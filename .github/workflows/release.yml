@@ -78,7 +78,8 @@ jobs:
           push: true
           tags:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
-            }}:${{ steps.version.outputs.version }}"
+            }}:${{ steps.version.outputs.version }}-${{
+            github.sha }}"
           provenance: mode=max
           sbom: true
           cache-from: "type=gha,scope=${{ matrix.target }}"
@@ -93,16 +94,27 @@ jobs:
           subject-digest:
             "${{ steps.build.outputs.digest }}"
           push-to-registry: true
+      - name: Scan image
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref:
+            "ghcr.io/trycopilotai/lint-${{ matrix.language
+            }}@${{ steps.build.outputs.digest }}"
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
       - name: Record digest
         shell: bash
         env:
           DIGEST: "${{ steps.build.outputs.digest }}"
+          GIT_SHA: "${{ github.sha }}"
           LANGUAGE: "${{ matrix.language }}"
           VERSION: "${{ steps.version.outputs.version }}"
         run: |
           mkdir digest
-          printf '{"image":"ghcr.io/trycopilotai/lint-%s:%s","digest":"%s"}\n' \
-            "$LANGUAGE" "$VERSION" "$DIGEST" \
+          printf '{"image":"ghcr.io/trycopilotai/lint-%s","staging_tag":"%s-%s","digest":"%s"}\n' \
+            "$LANGUAGE" "$VERSION" "$GIT_SHA" "$DIGEST" \
             >"digest/$LANGUAGE.json"
       - name: Upload digest
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -111,9 +123,49 @@ jobs:
           path: "digest/${{ matrix.language }}.json"
           if-no-files-found: error
 
-  draft:
+  promote:
     if: github.event.repository.private == true
     needs: images
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download image digests
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: digest-*
+          path: digests
+          merge-multiple: true
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - name: Log in to the private registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: "${{ github.actor }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Promote verified manifests
+        shell: bash
+        env:
+          VERSION: "${{ github.ref_name }}"
+        run: |
+          version="${VERSION#v}"
+          for record in digests/*.json; do
+            image="$(jq -r .image "$record")"
+            staging_tag="$(jq -r .staging_tag "$record")"
+            digest="$(jq -r .digest "$record")"
+            docker buildx imagetools create \
+              --tag "$image:$version" \
+              "$image:$staging_tag@$digest"
+            promoted="$(docker buildx imagetools inspect \
+              "$image:$version" --format '{{json .Manifest.Digest}}')"
+            test "$promoted" = "\"$digest\""
+          done
+
+  draft:
+    if: github.event.repository.private == true
+    needs: promote
     permissions:
       attestations: write
       contents: write
