@@ -5,6 +5,10 @@ local tools and independently addressable per-language
 Docker images. It uses an explicit working directory and
 applies writes only after every selected formatter succeeds.
 
+`lint` is read-only by default.
+
+Each language has an independently addressable Docker image.
+
 ![Animated lint command demo](assets/demo.svg)
 
 The static reduced-motion poster is available at
