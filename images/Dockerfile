@@ -1,10 +1,8 @@
 # syntax=docker/dockerfile:1.18
 
-ARG ALPINE_3_20="alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc"
 ARG ALPINE_3_23="alpine:3.23@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40"
 ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:d97bc0a941b8d4be647dc0ee75b264ddbb772f1ac5ba690a4309c00723b23775"
 ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.7-alpine3.23@sha256:405a4e86f50ab5fd78c65bab461499913088d1702da4faf6236426653cc052c4"
-ARG DOTNET_SDK="mcr.microsoft.com/dotnet/sdk:10.0.302-alpine3.23@sha256:d8ee39817ca03a3757288e83c37ed73cc969a286c603b827c7cbe33add1c2d1c"
 ARG GO_IMAGE="golang:1.26.5-alpine3.23@sha256:622e56dbc11a8cfe87cafa2331e9a201877271cbff918af53d3be315f3da88cc"
 ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
 ARG JAVA_JDK_IMAGE="eclipse-temurin:21-jdk-alpine-3.23@sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76"
@@ -100,29 +98,39 @@ COPY --from=shfmt-download /shfmt /shfmt
 USER 65532:65532
 ENTRYPOINT ["/shfmt", "-w", "-i", "2", "-ci"]
 
-FROM ${ALPINE_3_20} AS clang-source
-RUN apk add --no-cache clang18-extra-tools=18.1.6-r0
+FROM downloader AS clang-download
+ARG TARGETARCH
+RUN set -eu; \
+    case "${TARGETARCH}" in \
+      amd64) \
+        checksum="4762e95ea887d522bf664c1411d93d4d41fc9eb059835dd88b9ad54bc3cb08e0"; \
+        url="https://files.pythonhosted.org/packages/c8/b1/7bdec805dfa84eb4d2f3cbe65a419eaeb4cb0d67634c68d0915f54a32b88/clang_format-18.1.8-py2.py3-none-musllinux_1_2_x86_64.whl" \
+        ;; \
+      arm64) \
+        checksum="7d71869103d0f27be3c4930bea59dc6325177a259ba321a04663a231432ec343"; \
+        url="https://files.pythonhosted.org/packages/a7/93/48c0fd19ac5d6221059049facf0e1a91572e7f811e57f94d4882e37ee8a7/clang_format-18.1.8-py2.py3-none-musllinux_1_2_aarch64.whl" \
+        ;; \
+      *) exit 2 ;; \
+    esac; \
+    curl --fail --location --output /clang-format.whl "${url}"; \
+    echo "${checksum}  /clang-format.whl" | sha256sum -c; \
+    mkdir /clang-wheel; \
+    busybox unzip -q /clang-format.whl -d /clang-wheel; \
+    chmod 0555 /clang-wheel/clang_format/data/bin/clang-format
 
 FROM scratch AS clang
-COPY --from=clang-source /lib/ld-musl-*.so.1 /lib/
-COPY --from=clang-source /lib/libz.so.1* /lib/
-COPY --from=clang-source /usr/lib/libffi.so.8* /usr/lib/
-COPY --from=clang-source /usr/lib/libgcc_s.so.1 /usr/lib/
-COPY --from=clang-source /usr/lib/liblzma.so.5* /usr/lib/
-COPY --from=clang-source /usr/lib/libstdc++.so.6* /usr/lib/
-COPY --from=clang-source /usr/lib/libxml2.so.2* /usr/lib/
-COPY --from=clang-source /usr/lib/libzstd.so.1* /usr/lib/
-COPY --from=clang-source \
-    /usr/lib/llvm18/bin/clang-format \
-    /usr/lib/llvm18/bin/clang-format
-COPY --from=clang-source \
-    /usr/lib/llvm18/lib/libLLVM.so.18.1 \
-    /usr/lib/llvm18/lib/libLLVM.so.18.1
-COPY --from=clang-source \
-    /usr/lib/llvm18/lib/libclang-cpp.so.18.1 \
-    /usr/lib/llvm18/lib/libclang-cpp.so.18.1
+COPY --from=clang-download /lib/ld-musl-*.so.1 /lib/
+COPY --from=clang-download \
+    /clang-wheel/clang_format.libs \
+    /clang_format.libs
+COPY --from=clang-download \
+    /clang-wheel/clang_format/data/bin/clang-format \
+    /clang_format/data/bin/clang-format
+COPY --from=clang-download \
+    /clang-wheel/clang_format-18.1.8.dist-info/licenses \
+    /licenses/clang-format
 USER 65532:65532
-ENTRYPOINT ["/usr/lib/llvm18/bin/clang-format", "-i"]
+ENTRYPOINT ["/clang_format/data/bin/clang-format", "-i"]
 
 FROM downloader AS java-download
 ARG TARGETARCH
@@ -182,7 +190,11 @@ RUN cp /ktlint /ktlint.jar \
       --no-header-files \
       --no-man-pages \
       --strip-debug \
-      --output /opt/ktlint-java
+      --output /opt/ktlint-java \
+    && find /opt/ktlint-java/bin \
+      -mindepth 1 \
+      ! -name java \
+      -delete
 
 FROM scratch AS kotlin
 COPY --from=kotlin-build /lib /lib
@@ -254,21 +266,27 @@ COPY --from=swift-source /usr/lib/swift/linux /usr/lib/swift/linux
 USER 65532:65532
 ENTRYPOINT ["swift-format", "format", "--in-place"]
 
-FROM ${DOTNET_SDK} AS csharp-build
-RUN dotnet tool install csharpier \
-      --tool-path /tools \
-      --version 1.3.0
+FROM downloader AS csharp-download
+RUN curl --fail --location \
+      --output /csharpier.nupkg \
+      https://api.nuget.org/v3-flatcontainer/csharpier/1.3.0/csharpier.1.3.0.nupkg \
+    && echo "87089e1284137004f2299219ec241258034f06ffa9112860e9c0d75391087b15  /csharpier.nupkg" \
+      | sha256sum -c \
+    && mkdir /csharpier /tools \
+    && busybox unzip -q /csharpier.nupkg -d /csharpier \
+    && cp -R /csharpier/tools/net10.0/any/. /tools/ \
+    && find /tools -name '*.pdb' -delete
 
 FROM ${DOTNET_RUNTIME} AS csharp-runtime
 
 FROM scratch AS csharp
-COPY --from=csharp-build /tools /tools
+COPY --from=csharp-download /tools /tools
 COPY --from=csharp-runtime /lib /lib
 COPY --from=csharp-runtime /usr/lib /usr/lib
 COPY --from=csharp-runtime /usr/share/dotnet /usr/share/dotnet
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 USER 65532:65532
-ENTRYPOINT ["/tools/csharpier", "format", "--no-cache"]
+ENTRYPOINT ["/usr/share/dotnet/dotnet", "/tools/CSharpier.dll", "format", "--no-cache"]
 
 FROM ${JULIA_IMAGE} AS julia-build
 RUN mkdir -p /opt/julia-depot \
