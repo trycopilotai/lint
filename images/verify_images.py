@@ -4,9 +4,13 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
+import os
 import re
 import subprocess
+import tarfile
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -110,6 +114,129 @@ def validate_sources() -> None:
             raise ValueError(f"download checksum is unused: {checksum}")
 
 
+class ByteCounter:
+    def __init__(self) -> None:
+        self.count = 0
+
+    def write(self, payload: bytes) -> int:
+        self.count += len(payload)
+        return len(payload)
+
+    def flush(self) -> None:
+        return None
+
+
+def compressed_image_size(image: str) -> int:
+    inspect = subprocess.run(
+        ["docker", "image", "inspect", image],
+        check=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if inspect.returncode != 0:
+        detail = inspect.stderr.strip()
+        raise ValueError(f"image is unavailable: {image}: {detail}")
+
+    saved = subprocess.Popen(
+        ["docker", "image", "save", image],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if saved.stdout is None:
+        raise RuntimeError("docker image save did not expose standard output")
+    counter = ByteCounter()
+    with gzip.GzipFile(
+        filename="",
+        mode="wb",
+        fileobj=counter,
+        mtime=0,
+    ) as compressed:
+        while True:
+            block = saved.stdout.read(1024 * 1024)
+            if block == b"":
+                break
+            compressed.write(block)
+    standard_error = b""
+    if saved.stderr is not None:
+        standard_error = saved.stderr.read()
+    return_code = saved.wait()
+    if return_code != 0:
+        detail = standard_error.decode("utf-8", errors="replace").strip()
+        raise ValueError(f"could not save image {image}: {detail}")
+    return counter.count
+
+
+def verify_image_budget(image: str, budget_mib: int) -> int:
+    size = compressed_image_size(image)
+    maximum = budget_mib * 1024 * 1024
+    if size > maximum:
+        raise ValueError(f"{image} is {size} compressed bytes; budget is {maximum}")
+    return size
+
+
+def verify_image_contents(image: str) -> int:
+    forbidden = {
+        "bin/bash",
+        "bin/sh",
+        "sbin/apk",
+        "usr/bin/apt",
+        "usr/bin/apt-get",
+        "usr/bin/bash",
+        "usr/bin/clang",
+        "usr/bin/gcc",
+        "usr/bin/sh",
+        "usr/local/bin/npm",
+        "usr/local/bin/npx",
+        "usr/local/bin/pip",
+        "usr/local/bin/pip3",
+        "usr/local/cargo/bin/cargo",
+        "usr/local/cargo/bin/rustc",
+    }
+    created = subprocess.run(
+        ["docker", "container", "create", image],
+        check=True,
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    container = created.stdout.strip()
+    descriptor, archive_name = tempfile.mkstemp(
+        prefix="lint-image-",
+        suffix=".tar",
+    )
+    os.close(descriptor)
+    archive = Path(archive_name)
+    try:
+        subprocess.run(
+            [
+                "docker",
+                "container",
+                "export",
+                "--output",
+                str(archive),
+                container,
+            ],
+            check=True,
+        )
+        paths: set[str] = set()
+        with tarfile.open(archive, "r") as handle:
+            for member in handle:
+                paths.add(member.name.removeprefix("./"))
+        found = sorted(forbidden.intersection(paths))
+        if found:
+            values = ", ".join(found)
+            raise ValueError(f"{image} contains forbidden tools: {values}")
+        return len(paths)
+    finally:
+        subprocess.run(
+            ["docker", "container", "rm", container],
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        archive.unlink(missing_ok=True)
+
+
 def local_sizes(prefix: str) -> dict[str, int]:
     sizes: dict[str, int] = {}
     version = load_object(MATRIX_PATH)["version"]
@@ -117,27 +244,8 @@ def local_sizes(prefix: str) -> dict[str, int]:
         budget = row["budget_mib"]
         for language in row["languages"]:
             image = f"{prefix}-{language}:{version}"
-            completed = subprocess.run(
-                [
-                    "docker",
-                    "image",
-                    "inspect",
-                    image,
-                    "--format",
-                    "{{.Size}}",
-                ],
-                check=False,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            )
-            if completed.returncode != 0:
-                continue
-            size = int(completed.stdout.strip())
-            sizes[image] = size
-            maximum = budget * 1024 * 1024
-            if size > maximum:
-                raise ValueError(f"{image} is {size} bytes; budget is {maximum}")
+            sizes[image] = verify_image_budget(image, budget)
+            verify_image_contents(image)
     return sizes
 
 
@@ -145,8 +253,10 @@ def parser() -> argparse.ArgumentParser:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument(
         "--local-prefix",
-        help="also validate locally loaded PREFIX-language images",
+        help="validate every locally loaded PREFIX-language image",
     )
+    argument_parser.add_argument("--image")
+    argument_parser.add_argument("--budget-mib", type=int)
     return argument_parser
 
 
@@ -159,8 +269,18 @@ def main() -> int:
         "languages": 26,
         "targets": len(image_rows()),
     }
+    if arguments.image is not None:
+        if arguments.budget_mib is None:
+            raise ValueError("--image requires --budget-mib")
+        response["compressed_bytes"] = verify_image_budget(
+            arguments.image,
+            arguments.budget_mib,
+        )
+        response["filesystem_entries"] = verify_image_contents(arguments.image)
+    elif arguments.budget_mib is not None:
+        raise ValueError("--budget-mib requires --image")
     if arguments.local_prefix is not None:
-        response["local_sizes"] = local_sizes(arguments.local_prefix)
+        response["compressed_bytes"] = local_sizes(arguments.local_prefix)
     print(json.dumps(response, sort_keys=True))
     return 0
 

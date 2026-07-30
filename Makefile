@@ -19,41 +19,41 @@ ARGS ?=
 all: lint
 
 lint:
-	$(PYTHON) lint.py --all $(ARGS)
+	$(PYTHON) lint.py $(ARGS)
 
 dlint:
-	$(PYTHON) dlint.py --all $(ARGS)
+	$(PYTHON) dlint.py $(ARGS)
 
 lint_%:
-	$(PYTHON) lint.py --all --language "$*" $(ARGS)
+	$(PYTHON) lint.py --language "$*" $(ARGS)
 
 dlint_%:
-	$(PYTHON) dlint.py --all --language "$*" $(ARGS)
+	$(PYTHON) dlint.py --language "$*" $(ARGS)
 
 lint_ts:
-	$(PYTHON) lint.py --all \
+	$(PYTHON) lint.py \
 		--language typescript --language tsx $(ARGS)
 
 lint_js:
-	$(PYTHON) lint.py --all --language javascript $(ARGS)
+	$(PYTHON) lint.py --language javascript $(ARGS)
 
 lint_md:
-	$(PYTHON) lint.py --all --language markdown $(ARGS)
+	$(PYTHON) lint.py --language markdown $(ARGS)
 
 lint_py:
-	$(PYTHON) lint.py --all --language python $(ARGS)
+	$(PYTHON) lint.py --language python $(ARGS)
 
 lint_sh:
-	$(PYTHON) lint.py --all --language shell $(ARGS)
+	$(PYTHON) lint.py --language shell $(ARGS)
 
 lint_c:
-	$(PYTHON) lint.py --all --language c $(ARGS)
+	$(PYTHON) lint.py --language c $(ARGS)
 
 lint_cpp:
-	$(PYTHON) lint.py --all --language cpp $(ARGS)
+	$(PYTHON) lint.py --language cpp $(ARGS)
 
 lint_cs:
-	$(PYTHON) lint.py --all --language csharp $(ARGS)
+	$(PYTHON) lint.py --language csharp $(ARGS)
 
 test:
 	@set -e; \

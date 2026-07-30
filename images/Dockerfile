@@ -7,6 +7,7 @@ ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.7-alpine3.23@sha256:40
 ARG DOTNET_SDK="mcr.microsoft.com/dotnet/sdk:10.0.302-alpine3.23@sha256:d8ee39817ca03a3757288e83c37ed73cc969a286c603b827c7cbe33add1c2d1c"
 ARG GO_IMAGE="golang:1.26.5-alpine3.23@sha256:622e56dbc11a8cfe87cafa2331e9a201877271cbff918af53d3be315f3da88cc"
 ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
+ARG JAVA_JDK_IMAGE="eclipse-temurin:21-jdk-alpine-3.23@sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76"
 ARG JULIA_IMAGE="julia:1.12.6-bookworm@sha256:4979dc5c6fbcd7f5f0dc2ba2b336d136bda63a40c25e52a848222aa24326dfe1"
 ARG NODE_IMAGE="node:24.18.0-alpine3.23@sha256:595398b0081eacda8e1c4c5b97b76cd1020e4d58a8ebcb4843b9bca1e79e7436"
 ARG PYTHON_IMAGE="python:3.13.14-alpine3.23@sha256:9fdbf2e3e82628351513560b121e2ee6ce31cac212be9e070c5a5e2769fb5e76"
@@ -16,11 +17,24 @@ ARG SWIFT_IMAGE="swift:6.3-noble@sha256:66520bcba471018a34fd54ba09be97ba4abebd95
 FROM ${ALPINE_3_23} AS downloader
 RUN apk add --no-cache ca-certificates curl
 
-FROM ${NODE_IMAGE} AS prettier
+FROM ${ALPINE_3_23} AS launcher-build
+RUN apk add --no-cache build-base
+COPY images/kotlin_entrypoint.c /kotlin_entrypoint.c
+RUN cc -static -Os /kotlin_entrypoint.c -o /kotlin-format
+
+FROM ${NODE_IMAGE} AS prettier-build
 RUN npm install --global --omit=dev prettier@3.7.4 \
     && npm cache clean --force
+
+FROM scratch AS prettier
+COPY --from=prettier-build /lib /lib
+COPY --from=prettier-build /usr/lib /usr/lib
+COPY --from=prettier-build /usr/local/bin/node /usr/local/bin/node
+COPY --from=prettier-build \
+    /usr/local/lib/node_modules/prettier \
+    /usr/local/lib/node_modules/prettier
 USER 65532:65532
-ENTRYPOINT ["prettier", "--write", "--ignore-unknown", "--print-width", "60", "--prose-wrap", "always", "--trailing-comma", "none"]
+ENTRYPOINT ["/usr/local/bin/node", "/usr/local/lib/node_modules/prettier/bin/prettier.cjs", "--write", "--ignore-unknown", "--print-width", "60", "--prose-wrap", "always", "--trailing-comma", "none"]
 
 FROM downloader AS buildifier-download
 ARG TARGETARCH
@@ -40,15 +54,33 @@ COPY --from=buildifier-download /buildifier /buildifier
 USER 65532:65532
 ENTRYPOINT ["/buildifier", "-mode=fix"]
 
-FROM ${PYTHON_IMAGE} AS black
-RUN pip install --no-cache-dir black==24.10.0
-USER 65532:65532
-ENTRYPOINT ["python3", "-m", "black", "--quiet", "--line-length", "88"]
+FROM ${PYTHON_IMAGE} AS black-build
+RUN pip install --no-cache-dir black==24.10.0 \
+    && rm -rf \
+      /usr/local/bin/pip* \
+      /usr/local/lib/python3.13/ensurepip \
+      /usr/local/lib/python3.13/site-packages/pip*
 
-FROM ${PYTHON_IMAGE} AS requirements
+FROM scratch AS black
+COPY --from=black-build /lib /lib
+COPY --from=black-build /usr/lib /usr/lib
+COPY --from=black-build /usr/local /usr/local
+USER 65532:65532
+ENTRYPOINT ["/usr/local/bin/python3", "-m", "black", "--quiet", "--line-length", "88"]
+
+FROM ${PYTHON_IMAGE} AS requirements-build
+RUN rm -rf \
+      /usr/local/bin/pip* \
+      /usr/local/lib/python3.13/ensurepip \
+      /usr/local/lib/python3.13/site-packages/pip*
+
+FROM scratch AS requirements
+COPY --from=requirements-build /lib /lib
+COPY --from=requirements-build /usr/lib /usr/lib
+COPY --from=requirements-build /usr/local /usr/local
 COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
 USER 65532:65532
-ENTRYPOINT ["python3", "/requirements-format"]
+ENTRYPOINT ["/usr/local/bin/python3", "/requirements-format"]
 
 FROM downloader AS shfmt-download
 ARG TARGETARCH
@@ -117,17 +149,47 @@ COPY --from=go-source /usr/local/go/bin/gofmt /gofmt
 USER 65532:65532
 ENTRYPOINT ["/gofmt", "-w"]
 
-FROM ${RUST_IMAGE} AS rust
-RUN rustup component add rustfmt
-USER 65532:65532
-ENTRYPOINT ["rustfmt"]
+FROM ${RUST_IMAGE} AS rust-build
+RUN rustup component add rustfmt \
+    && cp "$(rustup which rustfmt)" /rustfmt \
+    && mkdir /rustfmt-libs \
+    && cp /usr/local/rustup/toolchains/*/lib/librustc_driver*.so \
+      /rustfmt-libs/ \
+    && strip --strip-unneeded /rustfmt /rustfmt-libs/*.so
 
-FROM ${JAVA_IMAGE} AS kotlin
+FROM scratch AS rust
+COPY --from=rust-build /lib /lib
+COPY --from=rust-build /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
+COPY --from=rust-build /rustfmt /bin/rustfmt
+COPY --from=rust-build /rustfmt-libs /lib
+USER 65532:65532
+ENTRYPOINT ["/bin/rustfmt"]
+
+FROM ${JAVA_JDK_IMAGE} AS kotlin-build
 ADD --checksum=sha256:01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985 \
     https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint \
-    /usr/local/bin/ktlint
-RUN chmod 0555 /usr/local/bin/ktlint
-COPY --chmod=0555 images/kotlin_entrypoint.sh /kotlin-format
+    /ktlint
+RUN cp /ktlint /ktlint.jar \
+    && chmod 0444 /ktlint.jar \
+    && modules="$(jdeps \
+      --ignore-missing-deps \
+      --multi-release 21 \
+      --print-module-deps \
+      /ktlint.jar)" \
+    && jlink \
+      --add-modules "$modules" \
+      --compress=2 \
+      --no-header-files \
+      --no-man-pages \
+      --strip-debug \
+      --output /opt/ktlint-java
+
+FROM scratch AS kotlin
+COPY --from=kotlin-build /lib /lib
+COPY --from=kotlin-build /usr/lib /usr/lib
+COPY --from=kotlin-build /opt/ktlint-java /opt/ktlint-java
+COPY --from=kotlin-build /ktlint.jar /ktlint.jar
+COPY --from=launcher-build /kotlin-format /kotlin-format
 USER 65532:65532
 ENTRYPOINT ["/kotlin-format"]
 
@@ -152,6 +214,7 @@ ENTRYPOINT ["/taplo", "format"]
 
 FROM ${ALPINE_3_23} AS xml-build
 RUN apk add --no-cache build-base ca-certificates curl xz
+COPY images/xml_entrypoint.c /xml_entrypoint.c
 RUN curl --fail --location \
       --output /libxml2.tar.xz \
       https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.3.tar.xz \
@@ -171,11 +234,15 @@ RUN curl --fail --location \
       --without-python \
       --without-zlib \
     && make -j2 \
-    && make install-strip
+    && make install-strip \
+    && cc -static -Os \
+      /xml_entrypoint.c \
+      -o /xml-format
 
-FROM ${ALPINE_3_23} AS xml
+FROM scratch AS xml
 COPY --from=xml-build /opt/libxml2 /opt/libxml2
-COPY --chmod=0555 images/xml_entrypoint.sh /xml-format
+COPY --from=xml-build /lib /lib
+COPY --from=xml-build /xml-format /xml-format
 USER 65532:65532
 ENTRYPOINT ["/xml-format"]
 
@@ -192,15 +259,31 @@ RUN dotnet tool install csharpier \
       --tool-path /tools \
       --version 1.3.0
 
-FROM ${DOTNET_RUNTIME} AS csharp
+FROM ${DOTNET_RUNTIME} AS csharp-runtime
+
+FROM scratch AS csharp
 COPY --from=csharp-build /tools /tools
+COPY --from=csharp-runtime /lib /lib
+COPY --from=csharp-runtime /usr/lib /usr/lib
+COPY --from=csharp-runtime /usr/share/dotnet /usr/share/dotnet
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 USER 65532:65532
 ENTRYPOINT ["/tools/csharpier", "format", "--no-cache"]
 
-FROM ${JULIA_IMAGE} AS julia
+FROM ${JULIA_IMAGE} AS julia-build
 RUN mkdir -p /opt/julia-depot \
     && JULIA_DEPOT_PATH=/opt/julia-depot julia --startup-file=no -e \
-    'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter", version="2.12.3")); Pkg.precompile()'
+    'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter", version="2.12.3")); Pkg.precompile()' \
+    && rm -rf /root/.julia /tmp/*
+
+FROM scratch AS julia
+COPY --from=julia-build /lib /lib
+COPY --from=julia-build \
+    /usr/lib/locale/C.utf8 \
+    /usr/lib/locale/C.utf8
+COPY --from=julia-build /usr/local/julia /usr/local/julia
+COPY --from=julia-build /opt/julia-depot /opt/julia-depot
 COPY --chmod=0555 images/julia_entrypoint.jl /julia-format.jl
+ENV LANG=C.UTF-8
 USER 65532:65532
-ENTRYPOINT ["julia", "--startup-file=no", "/julia-format.jl"]
+ENTRYPOINT ["/usr/local/julia/bin/julia", "--startup-file=no", "/julia-format.jl"]

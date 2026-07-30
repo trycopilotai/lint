@@ -74,6 +74,7 @@ class ParserTest(unittest.TestCase):
         arguments = LINT.parser().parse_args([])
         self.assertFalse(arguments.write)
         self.assertFalse(arguments.modified)
+        self.assertFalse(arguments.json)
         self.assertEqual(".", arguments.cwd)
         self.assertEqual([], arguments.paths)
 
@@ -146,6 +147,16 @@ class SelectionTest(unittest.TestCase):
             os.symlink(target, link)
             with self.assertRaises(LINT.SelectionError):
                 LINT.validate_explicit_path(root, "link.py")
+
+    def test_symbolic_link_directory_traversal_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            target = root / "target"
+            target.mkdir()
+            (target / "file.py").write_text("x = 1\n", encoding="utf-8")
+            os.symlink(target, root / "linked")
+            with self.assertRaises(LINT.SelectionError):
+                LINT.validate_explicit_path(root, "linked/file.py")
 
 
 class FormattingTest(unittest.TestCase):
@@ -272,7 +283,7 @@ class FormattingTest(unittest.TestCase):
 
 
 class MainTest(unittest.TestCase):
-    def test_default_cli_is_read_only_and_all(self) -> None:
+    def test_default_cli_is_human_readable_read_only_and_all(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             initialize_repository(root)
@@ -283,6 +294,30 @@ class MainTest(unittest.TestCase):
                 exit_code = LINT.main(["--cwd", str(root)])
 
             self.assertEqual(LINT.EXIT_FORMATTING, exit_code)
+            self.assertIn(
+                "requirements.txt: needs formatting (requirements)",
+                output.getvalue(),
+            )
+            self.assertIn(
+                "needs formatting: 1 selected, 1 changed, 0 skipped",
+                output.getvalue(),
+            )
+            self.assertEqual(
+                "zeta==1\nalpha==1\n",
+                path.read_text(encoding="utf-8"),
+            )
+
+    def test_json_cli_is_stable_read_only_and_all(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            initialize_repository(root)
+            path = root / "requirements.txt"
+            path.write_text("zeta==1\nalpha==1\n", encoding="utf-8")
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                exit_code = LINT.main(["--json", "--cwd", str(root)])
+
+            self.assertEqual(LINT.EXIT_FORMATTING, exit_code)
             response = json.loads(output.getvalue())
             self.assertEqual("read-only", response["mode"])
             self.assertEqual("needs_formatting", response["status"])
@@ -290,6 +325,48 @@ class MainTest(unittest.TestCase):
                 "zeta==1\nalpha==1\n",
                 path.read_text(encoding="utf-8"),
             )
+
+    def test_make_modified_does_not_add_all(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            initialize_repository(root)
+            for name in ("lint.py", "languages.json"):
+                (root / name).write_bytes((ROOT / name).read_bytes())
+            path = root / "requirements.txt"
+            path.write_text("alpha==1\n", encoding="utf-8")
+            subprocess.run(
+                ["git", "-C", str(root), "add", "requirements.txt"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "commit", "-qm", "fixture"],
+                check=True,
+            )
+            path.write_text("# modified\nalpha==1\n", encoding="utf-8")
+
+            completed = subprocess.run(
+                [
+                    "make",
+                    "-C",
+                    str(root),
+                    "-f",
+                    str(ROOT / "Makefile"),
+                    "lint",
+                    "ARGS=--modified --json",
+                ],
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+
+            self.assertEqual(
+                0, completed.returncode, completed.stdout + completed.stderr
+            )
+            start = completed.stdout.index("{")
+            response = json.loads(completed.stdout[start:])
+            self.assertEqual("clean", response["status"])
+            self.assertEqual(1, response["summary"]["selected"])
 
 
 if __name__ == "__main__":

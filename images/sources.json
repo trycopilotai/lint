@@ -28,6 +28,10 @@
       "image": "eclipse-temurin:21-jre-alpine-3.23",
       "digest": "sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
     },
+    "java_jdk": {
+      "image": "eclipse-temurin:21-jdk-alpine-3.23",
+      "digest": "sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76"
+    },
     "julia": {
       "image": "julia:1.12.6-bookworm",
       "digest": "sha256:4979dc5c6fbcd7f5f0dc2ba2b336d136bda63a40c25e52a848222aa24326dfe1"

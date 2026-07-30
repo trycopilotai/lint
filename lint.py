@@ -47,6 +47,10 @@ class FormatterError(Exception):
     """A formatter could not safely produce output."""
 
 
+class EngineError(FormatterError):
+    """A required formatter engine is unavailable."""
+
+
 @dataclasses.dataclass(frozen=True)
 class Language:
     id: str
@@ -298,6 +302,16 @@ def validate_explicit_path(cwd: Path, raw_path: str) -> Path:
     candidate = Path(raw_path)
     if not candidate.is_absolute():
         candidate = cwd / candidate
+    lexical = Path(os.path.abspath(candidate))
+    try:
+        relative = lexical.relative_to(cwd)
+    except ValueError as error:
+        raise SelectionError(f"path escapes --cwd: {raw_path}") from error
+    current = cwd
+    for part in relative.parts:
+        current = current / part
+        if current.is_symlink():
+            raise SelectionError(f"symbolic links are not accepted: {raw_path}")
     try:
         resolved = candidate.resolve(strict=True)
     except FileNotFoundError as error:
@@ -306,8 +320,6 @@ def validate_explicit_path(cwd: Path, raw_path: str) -> Path:
         resolved.relative_to(cwd)
     except ValueError as error:
         raise SelectionError(f"path escapes --cwd: {raw_path}") from error
-    if candidate.is_symlink():
-        raise SelectionError(f"symbolic links are not accepted: {raw_path}")
     return resolved
 
 
@@ -433,7 +445,7 @@ def version_command(language: Language) -> tuple[list[str], str] | None:
     if family == "go":
         return ["go", "version"], f"go{versions['go']}"
     if family == "rust":
-        return ["rustfmt", "--version"], versions["rust"]
+        return ["rustc", "--version"], f"rustc {versions['rust']}"
     if family == "kotlin":
         return ["ktlint", "--version"], versions["ktlint"]
     if family == "toml":
@@ -463,7 +475,7 @@ def verify_formatter_version(language: Language) -> None:
             timeout=10,
         )
     except FileNotFoundError as error:
-        raise FormatterError(
+        raise EngineError(
             f"{command[0]} is not installed; use --docker or install "
             "the pinned version from languages.json"
         ) from error
@@ -478,7 +490,7 @@ def verify_formatter_version(language: Language) -> None:
         found = output.strip()
         if found == "":
             found = f"exit {completed.returncode}"
-        raise FormatterError(f"{command[0]} must match {expected}; found {found}")
+        raise EngineError(f"{command[0]} must match {expected}; found {found}")
 
 
 def requirements_output(payload: bytes) -> bytes:
@@ -571,7 +583,7 @@ def run_formatter(
         )
     except FileNotFoundError as error:
         executable = command[0]
-        raise FormatterError(
+        raise EngineError(
             f"{executable} is not installed; use --docker or install "
             "the pinned version from languages.json"
         ) from error
@@ -642,7 +654,7 @@ def run_docker_formatter(
             timeout=timeout_seconds,
         )
     except FileNotFoundError as error:
-        raise FormatterError("docker is not installed") from error
+        raise EngineError("docker is not installed") from error
     except subprocess.TimeoutExpired as error:
         raise FormatterError(
             f"{language.id} container exceeded {timeout_seconds} seconds"
@@ -703,6 +715,7 @@ def prepare_results(
     verified_families: set[str] = set()
     workspace = tempfile.mkdtemp(prefix=".lint-work-", dir=cwd)
     mirror_root = Path(workspace)
+    os.chmod(mirror_root, 0o777)
     try:
         for path, language in selected:
             relative = path.relative_to(cwd)
@@ -711,9 +724,14 @@ def prepare_results(
                 raise FormatterError(f"{relative}: exceeds {maximum_bytes} bytes")
             mirror_path = mirror_root / relative
             mirror_path.parent.mkdir(parents=True, exist_ok=True)
+            current = mirror_path.parent
+            while current != mirror_root:
+                os.chmod(current, 0o777)
+                current = current.parent
             mirror_path.write_bytes(payload)
             source_mode = stat.S_IMODE(path.stat().st_mode)
-            os.chmod(mirror_path, source_mode)
+            mirror_mode = source_mode | 0o666
+            os.chmod(mirror_path, mirror_mode)
             if use_docker:
                 run_docker_formatter(
                     language,
@@ -912,8 +930,66 @@ def parser() -> argparse.ArgumentParser:
         action="store_true",
         help="print the language manifest and exit",
     )
+    argument_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="print stable machine-readable JSON",
+    )
     argument_parser.add_argument("paths", nargs="*")
     return argument_parser
+
+
+def human_response(response: dict[str, Any]) -> str:
+    lines: list[str] = []
+    files = response.get("files")
+    if isinstance(files, list):
+        for finding in files:
+            if not isinstance(finding, dict):
+                continue
+            path = finding.get("path")
+            status = finding.get("status")
+            language = finding.get("language")
+            if not isinstance(path, str):
+                continue
+            if not isinstance(status, str):
+                continue
+            if not isinstance(language, str):
+                continue
+            display_status = status.replace("_", " ")
+            lines.append(f"{path}: {display_status} ({language})")
+    summary = response.get("summary")
+    if isinstance(summary, dict):
+        selected = summary.get("selected")
+        changed = summary.get("changed")
+        skipped = summary.get("skipped")
+        mode = response.get("mode")
+        backend = response.get("backend")
+        status = response.get("status")
+        display_status = str(status).replace("_", " ")
+        lines.append(
+            f"{display_status}: {selected} selected, {changed} changed, "
+            f"{skipped} skipped; {mode}; {backend}"
+        )
+    message = response.get("message")
+    if isinstance(message, str):
+        status = response.get("status")
+        display_status = str(status).replace("_", " ")
+        lines.append(f"{display_status}: {message}")
+    return "\n".join(lines)
+
+
+def print_response(
+    response: dict[str, Any],
+    json_output: bool,
+    error: bool = False,
+) -> None:
+    stream = sys.stdout
+    if error:
+        stream = sys.stderr
+    if json_output:
+        print(json.dumps(response, sort_keys=True, indent=2), file=stream)
+        return
+    print(human_response(response), file=stream)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -947,7 +1023,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             write=arguments.write,
             use_docker=arguments.docker,
         )
-        print(json.dumps(response, sort_keys=True, indent=2))
+        print_response(response, arguments.json)
         if response["status"] == "needs_formatting":
             return EXIT_FORMATTING
         return EXIT_CLEAN
@@ -957,15 +1033,23 @@ def main(argv: Sequence[str] | None = None) -> int:
             "status": "selection_error",
             "message": str(error),
         }
-        print(json.dumps(response, sort_keys=True), file=sys.stderr)
+        print_response(response, arguments.json, error=True)
         return EXIT_SELECTION
+    except EngineError as error:
+        response = {
+            "schema_version": 1,
+            "status": "engine_error",
+            "message": str(error),
+        }
+        print_response(response, arguments.json, error=True)
+        return EXIT_INTERNAL
     except FormatterError as error:
         response = {
             "schema_version": 1,
             "status": "formatter_error",
             "message": str(error),
         }
-        print(json.dumps(response, sort_keys=True), file=sys.stderr)
+        print_response(response, arguments.json, error=True)
         return EXIT_FORMATTING
     except (OSError, ValueError, KeyError) as error:
         response = {
@@ -973,7 +1057,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "status": "internal_error",
             "message": str(error),
         }
-        print(json.dumps(response, sort_keys=True), file=sys.stderr)
+        print_response(response, arguments.json, error=True)
         return EXIT_INTERNAL
 
 

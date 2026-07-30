@@ -8,8 +8,51 @@ permissions:
   contents: read
 
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.13.14"
+      - name: Verify repository
+        run: make verify
+      - name: Check Python formatting
+        run: >-
+          pipx run --spec black==24.10.0 black --check
+          --diff lint.py dlint.py service.py
+          action_entrypoint.py tests images scripts skills
+          tools
+      - name: Check document codec
+        run: >-
+          npx -y prettier@3.7.4 --check --print-width 60
+          --prose-wrap always --trailing-comma none
+          README.md CONTRIBUTING.md SECURITY.md action.yml
+          .github/workflows .claude-plugin .codex-plugin
+          docs skills languages.json images/*.json
+
+  matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      images: "${{ steps.images.outputs.matrix }}"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Load release image matrix
+        id: images
+        shell: bash
+        run: |
+          matrix="$(python3 tools/release_matrix.py)"
+          printf 'matrix=%s\n' "$matrix" >>"$GITHUB_OUTPUT"
+
   images:
-    if: github.event.repository.private == true
+    needs: [matrix, verify]
     permissions:
       contents: read
       id-token: write
@@ -18,34 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - { language: markdown, target: prettier }
-          - { language: html, target: prettier }
-          - { language: yaml, target: prettier }
-          - { language: json, target: prettier }
-          - { language: javascript, target: prettier }
-          - { language: typescript, target: prettier }
-          - { language: tsx, target: prettier }
-          - { language: css, target: prettier }
-          - { language: bazel, target: buildifier }
-          - { language: python, target: black }
-          - { language: requirements, target: requirements }
-          - { language: shell, target: shfmt }
-          - { language: c, target: clang }
-          - { language: cpp, target: clang }
-          - { language: objective-c, target: clang }
-          - { language: objective-cpp, target: clang }
-          - { language: java, target: java }
-          - { language: go, target: go }
-          - { language: rust, target: rust }
-          - { language: kotlin, target: kotlin }
-          - { language: toml, target: taplo }
-          - { language: xml, target: xml }
-          - { language: plist, target: xml }
-          - { language: swift, target: swift }
-          - { language: csharp, target: csharp }
-          - { language: julia, target: julia }
+      matrix: "${{ fromJSON(needs.matrix.outputs.images) }}"
     steps:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -85,8 +101,45 @@ jobs:
           cache-from: "type=gha,scope=${{ matrix.target }}"
           cache-to:
             "type=gha,mode=max,scope=${{ matrix.target }}"
+      - name: Verify AMD64 image
+        shell: bash
+        env:
+          BUDGET_MIB: "${{ matrix.budget_mib }}"
+          DIGEST: "${{ steps.build.outputs.digest }}"
+          IMAGE:
+            "ghcr.io/trycopilotai/lint-${{ matrix.language
+            }}"
+          TARGET: "${{ matrix.target }}"
+        run: |
+          docker pull --platform linux/amd64 "$IMAGE@$DIGEST"
+          docker image tag "$IMAGE@$DIGEST" lint-release-test:amd64
+          python3 images/smoke.py \
+            --target "$TARGET" \
+            --image lint-release-test:amd64
+          python3 images/verify_images.py \
+            --image lint-release-test:amd64 \
+            --budget-mib "$BUDGET_MIB"
+          docker image rm lint-release-test:amd64 "$IMAGE@$DIGEST"
+      - name: Verify ARM64 image
+        shell: bash
+        env:
+          BUDGET_MIB: "${{ matrix.budget_mib }}"
+          DIGEST: "${{ steps.build.outputs.digest }}"
+          IMAGE:
+            "ghcr.io/trycopilotai/lint-${{ matrix.language
+            }}"
+          TARGET: "${{ matrix.target }}"
+        run: |
+          docker pull --platform linux/arm64 "$IMAGE@$DIGEST"
+          docker image tag "$IMAGE@$DIGEST" lint-release-test:arm64
+          python3 images/smoke.py \
+            --target "$TARGET" \
+            --image lint-release-test:arm64
+          python3 images/verify_images.py \
+            --image lint-release-test:arm64 \
+            --budget-mib "$BUDGET_MIB"
       - name: Attest image
-        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-name:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
@@ -124,7 +177,6 @@ jobs:
           if-no-files-found: error
 
   promote:
-    if: github.event.repository.private == true
     needs: images
     permissions:
       contents: read
@@ -164,7 +216,6 @@ jobs:
           done
 
   draft:
-    if: github.event.repository.private == true
     needs: promote
     permissions:
       attestations: write
@@ -203,7 +254,7 @@ jobs:
             sha256sum ./* >SHA256SUMS
           )
       - name: Attest source archive
-        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-path: "dist/lint-*.tar.gz"
       - name: Create private draft release

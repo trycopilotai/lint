@@ -17,7 +17,6 @@ concurrency:
 
 jobs:
   select:
-    if: github.event.repository.private == true
     runs-on: ubuntu-latest
     outputs:
       matrix: "${{ steps.matrix.outputs.matrix }}"
@@ -44,7 +43,6 @@ jobs:
 
   build:
     if: >-
-      github.event.repository.private == true &&
       needs.select.outputs.matrix != '{"include":[]}'
     needs: select
     runs-on: ubuntu-latest
@@ -83,10 +81,14 @@ jobs:
           python3 images/smoke.py --target "${{
           matrix.target }}" --image "lint-${{
           matrix.language }}:ci"
+      - name: Enforce compressed size budget
+        run: >-
+          python3 images/verify_images.py --image "lint-${{
+          matrix.language }}:ci" --budget-mib "${{
+          matrix.budget_mib }}"
 
   build-arm64:
     if: >-
-      github.event.repository.private == true &&
       github.event_name != 'pull_request' &&
       needs.select.outputs.matrix != '{"include":[]}'
     needs: select
@@ -128,3 +130,8 @@ jobs:
           python3 images/smoke.py --target "${{
           matrix.target }}" --image "lint-${{
           matrix.language }}:ci-arm64"
+      - name: Enforce compressed size budget
+        run: >-
+          python3 images/verify_images.py --image "lint-${{
+          matrix.language }}:ci-arm64" --budget-mib "${{
+          matrix.budget_mib }}"

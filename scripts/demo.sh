@@ -5,11 +5,11 @@ workspace="${1:-demo-work}"
 mkdir -p "$workspace"
 printf 'zeta==1\nalpha==1\n' >"$workspace/requirements.txt"
 
-python3 lint.py --cwd "$workspace" requirements.txt \
+python3 lint.py --json --cwd "$workspace" requirements.txt \
   >"$workspace/read-only.json" || true
-python3 lint.py --cwd "$workspace" --write requirements.txt \
+python3 lint.py --json --cwd "$workspace" --write requirements.txt \
   >"$workspace/write.json"
-python3 lint.py --cwd "$workspace" requirements.txt \
+python3 lint.py --json --cwd "$workspace" requirements.txt \
   >"$workspace/final.json"
 
 printf '%s\n' "$workspace/read-only.json"

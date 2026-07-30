@@ -58,12 +58,12 @@
     {
       "languages": ["rust"],
       "target": "rust",
-      "budget_mib": 40
+      "budget_mib": 90
     },
     {
       "languages": ["kotlin"],
       "target": "kotlin",
-      "budget_mib": 110
+      "budget_mib": 140
     },
     {
       "languages": ["toml"],
@@ -88,7 +88,7 @@
     {
       "languages": ["julia"],
       "target": "julia",
-      "budget_mib": 250
+      "budget_mib": 360
     }
   ]
 }

@@ -17,6 +17,8 @@ demo derives from
 [`evidence/demo-transcript.txt`](evidence/demo-transcript.txt);
 its generation record is
 [`evidence/demo-manifest.json`](evidence/demo-manifest.json).
+The upload-ready 1280×640 social preview is
+[`assets/social-preview.png`](assets/social-preview.png).
 
 ## Quick start
 
@@ -38,6 +40,7 @@ Check only modified Git-tracked files:
 
 ```sh
 python3 lint.py --modified
+make lint ARGS=--modified
 ```
 
 Run from another directory or select a language:
@@ -57,7 +60,8 @@ make dlint_markdown
 
 `--read-only`, `--readonly`, and `-ro` are equivalent.
 `--write`, `--apply`, and `-w` are equivalent. `--docker`
-and `-d` select the Docker backend.
+and `-d` select the Docker backend. Output is human-readable
+by default; `--json` emits the stable result object.
 
 ## Selection
 
@@ -96,7 +100,10 @@ The default policy covers:
 Pinned versions are recorded in `languages.json`. Local runs
 report an install hint when a required executable is absent.
 Docker runs use
-`ghcr.io/trycopilotai/lint-<language>:0.1.0`.
+`ghcr.io/trycopilotai/lint-<language>:0.1.0`. Each final
+image is checked against its compressed-size budget and
+rejects shell, package-manager, and standalone compiler
+executables.
 
 Prettier always uses `printWidth: 60`, `proseWrap: always`,
 and `trailingComma: none`. A project configuration can add
@@ -149,9 +156,10 @@ install -d "$target"
 gh api repos/trycopilotai/lint/tarball/v0.1.0 \
   >"$archive/lint.tar.gz"
 tar -xzf "$archive/lint.tar.gz" \
-  --strip-components=3 \
-  -C "$target" \
-  '*/skills/lint'
+  --strip-components=1 \
+  -C "$target"
+cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
+cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
 The standalone invocation is `/lint`. A Claude marketplace
@@ -168,9 +176,10 @@ install -d "$target"
 gh api repos/trycopilotai/lint/tarball/v0.1.0 \
   >"$archive/lint.tar.gz"
 tar -xzf "$archive/lint.tar.gz" \
-  --strip-components=3 \
-  -C "$target" \
-  '*/skills/lint'
+  --strip-components=1 \
+  -C "$target"
+cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
+cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
 Invoke it as `$lint`.

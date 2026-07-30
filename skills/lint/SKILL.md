@@ -28,13 +28,13 @@ without broadening the requested scope.
 
 ## Run
 
-From this repository:
+Run the launcher from this skill directory:
 
 ```sh
-python3 lint.py --cwd /absolute/project/path
-python3 lint.py --cwd /absolute/project/path --modified
-python3 lint.py --cwd /absolute/project/path --write
-python3 dlint.py --cwd /absolute/project/path
+python3 <skill-directory>/run.py --cwd /absolute/project/path
+python3 <skill-directory>/run.py --cwd /absolute/project/path --modified
+python3 <skill-directory>/run.py --cwd /absolute/project/path --write
+python3 <skill-directory>/run.py --cwd /absolute/project/path --docker
 ```
 
 In a consumer repository with the Make adapter:
@@ -48,7 +48,8 @@ make lint ARGS=--write
 
 ## Interpret the result
 
-The CLI prints one JSON object.
+The CLI prints a human-readable result. Add `--json` for one
+stable JSON object.
 
 - Exit 0 means every selected file was clean, or every
   requested write completed.

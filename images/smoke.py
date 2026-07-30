@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import shutil
 import subprocess
 import tempfile
@@ -79,8 +80,10 @@ def main() -> int:
         dir=ROOT,
     ) as directory:
         root = Path(directory).resolve()
+        os.chmod(root, 0o777)
         path = root / fixture.name
         shutil.copyfile(fixture, path)
+        os.chmod(path, 0o666)
         before = digest(path)
         run_image(arguments.image, root, path.name)
         after = digest(path)

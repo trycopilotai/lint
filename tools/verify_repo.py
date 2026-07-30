@@ -4,9 +4,11 @@
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib.util
 import json
 import re
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -29,6 +31,26 @@ def load_image_verifier():
     sys.modules[specification.name] = module
     specification.loader.exec_module(module)
     return module
+
+
+def load_demo_generator():
+    path = ROOT / "scripts" / "generate_demo.py"
+    specification = importlib.util.spec_from_file_location(
+        "demo_generator",
+        path,
+    )
+    if specification is None:
+        raise RuntimeError("could not create demo generator specification")
+    if specification.loader is None:
+        raise RuntimeError("demo generator specification has no loader")
+    module = importlib.util.module_from_spec(specification)
+    sys.modules[specification.name] = module
+    specification.loader.exec_module(module)
+    return module
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def tracked_files() -> list[Path]:
@@ -110,6 +132,40 @@ def verify_manifests() -> None:
             raise ValueError(f"wrong plugin version: {manifest}")
 
 
+def verify_demo() -> None:
+    manifest_path = ROOT / "evidence" / "demo-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    expected_paths = {
+        "output": "evidence/demo-transcript.txt",
+        "skill": "skills/lint/SKILL.md",
+        "invocation_script": "scripts/demo.sh",
+        "generator": "scripts/generate_demo.py",
+        "demo": "assets/demo.svg",
+    }
+    for key, relative in expected_paths.items():
+        path_key = f"{key}_path"
+        hash_key = f"{key}_sha256"
+        if manifest.get(path_key) != relative:
+            raise ValueError(f"demo manifest has wrong {path_key}")
+        if manifest.get(hash_key) != sha256(ROOT / relative):
+            raise ValueError(f"demo manifest has stale {hash_key}")
+
+    transcript = (ROOT / expected_paths["output"]).read_text(encoding="utf-8")
+    generator = load_demo_generator()
+    rendered = generator.render_svg(transcript)
+    actual = (ROOT / expected_paths["demo"]).read_text(encoding="utf-8")
+    if rendered != actual:
+        raise ValueError("demo SVG does not derive from the transcript")
+
+    preview = ROOT / "assets" / "social-preview.png"
+    payload = preview.read_bytes()
+    if payload[:8] != b"\x89PNG\r\n\x1a\n":
+        raise ValueError("social preview must be a PNG")
+    width, height = struct.unpack(">II", payload[16:24])
+    if (width, height) != (1280, 640):
+        raise ValueError("social preview must be 1280 by 640")
+
+
 def verify_actions(files: list[Path]) -> None:
     workflows = [
         path for path in files if path.parent == ROOT / ".github" / "workflows"
@@ -128,6 +184,8 @@ def verify_actions(files: list[Path]) -> None:
                 )
         if re.search(r"^\s*pull_request_target\s*:", text, re.MULTILINE):
             raise ValueError(f"pull_request_target is not allowed: {path}")
+        if "github.event.repository.private" in text:
+            raise ValueError(f"workflow is incorrectly gated by visibility: {path}")
 
 
 def main() -> int:
@@ -135,6 +193,7 @@ def main() -> int:
     verify_python_style(files)
     verify_normal_names(files)
     verify_manifests()
+    verify_demo()
     verifier = load_image_verifier()
     verifier.validate_coverage()
     verifier.validate_sources()

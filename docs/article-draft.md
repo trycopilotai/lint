@@ -25,7 +25,8 @@ pulling the Go formatter does not require a JVM. Languages
 that use the same formatter may share a digest while keeping
 distinct image names.
 
-The command emits stable JSON for scripts and CI. The HTTP
+The command emits a human-readable result by default and
+stable JSON with `--json` for scripts and CI. The HTTP
 surface uses the same policy and accepts only bounded,
 base64-encoded relative paths. This keeps the local CLI,
 containers, and service on one observable formatting
