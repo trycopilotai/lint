@@ -5,7 +5,7 @@
   "demo_sha256": "d79226f49b868619d87fefec1b5b13e3d2cf4626b70a680e21f1d5857ed7d76e",
   "generator_path": "scripts/generate_demo.py",
   "generator_sha256": "e899ffd2f66677a2fe96e1f2dd17f594717d2fef2e0e1e122e11030133da16d2",
-  "input_commit": "1f5b4e9aae5306cc9f0413671d79982797efaf83",
+  "input_commit": "c89b9f9c21924e15f36d35cfbc8c834f804e1b4e",
   "invocation": "./scripts/demo.sh demo-work",
   "invocation_date": "2026-07-30",
   "invocation_script_path": "scripts/demo.sh",
@@ -14,7 +14,7 @@
   "output_sha256": "03c1f3e3b68aa8b2c0329b44343a88d10bc4ff94b9a188d5f53386938ccfb90d",
   "schema_version": 1,
   "skill_path": "skills/lint/SKILL.md",
-  "skill_sha256": "80bddc0f8ff13263326447949f67353b6dd6cefcbc9046626c8a3305711464f0",
+  "skill_sha256": "de15893c52c36b080103a93b53209a9c8086a08650dc6e59399625b5f8e02102",
   "transcript_edited": true,
   "transcript_note": "Command output was assembled into a readable transcript without changing JSON result bytes."
 }
