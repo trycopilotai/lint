@@ -172,6 +172,9 @@ def validate_sources() -> None:
     if not isinstance(downloads, dict):
         raise ValueError("sources are missing downloads")
     dockerfile = DOCKERFILE_PATH.read_text(encoding="utf-8")
+    for option in ("--no-config", "--no-editorconfig"):
+        if option not in dockerfile:
+            raise ValueError(f"Prettier image is missing locked option: {option}")
     for item in base_images.values():
         if not isinstance(item, dict):
             raise ValueError("base image entries must be objects")

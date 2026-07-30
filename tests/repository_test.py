@@ -63,6 +63,12 @@ class ReleaseMatrixTest(unittest.TestCase):
 
 
 class ImageContentsTest(unittest.TestCase):
+    def test_prettier_image_ignores_repository_configuration(self) -> None:
+        dockerfile = (ROOT / "images" / "Dockerfile").read_text(encoding="utf-8")
+
+        self.assertIn("--no-config", dockerfile)
+        self.assertIn("--no-editorconfig", dockerfile)
+
     def test_shells_package_managers_and_compilers_are_forbidden(self) -> None:
         paths = [
             "bin/ash",

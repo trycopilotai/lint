@@ -34,7 +34,7 @@ COPY --from=prettier-build \
     /usr/local/lib/node_modules/prettier \
     /usr/local/lib/node_modules/prettier
 USER 65532:65532
-ENTRYPOINT ["/usr/local/bin/node", "/usr/local/lib/node_modules/prettier/bin/prettier.cjs", "--write", "--ignore-unknown", "--print-width", "60", "--prose-wrap", "always", "--trailing-comma", "none"]
+ENTRYPOINT ["/usr/local/bin/node", "/usr/local/lib/node_modules/prettier/bin/prettier.cjs", "--write", "--no-config", "--no-editorconfig", "--ignore-unknown", "--print-width", "60", "--prose-wrap", "always", "--trailing-comma", "none"]
 
 FROM downloader AS buildifier-download
 ARG TARGETARCH
