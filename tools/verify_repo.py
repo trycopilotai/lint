@@ -58,6 +58,17 @@ def verify_python_style(files: list[Path]) -> None:
                 raise ValueError(f"ternary expression: {path}:{node.lineno}")
 
 
+def verify_normal_names(files: list[Path]) -> None:
+    reserved = "." + "g" + "p" + "t"
+    reserved_bytes = reserved.encode("ascii")
+    for path in files:
+        relative = path.relative_to(ROOT).as_posix()
+        if reserved in relative:
+            raise ValueError(f"reserved filename infix: {relative}")
+        if reserved_bytes in path.read_bytes():
+            raise ValueError(f"reserved reference infix: {relative}")
+
+
 def verify_manifests() -> None:
     versions = json.loads((ROOT / "languages.json").read_text(encoding="utf-8"))[
         "tools"
@@ -122,6 +133,7 @@ def verify_actions(files: list[Path]) -> None:
 def main() -> int:
     files = tracked_files()
     verify_python_style(files)
+    verify_normal_names(files)
     verify_manifests()
     verifier = load_image_verifier()
     verifier.validate_coverage()

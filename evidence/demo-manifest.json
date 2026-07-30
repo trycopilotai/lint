@@ -1,0 +1,14 @@
+{
+  "agent": "Codex",
+  "agent_version": "unreported",
+  "input_commit": "ccc7b830eedec241084253e27a44e1da380dd651",
+  "invocation": "./scripts/demo.sh demo-work",
+  "invocation_date": "2026-07-30",
+  "output_path": "evidence/demo-transcript.txt",
+  "output_sha256": "03c1f3e3b68aa8b2c0329b44343a88d10bc4ff94b9a188d5f53386938ccfb90d",
+  "schema_version": 1,
+  "skill_path": "skills/lint/SKILL.md",
+  "skill_sha256": "5f1d8849b074fc990de77fddb671e8d09ae4fa047bd8796c5a4dd0fb95048550",
+  "transcript_edited": true,
+  "transcript_note": "Command output was assembled into a readable transcript without changing JSON result bytes."
+}

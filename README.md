@@ -1,9 +1,18 @@
 # lint
 
-`lint` is one formatting interface for mixed-language
-repositories. It is read-only by default, uses an explicit
-working directory, and can run pinned local tools or
-language-specific containers.
+`lint` is one read-only-by-default formatting interface for
+local tools and independently addressable per-language
+Docker images. It uses an explicit working directory and
+applies writes only after every selected formatter succeeds.
+
+![Animated lint command demo](assets/demo.svg)
+
+The static reduced-motion poster is available at
+[`assets/poster.svg`](assets/poster.svg). The reconstructed
+demo derives from
+[`evidence/demo-transcript.txt`](evidence/demo-transcript.txt);
+its generation record is
+[`evidence/demo-manifest.json`](evidence/demo-manifest.json).
 
 ## Quick start
 
@@ -123,3 +132,41 @@ attestations, and stage a draft GitHub release.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for changes and
 [SECURITY.md](SECURITY.md) for vulnerability reports.
+
+## Claude Code
+
+Install the pinned standalone skill after repository access
+is available:
+
+```sh
+archive="$(mktemp -d)"
+target="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/lint"
+install -d "$target"
+gh api repos/trycopilotai/lint/tarball/v0.1.0 \
+  >"$archive/lint.tar.gz"
+tar -xzf "$archive/lint.tar.gz" \
+  --strip-components=3 \
+  -C "$target" \
+  '*/skills/lint'
+```
+
+The standalone invocation is `/lint`. A Claude marketplace
+distribution uses `/lint:lint`.
+
+## Codex
+
+Install the same pinned skill into the Codex skill store:
+
+```sh
+archive="$(mktemp -d)"
+target="${CODEX_HOME:-$HOME/.codex}/skills/lint"
+install -d "$target"
+gh api repos/trycopilotai/lint/tarball/v0.1.0 \
+  >"$archive/lint.tar.gz"
+tar -xzf "$archive/lint.tar.gz" \
+  --strip-components=3 \
+  -C "$target" \
+  '*/skills/lint'
+```
+
+Invoke it as `$lint`.

@@ -1,0 +1,67 @@
+$ ./scripts/demo.sh demo-work
+demo-work/read-only.json
+demo-work/write.json
+demo-work/final.json
+
+$ cat demo-work/read-only.json
+{
+  "backend": "local",
+  "files": [
+    {
+      "language": "requirements",
+      "path": "requirements.txt",
+      "status": "needs_formatting"
+    }
+  ],
+  "mode": "read-only",
+  "policy": "default",
+  "schema_version": 1,
+  "status": "needs_formatting",
+  "summary": {
+    "changed": 1,
+    "selected": 1,
+    "skipped": 0
+  }
+}
+
+$ cat demo-work/write.json
+{
+  "backend": "local",
+  "files": [
+    {
+      "language": "requirements",
+      "path": "requirements.txt",
+      "status": "written"
+    }
+  ],
+  "mode": "write",
+  "policy": "default",
+  "schema_version": 1,
+  "status": "clean",
+  "summary": {
+    "changed": 1,
+    "selected": 1,
+    "skipped": 0
+  }
+}
+
+$ cat demo-work/final.json
+{
+  "backend": "local",
+  "files": [
+    {
+      "language": "requirements",
+      "path": "requirements.txt",
+      "status": "clean"
+    }
+  ],
+  "mode": "read-only",
+  "policy": "default",
+  "schema_version": 1,
+  "status": "clean",
+  "summary": {
+    "changed": 0,
+    "selected": 1,
+    "skipped": 0
+  }
+}

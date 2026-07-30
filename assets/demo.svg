@@ -1,0 +1,89 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="700"
+  viewBox="0 0 1200 700"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">Animated lint command demo</title>
+  <desc id="description">
+    A terminal checks a requirements file without writing,
+    applies the formatting, and confirms that the result is
+    clean.
+  </desc>
+  <style>
+    .step {
+      opacity: 0;
+      animation: reveal 9s infinite;
+    }
+    .step-two {
+      animation-delay: 3s;
+    }
+    .step-three {
+      animation-delay: 6s;
+    }
+    @keyframes reveal {
+      0%,
+      24% {
+        opacity: 0;
+      }
+      30%,
+      100% {
+        opacity: 1;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .step {
+        opacity: 1;
+        animation: none;
+      }
+    }
+  </style>
+  <rect width="1200" height="700" rx="28" fill="#101418" />
+  <circle cx="48" cy="48" r="10" fill="#ff6b6b" />
+  <circle cx="80" cy="48" r="10" fill="#ffd166" />
+  <circle cx="112" cy="48" r="10" fill="#55d6be" />
+  <g
+    fill="#f7fbff"
+    font-family="ui-monospace, SFMono-Regular, monospace"
+    font-size="28"
+  >
+    <text x="48" y="130">
+      $ python3 lint.py --cwd demo-work
+    </text>
+    <g class="step">
+      <text x="72" y="185" fill="#ffd166">
+        requirements.txt needs formatting
+      </text>
+      <text x="72" y="225" fill="#a7bac5">
+        read-only · source unchanged
+      </text>
+    </g>
+    <g class="step step-two">
+      <text x="48" y="330">
+        $ python3 lint.py --cwd demo-work --write
+      </text>
+      <text x="72" y="385" fill="#55d6be">
+        requirements.txt written
+      </text>
+    </g>
+    <g class="step step-three">
+      <text x="48" y="490">
+        $ python3 lint.py --cwd demo-work
+      </text>
+      <text x="72" y="545" fill="#55d6be">
+        clean · 1 selected · 0 changed
+      </text>
+    </g>
+  </g>
+  <text
+    x="48"
+    y="640"
+    fill="#a7bac5"
+    font-family="ui-monospace, SFMono-Regular, monospace"
+    font-size="22"
+  >
+    Reconstructed from evidence/demo-transcript.txt
+  </text>
+</svg>
