@@ -160,6 +160,33 @@ class SelectionTest(unittest.TestCase):
 
 
 class FormattingTest(unittest.TestCase):
+    def test_prettier_command_ignores_repository_configuration(self) -> None:
+        language = LINT.Language(
+            id="typescript",
+            family="prettier",
+            extensions=(".ts",),
+            filenames=(),
+        )
+        command = LINT.command_for(language, Path("/work/example.ts"))
+
+        self.assertIn("--no-config", command)
+        self.assertIn("--no-editorconfig", command)
+        self.assertNotIn("--plugin", command)
+
+    def test_julia_path_is_passed_as_an_argument(self) -> None:
+        language = LINT.Language(
+            id="julia",
+            family="julia",
+            extensions=(".jl",),
+            filenames=(),
+        )
+        path = Path('/work/a"); run(`touch injected`); #.jl')
+        command = LINT.command_for(language, path)
+
+        expression = command[command.index("-e") + 1]
+        self.assertNotIn(str(path), expression)
+        self.assertEqual(["--", str(path)], command[-2:])
+
     def test_read_only_reports_without_writing(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()

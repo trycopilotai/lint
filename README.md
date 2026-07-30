@@ -58,6 +58,17 @@ python3 dlint.py
 make dlint_markdown
 ```
 
+Use the composite GitHub Action:
+
+```yaml
+steps:
+  - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+  - uses: trycopilotai/lint@v0.1.0
+    with:
+      mode: read-only
+      cwd: .
+```
+
 `--read-only`, `--readonly`, and `-ro` are equivalent.
 `--write`, `--apply`, and `-w` are equivalent. `--docker`
 and `-d` select the Docker backend. Output is human-readable
@@ -106,9 +117,9 @@ rejects shell, package-manager, and standalone compiler
 executables.
 
 Prettier always uses `printWidth: 60`, `proseWrap: always`,
-and `trailingComma: none`. A project configuration can add
-nonconflicting native options. Prettier plugins are not part
-of the default policy.
+and `trailingComma: none`. It does not load repository
+Prettier configuration, EditorConfig files, or plugins, so
+local and Docker runs use the same policy.
 
 ## HTTP API
 
@@ -125,10 +136,19 @@ It exposes:
 - `POST /v1/lint`
 
 `POST /v1/lint` accepts `policy: "default"`, a read or write
-mode, and base64-encoded file objects. Limits are 64 files,
-2 MiB per file, 16 MiB per request, and 30 seconds per
-formatter. The service returns formatted bytes without
-modifying caller files.
+mode, and file objects with `path` and `input_bytes_base64`.
+For example:
+
+```sh
+curl --fail-with-body \
+  --header 'Content-Type: application/json' \
+  --data '{"policy":"default","mode":"read-only","files":[{"path":"requirements.txt","input_bytes_base64":"emV0YT09MQphbHBoYT09MQo="}]}' \
+  http://127.0.0.1:8080/v1/lint
+```
+
+Limits are 64 files, 2 MiB per file, 16 MiB per request, and
+30 seconds per formatter. The service returns formatted
+bytes without modifying caller files.
 
 ## Development
 
@@ -142,7 +162,10 @@ source checksums and software bills of materials, produce
 attestations, and stage a draft GitHub release.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for changes and
-[SECURITY.md](SECURITY.md) for vulnerability reports.
+[SECURITY.md](SECURITY.md) for vulnerability reports. The
+[publishing procedure](docs/publishing.md) covers the
+deferred public transition for packages and the draft
+release.
 
 ## Claude Code
 
@@ -183,3 +206,11 @@ cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
 Invoke it as `$lint`.
+
+The local backend reads selected repository files and
+executes formatter processes. Its pinned Prettier and
+Buildifier commands use `npx`, which can access the network
+and update the user's package cache. The Docker backend runs
+with networking off. Read-only mode means source files are
+not changed; it does not mean the local package cache is
+untouched.

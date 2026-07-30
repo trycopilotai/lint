@@ -12,6 +12,7 @@ import subprocess
 import tarfile
 import tempfile
 from pathlib import Path
+from pathlib import PurePosixPath
 from typing import Any
 
 
@@ -20,6 +21,85 @@ MATRIX_PATH = ROOT / "images" / "matrix.json"
 SOURCES_PATH = ROOT / "images" / "sources.json"
 LANGUAGES_PATH = ROOT / "languages.json"
 DOCKERFILE_PATH = ROOT / "images" / "Dockerfile"
+FORBIDDEN_EXECUTABLE_NAMES = frozenset(
+    {
+        "apk",
+        "apt",
+        "apt-cache",
+        "apt-get",
+        "aptitude",
+        "ar",
+        "as",
+        "ash",
+        "bash",
+        "brew",
+        "bundle",
+        "bundler",
+        "busybox",
+        "c++",
+        "c89",
+        "c99",
+        "cargo",
+        "cc",
+        "clang",
+        "clang++",
+        "cl",
+        "cl.exe",
+        "cmake",
+        "cpp",
+        "csc",
+        "csh",
+        "dash",
+        "dnf",
+        "dpkg",
+        "dpkg-deb",
+        "fish",
+        "g++",
+        "gcc",
+        "gem",
+        "gfortran",
+        "go",
+        "icc",
+        "ifort",
+        "javac",
+        "kotlin",
+        "kotlinc",
+        "ksh",
+        "ld",
+        "lld",
+        "make",
+        "microdnf",
+        "mksh",
+        "msbuild",
+        "ninja",
+        "nm",
+        "npm",
+        "npx",
+        "objcopy",
+        "objdump",
+        "pacman",
+        "pip",
+        "pip3",
+        "pipx",
+        "pnpm",
+        "poetry",
+        "port",
+        "ranlib",
+        "rpm",
+        "rustc",
+        "rustup",
+        "sh",
+        "strip",
+        "swift",
+        "swiftc",
+        "tcsh",
+        "uv",
+        "yarn",
+        "yum",
+        "zsh",
+        "zypper",
+    }
+)
 
 
 def load_object(path: Path) -> dict[str, Any]:
@@ -175,24 +255,12 @@ def verify_image_budget(image: str, budget_mib: int) -> int:
     return size
 
 
+def forbidden_executable(path: str) -> bool:
+    name = PurePosixPath(path).name
+    return name in FORBIDDEN_EXECUTABLE_NAMES
+
+
 def verify_image_contents(image: str) -> int:
-    forbidden = {
-        "bin/bash",
-        "bin/sh",
-        "sbin/apk",
-        "usr/bin/apt",
-        "usr/bin/apt-get",
-        "usr/bin/bash",
-        "usr/bin/clang",
-        "usr/bin/gcc",
-        "usr/bin/sh",
-        "usr/local/bin/npm",
-        "usr/local/bin/npx",
-        "usr/local/bin/pip",
-        "usr/local/bin/pip3",
-        "usr/local/cargo/bin/cargo",
-        "usr/local/cargo/bin/rustc",
-    }
     created = subprocess.run(
         ["docker", "container", "create", image],
         check=True,
@@ -219,12 +287,17 @@ def verify_image_contents(image: str) -> int:
             check=True,
         )
         paths: set[str] = set()
+        forbidden_paths: list[str] = []
         with tarfile.open(archive, "r") as handle:
             for member in handle:
-                paths.add(member.name.removeprefix("./"))
-        found = sorted(forbidden.intersection(paths))
-        if found:
-            values = ", ".join(found)
+                path = member.name.removeprefix("./")
+                paths.add(path)
+                executable = member.isfile() and member.mode & 0o111 != 0
+                executable = executable or member.issym() or member.islnk()
+                if executable and forbidden_executable(path):
+                    forbidden_paths.append(path)
+        if forbidden_paths:
+            values = ", ".join(sorted(forbidden_paths))
             raise ValueError(f"{image} contains forbidden tools: {values}")
         return len(paths)
     finally:

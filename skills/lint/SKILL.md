@@ -69,3 +69,10 @@ Keep `--cwd` at the intended repository or subdirectory. Do
 not follow symbolic links or send paths outside it. Preserve
 repository-specific checks as a separate command; this tool
 is a formatter interface.
+
+The local backend reads the selected files and executes
+formatter processes. Pinned Prettier and Buildifier runs use
+`npx`, which can access the network and update the user's
+package cache. Docker mode runs with networking off.
+Read-only mode protects source files, not the local package
+cache.

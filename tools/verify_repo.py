@@ -188,6 +188,24 @@ def verify_actions(files: list[Path]) -> None:
             raise ValueError(f"workflow is incorrectly gated by visibility: {path}")
 
 
+def verify_release_surfaces() -> None:
+    release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+        encoding="utf-8"
+    )
+    if "private release candidate" in release.lower():
+        raise ValueError("release metadata contains private-candidate wording")
+
+    publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
+    required = (
+        "Change visibility",
+        "anonymous pull",
+        "Publish release",
+    )
+    for phrase in required:
+        if phrase not in publishing:
+            raise ValueError(f"publishing procedure is missing: {phrase}")
+
+
 def main() -> int:
     files = tracked_files()
     verify_python_style(files)
@@ -198,6 +216,7 @@ def main() -> int:
     verifier.validate_coverage()
     verifier.validate_sources()
     verify_actions(files)
+    verify_release_surfaces()
     print(
         json.dumps(
             {

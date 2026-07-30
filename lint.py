@@ -371,6 +371,8 @@ def command_for(language: Language, path: Path) -> list[str]:
         executable.extend(
             [
                 "--write",
+                "--no-config",
+                "--no-editorconfig",
                 "--ignore-path",
                 str(path.parent / ".lint-empty-ignore"),
                 "--print-width",
@@ -422,10 +424,15 @@ def command_for(language: Language, path: Path) -> list[str]:
     if family == "csharp":
         return ["csharpier", "format", "--no-cache", str(path)]
     if family == "julia":
-        expression = (
-            "using JuliaFormatter; " f'format_file(raw"{path}", overwrite=true)'
-        )
-        return ["julia", "--startup-file=no", "-e", expression]
+        expression = "using JuliaFormatter; " "format_file(ARGS[1], overwrite=true)"
+        return [
+            "julia",
+            "--startup-file=no",
+            "-e",
+            expression,
+            "--",
+            str(path),
+        ]
     raise FormatterError(f"unsupported formatter family: {family}")
 
 
@@ -525,40 +532,6 @@ def requirements_output(payload: bytes) -> bytes:
     return ("\n\n".join(output_sections) + "\n").encode("utf-8")
 
 
-def validate_prettier_config(cwd: Path) -> None:
-    candidates = [
-        cwd / ".prettierrc",
-        cwd / ".prettierrc.json",
-        cwd / "package.json",
-    ]
-    locked = {
-        "printWidth": 60,
-        "proseWrap": "always",
-        "trailingComma": "none",
-    }
-    for candidate in candidates:
-        if not candidate.is_file():
-            continue
-        try:
-            payload = json.loads(candidate.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            continue
-        if candidate.name == "package.json":
-            payload = payload.get("prettier", {})
-        if not isinstance(payload, dict):
-            continue
-        if "plugins" in payload:
-            raise FormatterError(f"Prettier plugins are not supported: {candidate}")
-        for key, expected in locked.items():
-            actual = payload.get(key)
-            if actual is None:
-                continue
-            if actual != expected:
-                raise FormatterError(
-                    f"{candidate} conflicts with locked {key}={expected}"
-                )
-
-
 def run_formatter(
     language: Language,
     path: Path,
@@ -569,7 +542,6 @@ def run_formatter(
         path.write_bytes(requirements_output(path.read_bytes()))
         return
     if language.family == "prettier":
-        validate_prettier_config(cwd)
         (path.parent / ".lint-empty-ignore").touch()
     command = command_for(language, path)
     try:
