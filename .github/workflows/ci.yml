@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "ci-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  test:
+    if: github.event.repository.private == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.13.14"
+      - name: Run tests
+        run: make test
+      - name: Verify repository
+        run: python3 tools/verify_repo.py
+      - name: Verify read-only default
+        shell: bash
+        run: |
+          set +e
+          python3 lint.py \
+            --cwd fixtures/requirements \
+            >read-only-result.json
+          result=$?
+          set -e
+          test "$result" -eq 1
+          git diff --exit-code
+      - name: Check Python formatting
+        run: >-
+          pipx run --spec black==24.10.0 black --check
+          --diff lint.py dlint.py service.py
+          action_entrypoint.py tests images tools
+      - name: Check document codec
+        run: >-
+          npx -y prettier@3.7.4 --check --print-width 60
+          --prose-wrap always --trailing-comma none
+          README.md CONTRIBUTING.md SECURITY.md action.yml
+          .github/workflows .claude-plugin .codex-plugin
+          docs skills languages.json images/*.json
+      - name: Upload contract result
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: cli-contract-result
+          path: read-only-result.json
+          if-no-files-found: error

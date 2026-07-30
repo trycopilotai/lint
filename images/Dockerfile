@@ -1,0 +1,206 @@
+# syntax=docker/dockerfile:1.18
+
+ARG ALPINE_3_20="alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc"
+ARG ALPINE_3_23="alpine:3.23@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40"
+ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:d97bc0a941b8d4be647dc0ee75b264ddbb772f1ac5ba690a4309c00723b23775"
+ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.7-alpine3.23@sha256:405a4e86f50ab5fd78c65bab461499913088d1702da4faf6236426653cc052c4"
+ARG DOTNET_SDK="mcr.microsoft.com/dotnet/sdk:10.0.302-alpine3.23@sha256:d8ee39817ca03a3757288e83c37ed73cc969a286c603b827c7cbe33add1c2d1c"
+ARG GO_IMAGE="golang:1.26.5-alpine3.23@sha256:622e56dbc11a8cfe87cafa2331e9a201877271cbff918af53d3be315f3da88cc"
+ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
+ARG JULIA_IMAGE="julia:1.12.6-bookworm@sha256:4979dc5c6fbcd7f5f0dc2ba2b336d136bda63a40c25e52a848222aa24326dfe1"
+ARG NODE_IMAGE="node:24.18.0-alpine3.23@sha256:595398b0081eacda8e1c4c5b97b76cd1020e4d58a8ebcb4843b9bca1e79e7436"
+ARG PYTHON_IMAGE="python:3.13.14-alpine3.23@sha256:9fdbf2e3e82628351513560b121e2ee6ce31cac212be9e070c5a5e2769fb5e76"
+ARG RUST_IMAGE="rust:1.97.1-alpine3.23@sha256:c4a364ddbf684fe038e6fa6a4f25b30c8dc85247423e0e660676ece0d17be4a2"
+ARG SWIFT_IMAGE="swift:6.3-noble@sha256:66520bcba471018a34fd54ba09be97ba4abebd950a96ff5cb8c2bf50a2d33259"
+
+FROM ${ALPINE_3_23} AS downloader
+RUN apk add --no-cache ca-certificates curl
+
+FROM ${NODE_IMAGE} AS prettier
+RUN npm install --global --omit=dev prettier@3.7.4 \
+    && npm cache clean --force
+USER 65532:65532
+ENTRYPOINT ["prettier", "--write", "--ignore-unknown", "--print-width", "60", "--prose-wrap", "always", "--trailing-comma", "none"]
+
+FROM downloader AS buildifier-download
+ARG TARGETARCH
+RUN set -eu; \
+    case "${TARGETARCH}" in \
+      amd64) checksum="6ceb7b0ab7cf66fceccc56a027d21d9cc557a7f34af37d2101edb56b92fcfa1a" ;; \
+      arm64) checksum="3baa1cf7eb41d51f462fdd1fff3a6a4d81d757275d05b2dd5f48671284e9a1a5" ;; \
+      *) exit 2 ;; \
+    esac; \
+    url="https://github.com/bazelbuild/buildtools/releases/download/v8.2.1/buildifier-linux-${TARGETARCH}"; \
+    curl --fail --location --output /buildifier "${url}"; \
+    echo "${checksum}  /buildifier" | sha256sum -c; \
+    chmod 0555 /buildifier
+
+FROM scratch AS buildifier
+COPY --from=buildifier-download /buildifier /buildifier
+USER 65532:65532
+ENTRYPOINT ["/buildifier", "-mode=fix"]
+
+FROM ${PYTHON_IMAGE} AS black
+RUN pip install --no-cache-dir black==24.10.0
+USER 65532:65532
+ENTRYPOINT ["python3", "-m", "black", "--quiet", "--line-length", "88"]
+
+FROM ${PYTHON_IMAGE} AS requirements
+COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
+USER 65532:65532
+ENTRYPOINT ["python3", "/requirements-format"]
+
+FROM downloader AS shfmt-download
+ARG TARGETARCH
+RUN set -eu; \
+    case "${TARGETARCH}" in \
+      amd64) checksum="fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1" ;; \
+      arm64) checksum="32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7" ;; \
+      *) exit 2 ;; \
+    esac; \
+    url="https://github.com/mvdan/sh/releases/download/v3.13.1/shfmt_v3.13.1_linux_${TARGETARCH}"; \
+    curl --fail --location --output /shfmt "${url}"; \
+    echo "${checksum}  /shfmt" | sha256sum -c; \
+    chmod 0555 /shfmt
+
+FROM scratch AS shfmt
+COPY --from=shfmt-download /shfmt /shfmt
+USER 65532:65532
+ENTRYPOINT ["/shfmt", "-w", "-i", "2", "-ci"]
+
+FROM ${ALPINE_3_20} AS clang-source
+RUN apk add --no-cache clang18-extra-tools=18.1.6-r0
+
+FROM scratch AS clang
+COPY --from=clang-source /lib/ld-musl-*.so.1 /lib/
+COPY --from=clang-source /lib/libz.so.1* /lib/
+COPY --from=clang-source /usr/lib/libffi.so.8* /usr/lib/
+COPY --from=clang-source /usr/lib/libgcc_s.so.1 /usr/lib/
+COPY --from=clang-source /usr/lib/liblzma.so.5* /usr/lib/
+COPY --from=clang-source /usr/lib/libstdc++.so.6* /usr/lib/
+COPY --from=clang-source /usr/lib/libxml2.so.2* /usr/lib/
+COPY --from=clang-source /usr/lib/libzstd.so.1* /usr/lib/
+COPY --from=clang-source \
+    /usr/lib/llvm18/bin/clang-format \
+    /usr/lib/llvm18/bin/clang-format
+COPY --from=clang-source \
+    /usr/lib/llvm18/lib/libLLVM.so.18.1 \
+    /usr/lib/llvm18/lib/libLLVM.so.18.1
+COPY --from=clang-source \
+    /usr/lib/llvm18/lib/libclang-cpp.so.18.1 \
+    /usr/lib/llvm18/lib/libclang-cpp.so.18.1
+USER 65532:65532
+ENTRYPOINT ["/usr/lib/llvm18/bin/clang-format", "-i"]
+
+FROM downloader AS java-download
+ARG TARGETARCH
+RUN set -eu; \
+    case "${TARGETARCH}" in \
+      amd64) asset_arch="x86-64"; checksum="e0f95ad6d26b8fbd5b1e3fd3014f8306c4eb3b29d2a6b15fab62d0a364629437" ;; \
+      arm64) asset_arch="arm64"; checksum="a69b2e85deb681f3eae4c946b948908e162e76ef27d752fa31830866dd7aa764" ;; \
+      *) exit 2 ;; \
+    esac; \
+    url="https://github.com/google/google-java-format/releases/download/v1.35.0/google-java-format_linux-${asset_arch}"; \
+    curl --fail --location --output /google-java-format "${url}"; \
+    echo "${checksum}  /google-java-format" | sha256sum -c; \
+    chmod 0555 /google-java-format
+
+FROM ${DISTROLESS_CC} AS java
+COPY --from=java-download /google-java-format /usr/local/bin/google-java-format
+USER 65532:65532
+ENTRYPOINT ["google-java-format", "--replace"]
+
+FROM ${GO_IMAGE} AS go-source
+
+FROM scratch AS go
+COPY --from=go-source /usr/local/go/bin/gofmt /gofmt
+USER 65532:65532
+ENTRYPOINT ["/gofmt", "-w"]
+
+FROM ${RUST_IMAGE} AS rust
+RUN rustup component add rustfmt
+USER 65532:65532
+ENTRYPOINT ["rustfmt"]
+
+FROM ${JAVA_IMAGE} AS kotlin
+ADD --checksum=sha256:01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985 \
+    https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint \
+    /usr/local/bin/ktlint
+RUN chmod 0555 /usr/local/bin/ktlint
+COPY --chmod=0555 images/kotlin_entrypoint.sh /kotlin-format
+USER 65532:65532
+ENTRYPOINT ["/kotlin-format"]
+
+FROM downloader AS taplo-download
+ARG TARGETARCH
+RUN set -eu; \
+    case "${TARGETARCH}" in \
+      amd64) asset_arch="x86_64"; checksum="8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156" ;; \
+      arm64) asset_arch="aarch64"; checksum="033681d01eec8376c3fd38fa3703c79316f5e14bb013d859943b60a07bccdcc3" ;; \
+      *) exit 2 ;; \
+    esac; \
+    url="https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-${asset_arch}.gz"; \
+    curl --fail --location --output /taplo.gz "${url}"; \
+    echo "${checksum}  /taplo.gz" | sha256sum -c; \
+    gunzip /taplo.gz; \
+    chmod 0555 /taplo
+
+FROM scratch AS taplo
+COPY --from=taplo-download /taplo /taplo
+USER 65532:65532
+ENTRYPOINT ["/taplo", "format"]
+
+FROM ${ALPINE_3_23} AS xml-build
+RUN apk add --no-cache build-base ca-certificates curl xz
+RUN curl --fail --location \
+      --output /libxml2.tar.xz \
+      https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.3.tar.xz \
+    && echo "78262a6e7ac170d6528ebfe2efccdf220191a5af6a6cd61ea4a9a9a5042c7a07  /libxml2.tar.xz" \
+      | sha256sum -c \
+    && mkdir /source \
+    && tar --extract --xz --file /libxml2.tar.xz \
+      --directory /source --strip-components 1 \
+    && cd /source \
+    && ./configure \
+      --prefix=/opt/libxml2 \
+      --without-debug \
+      --without-history \
+      --without-http \
+      --without-iconv \
+      --without-lzma \
+      --without-python \
+      --without-zlib \
+    && make -j2 \
+    && make install-strip
+
+FROM ${ALPINE_3_23} AS xml
+COPY --from=xml-build /opt/libxml2 /opt/libxml2
+COPY --chmod=0555 images/xml_entrypoint.sh /xml-format
+USER 65532:65532
+ENTRYPOINT ["/xml-format"]
+
+FROM ${SWIFT_IMAGE} AS swift-source
+
+FROM ${DISTROLESS_CC} AS swift
+COPY --from=swift-source /usr/bin/swift-format /usr/bin/swift-format
+COPY --from=swift-source /usr/lib/swift/linux /usr/lib/swift/linux
+USER 65532:65532
+ENTRYPOINT ["swift-format", "format", "--in-place"]
+
+FROM ${DOTNET_SDK} AS csharp-build
+RUN dotnet tool install csharpier \
+      --tool-path /tools \
+      --version 1.3.0
+
+FROM ${DOTNET_RUNTIME} AS csharp
+COPY --from=csharp-build /tools /tools
+USER 65532:65532
+ENTRYPOINT ["/tools/csharpier", "format", "--no-cache"]
+
+FROM ${JULIA_IMAGE} AS julia
+RUN mkdir -p /opt/julia-depot \
+    && JULIA_DEPOT_PATH=/opt/julia-depot julia --startup-file=no -e \
+    'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter", version="2.12.3")); Pkg.precompile()'
+COPY --chmod=0555 images/julia_entrypoint.jl /julia-format.jl
+USER 65532:65532
+ENTRYPOINT ["julia", "--startup-file=no", "/julia-format.jl"]

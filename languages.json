@@ -1,0 +1,199 @@
+{
+  "policy": "default",
+  "limits": {
+    "max_files": 64,
+    "max_file_bytes": 2097152,
+    "max_request_bytes": 16777216,
+    "timeout_seconds_per_file": 30
+  },
+  "tools": {
+    "black": "24.10.0",
+    "buildifier": "8.2.1",
+    "clang-format": "18",
+    "csharpier": "1.3.0",
+    "go": "1.26.5",
+    "google-java-format": "1.35.0",
+    "julia": "1.12.6",
+    "juliaformatter": "2.12.3",
+    "ktlint": "1.3.0",
+    "libxml2": "2.15.3",
+    "node": "24.18.0",
+    "prettier": "3.7.4",
+    "python": "3.13.14",
+    "rust": "1.97.1",
+    "shfmt": "3.13.1",
+    "swift-format": "603.0.0",
+    "taplo": "0.10.0"
+  },
+  "languages": [
+    {
+      "id": "markdown",
+      "family": "prettier",
+      "extensions": [".md", ".markdown", ".mdown"],
+      "filenames": []
+    },
+    {
+      "id": "html",
+      "family": "prettier",
+      "extensions": [".html", ".htm"],
+      "filenames": []
+    },
+    {
+      "id": "yaml",
+      "family": "prettier",
+      "extensions": [".yaml", ".yml"],
+      "filenames": []
+    },
+    {
+      "id": "json",
+      "family": "prettier",
+      "extensions": [".json", ".jsonc"],
+      "filenames": []
+    },
+    {
+      "id": "javascript",
+      "family": "prettier",
+      "extensions": [".js", ".jsx", ".mjs", ".cjs"],
+      "filenames": []
+    },
+    {
+      "id": "typescript",
+      "family": "prettier",
+      "extensions": [".ts", ".mts", ".cts"],
+      "filenames": []
+    },
+    {
+      "id": "tsx",
+      "family": "prettier",
+      "extensions": [".tsx"],
+      "filenames": []
+    },
+    {
+      "id": "css",
+      "family": "prettier",
+      "extensions": [".css", ".scss", ".less"],
+      "filenames": []
+    },
+    {
+      "id": "bazel",
+      "family": "buildifier",
+      "extensions": [".bzl", ".bazel"],
+      "filenames": [
+        "BUILD",
+        "BUILD.bazel",
+        "MODULE.bazel",
+        "WORKSPACE",
+        "WORKSPACE.bazel"
+      ]
+    },
+    {
+      "id": "python",
+      "family": "black",
+      "extensions": [".py", ".pyi"],
+      "filenames": []
+    },
+    {
+      "id": "requirements",
+      "family": "requirements",
+      "extensions": [],
+      "filenames": ["requirements*.txt", "constraints*.txt"]
+    },
+    {
+      "id": "shell",
+      "family": "shfmt",
+      "extensions": [".sh", ".bash", ".zsh"],
+      "filenames": []
+    },
+    {
+      "id": "c",
+      "family": "clang",
+      "extensions": [".c", ".h"],
+      "filenames": []
+    },
+    {
+      "id": "cpp",
+      "family": "clang",
+      "extensions": [
+        ".cc",
+        ".cpp",
+        ".cxx",
+        ".hh",
+        ".hpp",
+        ".hxx"
+      ],
+      "filenames": []
+    },
+    {
+      "id": "objective-c",
+      "family": "clang",
+      "extensions": [".m"],
+      "filenames": []
+    },
+    {
+      "id": "objective-cpp",
+      "family": "clang",
+      "extensions": [".mm"],
+      "filenames": []
+    },
+    {
+      "id": "java",
+      "family": "java",
+      "extensions": [".java"],
+      "filenames": []
+    },
+    {
+      "id": "go",
+      "family": "go",
+      "extensions": [".go"],
+      "filenames": []
+    },
+    {
+      "id": "rust",
+      "family": "rust",
+      "extensions": [".rs"],
+      "filenames": []
+    },
+    {
+      "id": "kotlin",
+      "family": "kotlin",
+      "extensions": [".kt", ".kts"],
+      "filenames": []
+    },
+    {
+      "id": "toml",
+      "family": "toml",
+      "extensions": [".toml"],
+      "filenames": ["Cargo.lock"]
+    },
+    {
+      "id": "xml",
+      "family": "xml",
+      "extensions": [".xml"],
+      "filenames": []
+    },
+    {
+      "id": "plist",
+      "family": "xml",
+      "extensions": [".plist"],
+      "filenames": ["Info.plist"]
+    },
+    {
+      "id": "swift",
+      "family": "swift",
+      "extensions": [".swift"],
+      "filenames": []
+    },
+    {
+      "id": "csharp",
+      "family": "csharp",
+      "extensions": [".cs", ".csx"],
+      "filenames": []
+    },
+    {
+      "id": "julia",
+      "family": "julia",
+      "extensions": [".jl"],
+      "filenames": []
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "version": "0.1.0",
+  "images": [
+    {
+      "languages": [
+        "markdown",
+        "html",
+        "yaml",
+        "json",
+        "javascript",
+        "typescript",
+        "tsx",
+        "css"
+      ],
+      "target": "prettier",
+      "budget_mib": 80
+    },
+    {
+      "languages": ["bazel"],
+      "target": "buildifier",
+      "budget_mib": 40
+    },
+    {
+      "languages": ["python"],
+      "target": "black",
+      "budget_mib": 80
+    },
+    {
+      "languages": ["requirements"],
+      "target": "requirements",
+      "budget_mib": 40
+    },
+    {
+      "languages": ["shell"],
+      "target": "shfmt",
+      "budget_mib": 40
+    },
+    {
+      "languages": [
+        "c",
+        "cpp",
+        "objective-c",
+        "objective-cpp"
+      ],
+      "target": "clang",
+      "budget_mib": 60
+    },
+    {
+      "languages": ["java"],
+      "target": "java",
+      "budget_mib": 110
+    },
+    {
+      "languages": ["go"],
+      "target": "go",
+      "budget_mib": 40
+    },
+    {
+      "languages": ["rust"],
+      "target": "rust",
+      "budget_mib": 40
+    },
+    {
+      "languages": ["kotlin"],
+      "target": "kotlin",
+      "budget_mib": 110
+    },
+    {
+      "languages": ["toml"],
+      "target": "taplo",
+      "budget_mib": 40
+    },
+    {
+      "languages": ["xml", "plist"],
+      "target": "xml",
+      "budget_mib": 40
+    },
+    {
+      "languages": ["swift"],
+      "target": "swift",
+      "budget_mib": 150
+    },
+    {
+      "languages": ["csharp"],
+      "target": "csharp",
+      "budget_mib": 120
+    },
+    {
+      "languages": ["julia"],
+      "target": "julia",
+      "budget_mib": 250
+    }
+  ]
+}

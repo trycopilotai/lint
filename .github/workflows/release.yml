@@ -1,0 +1,167 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  images:
+    if: github.event.repository.private == true
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+      attestations: write
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { language: markdown, target: prettier }
+          - { language: html, target: prettier }
+          - { language: yaml, target: prettier }
+          - { language: json, target: prettier }
+          - { language: javascript, target: prettier }
+          - { language: typescript, target: prettier }
+          - { language: tsx, target: prettier }
+          - { language: css, target: prettier }
+          - { language: bazel, target: buildifier }
+          - { language: python, target: black }
+          - { language: requirements, target: requirements }
+          - { language: shell, target: shfmt }
+          - { language: c, target: clang }
+          - { language: cpp, target: clang }
+          - { language: objective-c, target: clang }
+          - { language: objective-cpp, target: clang }
+          - { language: java, target: java }
+          - { language: go, target: go }
+          - { language: rust, target: rust }
+          - { language: kotlin, target: kotlin }
+          - { language: toml, target: taplo }
+          - { language: xml, target: xml }
+          - { language: plist, target: xml }
+          - { language: swift, target: swift }
+          - { language: csharp, target: csharp }
+          - { language: julia, target: julia }
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Set version
+        id: version
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          printf 'version=%s\n' "$version" >>"$GITHUB_OUTPUT"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - name: Log in to the private registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: "${{ github.actor }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Build and push image
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          file: images/Dockerfile
+          target: "${{ matrix.target }}"
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags:
+            "ghcr.io/trycopilotai/lint-${{ matrix.language
+            }}:${{ steps.version.outputs.version }}"
+          provenance: mode=max
+          sbom: true
+          cache-from: "type=gha,scope=${{ matrix.target }}"
+          cache-to:
+            "type=gha,mode=max,scope=${{ matrix.target }}"
+      - name: Attest image
+        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
+        with:
+          subject-name:
+            "ghcr.io/trycopilotai/lint-${{ matrix.language
+            }}"
+          subject-digest:
+            "${{ steps.build.outputs.digest }}"
+          push-to-registry: true
+      - name: Record digest
+        shell: bash
+        env:
+          DIGEST: "${{ steps.build.outputs.digest }}"
+          LANGUAGE: "${{ matrix.language }}"
+          VERSION: "${{ steps.version.outputs.version }}"
+        run: |
+          mkdir digest
+          printf '{"image":"ghcr.io/trycopilotai/lint-%s:%s","digest":"%s"}\n' \
+            "$LANGUAGE" "$VERSION" "$DIGEST" \
+            >"digest/$LANGUAGE.json"
+      - name: Upload digest
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: "digest-${{ matrix.language }}"
+          path: "digest/${{ matrix.language }}.json"
+          if-no-files-found: error
+
+  draft:
+    if: github.event.repository.private == true
+    needs: images
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Download image digests
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: digest-*
+          path: digests
+          merge-multiple: true
+      - name: Create source archive and manifest
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          mkdir dist
+          git archive \
+            --format=tar \
+            --prefix="lint-$version/" \
+            "$GITHUB_SHA" |
+            gzip -n >"dist/lint-$version.tar.gz"
+          python3 tools/release_manifest.py \
+            --version "$version" \
+            --archive "dist/lint-$version.tar.gz" \
+            --digests digests \
+            --output "dist/release-manifest-$version.json"
+          (
+            cd dist
+            sha256sum ./* >SHA256SUMS
+          )
+      - name: Attest source archive
+        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
+        with:
+          subject-path: "dist/lint-*.tar.gz"
+      - name: Create private draft release
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          gh release create "$GITHUB_REF_NAME" \
+            --draft \
+            --title "lint $version" \
+            --notes "Private release candidate." \
+            dist/*

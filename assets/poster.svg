@@ -1,0 +1,142 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="1600"
+  viewBox="0 0 1200 1600"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">lint command poster</title>
+  <desc id="description">
+    A dark poster showing one formatting interface for local
+    tools, Docker images, and continuous integration.
+  </desc>
+  <rect width="1200" height="1600" fill="#101418" />
+  <rect
+    x="80"
+    y="80"
+    width="1040"
+    height="1440"
+    rx="48"
+    fill="#172128"
+    stroke="#55d6be"
+    stroke-width="4"
+  />
+  <text
+    x="140"
+    y="240"
+    fill="#f7fbff"
+    font-family="ui-monospace, monospace"
+    font-size="148"
+    font-weight="700"
+  >
+    lint
+  </text>
+  <text
+    x="140"
+    y="330"
+    fill="#55d6be"
+    font-family="ui-monospace, monospace"
+    font-size="36"
+  >
+    read-only by default
+  </text>
+  <path
+    d="M140 430 H1060"
+    stroke="#33434d"
+    stroke-width="3"
+  />
+  <text
+    x="140"
+    y="550"
+    fill="#f7fbff"
+    font-family="ui-monospace, monospace"
+    font-size="40"
+  >
+    python3 lint.py
+  </text>
+  <text
+    x="140"
+    y="640"
+    fill="#a7bac5"
+    font-family="ui-monospace, monospace"
+    font-size="32"
+  >
+    --all --modified --cwd
+  </text>
+  <text
+    x="140"
+    y="720"
+    fill="#a7bac5"
+    font-family="ui-monospace, monospace"
+    font-size="32"
+  >
+    --read-only --write
+  </text>
+  <text
+    x="140"
+    y="800"
+    fill="#a7bac5"
+    font-family="ui-monospace, monospace"
+    font-size="32"
+  >
+    --docker --language
+  </text>
+  <path
+    d="M140 900 H1060"
+    stroke="#33434d"
+    stroke-width="3"
+  />
+  <g font-family="ui-monospace, monospace" font-size="30">
+    <rect
+      x="140"
+      y="990"
+      width="280"
+      height="120"
+      rx="18"
+      fill="#22313a"
+    />
+    <text x="210" y="1063" fill="#f7fbff">LOCAL</text>
+    <rect
+      x="460"
+      y="990"
+      width="280"
+      height="120"
+      rx="18"
+      fill="#22313a"
+    />
+    <text x="515" y="1063" fill="#f7fbff">DOCKER</text>
+    <rect
+      x="780"
+      y="990"
+      width="280"
+      height="120"
+      rx="18"
+      fill="#22313a"
+    />
+    <text x="875" y="1063" fill="#f7fbff">CI</text>
+  </g>
+  <path
+    d="M420 1050 H460 M740 1050 H780"
+    stroke="#55d6be"
+    stroke-width="8"
+  />
+  <text
+    x="140"
+    y="1280"
+    fill="#55d6be"
+    font-family="ui-monospace, monospace"
+    font-size="34"
+  >
+    one policy · stable JSON · atomic writes
+  </text>
+  <text
+    x="140"
+    y="1400"
+    fill="#a7bac5"
+    font-family="ui-monospace, monospace"
+    font-size="28"
+  >
+    github.com/trycopilotai/lint
+  </text>
+</svg>

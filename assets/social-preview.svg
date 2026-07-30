@@ -1,0 +1,52 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1280"
+  height="640"
+  viewBox="0 0 1280 640"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">lint social preview</title>
+  <desc id="description">
+    One formatting interface for mixed-language
+    repositories.
+  </desc>
+  <rect width="1280" height="640" fill="#101418" />
+  <circle cx="1110" cy="100" r="250" fill="#1d3f42" />
+  <circle cx="1100" cy="590" r="320" fill="#172c34" />
+  <text
+    x="90"
+    y="260"
+    fill="#f7fbff"
+    font-family="ui-monospace, monospace"
+    font-size="156"
+    font-weight="700"
+  >
+    lint
+  </text>
+  <text
+    x="100"
+    y="355"
+    fill="#55d6be"
+    font-family="ui-monospace, monospace"
+    font-size="40"
+  >
+    read-only by default
+  </text>
+  <text
+    x="100"
+    y="440"
+    fill="#a7bac5"
+    font-family="ui-monospace, monospace"
+    font-size="32"
+  >
+    local · Docker · CI · HTTP
+  </text>
+  <rect
+    x="90"
+    y="500"
+    width="700"
+    height="6"
+    fill="#55d6be"
+  />
+</svg>

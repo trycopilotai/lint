@@ -1,0 +1,18 @@
+{
+  "name": "lint",
+  "version": "0.1.0",
+  "description": "Check or apply canonical formatting across mixed-language repositories with a read-only default.",
+  "author": {
+    "name": "trycopilot.ai"
+  },
+  "homepage": "https://github.com/trycopilotai/lint",
+  "repository": "https://github.com/trycopilotai/lint",
+  "license": "MIT",
+  "keywords": [
+    "lint",
+    "formatting",
+    "docker",
+    "developer-tools"
+  ],
+  "skills": "./skills/"
+}

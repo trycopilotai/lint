@@ -1,0 +1,48 @@
+name: "lint"
+description:
+  "Check or apply pinned mixed-language formatting"
+inputs:
+  mode:
+    description:
+      "read-only, readonly, check, write, apply, or fix"
+    required: false
+    default: "read-only"
+  cwd:
+    description: "Working directory"
+    required: false
+    default: "."
+  modified:
+    description: "Select only modified Git-tracked files"
+    required: false
+    default: "false"
+  docker:
+    description: "Use language-specific Docker images"
+    required: false
+    default: "false"
+  languages:
+    description: "Comma-separated language ids"
+    required: false
+    default: ""
+  paths:
+    description: "Shell-quoted explicit paths"
+    required: false
+    default: ""
+  files-from0:
+    description: "NUL-delimited path file"
+    required: false
+    default: ""
+runs:
+  using: "composite"
+  steps:
+    - name: Run lint
+      shell: bash
+      env:
+        LINT_INPUT_MODE: "${{ inputs.mode }}"
+        LINT_INPUT_CWD: "${{ inputs.cwd }}"
+        LINT_INPUT_MODIFIED: "${{ inputs.modified }}"
+        LINT_INPUT_DOCKER: "${{ inputs.docker }}"
+        LINT_INPUT_LANGUAGES: "${{ inputs.languages }}"
+        LINT_INPUT_PATHS: "${{ inputs.paths }}"
+        LINT_INPUT_FILES_FROM0: "${{ inputs.files-from0 }}"
+      run: >-
+        python3 "$GITHUB_ACTION_PATH/action_entrypoint.py"
