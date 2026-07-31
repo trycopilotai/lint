@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import sys
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 
@@ -135,10 +136,32 @@ class ReleaseWorkflowTest(unittest.TestCase):
 
 
 class LaunchSurfaceTest(unittest.TestCase):
+    def test_readme_has_an_icon_and_every_workflow_badge(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        icon = ROOT / "assets" / "icon.svg"
+
+        self.assertIn('src="assets/icon.svg"', readme)
+        self.assertIn('alt="lint icon"', readme)
+        self.assertTrue(icon.is_file())
+        root = ET.parse(icon).getroot()
+        self.assertEqual("512", root.attrib.get("width"))
+        self.assertEqual("512", root.attrib.get("height"))
+
+        workflows = sorted((ROOT / ".github" / "workflows").glob("*.yml"))
+        self.assertEqual(3, len(workflows))
+        for workflow in workflows:
+            with self.subTest(workflow=workflow.name):
+                action_url = (
+                    "https://github.com/trycopilotai/lint/"
+                    f"actions/workflows/{workflow.name}"
+                )
+                badge_and_link = f"({action_url}/badge.svg)]({action_url})"
+                self.assertIn(badge_and_link, readme)
+
     def test_public_skill_installs_do_not_require_authentication(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         archive_url = (
-            "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.3.tar.gz"
+            "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.4.tar.gz"
         )
 
         self.assertEqual(2, readme.count(archive_url))
@@ -150,7 +173,7 @@ class LaunchSurfaceTest(unittest.TestCase):
         self.assertIn("Never make\nthis repository object public directly", publishing)
         self.assertIn("delete every Actions workflow run", publishing)
         self.assertIn("Push only `refs/heads/main` and", publishing)
-        self.assertIn("`refs/tags/v0.1.3`", publishing)
+        self.assertIn("`refs/tags/v0.1.4`", publishing)
 
     def test_issue_forms_and_domain_labels_are_declared(self) -> None:
         expected = [
