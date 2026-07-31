@@ -70,6 +70,11 @@ class ImageContentsTest(unittest.TestCase):
         self.assertIn("--no-config", dockerfile)
         self.assertIn("--no-editorconfig", dockerfile)
 
+    def test_black_image_ignores_repository_configuration(self) -> None:
+        dockerfile = (ROOT / "images" / "Dockerfile").read_text(encoding="utf-8")
+
+        self.assertIn('"--config", "/dev/null"', dockerfile)
+
     def test_shells_package_managers_and_compilers_are_forbidden(self) -> None:
         paths = [
             "bin/ash",
@@ -110,13 +115,42 @@ class ImageContentsTest(unittest.TestCase):
 
     def test_black_scanner_exception_is_scoped_and_expires(self) -> None:
         ignore = (ROOT / ".trivyignore.yaml").read_text(encoding="utf-8")
+        security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
 
         self.assertIn("CVE-2026-32274", ignore)
         self.assertIn("pkg:pypi/black@24.10.0", ignore)
         self.assertIn("expired_at: 2026-10-31", ignore)
+        self.assertIn("--config /dev/null", ignore)
+        self.assertIn("--config /dev/null", security)
 
 
 class ReleaseWorkflowTest(unittest.TestCase):
+    def test_release_tag_signature_uses_the_retained_signer(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        allowed_signers = (ROOT / ".github" / "release-allowed-signers").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertTrue(allowed_signers.startswith("trycopilotai-release "))
+        self.assertIn("ssh-ed25519 ", allowed_signers)
+        self.assertIn(
+            "gpg.ssh.allowedSignersFile=.github/release-allowed-signers",
+            release,
+        )
+        self.assertIn('verify-tag "$RELEASE_REF"', release)
+
+    def test_promotion_requires_the_complete_digest_set(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        verification = "python3 tools/release_manifest.py"
+        promotion = "for record in digests/*.json"
+        self.assertIn("--verify-only", release)
+        self.assertLess(release.index(verification), release.index(promotion))
+
     def test_attestations_wait_for_public_visibility(self) -> None:
         release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
             encoding="utf-8"

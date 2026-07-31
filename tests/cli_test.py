@@ -189,6 +189,19 @@ class FormattingTest(unittest.TestCase):
         self.assertIn("--no-editorconfig", command)
         self.assertNotIn("--plugin", command)
 
+    def test_black_command_ignores_repository_configuration(self) -> None:
+        language = LINT.Language(
+            id="python",
+            family="black",
+            extensions=(".py",),
+            filenames=(),
+        )
+        command = LINT.command_for(language, Path("/work/example.py"))
+
+        self.assertIn("--config", command)
+        config_index = command.index("--config")
+        self.assertEqual(os.devnull, command[config_index + 1])
+
     def test_local_formatter_runs_in_external_mirror(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve() / "project"
