@@ -308,12 +308,9 @@ RUN mkdir -p /opt/julia-depot \
     'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter", version="2.12.3")); Pkg.precompile()' \
     && rm -rf /root/.julia /tmp/*
 RUN rm -f /usr/local/julia/libexec/julia/lld \
-    && rm -rf \
-      /usr/local/julia/share/doc \
-      /usr/local/julia/share/julia/test \
-      /usr/local/julia/share/julia/base/JuliaSyntax/docs \
+    && rm -rf /usr/local/julia/share/doc \
     && find \
-      /usr/local/julia/share/julia/stdlib \
+      /usr/local/julia/share/julia \
       /opt/julia-depot/packages \
       -type d \( -name docs -o -name test \) \
       -prune -exec rm -rf {} +

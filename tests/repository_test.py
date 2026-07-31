@@ -102,8 +102,8 @@ class ImageContentsTest(unittest.TestCase):
     def test_julia_image_removes_non_runtime_manifests(self) -> None:
         dockerfile = (ROOT / "images" / "Dockerfile").read_text(encoding="utf-8")
 
-        self.assertIn("/usr/local/julia/share/julia/test", dockerfile)
-        self.assertIn("/usr/local/julia/share/julia/base/JuliaSyntax/docs", dockerfile)
+        self.assertIn("/usr/local/julia/share/julia", dockerfile)
+        self.assertIn("/usr/local/julia/share/doc", dockerfile)
         self.assertIn("/opt/julia-depot/packages", dockerfile)
         self.assertIn(r"-type d \( -name docs -o -name test \)", dockerfile)
 
