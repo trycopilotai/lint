@@ -199,7 +199,7 @@ def _process_request(
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "lint/0.1.1"
+    server_version = "lint/0.1.2"
     use_docker = False
 
     def do_GET(self) -> None:

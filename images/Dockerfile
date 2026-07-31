@@ -308,9 +308,14 @@ RUN mkdir -p /opt/julia-depot \
     'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter", version="2.12.3")); Pkg.precompile()' \
     && rm -rf /root/.julia /tmp/*
 RUN rm -f /usr/local/julia/libexec/julia/lld
+RUN mkdir -p /opt/runtime/lib64 \
+    && if [ -e /lib64/ld-linux-x86-64.so.2 ]; then \
+      cp -L /lib64/ld-linux-x86-64.so.2 /opt/runtime/lib64/; \
+    fi
 
 FROM scratch AS julia
 COPY --from=julia-build /lib /lib
+COPY --from=julia-build /opt/runtime/lib64 /lib64
 COPY --from=julia-build \
     /usr/lib/locale/C.utf8 \
     /usr/lib/locale/C.utf8
