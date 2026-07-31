@@ -3,9 +3,21 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      release-ref:
+        description: "Existing signed release tag"
+        required: true
+        type: string
+        default: v0.1.0
 
 permissions:
   contents: read
+
+env:
+  RELEASE_REF:
+    "${{ github.event_name == 'workflow_dispatch' &&
+    inputs.release-ref || github.ref_name }}"
 
 jobs:
   verify:
@@ -14,7 +26,16 @@ jobs:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: "${{ env.RELEASE_REF }}"
+          fetch-depth: 0
           persist-credentials: false
+      - name: Verify annotated release tag
+        shell: bash
+        run: |
+          test "${RELEASE_REF#v}" != "$RELEASE_REF"
+          test "$(git cat-file -t "$RELEASE_REF")" = "tag"
+          test "$(git rev-list -n 1 "$RELEASE_REF")" = \
+            "$(git rev-parse HEAD)"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -43,6 +64,7 @@ jobs:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: "${{ env.RELEASE_REF }}"
           persist-credentials: false
       - name: Load release image matrix
         id: images
@@ -66,6 +88,7 @@ jobs:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: "${{ env.RELEASE_REF }}"
           persist-credentials: false
       - name: Read repository visibility
         id: visibility
@@ -81,8 +104,10 @@ jobs:
         id: version
         shell: bash
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="${RELEASE_REF#v}"
           printf 'version=%s\n' "$version" >>"$GITHUB_OUTPUT"
+          printf 'sha=%s\n' "$(git rev-parse HEAD)" \
+            >>"$GITHUB_OUTPUT"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130
       - name: Set up Buildx
@@ -105,7 +130,7 @@ jobs:
           tags:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
             }}:${{ steps.version.outputs.version }}-${{
-            github.sha }}"
+            steps.version.outputs.sha }}"
           provenance: mode=max
           sbom: true
           cache-from: "type=gha,scope=${{ matrix.target }}"
@@ -172,7 +197,7 @@ jobs:
         shell: bash
         env:
           DIGEST: "${{ steps.build.outputs.digest }}"
-          GIT_SHA: "${{ github.sha }}"
+          GIT_SHA: "${{ steps.version.outputs.sha }}"
           LANGUAGE: "${{ matrix.language }}"
           VERSION: "${{ steps.version.outputs.version }}"
         run: |
@@ -211,9 +236,9 @@ jobs:
       - name: Promote verified manifests
         shell: bash
         env:
-          VERSION: "${{ github.ref_name }}"
+          RELEASE_REF: "${{ env.RELEASE_REF }}"
         run: |
-          version="${VERSION#v}"
+          version="${RELEASE_REF#v}"
           for record in digests/*.json; do
             image="$(jq -r .image "$record")"
             staging_tag="$(jq -r .staging_tag "$record")"
@@ -237,6 +262,7 @@ jobs:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          ref: "${{ env.RELEASE_REF }}"
           fetch-depth: 0
           persist-credentials: false
       - name: Read repository visibility
@@ -258,12 +284,12 @@ jobs:
       - name: Create source archive and manifest
         shell: bash
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="${RELEASE_REF#v}"
           mkdir dist
           git archive \
             --format=tar \
             --prefix="lint-$version/" \
-            "$GITHUB_SHA" |
+            "$RELEASE_REF" |
             gzip -n >"dist/lint-$version.tar.gz"
           python3 tools/release_manifest.py \
             --version "$version" \
@@ -284,25 +310,25 @@ jobs:
           GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         shell: bash
         run: |
-          version="${GITHUB_REF_NAME#v}"
+          version="${RELEASE_REF#v}"
           draft="$(
-            gh release view "$GITHUB_REF_NAME" \
+            gh release view "$RELEASE_REF" \
               --json isDraft \
               --jq .isDraft \
               2>/dev/null || true
           )"
           if test "$draft" = "true"; then
-            gh release upload "$GITHUB_REF_NAME" \
+            gh release upload "$RELEASE_REF" \
               --clobber \
               dist/*
           elif test "$draft" = ""; then
-            gh release create "$GITHUB_REF_NAME" \
+            gh release create "$RELEASE_REF" \
               --draft \
               --title "lint $version" \
               --notes "Release artifacts for lint $version." \
               dist/*
           else
             printf '%s\n' \
-              "release $GITHUB_REF_NAME is already public" >&2
+              "release $RELEASE_REF is already public" >&2
             exit 1
           fi
