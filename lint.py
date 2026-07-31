@@ -402,6 +402,8 @@ def command_for(language: Language, path: Path) -> list[str]:
             "--quiet",
             "--line-length",
             "88",
+            "--config",
+            os.devnull,
             str(path),
         ]
     if family == "shfmt":

@@ -23,8 +23,8 @@ Security fixes are supported for the latest tagged release.
 The release scan carries one time-bounded exception for
 Black 24.10.0 under `CVE-2026-32274`. The release requires
 that version for output compatibility. The image forces
-`--no-config`, formats isolated temporary mirrors, and does
-not expose project plugin or cache-path inputs.
+`--config /dev/null`, formats isolated temporary mirrors,
+and does not expose project plugin or cache-path inputs.
 
 The exception is scoped to the Black 24.10.0 package URL and
 expires on 2026-10-31. A release after that date must update

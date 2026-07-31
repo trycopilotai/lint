@@ -5,7 +5,7 @@ vulnerabilities:
     expired_at: 2026-10-31
     statement: >-
       Black is intentionally pinned for output
-      compatibility. This image always passes --no-config,
+      compatibility. It always passes --config /dev/null,
       formats isolated temporary mirrors, and exposes no
       project plugin or cache-path input. Reassess the pin
       before this exception expires.

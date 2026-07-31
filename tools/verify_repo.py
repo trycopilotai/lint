@@ -202,6 +202,22 @@ def verify_release_surfaces() -> None:
             raise ValueError(f"release scan is missing {platform}")
     if "ignore-unfixed: true" in release:
         raise ValueError("release scan must not ignore unfixed findings")
+    allowed_signers = (ROOT / ".github" / "release-allowed-signers").read_text(
+        encoding="utf-8"
+    )
+    if not allowed_signers.startswith("trycopilotai-release ssh-ed25519 "):
+        raise ValueError("release signer trust root is missing")
+    signer_configuration = "gpg.ssh.allowedSignersFile=.github/release-allowed-signers"
+    if signer_configuration not in release:
+        raise ValueError("release tag verification is missing its trust root")
+    if 'verify-tag "$RELEASE_REF"' not in release:
+        raise ValueError("release tag signature is not verified")
+    digest_verification = "python3 tools/release_manifest.py"
+    digest_promotion = "for record in digests/*.json"
+    if "--verify-only" not in release:
+        raise ValueError("release digest-set verification is missing")
+    if release.index(digest_verification) > release.index(digest_promotion):
+        raise ValueError("release digests are promoted before verification")
 
     publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
     normalized_publishing = " ".join(

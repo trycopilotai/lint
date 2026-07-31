@@ -90,7 +90,7 @@ COPY --from=black-build /lib /lib
 COPY --from=black-build /usr/lib /usr/lib
 COPY --from=black-build /usr/local /usr/local
 USER 65532:65532
-ENTRYPOINT ["/usr/local/bin/python3", "-m", "black", "--quiet", "--line-length", "88"]
+ENTRYPOINT ["/usr/local/bin/python3", "-m", "black", "--quiet", "--line-length", "88", "--config", "/dev/null"]
 
 FROM ${PYTHON_IMAGE} AS requirements-build
 RUN rm -rf \

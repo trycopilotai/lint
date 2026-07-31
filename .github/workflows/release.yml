@@ -29,13 +29,16 @@ jobs:
           ref: "${{ env.RELEASE_REF }}"
           fetch-depth: 0
           persist-credentials: false
-      - name: Verify annotated release tag
+      - name: Verify signed release tag
         shell: bash
         run: |
           test "${RELEASE_REF#v}" != "$RELEASE_REF"
           test "$(git cat-file -t "$RELEASE_REF")" = "tag"
           test "$(git rev-list -n 1 "$RELEASE_REF")" = \
             "$(git rev-parse HEAD)"
+          git \
+            -c gpg.ssh.allowedSignersFile=.github/release-allowed-signers \
+            verify-tag "$RELEASE_REF"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -234,12 +237,25 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: "${{ env.RELEASE_REF }}"
+          persist-credentials: false
       - name: Download image digests
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
           pattern: digest-*
           path: digests
           merge-multiple: true
+      - name: Verify complete digest set
+        shell: bash
+        run: |
+          version="${RELEASE_REF#v}"
+          python3 tools/release_manifest.py \
+            --version "$version" \
+            --digests digests \
+            --verify-only
       - name: Set up Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
       - name: Log in to the private registry
