@@ -194,6 +194,14 @@ def verify_release_surfaces() -> None:
     )
     if "private release candidate" in release.lower():
         raise ValueError("release metadata contains private-candidate wording")
+    if release.count("uses: aquasecurity/trivy-action@") != 2:
+        raise ValueError("release must scan both image platforms")
+    for platform in ("linux/amd64", "linux/arm64"):
+        marker = f"TRIVY_PLATFORM: {platform}"
+        if release.count(marker) != 1:
+            raise ValueError(f"release scan is missing {platform}")
+    if "ignore-unfixed: true" in release:
+        raise ValueError("release scan must not ignore unfixed findings")
 
     publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
     normalized_publishing = " ".join(

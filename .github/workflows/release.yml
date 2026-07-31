@@ -183,7 +183,9 @@ jobs:
           subject-digest:
             "${{ steps.build.outputs.digest }}"
           push-to-registry: true
-      - name: Scan image
+      - name: Scan AMD64 image
+        env:
+          TRIVY_PLATFORM: linux/amd64
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
         with:
           image-ref:
@@ -191,9 +193,21 @@ jobs:
             }}@${{ steps.build.outputs.digest }}"
           format: table
           exit-code: "1"
-          ignore-unfixed: true
           severity: HIGH,CRITICAL
           trivyignores: .trivyignore.yaml
+      - name: Scan ARM64 image
+        env:
+          TRIVY_PLATFORM: linux/arm64
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref:
+            "ghcr.io/trycopilotai/lint-${{ matrix.language
+            }}@${{ steps.build.outputs.digest }}"
+          format: table
+          exit-code: "1"
+          severity: HIGH,CRITICAL
+          trivyignores: .trivyignore.yaml
+          skip-setup-trivy: true
       - name: Record digest
         shell: bash
         env:
