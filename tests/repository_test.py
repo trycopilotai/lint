@@ -134,6 +134,19 @@ class ReleaseWorkflowTest(unittest.TestCase):
         self.assertIn("Re-run all jobs", publishing)
         self.assertIn("GitHub Free", publishing)
 
+    def test_vulnerability_scan_covers_both_platforms(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertEqual(
+            2,
+            release.count("uses: aquasecurity/trivy-action@"),
+        )
+        self.assertEqual(1, release.count("TRIVY_PLATFORM: linux/amd64"))
+        self.assertEqual(1, release.count("TRIVY_PLATFORM: linux/arm64"))
+        self.assertNotIn("ignore-unfixed: true", release)
+
 
 class LaunchSurfaceTest(unittest.TestCase):
     def test_readme_has_an_icon_and_every_workflow_badge(self) -> None:
