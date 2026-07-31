@@ -5,7 +5,7 @@
   "demo_sha256": "d79226f49b868619d87fefec1b5b13e3d2cf4626b70a680e21f1d5857ed7d76e",
   "generator_path": "scripts/generate_demo.py",
   "generator_sha256": "e899ffd2f66677a2fe96e1f2dd17f594717d2fef2e0e1e122e11030133da16d2",
-  "input_commit": "4be48f0434c8aae64cf9f11a4c9450b5eb598fb7",
+  "input_commit": "29791bd4d05695b66e686ca568891b024f22aaad",
   "invocation": "./scripts/demo.sh demo-work",
   "invocation_date": "2026-07-30",
   "invocation_script_path": "scripts/demo.sh",
