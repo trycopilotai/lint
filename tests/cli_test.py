@@ -515,6 +515,7 @@ class MainTest(unittest.TestCase):
                     "-f",
                     str(ROOT / "Makefile"),
                     "lint",
+                    f"PYTHON={sys.executable}",
                     "ARGS=--modified --json",
                 ],
                 check=False,
