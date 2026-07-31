@@ -67,7 +67,13 @@ steps:
     with:
       mode: read-only
       cwd: .
+      docker: "true"
 ```
+
+The Action uses Docker by default, so the example does not
+depend on formatter versions installed on the runner. Set
+`docker: "false"` only after provisioning every pinned local
+formatter.
 
 `--read-only`, `--readonly`, and `-ro` are equivalent.
 `--write`, `--apply`, and `-w` are equivalent. `--docker`
@@ -95,7 +101,8 @@ The default policy covers:
   CSS, SCSS, and Less with Prettier
 - Bazel files with Buildifier
 - Python with Black
-- requirements files with deterministic sorting
+- requirements files with deterministic sorting that keeps
+  backslash continuation blocks intact
 - shell files with shfmt
 - C, C++, Objective-C, and Objective-C++ with clang-format
 - Java with google-java-format
@@ -158,8 +165,10 @@ make verify
 ```
 
 Release tags build Linux AMD64 and ARM64 images, record
-source checksums and software bills of materials, produce
-attestations, and stage a draft GitHub release.
+source checksums and software bills of materials, and stage
+a draft GitHub release. GitHub artifact attestations are
+added when the repository is public; the publishing
+procedure reruns the release after the visibility change.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for changes and
 [SECURITY.md](SECURITY.md) for vulnerability reports. The
