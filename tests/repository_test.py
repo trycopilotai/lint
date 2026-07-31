@@ -93,5 +93,24 @@ class ImageContentsTest(unittest.TestCase):
                 self.assertFalse(IMAGE_VERIFIER.forbidden_executable(path))
 
 
+class ReleaseWorkflowTest(unittest.TestCase):
+    def test_attestations_wait_for_public_visibility(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
+
+        self.assertEqual(
+            2,
+            release.count("if: steps.visibility.outputs.value == 'public'"),
+        )
+        self.assertGreaterEqual(
+            release.count('gh api "repos/$GITHUB_REPOSITORY"'),
+            2,
+        )
+        self.assertIn("Re-run all jobs", publishing)
+        self.assertIn("GitHub Free", publishing)
+
+
 if __name__ == "__main__":
     unittest.main()

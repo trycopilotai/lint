@@ -67,6 +67,16 @@ jobs:
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
+      - name: Read repository visibility
+        id: visibility
+        shell: bash
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          visibility="$(
+            gh api "repos/$GITHUB_REPOSITORY" --jq .visibility
+          )"
+          printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
       - name: Set version
         id: version
         shell: bash
@@ -139,6 +149,7 @@ jobs:
             --image lint-release-test:arm64 \
             --budget-mib "$BUDGET_MIB"
       - name: Attest image
+        if: steps.visibility.outputs.value == 'public'
         uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-name:
@@ -228,6 +239,16 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Read repository visibility
+        id: visibility
+        shell: bash
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          visibility="$(
+            gh api "repos/$GITHUB_REPOSITORY" --jq .visibility
+          )"
+          printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
       - name: Download image digests
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
@@ -254,6 +275,7 @@ jobs:
             sha256sum ./* >SHA256SUMS
           )
       - name: Attest source archive
+        if: steps.visibility.outputs.value == 'public'
         uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-path: "dist/lint-*.tar.gz"
@@ -263,8 +285,24 @@ jobs:
         shell: bash
         run: |
           version="${GITHUB_REF_NAME#v}"
-          gh release create "$GITHUB_REF_NAME" \
-            --draft \
-            --title "lint $version" \
-            --notes "Release artifacts for lint $version." \
-            dist/*
+          draft="$(
+            gh release view "$GITHUB_REF_NAME" \
+              --json isDraft \
+              --jq .isDraft \
+              2>/dev/null || true
+          )"
+          if test "$draft" = "true"; then
+            gh release upload "$GITHUB_REF_NAME" \
+              --clobber \
+              dist/*
+          elif test "$draft" = ""; then
+            gh release create "$GITHUB_REF_NAME" \
+              --draft \
+              --title "lint $version" \
+              --notes "Release artifacts for lint $version." \
+              dist/*
+          else
+            printf '%s\n' \
+              "release $GITHUB_REF_NAME is already public" >&2
+            exit 1
+          fi
