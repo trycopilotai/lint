@@ -34,7 +34,7 @@ RUNNER = load_module(
 
 
 class ActionTest(unittest.TestCase):
-    def test_default_is_read_only_all_local(self) -> None:
+    def test_default_is_read_only_all_docker(self) -> None:
         environment = {"GITHUB_ACTION_PATH": str(ROOT)}
         with mock.patch.dict(os.environ, environment, clear=True):
             command = ACTION.command()
@@ -42,7 +42,14 @@ class ActionTest(unittest.TestCase):
         self.assertIn("--read-only", command)
         self.assertIn("--all", command)
         self.assertNotIn("--write", command)
-        self.assertNotIn("--docker", command)
+        self.assertIn("--docker", command)
+
+        action = (ROOT / "action.yml").read_text(encoding="utf-8")
+        docker_input = action.split("  docker:", 1)[1].split(
+            "  languages:",
+            1,
+        )[0]
+        self.assertIn('default: "true"', docker_input)
 
     def test_modified_scope_does_not_add_all(self) -> None:
         environment = {

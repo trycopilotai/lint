@@ -14,8 +14,8 @@ READ_MODES = frozenset({"read-only", "readonly", "check"})
 WRITE_MODES = frozenset({"write", "apply", "fix"})
 
 
-def boolean_input(name: str) -> bool:
-    value = os.environ.get(name, "false").strip().lower()
+def boolean_input(name: str, default: str = "false") -> bool:
+    value = os.environ.get(name, default).strip().lower()
     if value in {"true", "1", "yes"}:
         return True
     if value in {"false", "0", "no", ""}:
@@ -52,7 +52,7 @@ def command() -> list[str]:
     else:
         arguments.append("--all")
 
-    if boolean_input("LINT_INPUT_DOCKER"):
+    if boolean_input("LINT_INPUT_DOCKER", default="true"):
         arguments.append("--docker")
 
     languages = os.environ.get("LINT_INPUT_LANGUAGES", "")

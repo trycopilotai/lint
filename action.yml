@@ -18,7 +18,7 @@ inputs:
   docker:
     description: "Use language-specific Docker images"
     required: false
-    default: "false"
+    default: "true"
   languages:
     description: "Comma-separated language ids"
     required: false
