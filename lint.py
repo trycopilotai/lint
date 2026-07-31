@@ -616,7 +616,7 @@ def run_formatter(
 
 
 def docker_image(language: Language) -> str:
-    return f"ghcr.io/trycopilotai/lint-{language.id}:0.1.3"
+    return f"ghcr.io/trycopilotai/lint-{language.id}:0.1.4"
 
 
 def run_docker_formatter(

@@ -128,7 +128,7 @@ def verify_manifests() -> None:
         ROOT / ".codex-plugin" / "plugin.json",
     ):
         data = json.loads(manifest.read_text(encoding="utf-8"))
-        if data["version"] != "0.1.3":
+        if data["version"] != "0.1.4":
             raise ValueError(f"wrong plugin version: {manifest}")
 
 
@@ -201,7 +201,7 @@ def verify_release_surfaces() -> None:
     )
     required = (
         "Never make this repository object public directly",
-        "Push only refs/heads/main and refs/tags/v0.1.3",
+        "Push only refs/heads/main and refs/tags/v0.1.4",
         "delete every Actions workflow run",
         "Social preview",
         "Private vulnerability reporting",
@@ -216,7 +216,7 @@ def verify_release_surfaces() -> None:
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     archive_url = (
-        "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.3.tar.gz"
+        "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.4.tar.gz"
     )
     if readme.count(archive_url) != 2:
         raise ValueError("public skill installs must use the release archive")
