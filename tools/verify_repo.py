@@ -196,13 +196,17 @@ def verify_release_surfaces() -> None:
         raise ValueError("release metadata contains private-candidate wording")
 
     publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
+    normalized_publishing = " ".join(publishing.replace("**", "").split())
     required = (
+        "Social preview",
+        "Private vulnerability reporting",
+        "Report a vulnerability",
         "Change visibility",
         "anonymous pull",
         "Publish release",
     )
     for phrase in required:
-        if phrase not in publishing:
+        if phrase not in normalized_publishing:
             raise ValueError(f"publishing procedure is missing: {phrase}")
 
 

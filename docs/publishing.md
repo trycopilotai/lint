@@ -13,18 +13,23 @@ Public launch is a separate, irreversible procedure:
    **Edit**, upload `assets/social-preview.png`, and verify
    from an unauthenticated preview client that a shared
    repository link renders the custom image.
-3. Open each `lint-<language>` package under the
+3. In **Settings**, under **Security**, open **Advanced
+   Security** and enable **Private vulnerability
+   reporting**. From an unauthenticated session, open
+   **Security**, then **Advisories**, and verify that
+   **Report a vulnerability** is available.
+4. Open each `lint-<language>` package under the
    `trycopilotai` organization. In **Package settings**,
    choose **Change visibility**, select **Public**, and
    confirm the package name. Repeat for all 26 package
    names.
-4. Verify an anonymous pull of every versioned package in a
+5. Verify an anonymous pull of every versioned package in a
    clean Docker credential directory. Each manifest must
    expose both Linux AMD64 and ARM64.
-5. Verify the source archive, checksums, release manifest,
+6. Verify the source archive, checksums, release manifest,
    attestations, and software bills of materials from an
    unauthenticated client.
-6. In the draft GitHub Release, choose **Publish release**
+7. In the draft GitHub Release, choose **Publish release**
    only after every package and artifact passes the
    unauthenticated checks.
 
