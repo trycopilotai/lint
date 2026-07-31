@@ -126,5 +126,40 @@ class ReleaseWorkflowTest(unittest.TestCase):
         self.assertIn("GitHub Free", publishing)
 
 
+class LaunchSurfaceTest(unittest.TestCase):
+    def test_public_skill_installs_do_not_require_authentication(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        archive_url = (
+            "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.2.tar.gz"
+        )
+
+        self.assertEqual(2, readme.count(archive_url))
+        self.assertNotIn("gh api repos/trycopilotai/lint/tarball", readme)
+
+    def test_public_transition_recreates_the_private_stage(self) -> None:
+        publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
+
+        self.assertIn("Never make\nthis repository object public directly", publishing)
+        self.assertIn("delete every Actions workflow run", publishing)
+        self.assertIn("Push only `refs/heads/main` and", publishing)
+        self.assertIn("`refs/tags/v0.1.2`", publishing)
+
+    def test_issue_forms_and_domain_labels_are_declared(self) -> None:
+        expected = [
+            ROOT / ".github" / "ISSUE_TEMPLATE" / "config.yml",
+            ROOT / ".github" / "ISSUE_TEMPLATE" / "formatter.yml",
+            ROOT / ".github" / "ISSUE_TEMPLATE" / "supply-chain.yml",
+            ROOT / ".github" / "labels.yml",
+        ]
+        for path in expected:
+            with self.subTest(path=path):
+                self.assertTrue(path.is_file())
+
+        labels = (ROOT / ".github" / "labels.yml").read_text(encoding="utf-8")
+        for label in ("formatter", "supply-chain", "good first issue"):
+            with self.subTest(label=label):
+                self.assertIn(f"name: {label}", labels)
+
+
 if __name__ == "__main__":
     unittest.main()

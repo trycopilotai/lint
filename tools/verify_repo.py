@@ -196,8 +196,13 @@ def verify_release_surfaces() -> None:
         raise ValueError("release metadata contains private-candidate wording")
 
     publishing = (ROOT / "docs" / "publishing.md").read_text(encoding="utf-8")
-    normalized_publishing = " ".join(publishing.replace("**", "").split())
+    normalized_publishing = " ".join(
+        publishing.replace("**", "").replace("`", "").split()
+    )
     required = (
+        "Never make this repository object public directly",
+        "Push only refs/heads/main and refs/tags/v0.1.2",
+        "delete every Actions workflow run",
         "Social preview",
         "Private vulnerability reporting",
         "Report a vulnerability",
@@ -208,6 +213,30 @@ def verify_release_surfaces() -> None:
     for phrase in required:
         if phrase not in normalized_publishing:
             raise ValueError(f"publishing procedure is missing: {phrase}")
+
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    archive_url = (
+        "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.2.tar.gz"
+    )
+    if readme.count(archive_url) != 2:
+        raise ValueError("public skill installs must use the release archive")
+    if "gh api repos/trycopilotai/lint/tarball" in readme:
+        raise ValueError("public skill installs must not require GitHub login")
+
+    issue_surfaces = (
+        ROOT / ".github" / "ISSUE_TEMPLATE" / "config.yml",
+        ROOT / ".github" / "ISSUE_TEMPLATE" / "formatter.yml",
+        ROOT / ".github" / "ISSUE_TEMPLATE" / "supply-chain.yml",
+        ROOT / ".github" / "labels.yml",
+    )
+    for path in issue_surfaces:
+        if not path.is_file():
+            raise ValueError(f"issue launch surface is missing: {path}")
+
+    labels = (ROOT / ".github" / "labels.yml").read_text(encoding="utf-8")
+    for label in ("formatter", "supply-chain", "good first issue"):
+        if f"name: {label}" not in labels:
+            raise ValueError(f"label definition is missing: {label}")
 
 
 def main() -> int:
