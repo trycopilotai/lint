@@ -14,6 +14,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
@@ -464,7 +465,19 @@ def version_command(language: Language) -> tuple[list[str], str] | None:
     if family == "csharp":
         return ["csharpier", "--version"], versions["csharpier"]
     if family == "julia":
-        return ["julia", "--version"], versions["julia"]
+        expression = (
+            "using JuliaFormatter; "
+            'print(VERSION, "\\n", Base.pkgversion(JuliaFormatter))'
+        )
+        expected = (
+            f"{versions['julia']}\n{versions['juliaformatter']}"
+        )
+        return [
+            "julia",
+            "--startup-file=no",
+            "-e",
+            expression,
+        ], expected
     raise FormatterError(f"unsupported formatter family: {family}")
 
 
@@ -544,40 +557,54 @@ def run_formatter(
     if language.family == "prettier":
         (path.parent / ".lint-empty-ignore").touch()
     command = command_for(language, path)
-    try:
-        completed = subprocess.run(
-            command,
-            cwd=cwd,
-            check=False,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=timeout_seconds,
+    pass_count = 1
+    if language.family == "kotlin":
+        pass_count = 2
+    started_at = time.monotonic()
+    for _ in range(pass_count):
+        remaining_seconds = timeout_seconds - (
+            time.monotonic() - started_at
         )
-    except FileNotFoundError as error:
-        executable = command[0]
-        raise EngineError(
-            f"{executable} is not installed; use --docker or install "
-            "the pinned version from languages.json"
-        ) from error
-    except subprocess.TimeoutExpired as error:
-        raise FormatterError(
-            f"{language.id} formatter exceeded {timeout_seconds} seconds"
-        ) from error
-    if completed.returncode != 0:
-        standard_error = completed.stderr.decode(
-            "utf-8",
-            errors="replace",
-        ).strip()
-        standard_output = completed.stdout.decode(
-            "utf-8",
-            errors="replace",
-        ).strip()
-        detail = standard_error
-        if detail == "":
-            detail = standard_output
-        if detail == "":
-            detail = f"formatter exited {completed.returncode}"
-        raise FormatterError(detail)
+        if remaining_seconds <= 0:
+            raise FormatterError(
+                f"{language.id} formatter exceeded "
+                f"{timeout_seconds} seconds"
+            )
+        try:
+            completed = subprocess.run(
+                command,
+                cwd=cwd,
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=remaining_seconds,
+            )
+        except FileNotFoundError as error:
+            executable = command[0]
+            raise EngineError(
+                f"{executable} is not installed; use --docker or install "
+                "the pinned version from languages.json"
+            ) from error
+        except subprocess.TimeoutExpired as error:
+            raise FormatterError(
+                f"{language.id} formatter exceeded "
+                f"{timeout_seconds} seconds"
+            ) from error
+        if completed.returncode != 0:
+            standard_error = completed.stderr.decode(
+                "utf-8",
+                errors="replace",
+            ).strip()
+            standard_output = completed.stdout.decode(
+                "utf-8",
+                errors="replace",
+            ).strip()
+            detail = standard_error
+            if detail == "":
+                detail = standard_output
+            if detail == "":
+                detail = f"formatter exited {completed.returncode}"
+            raise FormatterError(detail)
 
 
 def docker_image(language: Language) -> str:

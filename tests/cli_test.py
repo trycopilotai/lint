@@ -230,6 +230,61 @@ class FormattingTest(unittest.TestCase):
         self.assertNotIn(str(path), expression)
         self.assertEqual(["--", str(path)], command[-2:])
 
+    def test_kotlin_formatter_runs_two_convergence_passes(self) -> None:
+        language = LINT.Language(
+            id="kotlin",
+            family="kotlin",
+            extensions=(".kt",),
+            filenames=(),
+        )
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout=b"",
+            stderr=b"",
+        )
+
+        with mock.patch.object(
+            LINT.subprocess,
+            "run",
+            return_value=completed,
+        ) as run:
+            LINT.run_formatter(
+                language=language,
+                path=Path("/work/fixture.kt"),
+                cwd=Path("/work"),
+                timeout_seconds=30,
+            )
+
+        self.assertEqual(2, run.call_count)
+
+    def test_julia_version_check_requires_formatter_package(self) -> None:
+        language = LINT.Language(
+            id="julia",
+            family="julia",
+            extensions=(".jl",),
+            filenames=(),
+        )
+        command, expected = LINT.version_command(language)
+        versions = LINT.tool_versions()
+
+        self.assertIn("JuliaFormatter", " ".join(command))
+        self.assertIn(versions["julia"], expected)
+        self.assertIn(versions["juliaformatter"], expected)
+
+        completed = subprocess.CompletedProcess(
+            args=command,
+            returncode=0,
+            stdout=f"{versions['julia']}\n0.0.0".encode("utf-8"),
+            stderr=b"",
+        )
+        with mock.patch.object(
+            LINT.subprocess,
+            "run",
+            return_value=completed,
+        ), self.assertRaises(LINT.EngineError):
+            LINT.verify_formatter_version(language)
+
     def test_read_only_reports_without_writing(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()
