@@ -307,7 +307,16 @@ RUN mkdir -p /opt/julia-depot \
     && JULIA_DEPOT_PATH=/opt/julia-depot julia --startup-file=no -e \
     'using Pkg; Pkg.add(PackageSpec(name="JuliaFormatter", version="2.12.3")); Pkg.precompile()' \
     && rm -rf /root/.julia /tmp/*
-RUN rm -f /usr/local/julia/libexec/julia/lld
+RUN rm -f /usr/local/julia/libexec/julia/lld \
+    && rm -rf \
+      /usr/local/julia/share/doc \
+      /usr/local/julia/share/julia/test \
+      /usr/local/julia/share/julia/base/JuliaSyntax/docs \
+    && find \
+      /usr/local/julia/share/julia/stdlib \
+      /opt/julia-depot/packages \
+      -type d \( -name docs -o -name test \) \
+      -prune -exec rm -rf {} +
 RUN mkdir -p /opt/runtime/lib64 \
     && if [ -e /lib64/ld-linux-x86-64.so.2 ]; then \
       cp -L /lib64/ld-linux-x86-64.so.2 /opt/runtime/lib64/; \

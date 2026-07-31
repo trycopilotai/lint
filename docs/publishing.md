@@ -17,11 +17,11 @@ Public launch is a separate, irreversible procedure:
 1. Complete private validation and disclosure review. Save
    the repository metadata, labels, issue forms, successful
    check receipts, package digests, draft release assets,
-   and the exact final `main` and signed `v0.1.2` objects.
+   and the exact final `main` and signed `v0.1.3` objects.
 2. Obtain fresh signed authorization to delete and recreate
    `trycopilotai/lint`. Recreate it as a private repository
    with no initial content. Push only `refs/heads/main` and
-   `refs/tags/v0.1.2`; do not push the withdrawn staging
+   `refs/tags/v0.1.3`; do not push the withdrawn staging
    tags or any other ref.
 3. Verify the new repository ID differs from the staging
    repository ID. Confirm that `v0.1.0`, `v0.1.1`, every
@@ -39,7 +39,7 @@ Public launch is a separate, irreversible procedure:
    changing visibility. Workflow logs name the triggering
    account and are publication surfaces.
 6. Make the repository public. In **Actions**, run the
-   tag-triggered **Release** workflow for `v0.1.2`. The
+   tag-triggered **Release** workflow for `v0.1.3`. The
    workflow reads the repository's current visibility, adds
    image and source-archive attestations, and replaces the
    existing draft assets. Choose **Re-run all jobs** if the

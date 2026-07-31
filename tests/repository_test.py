@@ -99,6 +99,14 @@ class ImageContentsTest(unittest.TestCase):
         self.assertIn("./buildifier", dockerfile)
         self.assertIn("./cmd/shfmt", dockerfile)
 
+    def test_julia_image_removes_non_runtime_manifests(self) -> None:
+        dockerfile = (ROOT / "images" / "Dockerfile").read_text(encoding="utf-8")
+
+        self.assertIn("/usr/local/julia/share/julia/test", dockerfile)
+        self.assertIn("/usr/local/julia/share/julia/base/JuliaSyntax/docs", dockerfile)
+        self.assertIn("/opt/julia-depot/packages", dockerfile)
+        self.assertIn(r"-type d \( -name docs -o -name test \)", dockerfile)
+
     def test_black_scanner_exception_is_scoped_and_expires(self) -> None:
         ignore = (ROOT / ".trivyignore.yaml").read_text(encoding="utf-8")
 
@@ -130,7 +138,7 @@ class LaunchSurfaceTest(unittest.TestCase):
     def test_public_skill_installs_do_not_require_authentication(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         archive_url = (
-            "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.2.tar.gz"
+            "https://github.com/trycopilotai/lint/" "archive/refs/tags/v0.1.3.tar.gz"
         )
 
         self.assertEqual(2, readme.count(archive_url))
@@ -142,7 +150,7 @@ class LaunchSurfaceTest(unittest.TestCase):
         self.assertIn("Never make\nthis repository object public directly", publishing)
         self.assertIn("delete every Actions workflow run", publishing)
         self.assertIn("Push only `refs/heads/main` and", publishing)
-        self.assertIn("`refs/tags/v0.1.2`", publishing)
+        self.assertIn("`refs/tags/v0.1.3`", publishing)
 
     def test_issue_forms_and_domain_labels_are_declared(self) -> None:
         expected = [
