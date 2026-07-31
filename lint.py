@@ -469,9 +469,7 @@ def version_command(language: Language) -> tuple[list[str], str] | None:
             "using JuliaFormatter; "
             'print(VERSION, "\\n", Base.pkgversion(JuliaFormatter))'
         )
-        expected = (
-            f"{versions['julia']}\n{versions['juliaformatter']}"
-        )
+        expected = f"{versions['julia']}\n{versions['juliaformatter']}"
         return [
             "julia",
             "--startup-file=no",
@@ -562,13 +560,10 @@ def run_formatter(
         pass_count = 2
     started_at = time.monotonic()
     for _ in range(pass_count):
-        remaining_seconds = timeout_seconds - (
-            time.monotonic() - started_at
-        )
+        remaining_seconds = timeout_seconds - (time.monotonic() - started_at)
         if remaining_seconds <= 0:
             raise FormatterError(
-                f"{language.id} formatter exceeded "
-                f"{timeout_seconds} seconds"
+                f"{language.id} formatter exceeded {timeout_seconds} seconds"
             )
         try:
             completed = subprocess.run(
@@ -587,8 +582,7 @@ def run_formatter(
             ) from error
         except subprocess.TimeoutExpired as error:
             raise FormatterError(
-                f"{language.id} formatter exceeded "
-                f"{timeout_seconds} seconds"
+                f"{language.id} formatter exceeded {timeout_seconds} seconds"
             ) from error
         if completed.returncode != 0:
             standard_error = completed.stderr.decode(
