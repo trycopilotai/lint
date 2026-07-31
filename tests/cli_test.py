@@ -31,7 +31,23 @@ def load_lint():
     return module
 
 
+def load_requirements_entrypoint():
+    specification = importlib.util.spec_from_file_location(
+        "requirements_entrypoint_under_test",
+        ROOT / "images" / "requirements_entrypoint.py",
+    )
+    if specification is None:
+        raise RuntimeError("could not create requirements entrypoint specification")
+    if specification.loader is None:
+        raise RuntimeError("requirements entrypoint specification has no loader")
+    module = importlib.util.module_from_spec(specification)
+    sys.modules[specification.name] = module
+    specification.loader.exec_module(module)
+    return module
+
+
 LINT = load_lint()
+REQUIREMENTS_ENTRYPOINT = load_requirements_entrypoint()
 
 
 def initialize_repository(path: Path) -> None:
@@ -284,6 +300,28 @@ class FormattingTest(unittest.TestCase):
             return_value=completed,
         ), self.assertRaises(LINT.EngineError):
             LINT.verify_formatter_version(language)
+
+    def test_requirements_hash_continuations_stay_with_requirement(
+        self,
+    ) -> None:
+        source = (
+            "zeta==1\n"
+            "alpha==1 \\\n"
+            "    --hash=sha256:aaaaaaaa \\\n"
+            "    --hash=sha256:bbbbbbbb\n"
+        )
+        expected = (
+            "alpha==1 \\\n"
+            "    --hash=sha256:aaaaaaaa \\\n"
+            "    --hash=sha256:bbbbbbbb\n"
+            "zeta==1\n"
+        )
+
+        local = LINT.requirements_output(source.encode("utf-8")).decode("utf-8")
+        image = REQUIREMENTS_ENTRYPOINT.formatted(source)
+
+        self.assertEqual(expected, local)
+        self.assertEqual(expected, image)
 
     def test_read_only_reports_without_writing(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

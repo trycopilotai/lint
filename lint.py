@@ -511,6 +511,20 @@ def verify_formatter_version(language: Language) -> None:
         raise EngineError(f"{command[0]} must match {expected}; found {found}")
 
 
+def requirement_records(section: list[str]) -> list[str]:
+    records: list[str] = []
+    current: list[str] = []
+    for line in section:
+        current.append(line)
+        if line.endswith("\\"):
+            continue
+        records.append("\n".join(current))
+        current = []
+    if current:
+        records.append("\n".join(current))
+    return records
+
+
 def requirements_output(payload: bytes) -> bytes:
     try:
         text = payload.decode("utf-8")
@@ -531,11 +545,11 @@ def requirements_output(payload: bytes) -> bytes:
             continue
         comments: list[str] = []
         requirements: list[str] = []
-        for line in section:
-            if line.lstrip().startswith(("#", "-", "http://", "https://")):
-                comments.append(line)
+        for record in requirement_records(section):
+            if record.lstrip().startswith(("#", "-", "http://", "https://")):
+                comments.append(record)
             else:
-                requirements.append(line)
+                requirements.append(record)
         requirements.sort(key=str.casefold)
         output_sections.append("\n".join(comments + requirements))
     if not output_sections:

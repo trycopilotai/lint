@@ -7,6 +7,20 @@ import sys
 from pathlib import Path
 
 
+def requirement_records(section: list[str]) -> list[str]:
+    records: list[str] = []
+    current: list[str] = []
+    for line in section:
+        current.append(line)
+        if line.endswith("\\"):
+            continue
+        records.append("\n".join(current))
+        current = []
+    if current:
+        records.append("\n".join(current))
+    return records
+
+
 def formatted(text: str) -> str:
     sections: list[list[str]] = [[]]
     for line in text.splitlines():
@@ -22,11 +36,11 @@ def formatted(text: str) -> str:
             continue
         comments: list[str] = []
         requirements: list[str] = []
-        for line in section:
-            if line.lstrip().startswith(("#", "-", "http://", "https://")):
-                comments.append(line)
+        for record in requirement_records(section):
+            if record.lstrip().startswith(("#", "-", "http://", "https://")):
+                comments.append(record)
             else:
-                requirements.append(line)
+                requirements.append(record)
         requirements.sort(key=str.casefold)
         output.append("\n".join(comments + requirements))
     if not output:
