@@ -1,0 +1,48 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="512"
+  height="512"
+  viewBox="0 0 512 512"
+  role="img"
+  aria-labelledby="title description"
+>
+  <title id="title">lint icon</title>
+  <desc id="description">
+    Code brackets surrounding a formatting check mark.
+  </desc>
+  <rect width="512" height="512" rx="112" fill="#101418" />
+  <rect
+    x="40"
+    y="40"
+    width="432"
+    height="432"
+    rx="84"
+    fill="#172128"
+    stroke="#33434d"
+    stroke-width="8"
+  />
+  <path
+    d="M172 154 82 256l90 102"
+    fill="none"
+    stroke="#a7bac5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="30"
+  />
+  <path
+    d="m340 154 90 102-90 102"
+    fill="none"
+    stroke="#a7bac5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="30"
+  />
+  <path
+    d="m177 265 53 53 112-130"
+    fill="none"
+    stroke="#55d6be"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="34"
+  />
+</svg>

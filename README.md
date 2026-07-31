@@ -1,4 +1,12 @@
+<p align="center">
+  <img src="assets/icon.svg" alt="lint icon" width="128" />
+</p>
+
 # lint
+
+[![CI](https://github.com/trycopilotai/lint/actions/workflows/ci.yml/badge.svg)](https://github.com/trycopilotai/lint/actions/workflows/ci.yml)
+[![Images](https://github.com/trycopilotai/lint/actions/workflows/images.yml/badge.svg)](https://github.com/trycopilotai/lint/actions/workflows/images.yml)
+[![Release](https://github.com/trycopilotai/lint/actions/workflows/release.yml/badge.svg)](https://github.com/trycopilotai/lint/actions/workflows/release.yml)
 
 `lint` is one read-only-by-default formatting interface for
 local tools and independently addressable per-language
@@ -63,7 +71,7 @@ Use the composite GitHub Action:
 ```yaml
 steps:
   - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
-  - uses: trycopilotai/lint@v0.1.3
+  - uses: trycopilotai/lint@v0.1.4
     with:
       mode: read-only
       cwd: .
@@ -118,7 +126,7 @@ The default policy covers:
 Pinned versions are recorded in `languages.json`. Local runs
 report an install hint when a required executable is absent.
 Docker runs use
-`ghcr.io/trycopilotai/lint-<language>:0.1.3`. Each final
+`ghcr.io/trycopilotai/lint-<language>:0.1.4`. Each final
 image is checked against its compressed-size budget and
 rejects shell, package-manager, and standalone compiler
 executables.
@@ -191,7 +199,7 @@ archive="$(mktemp -d)"
 target="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/lint"
 install -d "$target"
 curl --fail --location \
-  https://github.com/trycopilotai/lint/archive/refs/tags/v0.1.3.tar.gz \
+  https://github.com/trycopilotai/lint/archive/refs/tags/v0.1.4.tar.gz \
   >"$archive/lint.tar.gz"
 tar -xzf "$archive/lint.tar.gz" \
   --strip-components=1 \
@@ -213,7 +221,7 @@ archive="$(mktemp -d)"
 target="${CODEX_HOME:-$HOME/.codex}/skills/lint"
 install -d "$target"
 curl --fail --location \
-  https://github.com/trycopilotai/lint/archive/refs/tags/v0.1.3.tar.gz \
+  https://github.com/trycopilotai/lint/archive/refs/tags/v0.1.4.tar.gz \
   >"$archive/lint.tar.gz"
 tar -xzf "$archive/lint.tar.gz" \
   --strip-components=1 \
