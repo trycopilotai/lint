@@ -1,0 +1,10 @@
+- name: formatter
+  color: "1D76DB"
+  description: Formatter behavior and language coverage
+- name: supply-chain
+  color: "5319E7"
+  description:
+    Images, checksums, SBOMs, and release provenance
+- name: good first issue
+  color: "7057FF"
+  description: Scoped work suitable for a first contribution

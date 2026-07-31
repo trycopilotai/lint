@@ -176,16 +176,22 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for changes and
 deferred public transition for packages and the draft
 release.
 
+Public issues use the `formatter` and `supply-chain` domain
+labels. Starter tasks use `good first issue`; the launch
+procedure creates them from the committed issue forms only
+after a public maintainer identity is available.
+
 ## Claude Code
 
-Install the pinned standalone skill after repository access
-is available:
+After public launch, install the pinned standalone skill
+without authentication:
 
 ```sh
 archive="$(mktemp -d)"
 target="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/lint"
 install -d "$target"
-gh api repos/trycopilotai/lint/tarball/v0.1.2 \
+curl --fail --location \
+  https://github.com/trycopilotai/lint/archive/refs/tags/v0.1.2.tar.gz \
   >"$archive/lint.tar.gz"
 tar -xzf "$archive/lint.tar.gz" \
   --strip-components=1 \
@@ -199,13 +205,15 @@ distribution uses `/lint:lint`.
 
 ## Codex
 
-Install the same pinned skill into the Codex skill store:
+After public launch, install the same pinned skill into the
+Codex skill store without authentication:
 
 ```sh
 archive="$(mktemp -d)"
 target="${CODEX_HOME:-$HOME/.codex}/skills/lint"
 install -d "$target"
-gh api repos/trycopilotai/lint/tarball/v0.1.2 \
+curl --fail --location \
+  https://github.com/trycopilotai/lint/archive/refs/tags/v0.1.2.tar.gz \
   >"$archive/lint.tar.gz"
 tar -xzf "$archive/lint.tar.gz" \
   --strip-components=1 \

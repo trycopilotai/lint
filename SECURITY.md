@@ -29,3 +29,9 @@ not expose project plugin or cache-path inputs.
 The exception is scoped to the Black 24.10.0 package URL and
 expires on 2026-10-31. A release after that date must update
 the pin or record a newly reviewed disposition.
+
+Public follow-up work about formatter isolation uses the
+`formatter` label. Public follow-up work about images,
+checksums, SBOMs, attestations, or release provenance uses
+`supply-chain`. Never place vulnerability details in either
+public label.

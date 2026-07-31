@@ -1,0 +1,44 @@
+name: Supply-chain and release
+description:
+  Report an image, checksum, SBOM, or release issue.
+title: ""
+labels:
+  - supply-chain
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Use private vulnerability reporting for security
+        details.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - Container image
+        - Source archive
+        - Checksum
+        - SBOM
+        - Attestation
+        - Release manifest
+        - GitHub Action
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version, tag, or digest
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: Reproducible observation
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
