@@ -173,6 +173,49 @@ class FormattingTest(unittest.TestCase):
         self.assertIn("--no-editorconfig", command)
         self.assertNotIn("--plugin", command)
 
+    def test_local_formatter_runs_in_external_mirror(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve() / "project"
+            root.mkdir()
+            path = root / "nested" / "fixture.py"
+            path.parent.mkdir()
+            path.write_text("value = 1\n", encoding="utf-8")
+            observed: dict[str, Path] = {}
+
+            def record_formatter(
+                language: LINT.Language,
+                mirror_path: Path,
+                formatter_cwd: Path,
+                timeout_seconds: int,
+            ) -> None:
+                observed["path"] = mirror_path
+                observed["cwd"] = formatter_cwd
+
+            with mock.patch.object(
+                LINT,
+                "verify_formatter_version",
+            ), mock.patch.object(
+                LINT,
+                "run_formatter",
+                side_effect=record_formatter,
+            ):
+                LINT.prepare_results(
+                    cwd=root,
+                    paths=[path],
+                    requested_languages=frozenset(),
+                    use_docker=False,
+                )
+
+        mirror_path = observed["path"]
+        formatter_cwd = observed["cwd"]
+        self.assertEqual(
+            Path("nested/fixture.py"),
+            mirror_path.relative_to(formatter_cwd),
+        )
+        self.assertNotEqual(root, formatter_cwd)
+        self.assertNotIn(root, formatter_cwd.parents)
+        self.assertFalse(formatter_cwd.exists())
+
     def test_julia_path_is_passed_as_an_argument(self) -> None:
         language = LINT.Language(
             id="julia",

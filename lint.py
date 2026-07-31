@@ -685,7 +685,7 @@ def prepare_results(
     timeout_seconds = request_limits["timeout_seconds_per_file"]
     results: list[FormatResult] = []
     verified_families: set[str] = set()
-    workspace = tempfile.mkdtemp(prefix=".lint-work-", dir=cwd)
+    workspace = tempfile.mkdtemp(prefix="lint-work-")
     mirror_root = Path(workspace)
     os.chmod(mirror_root, 0o777)
     try:
@@ -718,7 +718,7 @@ def prepare_results(
                 run_formatter(
                     language,
                     mirror_path,
-                    cwd,
+                    mirror_root,
                     timeout_seconds,
                 )
             results.append(
