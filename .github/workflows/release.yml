@@ -9,7 +9,7 @@ on:
         description: "Existing signed release tag"
         required: true
         type: string
-        default: v0.1.0
+        default: v0.1.1
 
 permissions:
   contents: read
@@ -193,6 +193,7 @@ jobs:
           exit-code: "1"
           ignore-unfixed: true
           severity: HIGH,CRITICAL
+          trivyignores: .trivyignore.yaml
       - name: Record digest
         shell: bash
         env:

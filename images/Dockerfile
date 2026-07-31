@@ -2,7 +2,7 @@
 
 ARG ALPINE_3_23="alpine:3.23@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40"
 ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:d97bc0a941b8d4be647dc0ee75b264ddbb772f1ac5ba690a4309c00723b23775"
-ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.7-alpine3.23@sha256:405a4e86f50ab5fd78c65bab461499913088d1702da4faf6236426653cc052c4"
+ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.10-alpine3.23@sha256:9297ae3050f7e80428142f784a6d016f80bc8b5cd54e7fc1b596935911b1e58e"
 ARG GO_IMAGE="golang:1.26.5-alpine3.23@sha256:622e56dbc11a8cfe87cafa2331e9a201877271cbff918af53d3be315f3da88cc"
 ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
 ARG JAVA_JDK_IMAGE="eclipse-temurin:21-jdk-alpine-3.23@sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76"
@@ -34,21 +34,47 @@ COPY --from=prettier-build \
 USER 65532:65532
 ENTRYPOINT ["/usr/local/bin/node", "/usr/local/lib/node_modules/prettier/bin/prettier.cjs", "--write", "--no-config", "--no-editorconfig", "--ignore-unknown", "--print-width", "60", "--prose-wrap", "always", "--trailing-comma", "none"]
 
-FROM downloader AS buildifier-download
-ARG TARGETARCH
-RUN set -eu; \
-    case "${TARGETARCH}" in \
-      amd64) checksum="6ceb7b0ab7cf66fceccc56a027d21d9cc557a7f34af37d2101edb56b92fcfa1a" ;; \
-      arm64) checksum="3baa1cf7eb41d51f462fdd1fff3a6a4d81d757275d05b2dd5f48671284e9a1a5" ;; \
-      *) exit 2 ;; \
-    esac; \
-    url="https://github.com/bazelbuild/buildtools/releases/download/v8.2.1/buildifier-linux-${TARGETARCH}"; \
-    curl --fail --location --output /buildifier "${url}"; \
-    echo "${checksum}  /buildifier" | sha256sum -c; \
-    chmod 0555 /buildifier
+FROM downloader AS go-tools-source
+RUN curl --fail --location \
+      --output /buildtools.tar.gz \
+      https://github.com/bazelbuild/buildtools/archive/refs/tags/v8.2.1.tar.gz \
+    && echo "53119397bbce1cd7e4c590e117dcda343c2086199de62932106c80733526c261  /buildtools.tar.gz" \
+      | sha256sum -c \
+    && mkdir /buildtools \
+    && tar -xzf /buildtools.tar.gz \
+      --strip-components=1 \
+      -C /buildtools \
+    && curl --fail --location \
+      --output /shfmt.tar.gz \
+      https://github.com/mvdan/sh/archive/refs/tags/v3.13.1.tar.gz \
+    && echo "b31aad2d4c26b0c6e8ebe894d59022520bbebce33e082d7d29e4325eee35d308  /shfmt.tar.gz" \
+      | sha256sum -c \
+    && mkdir /shfmt-source \
+    && tar -xzf /shfmt.tar.gz \
+      --strip-components=1 \
+      -C /shfmt-source
+
+FROM ${GO_IMAGE} AS go-tools-build
+ENV CGO_ENABLED=0 GOTOOLCHAIN=local
+COPY --from=go-tools-source /buildtools /buildtools
+COPY --from=go-tools-source /shfmt-source /shfmt-source
+RUN cd /buildtools \
+    && go build \
+      -mod=readonly \
+      -trimpath \
+      -ldflags="-s -w" \
+      -o /buildifier \
+      ./buildifier \
+    && cd /shfmt-source \
+    && go build \
+      -mod=readonly \
+      -trimpath \
+      -ldflags="-s -w" \
+      -o /shfmt \
+      ./cmd/shfmt
 
 FROM scratch AS buildifier
-COPY --from=buildifier-download /buildifier /buildifier
+COPY --from=go-tools-build /buildifier /buildifier
 USER 65532:65532
 ENTRYPOINT ["/buildifier", "-mode=fix"]
 
@@ -80,21 +106,8 @@ COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
 USER 65532:65532
 ENTRYPOINT ["/usr/local/bin/python3", "/requirements-format"]
 
-FROM downloader AS shfmt-download
-ARG TARGETARCH
-RUN set -eu; \
-    case "${TARGETARCH}" in \
-      amd64) checksum="fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1" ;; \
-      arm64) checksum="32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7" ;; \
-      *) exit 2 ;; \
-    esac; \
-    url="https://github.com/mvdan/sh/releases/download/v3.13.1/shfmt_v3.13.1_linux_${TARGETARCH}"; \
-    curl --fail --location --output /shfmt "${url}"; \
-    echo "${checksum}  /shfmt" | sha256sum -c; \
-    chmod 0555 /shfmt
-
 FROM scratch AS shfmt
-COPY --from=shfmt-download /shfmt /shfmt
+COPY --from=go-tools-build /shfmt /shfmt
 USER 65532:65532
 ENTRYPOINT ["/shfmt", "-w", "-i", "2", "-ci"]
 
@@ -174,6 +187,7 @@ USER 65532:65532
 ENTRYPOINT ["/bin/rustfmt"]
 
 FROM ${JAVA_JDK_IMAGE} AS kotlin-build
+RUN apk upgrade --no-cache
 ADD --checksum=sha256:01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985 \
     https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint \
     /ktlint

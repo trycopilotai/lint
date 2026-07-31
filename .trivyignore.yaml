@@ -1,0 +1,11 @@
+vulnerabilities:
+  - id: CVE-2026-32274
+    purls:
+      - "pkg:pypi/black@24.10.0"
+    expired_at: 2026-10-31
+    statement: >-
+      Black is intentionally pinned for output
+      compatibility. This image always passes --no-config,
+      formats isolated temporary mirrors, and exposes no
+      project plugin or cache-path input. Reassess the pin
+      before this exception expires.

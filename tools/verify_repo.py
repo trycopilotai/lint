@@ -128,7 +128,7 @@ def verify_manifests() -> None:
         ROOT / ".codex-plugin" / "plugin.json",
     ):
         data = json.loads(manifest.read_text(encoding="utf-8"))
-        if data["version"] != "0.1.0":
+        if data["version"] != "0.1.1":
             raise ValueError(f"wrong plugin version: {manifest}")
 
 

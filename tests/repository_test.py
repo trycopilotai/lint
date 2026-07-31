@@ -92,6 +92,20 @@ class ImageContentsTest(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertFalse(IMAGE_VERIFIER.forbidden_executable(path))
 
+    def test_go_formatters_are_built_with_the_pinned_toolchain(self) -> None:
+        dockerfile = (ROOT / "images" / "Dockerfile").read_text(encoding="utf-8")
+
+        self.assertIn("FROM ${GO_IMAGE} AS go-tools-build", dockerfile)
+        self.assertIn("./buildifier", dockerfile)
+        self.assertIn("./cmd/shfmt", dockerfile)
+
+    def test_black_scanner_exception_is_scoped_and_expires(self) -> None:
+        ignore = (ROOT / ".trivyignore.yaml").read_text(encoding="utf-8")
+
+        self.assertIn("CVE-2026-32274", ignore)
+        self.assertIn("pkg:pypi/black@24.10.0", ignore)
+        self.assertIn("expired_at: 2026-10-31", ignore)
+
 
 class ReleaseWorkflowTest(unittest.TestCase):
     def test_attestations_wait_for_public_visibility(self) -> None:
