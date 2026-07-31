@@ -489,7 +489,8 @@ class MainTest(unittest.TestCase):
                 0, completed.returncode, completed.stdout + completed.stderr
             )
             start = completed.stdout.index("{")
-            response = json.loads(completed.stdout[start:])
+            decoder = json.JSONDecoder()
+            response, _ = decoder.raw_decode(completed.stdout[start:])
             self.assertEqual("clean", response["status"])
             self.assertEqual(1, response["summary"]["selected"])
 
