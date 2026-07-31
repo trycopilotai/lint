@@ -496,7 +496,7 @@ class MainTest(unittest.TestCase):
             for name in ("lint.py", "languages.json"):
                 (root / name).write_bytes((ROOT / name).read_bytes())
             path = root / "requirements.txt"
-            path.write_text("alpha==1\n", encoding="utf-8")
+            path.write_bytes(b"alpha==1\n")
             subprocess.run(
                 ["git", "-C", str(root), "add", "requirements.txt"],
                 check=True,
@@ -505,7 +505,7 @@ class MainTest(unittest.TestCase):
                 ["git", "-C", str(root), "commit", "-qm", "fixture"],
                 check=True,
             )
-            path.write_text("# modified\nalpha==1\n", encoding="utf-8")
+            path.write_bytes(b"# modified\nalpha==1\n")
 
             completed = subprocess.run(
                 [
