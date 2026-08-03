@@ -206,7 +206,7 @@ jobs:
             --digest "$DIGEST" \
             --platform "linux/amd64" \
             --budget-mib "$BUDGET_MIB"
-          docker image rm lint-release-test:amd64 "$IMAGE@$DIGEST"
+          docker image rm lint-release-test:amd64
       - name: Verify ARM64 image
         if: steps.visibility.outputs.value == 'public'
         shell: bash

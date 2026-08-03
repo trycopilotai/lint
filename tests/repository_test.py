@@ -698,6 +698,25 @@ class ReleaseWorkflowTest(unittest.TestCase):
         self.assertIn("--image lint-release-test:amd64", release)
         self.assertIn("--image lint-release-test:arm64", release)
 
+    def test_release_cleanup_removes_only_the_local_image_alias(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        cleanup = []
+        for line in release.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("docker image rm"):
+                cleanup.append(stripped)
+
+        self.assertEqual(
+            ["docker image rm lint-release-test:amd64"],
+            cleanup,
+        )
+        self.assertNotIn(
+            'docker image rm lint-release-test:amd64 "$IMAGE@$DIGEST"',
+            release,
+        )
+
 
 class WorkflowTriggerTest(unittest.TestCase):
     """A version tag push must start the release workflow alone.
