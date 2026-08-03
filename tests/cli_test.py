@@ -637,7 +637,7 @@ class FormattingTest(unittest.TestCase):
             "toml": "taplo 0.10.0",
             "xml": (
                 "/tools/xmllint: using libxml version 21503\n"
-                "   compiled with: Threads Tree Reader"
+                "   compiled with: Threads Tree Reader "
             ),
             "swift": "603.0.0",
             "csharp": "1.3.0",
@@ -680,6 +680,55 @@ class FormattingTest(unittest.TestCase):
             for invalid_output in invalid_outputs:
                 with self.subTest(family=family, output=invalid_output):
                     self.assertFalse(LINT.version_output_matches(probe, invalid_output))
+
+    def test_xmllint_numeric_version_is_compared_exactly(self) -> None:
+        language = LINT.Language(
+            id="xml",
+            family="xml",
+            extensions=(".xml",),
+            filenames=(),
+        )
+        probe = LINT.version_command(language)
+        banner = (
+            "/opt/libxml2/bin/xmllint: using libxml version 21503\n"
+            "   compiled with: Threads Tree Output Push Reader "
+            "Patterns Writer SAXv1 DTDValid HTML C14N Catalog XPath "
+            "XPointer XInclude ISO8859X Regexps Automata RelaxNG "
+            "Schemas Schematron Modules \n"
+        )
+
+        self.assertEqual("2.15.3", probe.description)
+        self.assertEqual(("21503",), probe.expected)
+        self.assertEqual("21503", LINT.libxml_numeric_version("2.15.3"))
+        self.assertEqual("30000", LINT.libxml_numeric_version("3.0.0"))
+        self.assertTrue(LINT.version_output_matches(probe, banner))
+
+        mismatched_outputs = (
+            banner.replace("21503", "21502", 1),
+            banner.replace("21503", "21504", 1),
+            banner.replace("21503", "215030", 1),
+            banner.replace("21503", "2.15.3", 1),
+        )
+        for mismatched in mismatched_outputs:
+            with self.subTest(output=mismatched.splitlines()[0]):
+                self.assertFalse(LINT.version_output_matches(probe, mismatched))
+
+        malformed_outputs = (
+            "/opt/libxml2/bin/xmllint: using libxml version\n",
+            "using libxml version 21503\n",
+            "xmllint: using libxml version 21503\nunexpected trailer\n",
+            "xmllint: using libxml version 21503\n   compiled with: \n",
+        )
+        for malformed in malformed_outputs:
+            with self.subTest(output=malformed):
+                self.assertFalse(LINT.version_output_matches(probe, malformed))
+
+        for malformed_pin in ("", "2", "2.15", "2.15.3.1", "2.15.x"):
+            with self.subTest(pin=malformed_pin), self.assertRaisesRegex(
+                LINT.FormatterError,
+                "invalid libxml2 version",
+            ):
+                LINT.libxml_numeric_version(malformed_pin)
 
     def test_rust_formatter_uses_the_pinned_toolchain(self) -> None:
         language = LINT.Language(

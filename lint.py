@@ -820,6 +820,11 @@ def version_command(language: Language) -> VersionProbe | None:
             grammar=(r"taplo " r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)"),
         )
     if family == "xml":
+        # xmllint reports LIBXML_VERSION, the packed integer 21503,
+        # rather than the released 2.15.3, so the pin is normalized
+        # to the same integer and still compared exactly. Its banner
+        # writes every compiled-in feature name followed by a space,
+        # so the second line always ends in one.
         return VersionProbe(
             command=("xmllint", "--version"),
             expected=(libxml_numeric_version(versions["libxml2"]),),
@@ -827,8 +832,7 @@ def version_command(language: Language) -> VersionProbe | None:
             grammar=(
                 r"(?:[A-Za-z0-9_./-]*/)?xmllint: using libxml version "
                 r"(?P<version>[0-9]+)"
-                r"(?:\r?\n   compiled with: [A-Z][A-Za-z0-9]*"
-                r"(?: [A-Z][A-Za-z0-9]*)*)?"
+                r"(?:\r?\n   compiled with: (?:[A-Z][A-Za-z0-9]* )+)?"
             ),
         )
     if family == "swift":
