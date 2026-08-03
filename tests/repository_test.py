@@ -1284,6 +1284,30 @@ class LaunchSurfaceTest(unittest.TestCase):
             with self.subTest(invocation=invocation):
                 self.assertIn(invocation, readme)
 
+    def test_marketplace_installs_are_pinned_and_match_manifests(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        normalized = " ".join(readme.split())
+        claude_manifest = json.loads(
+            (ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
+        )
+        codex_manifest = json.loads(
+            (ROOT / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(claude_manifest["name"], codex_manifest["name"])
+        selector = f'{claude_manifest["name"]}@trycopilotai'
+        self.assertEqual(2, readme.count(selector))
+        self.assertEqual(
+            2,
+            normalized.count(
+                "Once the matching `v0.5.0` marketplace release is published"
+            ),
+        )
+        self.assertIn("https://github.com/trycopilotai/skills.git#v0.5.0", readme)
+        self.assertIn("trycopilotai/skills --ref v0.5.0", normalized)
+        self.assertEqual(2, readme.count("npx @anthropic-ai/claude-code@2.1.220"))
+        self.assertEqual(2, readme.count("npx -y @openai/codex@0.146.0"))
+
     def test_issue_forms_and_domain_labels_are_declared(self) -> None:
         expected = [
             ROOT / ".github" / "ISSUE_TEMPLATE" / "config.yml",
