@@ -735,7 +735,37 @@ def npx_engine_failure(returncode: int, detail: str) -> bool:
         "eai_again",
         "enotfound",
     )
-    return any(marker in lowered for marker in markers)
+    if any(marker in lowered for marker in markers):
+        return True
+
+    npm_engine_codes = frozenset(
+        {
+            "E403",
+            "E404",
+            "EACCES",
+            "EAI_AGAIN",
+            "ECONNREFUSED",
+            "ECONNRESET",
+            "EHOSTUNREACH",
+            "ENETUNREACH",
+            "ENOSPC",
+            "ENOTFOUND",
+            "EPERM",
+            "ETIMEDOUT",
+        }
+    )
+    for line in detail.splitlines():
+        normalized = line.strip().lower()
+        code_match = re.match(
+            r"^npm (?:error|err!) code ([a-z0-9_]+)(?:\s|$)",
+            normalized,
+        )
+        if code_match is not None:
+            if code_match.group(1).upper() in npm_engine_codes:
+                return True
+        if re.match(r"^npm (?:error|err!) network(?:\s|$)", normalized):
+            return True
+    return False
 
 
 def libxml_numeric_version(version: str) -> str:
