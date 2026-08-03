@@ -8,6 +8,7 @@ import base64
 import dataclasses
 import fnmatch
 import json
+import ntpath
 import os
 import re
 import shutil
@@ -581,14 +582,30 @@ def select_paths(
     return git_paths(cwd, modified=modified)
 
 
-def npx_executable() -> str:
-    if os.name == "nt":
-        return "npx.cmd"
-    return "npx"
+def npx_command() -> list[str]:
+    if os.name != "nt":
+        return ["npx"]
 
-
-def is_npx_executable(executable: str) -> bool:
-    return os.path.basename(executable).lower() in {"npx", "npx.cmd"}
+    shim = shutil.which("npx.cmd")
+    node = shutil.which("node.exe")
+    if shim is None or node is None:
+        raise EngineError(
+            "safe npx entry point is unavailable; "
+            "install Node.js with npm or use --docker"
+        )
+    entrypoint = ntpath.join(
+        ntpath.dirname(shim),
+        "node_modules",
+        "npm",
+        "bin",
+        "npx-cli.js",
+    )
+    if not os.path.isfile(entrypoint):
+        raise EngineError(
+            "safe npx entry point is unavailable; "
+            "install Node.js with npm or use --docker"
+        )
+    return [node, entrypoint]
 
 
 def command_for(language: Language, path: Path) -> list[str]:
@@ -602,13 +619,16 @@ def command_for(language: Language, path: Path) -> list[str]:
             str(path),
         ]
     if family == "prettier":
-        executable = [
-            npx_executable(),
-            "-y",
-            f"prettier@{versions['prettier']}",
-        ]
         if CONTAINER_MARKER.is_file():
             executable = ["prettier"]
+        else:
+            executable = npx_command()
+            executable.extend(
+                [
+                    "-y",
+                    f"prettier@{versions['prettier']}",
+                ]
+            )
         executable.extend(
             [
                 "--write",
@@ -625,13 +645,16 @@ def command_for(language: Language, path: Path) -> list[str]:
         )
         return executable
     if family == "buildifier":
-        executable = [
-            npx_executable(),
-            "-y",
-            f"@bazel/buildifier@{versions['buildifier']}",
-        ]
         if CONTAINER_MARKER.is_file():
             executable = ["buildifier"]
+        else:
+            executable = npx_command()
+            executable.extend(
+                [
+                    "-y",
+                    f"@bazel/buildifier@{versions['buildifier']}",
+                ]
+            )
         executable.extend(["-mode=fix", str(path)])
         return executable
     if family == "black":
@@ -732,8 +755,6 @@ def npx_engine_failure(returncode: int, detail: str) -> bool:
     markers = (
         "command not found",
         "could not determine executable",
-        "eai_again",
-        "enotfound",
     )
     if any(marker in lowered for marker in markers):
         return True
@@ -1198,6 +1219,9 @@ def run_formatter(
     if language.family == "prettier":
         (path.parent / ".lint-empty-ignore").touch()
     command = command_for(language, path)
+    uses_npx = language.family in {"prettier", "buildifier"}
+    if CONTAINER_MARKER.is_file():
+        uses_npx = False
     pass_count = 1
     if language.family == "kotlin":
         pass_count = 2
@@ -1240,7 +1264,7 @@ def run_formatter(
                 detail = standard_output
             if detail == "":
                 detail = f"formatter exited {completed.returncode}"
-            if is_npx_executable(command[0]):
+            if uses_npx:
                 if npx_engine_failure(completed.returncode, detail):
                     raise EngineError(f"{detail}; {formatter_install_hint(language)}")
             raise FormatterError(detail)
