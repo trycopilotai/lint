@@ -744,6 +744,28 @@ class FormattingTest(unittest.TestCase):
             command,
         )
 
+    def test_npx_uses_the_windows_command_shim(self) -> None:
+        cases = (
+            ("json", "prettier", ".json"),
+            ("bazel", "buildifier", ".bzl"),
+        )
+        for language_id, family, extension in cases:
+            language = LINT.Language(
+                id=language_id,
+                family=family,
+                extensions=(extension,),
+                filenames=(),
+            )
+            path = Path(f"fixture{extension}")
+            with self.subTest(language=language_id), mock.patch.object(
+                LINT.os,
+                "name",
+                "nt",
+            ):
+                command = LINT.command_for(language, path)
+
+            self.assertEqual("npx.cmd", command[0])
+
     def test_npx_dependency_failure_has_an_actionable_hint(self) -> None:
         completed = subprocess.CompletedProcess(
             args=[],
@@ -785,6 +807,39 @@ class FormattingTest(unittest.TestCase):
                         timeout_seconds=30,
                     )
                 self.assertIn(install_command, str(caught.exception))
+
+    def test_windows_npx_dependency_failure_stays_actionable(self) -> None:
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=1,
+            stdout=b"",
+            stderr=b"npm error code EAI_AGAIN\n",
+        )
+        language = LINT.Language(
+            id="json",
+            family="prettier",
+            extensions=(".json",),
+            filenames=(),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "fixture.json"
+            path.write_text('{"value": true}\n', encoding="utf-8")
+            with mock.patch.object(
+                LINT.os,
+                "name",
+                "nt",
+            ), mock.patch.object(
+                LINT.subprocess,
+                "run",
+                return_value=completed,
+            ), self.assertRaises(LINT.EngineError):
+                LINT.run_formatter(
+                    language=language,
+                    path=path,
+                    cwd=root,
+                    timeout_seconds=30,
+                )
 
     def test_npx_formatter_failure_is_not_a_dependency_failure(self) -> None:
         completed = subprocess.CompletedProcess(
