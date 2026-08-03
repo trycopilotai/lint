@@ -319,13 +319,17 @@ cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
 cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
-The standalone invocation is `/lint`. Install the Claude
-marketplace distribution from
+The standalone invocation is `/lint`. Once the matching
+`v0.5.0` marketplace release is published, install the
+Claude distribution from
 [`trycopilotai/skills`](https://github.com/trycopilotai/skills):
 
-```text
-/plugin marketplace add trycopilotai/skills
-/plugin install lint@trycopilotai
+```sh
+npx @anthropic-ai/claude-code@2.1.220 plugin \
+  marketplace add \
+  https://github.com/trycopilotai/skills.git#v0.5.0
+npx @anthropic-ai/claude-code@2.1.220 plugin \
+  install lint@trycopilotai
 ```
 
 Its invocation is `/lint:lint`.
@@ -355,13 +359,16 @@ cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
 cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
-The standalone invocation is `$lint`. Install the Codex
-marketplace distribution from
+The standalone invocation is `$lint`. Once the matching
+`v0.5.0` marketplace release is published, install the Codex
+distribution from
 [`trycopilotai/skills`](https://github.com/trycopilotai/skills):
 
 ```sh
-npx -y @openai/codex plugin marketplace add trycopilotai/skills
-npx -y @openai/codex plugin add lint@trycopilotai
+npx -y @openai/codex@0.146.0 plugin marketplace add \
+  trycopilotai/skills --ref v0.5.0
+npx -y @openai/codex@0.146.0 plugin add \
+  lint@trycopilotai
 ```
 
 Its invocation is `@lint`.
