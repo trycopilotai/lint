@@ -1,4 +1,15 @@
-images/licenses/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+# Each legal payload is bound by the SHA-256 in its target
+# manifest. Some payloads intentionally contain mixed line
+# endings, so preserve the blob bytes instead of normalizing
+# them during checkout.
+images/licenses/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+
+# These generated dependency receipts and formatter lockfiles
+# are also bound by checked-in SHA-256 values.
+images/closures/** -text
+images/julia/Manifest.toml -text
+images/julia/Project.toml -text
+images/swift/Package.resolved -text
 
 # evidence/demo-manifest.json records a SHA-256 for each path
 # below, and scripts/demo.sh is read by a POSIX shell. A
