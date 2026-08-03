@@ -156,8 +156,8 @@ class ReleaseProvenanceTest(unittest.TestCase):
                     1,
                 )[0]
                 self.assertIn(
-                    "if: steps.visibility.outputs.value == 'public'",
-                    step,
+                    "if: needs.matrix.outputs.repository_visibility == 'public'",
+                    " ".join(step.split()),
                 )
 
 
