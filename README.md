@@ -319,8 +319,16 @@ cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
 cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
-The standalone invocation is `/lint`. A Claude marketplace
-distribution uses `/lint:lint`.
+The standalone invocation is `/lint`. Install the Claude
+marketplace distribution from
+[`trycopilotai/skills`](https://github.com/trycopilotai/skills):
+
+```text
+/plugin marketplace add trycopilotai/skills
+/plugin install lint@trycopilotai
+```
+
+Its invocation is `/lint:lint`.
 
 ## Codex
 
@@ -347,8 +355,16 @@ cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
 cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
-The standalone invocation is `$lint`. A Codex marketplace
-distribution uses `@lint`.
+The standalone invocation is `$lint`. Install the Codex
+marketplace distribution from
+[`trycopilotai/skills`](https://github.com/trycopilotai/skills):
+
+```sh
+npx -y @openai/codex plugin marketplace add trycopilotai/skills
+npx -y @openai/codex plugin add lint@trycopilotai
+```
+
+Its invocation is `@lint`.
 
 The local backend reads selected repository files and
 executes formatter processes. Its pinned Prettier and
