@@ -1,0 +1,24 @@
+{
+  "entries": [
+    {
+      "component": "LLVM clang-format",
+      "license": "Apache-2.0 WITH LLVM-exception",
+      "path": "llvm-LICENSE.TXT",
+      "payload_sha256": "8d85c1057d742e597985c7d4e6320b015a9139385cff4cbae06ffc0ebe89afee",
+      "source_sha256": "8d85c1057d742e597985c7d4e6320b015a9139385cff4cbae06ffc0ebe89afee",
+      "source_url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-18.1.8/LICENSE.TXT",
+      "version": "18.1.8"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "path": "musl-COPYRIGHT",
+      "payload_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    }
+  ],
+  "schema_version": 4,
+  "target": "clang"
+}

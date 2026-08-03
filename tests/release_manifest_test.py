@@ -40,7 +40,7 @@ class ImageDigestSetTest(unittest.TestCase):
             record = {
                 "digest": "sha256:" + f"{index:064x}",
                 "image": f"ghcr.io/trycopilotai/lint-{language}",
-                "staging_tag": "0.1.4-deadbeef",
+                "staging_tag": "0.1.5-deadbeef",
             }
             (directory / f"{language}.json").write_text(
                 json.dumps(record),
@@ -57,11 +57,11 @@ class ImageDigestSetTest(unittest.TestCase):
 
             digests = RELEASE_MANIFEST.image_digests(
                 directory,
-                version="0.1.4",
+                version="0.1.5",
                 revision="deadbeef",
             )
 
-        self.assertEqual(26, len(digests))
+        self.assertEqual(28, len(digests))
 
     def test_missing_digest_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -71,7 +71,7 @@ class ImageDigestSetTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "coverage differs"):
                 RELEASE_MANIFEST.image_digests(
                     directory,
-                    version="0.1.4",
+                    version="0.1.5",
                     revision="deadbeef",
                 )
 
@@ -86,7 +86,7 @@ class ImageDigestSetTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "duplicate image"):
                 RELEASE_MANIFEST.image_digests(
                     directory,
-                    version="0.1.4",
+                    version="0.1.5",
                     revision="deadbeef",
                 )
 

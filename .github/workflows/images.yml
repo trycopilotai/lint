@@ -76,19 +76,90 @@ jobs:
         run: |
           test "$(docker image inspect "$IMAGE" \
             --format '{{.Config.User}}')" = "65532:65532"
+      - name: Verify runtime formatter identity
+        run: >-
+          python3 images/verify_tool_version.py --target
+          "${{ matrix.target }}" --image "lint-${{
+          matrix.language }}:ci"
       - name: Smoke image
         run: >-
           python3 images/smoke.py --target "${{
           matrix.target }}" --image "lint-${{
           matrix.language }}:ci"
+      - name: Verify source immutability
+        shell: bash
+        run: |
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+      - name: Verify local and Docker golden parity
+        env:
+          IMAGE: "lint-${{ matrix.language }}:ci"
+          LANGUAGE: "${{ matrix.language }}"
+          TARGET: "${{ matrix.target }}"
+        run: >-
+          python3 images/verify_cli.py --target "$TARGET"
+          --language "$LANGUAGE" --backend docker --image
+          "$IMAGE" --architecture "amd64"
+      - name: Export AMD64 OCI layout
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          file: images/Dockerfile
+          target: "${{ matrix.target }}"
+          platforms: linux/amd64
+          outputs: >-
+            type=oci,dest=${{ runner.temp }}/lint-${{
+            matrix.language }}-amd64.oci.tar
+          cache-from:
+            "type=gha,scope=${{ matrix.target }}-amd64"
+      - name: Verify AMD64 compressed layer budget
+        shell: bash
+        run: >-
+          python3 images/verify_registry_size.py
+          --oci-layout "${RUNNER_TEMP}/lint-${{
+          matrix.language }}-amd64.oci.tar" --platform
+          linux/amd64 --budget-mib "${{ matrix.budget_mib
+          }}"
       - name: Enforce compressed size budget
         run: >-
           python3 images/verify_images.py --image "lint-${{
           matrix.language }}:ci" --budget-mib "${{
-          matrix.budget_mib }}"
+          matrix.budget_mib }}" --target "${{ matrix.target
+          }}" --architecture "amd64"
+      - name: Generate AMD64 SBOM
+        if: github.event_name != 'pull_request'
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref: "lint-${{ matrix.language }}:ci"
+          format: cyclonedx
+          output: "sbom-${{ matrix.language }}-amd64.json"
+      - name: Verify SBOM AMD64
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: >-
+          jq -e '.bomFormat == "CycloneDX" and .specVersion'
+          "sbom-${{ matrix.language }}-amd64.json"
+      - name: Scan AMD64 vulnerabilities
+        if: github.event_name != 'pull_request'
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref: "lint-${{ matrix.language }}:ci"
+          format: table
+          exit-code: "1"
+          severity: HIGH,CRITICAL
+          trivyignores: .trivyignore.yaml
+          skip-setup-trivy: true
+      - name: Upload SBOM AMD64
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: "sbom-${{ matrix.language }}-amd64"
+          path: "sbom-${{ matrix.language }}-amd64.json"
+          if-no-files-found: error
 
   build-arm64:
     if: >-
+      github.event.repository.visibility == 'public' &&
       github.event_name != 'pull_request' &&
       needs.select.outputs.matrix != '{"include":[]}'
     needs: select
@@ -125,13 +196,80 @@ jobs:
         run: |
           test "$(docker image inspect "$IMAGE" \
             --format '{{.Config.User}}')" = "65532:65532"
+      - name: Verify runtime formatter identity
+        run: >-
+          python3 images/verify_tool_version.py --target
+          "${{ matrix.target }}" --image "lint-${{
+          matrix.language }}:ci-arm64"
       - name: Smoke image
         run: >-
           python3 images/smoke.py --target "${{
           matrix.target }}" --image "lint-${{
           matrix.language }}:ci-arm64"
-      - name: Enforce compressed size budget
+      - name: Verify source immutability
+        shell: bash
+        run: |
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+      - name: Verify local and Docker golden parity
+        env:
+          IMAGE: "lint-${{ matrix.language }}:ci-arm64"
+          LANGUAGE: "${{ matrix.language }}"
+          TARGET: "${{ matrix.target }}"
         run: >-
-          python3 images/verify_images.py --image "lint-${{
-          matrix.language }}:ci-arm64" --budget-mib "${{
-          matrix.budget_mib }}"
+          python3 images/verify_cli.py --target "$TARGET"
+          --language "$LANGUAGE" --backend docker --image
+          "$IMAGE" --architecture "arm64"
+      - name: Export ARM64 OCI layout
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          file: images/Dockerfile
+          target: "${{ matrix.target }}"
+          platforms: linux/arm64
+          outputs: >-
+            type=oci,dest=${{ runner.temp }}/lint-${{
+            matrix.language }}-arm64.oci.tar
+          cache-from:
+            "type=gha,scope=${{ matrix.target }}-arm64"
+      - name: Verify ARM64 compressed layer budget
+        shell: bash
+        run: >-
+          python3 images/verify_registry_size.py
+          --oci-layout "${RUNNER_TEMP}/lint-${{
+          matrix.language }}-arm64.oci.tar" --platform
+          linux/arm64 --budget-mib "${{ matrix.budget_mib
+          }}"
+      # No ARM64 canonical inventory is checked in, so there is
+      # no reviewed allowlist for this job to compare against.
+      # `images/verify_images.py --architecture arm64` would
+      # look one up and fail on every run. The compressed-layer
+      # budget above measures the same OCI layout that reaches
+      # the registry, so the size gate is kept without claiming
+      # a content inventory this repository does not have.
+      - name: Generate ARM64 SBOM
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref: "lint-${{ matrix.language }}:ci-arm64"
+          format: cyclonedx
+          output: "sbom-${{ matrix.language }}-arm64.json"
+      - name: Verify SBOM ARM64
+        shell: bash
+        run: >-
+          jq -e '.bomFormat == "CycloneDX" and .specVersion'
+          "sbom-${{ matrix.language }}-arm64.json"
+      - name: Scan ARM64 vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
+        with:
+          image-ref: "lint-${{ matrix.language }}:ci-arm64"
+          format: table
+          exit-code: "1"
+          severity: HIGH,CRITICAL
+          trivyignores: .trivyignore.yaml
+          skip-setup-trivy: true
+      - name: Upload SBOM ARM64
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: "sbom-${{ matrix.language }}-arm64"
+          path: "sbom-${{ matrix.language }}-arm64.json"
+          if-no-files-found: error

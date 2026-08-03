@@ -9,10 +9,16 @@ on:
         description: "Existing signed release tag"
         required: true
         type: string
-        default: v0.1.4
+        default: v0.1.5
 
 permissions:
   contents: read
+
+concurrency:
+  group: >-
+    release-${{ github.event_name == 'workflow_dispatch' &&
+    inputs.release-ref || github.ref_name }}
+  cancel-in-progress: false
 
 env:
   RELEASE_REF:
@@ -29,15 +35,27 @@ jobs:
           ref: "${{ env.RELEASE_REF }}"
           fetch-depth: 0
           persist-credentials: false
+      - name: Check out release trust root
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: 3d5d4ee7b83b2c6442039b8a72a571c729ffcead
+          path: release-trust
+          sparse-checkout: .github/release-allowed-signers
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
       - name: Verify signed release tag
         shell: bash
         run: |
+          test "$(
+            git -C "$GITHUB_WORKSPACE/release-trust" rev-parse HEAD
+          )" = "3d5d4ee7b83b2c6442039b8a72a571c729ffcead"
           test "${RELEASE_REF#v}" != "$RELEASE_REF"
           test "$(git cat-file -t "$RELEASE_REF")" = "tag"
           test "$(git rev-list -n 1 "$RELEASE_REF")" = \
             "$(git rev-parse HEAD)"
           git \
-            -c gpg.ssh.allowedSignersFile=.github/release-allowed-signers \
+            -c gpg.format=ssh \
+            -c "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/.github/release-allowed-signers" \
             verify-tag "$RELEASE_REF"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
@@ -46,23 +64,16 @@ jobs:
       - name: Verify repository
         run: make verify
       - name: Check Python formatting
-        run: >-
-          pipx run --spec black==24.10.0 black --check
-          --diff lint.py dlint.py service.py
-          action_entrypoint.py tests images scripts skills
-          tools
+        run: make pyformat
       - name: Check document codec
-        run: >-
-          npx -y prettier@3.7.4 --check --print-width 60
-          --prose-wrap always --trailing-comma none
-          README.md CONTRIBUTING.md SECURITY.md action.yml
-          .github/workflows .claude-plugin .codex-plugin
-          docs skills languages.json images/*.json
+        run: make codec
 
   matrix:
     runs-on: ubuntu-latest
     outputs:
       images: "${{ steps.images.outputs.matrix }}"
+      publish_images:
+        "${{ steps.release-mode.outputs.publish_images }}"
     steps:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -75,8 +86,21 @@ jobs:
         run: |
           matrix="$(python3 tools/release_matrix.py)"
           printf 'matrix=%s\n' "$matrix" >>"$GITHUB_OUTPUT"
+      - name: Select release mode
+        id: release-mode
+        shell: bash
+        run: |
+          source_version="${RELEASE_REF#v}"
+          image_version="$(jq -r .version images/matrix.json)"
+          publish_images=false
+          if test "$source_version" = "$image_version"; then
+            publish_images=true
+          fi
+          printf 'publish_images=%s\n' "$publish_images" \
+            >>"$GITHUB_OUTPUT"
 
   images:
+    if: needs.matrix.outputs.publish_images == 'true'
     needs: [matrix, verify]
     permissions:
       contents: read
@@ -102,7 +126,13 @@ jobs:
           visibility="$(
             gh api "repos/$GITHUB_REPOSITORY" --jq .visibility
           )"
+          platforms=linux/amd64
+          if test "$visibility" = "public"; then
+            platforms=linux/amd64,linux/arm64
+          fi
           printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
+          printf 'platforms=%s\n' "$platforms" \
+            >>"$GITHUB_OUTPUT"
       - name: Set version
         id: version
         shell: bash
@@ -112,10 +142,11 @@ jobs:
           printf 'sha=%s\n' "$(git rev-parse HEAD)" \
             >>"$GITHUB_OUTPUT"
       - name: Set up QEMU
+        if: steps.visibility.outputs.value == 'public'
         uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130
       - name: Set up Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
-      - name: Log in to the private registry
+      - name: Log in to the image registry
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
         with:
           registry: ghcr.io
@@ -128,7 +159,8 @@ jobs:
           context: .
           file: images/Dockerfile
           target: "${{ matrix.target }}"
-          platforms: linux/amd64,linux/arm64
+          platforms:
+            "${{ steps.visibility.outputs.platforms }}"
           push: true
           tags:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
@@ -147,18 +179,36 @@ jobs:
           IMAGE:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
             }}"
+          LANGUAGE: "${{ matrix.language }}"
           TARGET: "${{ matrix.target }}"
         run: |
           docker pull --platform linux/amd64 "$IMAGE@$DIGEST"
           docker image tag "$IMAGE@$DIGEST" lint-release-test:amd64
+          python3 images/verify_tool_version.py \
+            --target "$TARGET" \
+            --image lint-release-test:amd64
           python3 images/smoke.py \
             --target "$TARGET" \
             --image lint-release-test:amd64
+          python3 images/verify_cli.py \
+            --target "$TARGET" \
+            --language "$LANGUAGE" \
+            --backend docker \
+            --image lint-release-test:amd64 \
+            --architecture "amd64"
           python3 images/verify_images.py \
             --image lint-release-test:amd64 \
+            --budget-mib "$BUDGET_MIB" \
+            --target "$TARGET" \
+            --architecture "amd64"
+          python3 images/verify_registry_size.py \
+            --image "$IMAGE" \
+            --digest "$DIGEST" \
+            --platform "linux/amd64" \
             --budget-mib "$BUDGET_MIB"
           docker image rm lint-release-test:amd64 "$IMAGE@$DIGEST"
       - name: Verify ARM64 image
+        if: steps.visibility.outputs.value == 'public'
         shell: bash
         env:
           BUDGET_MIB: "${{ matrix.budget_mib }}"
@@ -166,15 +216,34 @@ jobs:
           IMAGE:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
             }}"
+          LANGUAGE: "${{ matrix.language }}"
           TARGET: "${{ matrix.target }}"
         run: |
           docker pull --platform linux/arm64 "$IMAGE@$DIGEST"
           docker image tag "$IMAGE@$DIGEST" lint-release-test:arm64
+          python3 images/verify_tool_version.py \
+            --target "$TARGET" \
+            --image lint-release-test:arm64
           python3 images/smoke.py \
             --target "$TARGET" \
             --image lint-release-test:arm64
-          python3 images/verify_images.py \
+          python3 images/verify_cli.py \
+            --target "$TARGET" \
+            --language "$LANGUAGE" \
+            --backend docker \
             --image lint-release-test:arm64 \
+            --architecture "arm64"
+          # No ARM64 canonical inventory is checked in, so
+          # `images/verify_images.py --architecture arm64`
+          # would look one up and fail here, after the images
+          # have already been pushed. The registry-size check
+          # below measures the published ARM64 manifest, so the
+          # size gate holds without claiming a content
+          # inventory this repository does not have.
+          python3 images/verify_registry_size.py \
+            --image "$IMAGE" \
+            --digest "$DIGEST" \
+            --platform "linux/arm64" \
             --budget-mib "$BUDGET_MIB"
       - name: Attest image
         if: steps.visibility.outputs.value == 'public'
@@ -199,6 +268,7 @@ jobs:
           severity: HIGH,CRITICAL
           trivyignores: .trivyignore.yaml
       - name: Scan ARM64 image
+        if: steps.visibility.outputs.value == 'public'
         env:
           TRIVY_PLATFORM: linux/arm64
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
@@ -231,7 +301,8 @@ jobs:
           if-no-files-found: error
 
   promote:
-    needs: images
+    if: needs.matrix.outputs.publish_images == 'true'
+    needs: [images, matrix]
     permissions:
       contents: read
       packages: write
@@ -258,7 +329,7 @@ jobs:
             --verify-only
       - name: Set up Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
-      - name: Log in to the private registry
+      - name: Log in to the image registry
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
         with:
           registry: ghcr.io
@@ -274,16 +345,23 @@ jobs:
             image="$(jq -r .image "$record")"
             staging_tag="$(jq -r .staging_tag "$record")"
             digest="$(jq -r .digest "$record")"
-            docker buildx imagetools create \
-              --tag "$image:$version" \
-              "$image:$staging_tag@$digest"
-            promoted="$(docker buildx imagetools inspect \
-              "$image:$version" --format '{{json .Manifest.Digest}}')"
-            test "$promoted" = "\"$digest\""
+            python3 tools/promote_image.py \
+              --image "$image" \
+              --version "$version" \
+              --staging-tag "$staging_tag" \
+              --digest "$digest"
           done
 
   draft:
-    needs: promote
+    if: >-
+      always() && needs.verify.result == 'success' &&
+      needs.matrix.result == 'success' &&
+      ((needs.matrix.outputs.publish_images == 'true' &&
+      needs.promote.result == 'success') ||
+      (needs.matrix.outputs.publish_images == 'false' &&
+      needs.images.result == 'skipped' &&
+      needs.promote.result == 'skipped'))
+    needs: [images, matrix, promote, verify]
     permissions:
       attestations: write
       contents: write
@@ -307,26 +385,61 @@ jobs:
           )"
           printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
       - name: Download image digests
+        if: needs.matrix.outputs.publish_images == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
           pattern: digest-*
           path: digests
           merge-multiple: true
-      - name: Create source archive and manifest
+      - name:
+          Create source archive, manifest, and provenance
         shell: bash
+        env:
+          PUBLISH_IMAGES:
+            "${{ needs.matrix.outputs.publish_images }}"
         run: |
           version="${RELEASE_REF#v}"
           mkdir dist
+          # The published SHA256SUMS entry is the digest of the
+          # compressed archive, so the compressor is part of the
+          # artifact. Different compressors and levels each
+          # produce a different digest from the same tar, and a
+          # recipient cannot guess which one ran. Pin exactly
+          # one here so the chain from the signed tag to the
+          # published digest is reproducible.
           git archive \
             --format=tar \
             --prefix="lint-$version/" \
-            "$RELEASE_REF" |
-            gzip -n >"dist/lint-$version.tar.gz"
-          python3 tools/release_manifest.py \
+            "$RELEASE_REF" >"dist/lint-$version.tar"
+          python3 tools/compress_archive.py \
+            --input "dist/lint-$version.tar" \
+            --output "dist/lint-$version.tar.gz"
+          rm "dist/lint-$version.tar"
+          if test "$PUBLISH_IMAGES" = "true"; then
+            python3 tools/release_manifest.py \
+              --version "$version" \
+              --archive "dist/lint-$version.tar.gz" \
+              --digests digests \
+              --output "dist/release-manifest-$version.json"
+          else
+            # A release tag is expected to match the version in
+            # images/matrix.json, so its own images are built and
+            # published above. A mismatch means there is no image
+            # set to record; stop rather than publish a manifest
+            # with nothing behind its image section.
+            printf '%s\n' \
+              "release $RELEASE_REF does not match the image" \
+              "matrix version; raise images/matrix.json or tag" \
+              "the matching version" >&2
+            exit 1
+          fi
+          python3 tools/release_provenance.py \
             --version "$version" \
+            --revision "$(git rev-parse HEAD)" \
             --archive "dist/lint-$version.tar.gz" \
-            --digests digests \
-            --output "dist/release-manifest-$version.json"
+            --manifest "dist/release-manifest-$version.json" \
+            --workflow .github/workflows/release.yml \
+            --output "dist/provenance-$version.intoto.json"
           (
             cd dist
             sha256sum ./* >SHA256SUMS

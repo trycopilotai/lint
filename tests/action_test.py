@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 import shutil
 import subprocess
@@ -34,6 +35,19 @@ RUNNER = load_module(
 
 
 class ActionTest(unittest.TestCase):
+    def test_ci_contract_traverses_the_repository_root(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(
+            encoding="utf-8"
+        )
+        contract = workflow.split("- name: Verify read-only default", 1)[1].split(
+            "- name: Check Python formatting",
+            1,
+        )[0]
+
+        self.assertIn("--cwd .", contract)
+        self.assertIn("--language requirements", contract)
+        self.assertIn('summary["skipped"]', contract)
+
     def test_default_is_read_only_all_docker(self) -> None:
         environment = {"GITHUB_ACTION_PATH": str(ROOT)}
         with mock.patch.dict(os.environ, environment, clear=True):
@@ -62,6 +76,33 @@ class ActionTest(unittest.TestCase):
         self.assertIn("--modified", command)
         self.assertNotIn("--all", command)
 
+    def test_contradictory_selection_inputs_are_rejected(self) -> None:
+        combinations = (
+            {
+                "LINT_INPUT_PATHS": "one.py",
+                "LINT_INPUT_FILES_FROM0": "paths.bin",
+            },
+            {
+                "LINT_INPUT_PATHS": "one.py",
+                "LINT_INPUT_MODIFIED": "true",
+            },
+            {
+                "LINT_INPUT_FILES_FROM0": "paths.bin",
+                "LINT_INPUT_MODIFIED": "true",
+            },
+        )
+        for inputs in combinations:
+            environment = {
+                "GITHUB_ACTION_PATH": str(ROOT),
+                **inputs,
+            }
+            with self.subTest(inputs=inputs), mock.patch.dict(
+                os.environ,
+                environment,
+                clear=True,
+            ), self.assertRaisesRegex(ValueError, "selection input"):
+                ACTION.command()
+
     def test_write_docker_languages_are_typed(self) -> None:
         environment = {
             "GITHUB_ACTION_PATH": str(ROOT),
@@ -86,7 +127,43 @@ class ActionTest(unittest.TestCase):
                 ACTION.command()
 
     def test_plugin_skill_runner_finds_engine(self) -> None:
-        self.assertEqual(ROOT / "lint.py", RUNNER.engine_path())
+        self.assertEqual(
+            ROOT / "skills" / "lint" / "lint.py",
+            RUNNER.engine_path(),
+        )
+
+    def test_plugin_skill_package_runs_without_repository_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "lint"
+            shutil.copytree(ROOT / "skills" / "lint", target)
+
+            completed = subprocess.run(
+                [sys.executable, str(target / "run.py"), "--list-languages"],
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        manifest = json.loads(completed.stdout)
+        self.assertEqual(28, len(manifest["languages"]))
+
+    def test_plugin_skill_runtime_matches_repository_runtime(self) -> None:
+        pairs = (
+            (ROOT / "lint.py", ROOT / "skills" / "lint" / "lint.py"),
+            (
+                ROOT / "languages.json",
+                ROOT / "skills" / "lint" / "languages.json",
+            ),
+            (
+                ROOT / "images" / "matrix.json",
+                ROOT / "skills" / "lint" / "images" / "matrix.json",
+            ),
+        )
+        for source, packaged in pairs:
+            with self.subTest(packaged=packaged):
+                self.assertEqual(source.read_bytes(), packaged.read_bytes())
 
     def test_standalone_skill_layout_launches_engine(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

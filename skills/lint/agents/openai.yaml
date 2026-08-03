@@ -1,7 +1,7 @@
 interface:
   display_name: "lint"
   short_description:
-    "Check or apply pinned mixed-language formatting"
+    "Check or apply canonical mixed-language formatting"
   default_prompt:
     "Use $lint to check this repository's formatting in
     read-only mode."

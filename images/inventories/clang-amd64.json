@@ -1,0 +1,183 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "clang_format",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "clang_format.libs",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "clang_format.libs/libgcc_s-a3a07607.so.1",
+      "role": "formatter",
+      "sha256": "e69b4851e03367078d66b15e84dd3f05be41d0570982ec7b35b005a14f2fc30a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "clang_format.libs/libncursesw-d80f65ca.so.6.4",
+      "role": "formatter",
+      "sha256": "ac7c9688df0edae0fb36be5765d9815c6b629efd365da601da3636a3a1df1d5d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "clang_format.libs/libstdc++-496613c0.so.6.0.32",
+      "role": "formatter",
+      "sha256": "0306612f95854fdf48d90eaf2315ce856eea75d7ee399d7179cc623fd413558e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "clang_format/data",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "clang_format/data/bin",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0555",
+      "path": "clang_format/data/bin/clang-format",
+      "role": "entrypoint",
+      "sha256": "ed1499898094c1a69395d21d8baf020b6823eed571e1ecdb3a362e2f7488c25e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/ld-musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/clang",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/clang-format",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/clang-format/COPYING.md",
+      "role": "license",
+      "sha256": "272ff22ee13e20e82c16b0d2c03bcefbc00800e3f09ae03bce52e2a367ddfaa1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/clang-format/LICENSE.md",
+      "role": "license",
+      "sha256": "73ba74dfaa520b49a401b5d21459a8523a146f3b7518a833eea5efa85130bf68",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/clang/llvm-LICENSE.TXT",
+      "role": "license",
+      "sha256": "8d85c1057d742e597985c7d4e6320b015a9139385cff4cbae06ffc0ebe89afee",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/clang/manifest.json",
+      "role": "license",
+      "sha256": "a3c59ce527a4018b56b48a8c216a191ab021917d5a2b015f82fc32c3d742e2d5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/clang/musl-COPYRIGHT",
+      "role": "license",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "7b715e133c68870851abca3020d81673eba919dbac603b3dc2702582dbf9a7b8",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "clang"
+}

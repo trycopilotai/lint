@@ -53,15 +53,23 @@ def summary_line(result: dict[str, Any]) -> str:
     if not isinstance(summary, dict):
         raise ValueError("demo result is missing its summary")
     selected = summary.get("selected")
-    changed = summary.get("changed")
     status = result.get("status")
+    if "changed" in summary:
+        changed = summary.get("changed")
+        changed_label = "changed"
+    else:
+        changed = summary.get("would_change")
+        changed_label = "would change"
     if not isinstance(selected, int):
         raise ValueError("demo selected count must be an integer")
     if not isinstance(changed, int):
         raise ValueError("demo changed count must be an integer")
     if not isinstance(status, str):
         raise ValueError("demo status must be a string")
-    return f"{status.replace('_', ' ')} · {selected} selected · " f"{changed} changed"
+    return (
+        f"{status.replace('_', ' ')} · {selected} selected · "
+        f"{changed} {changed_label}"
+    )
 
 
 def render_svg(transcript: str) -> str:

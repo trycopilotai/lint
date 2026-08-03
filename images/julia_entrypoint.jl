@@ -7,4 +7,4 @@ if length(ARGS) != 1
     exit(2)
 end
 
-format_file(ARGS[1], overwrite = true)
+format_file(ARGS[1], overwrite = true, throw_on_error = true)

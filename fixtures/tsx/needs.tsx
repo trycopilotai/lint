@@ -1,0 +1,1 @@
+export const View=()=> <div><span>one</span><span>two</span></div>;

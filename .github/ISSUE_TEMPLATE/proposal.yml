@@ -1,0 +1,38 @@
+name: Proposal or question
+description:
+  Propose scoped work, or ask about behavior you have not
+  reproduced yet.
+title: ""
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Use this when you do not have a reproduction. Bug
+        reports belong in the formatter or supply-chain
+        forms, and vulnerabilities go through the private
+        reporting path. Do not include credentials, private
+        source files, or vulnerability details.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What are you proposing or asking?
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why does it matter?
+      description:
+        What becomes possible, or what is confusing today.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Acceptance criteria
+      description:
+        How a reviewer would know the work is done. Leave
+        blank for a question.
+    validations:
+      required: false

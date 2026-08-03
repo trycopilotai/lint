@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
+  schedule:
+    - cron: "31 9 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -39,12 +42,41 @@ jobs:
           python-version: "${{ matrix.python }}"
       - name: Run tests
         shell: bash
-        run: |
-          python tests/cli_test.py
-          python tests/service_test.py
+        run: make test
 
-  repository:
+  local-golden-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: "${{ steps.matrix.outputs.matrix }}"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Select formatter families
+        id: matrix
+        shell: bash
+        run: |
+          matrix="$(python3 - <<'PY'
+          import json
+
+          with open("images/matrix.json", encoding="utf-8") as handle:
+              images = json.load(handle)["images"]
+          print(json.dumps({"include": images}, separators=(",", ":")))
+          PY
+          )"
+          printf 'matrix=%s\n' "$matrix" >>"$GITHUB_OUTPUT"
+
+  local-golden:
+    name: "Linux local / ${{ matrix.target }}"
+    needs: local-golden-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: >-
+        ${{
+        fromJSON(needs.local-golden-matrix.outputs.matrix)
+        }}
     steps:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -54,35 +86,426 @@ jobs:
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.13.14"
-      - name: Run tests
-        run: make test
-      - name: Verify repository
-        run: python3 tools/verify_repo.py
+      - name: Set up Node.js
+        if: >-
+          matrix.target == 'prettier' || matrix.target ==
+          'buildifier'
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "24.18.0"
+      - name: Set up Go
+        if: >-
+          matrix.target == 'shfmt' || matrix.target == 'go'
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+        with:
+          go-version: "1.26.5"
+      - name: Set up Java
+        if: matrix.target == 'kotlin'
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Set up .NET
+        if: matrix.target == 'csharp'
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
+        with:
+          dotnet-version: "10.0.x"
+      - name: Set up Julia
+        if: matrix.target == 'julia'
+        uses: julia-actions/setup-julia@4c0cb0fce8556fdb04a90347310e5db8b1f98fb9
+        with:
+          version: "1.12.6"
+      # The pinned commit is swift-actions/setup-swift v2.4.0, whose
+      # src/swift-versions.ts resolves swift-version against a
+      # hard-coded list topping out at 6.2.1; anything newer raises
+      # `Version "..." is not available`. swift-format 603.0.0 is
+      # still built from source below and still has to report
+      # 603.0.0; the swift-format repository's own pull-request
+      # workflow builds that tag in the swift:6.2 container.
+      - name: Set up Swift
+        if: matrix.target == 'swift'
+        uses: swift-actions/setup-swift@7ca6abe6b3b0e8b5421b88be48feee39cbf52c6a
+        with:
+          swift-version: "6.2.1"
+      - name: Build swift-format
+        if: matrix.target == 'swift'
+        shell: bash
+        run: |
+          curl --fail --location \
+            --output "$RUNNER_TEMP/swift-format.tar.gz" \
+            https://github.com/swiftlang/swift-format/archive/refs/tags/603.0.0.tar.gz
+          printf '%s  %s\n' \
+            39732a76ba0d86dca799b8c92f3516398aaa712e1ec489c9e439219e72feac1f \
+            "$RUNNER_TEMP/swift-format.tar.gz" \
+            | sha256sum --check
+          mkdir -p \
+            "$RUNNER_TEMP/swift-format-source" \
+            "$RUNNER_TEMP/local-bin"
+          tar -xzf "$RUNNER_TEMP/swift-format.tar.gz" \
+            --strip-components 1 \
+            -C "$RUNNER_TEMP/swift-format-source"
+          cp images/swift/Package.resolved \
+            "$RUNNER_TEMP/swift-format-source/Package.resolved"
+          printf '%s  %s\n' \
+            599a6beab32b6e9164edaf89903fd30d5c4b9dcc46083b15ef7c4f886b386636 \
+            "$RUNNER_TEMP/swift-format-source/Package.resolved" \
+            | sha256sum --check
+          swift package \
+            --package-path "$RUNNER_TEMP/swift-format-source" \
+            resolve
+          printf '%s  %s\n' \
+            599a6beab32b6e9164edaf89903fd30d5c4b9dcc46083b15ef7c4f886b386636 \
+            "$RUNNER_TEMP/swift-format-source/Package.resolved" \
+            | sha256sum --check
+          swift build \
+            --package-path "$RUNNER_TEMP/swift-format-source" \
+            --configuration release \
+            --disable-sandbox \
+            --product swift-format
+          binary_path="$(swift build \
+            --package-path "$RUNNER_TEMP/swift-format-source" \
+            --configuration release \
+            --show-bin-path)"
+          install -m 0555 "$binary_path/swift-format" \
+            "$RUNNER_TEMP/local-bin/swift-format"
+          test "$("$RUNNER_TEMP/local-bin/swift-format" \
+            --version)" = "603.0.0"
+          printf '%s\n' "$RUNNER_TEMP/local-bin" \
+            >>"$GITHUB_PATH"
+      - name: Install Black
+        if: matrix.target == 'black'
+        run: python -m pip install black==24.10.0
+      - name: Install shfmt
+        if: matrix.target == 'shfmt'
+        shell: bash
+        run: |
+          go install mvdan.cc/sh/v3/cmd/shfmt@v3.13.1
+          printf '%s\n' "$(go env GOPATH)/bin" >>"$GITHUB_PATH"
+      - name: Install clang-format
+        if: matrix.target == 'clang'
+        run: python -m pip install clang-format==18.1.8
+      - name: Install google-java-format
+        if: matrix.target == 'java'
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/local-bin"
+          curl --fail --location \
+            --output "$RUNNER_TEMP/local-bin/google-java-format" \
+            https://github.com/google/google-java-format/releases/download/v1.35.0/google-java-format_linux-x86-64
+          printf '%s  %s\n' \
+            e0f95ad6d26b8fbd5b1e3fd3014f8306c4eb3b29d2a6b15fab62d0a364629437 \
+            "$RUNNER_TEMP/local-bin/google-java-format" \
+            | sha256sum --check
+          chmod 0555 "$RUNNER_TEMP/local-bin/google-java-format"
+          printf '%s\n' "$RUNNER_TEMP/local-bin" >>"$GITHUB_PATH"
+      - name: Select Rust toolchain
+        if: matrix.target == 'rust'
+        shell: bash
+        run: |
+          rustup toolchain install 1.97.1 \
+            --profile minimal \
+            --component rustfmt
+          rustup default 1.97.1
+      - name: Install ktlint
+        if: matrix.target == 'kotlin'
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/local-bin"
+          curl --fail --location \
+            --output "$RUNNER_TEMP/local-bin/ktlint" \
+            https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint
+          printf '%s  %s\n' \
+            01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985 \
+            "$RUNNER_TEMP/local-bin/ktlint" \
+            | sha256sum --check
+          chmod 0555 "$RUNNER_TEMP/local-bin/ktlint"
+          printf '%s\n' "$RUNNER_TEMP/local-bin" >>"$GITHUB_PATH"
+      - name: Install Taplo
+        if: matrix.target == 'taplo'
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/local-bin"
+          curl --fail --location \
+            --output "$RUNNER_TEMP/taplo.gz" \
+            https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz
+          printf '%s  %s\n' \
+            8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156 \
+            "$RUNNER_TEMP/taplo.gz" \
+            | sha256sum --check
+          gzip --decompress "$RUNNER_TEMP/taplo.gz"
+          mv "$RUNNER_TEMP/taplo" "$RUNNER_TEMP/local-bin/taplo"
+          chmod 0555 "$RUNNER_TEMP/local-bin/taplo"
+          printf '%s\n' "$RUNNER_TEMP/local-bin" >>"$GITHUB_PATH"
+      - name: Build libxml2
+        if: matrix.target == 'xml'
+        shell: bash
+        run: |
+          curl --fail --location \
+            --output "$RUNNER_TEMP/libxml2.tar.xz" \
+            https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.3.tar.xz
+          printf '%s  %s\n' \
+            78262a6e7ac170d6528ebfe2efccdf220191a5af6a6cd61ea4a9a9a5042c7a07 \
+            "$RUNNER_TEMP/libxml2.tar.xz" \
+            | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/libxml2-source"
+          tar --extract --xz \
+            --file "$RUNNER_TEMP/libxml2.tar.xz" \
+            --directory "$RUNNER_TEMP/libxml2-source" \
+            --strip-components 1
+          cd "$RUNNER_TEMP/libxml2-source"
+          ./configure \
+            --prefix="$RUNNER_TEMP/libxml2" \
+            --without-debug \
+            --without-history \
+            --without-http \
+            --without-iconv \
+            --without-lzma \
+            --without-python \
+            --without-zlib
+          make -j2
+          make install-strip
+          printf '%s\n' "$RUNNER_TEMP/libxml2/bin" >>"$GITHUB_PATH"
+      - name: Install CSharpier
+        if: matrix.target == 'csharp'
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/local-bin"
+          dotnet tool install \
+            --tool-path "$RUNNER_TEMP/local-bin" \
+            csharpier \
+            --version 1.3.0
+          printf '%s\n' "$RUNNER_TEMP/local-bin" >>"$GITHUB_PATH"
+      - name: Install JuliaFormatter
+        if: matrix.target == 'julia'
+        shell: bash
+        run: |
+          project="$RUNNER_TEMP/julia-project"
+          source="$RUNNER_TEMP/julia-formatter"
+          archive="$RUNNER_TEMP/julia-formatter.tar.gz"
+          cp -R images/julia "$project"
+          mkdir -p "$source"
+          url="$(jq --raw-output \
+            '.downloads.julia_formatter_source.url' \
+            images/sources.json)"
+          expected="$(jq --raw-output \
+            '.downloads.julia_formatter_source.sha256' \
+            images/sources.json)"
+          curl --fail --location --output "$archive" "$url"
+          printf '%s  %s\n' "$expected" "$archive" \
+            | sha256sum --check
+          tar -xzf "$archive" -C "$source"
+          sed -i \
+            "s|/opt/julia-depot/dev/JuliaFormatter|$source|" \
+            "$project/Manifest.toml"
+          JULIA_DEPOT_PATH="$RUNNER_TEMP/julia-depot" \
+            JULIA_PKG_PRECOMPILE_AUTO=0 \
+            julia --startup-file=no --project="$project" \
+            -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
+      - name: Verify local golden and malformed cases
+        shell: bash
+        env:
+          JULIA_DEPOT_PATH: "${{ runner.temp }}/julia-depot"
+          JULIA_PROJECT: "${{ runner.temp }}/julia-project"
+          LANGUAGES: "${{ toJSON(matrix.languages) }}"
+          TARGET: "${{ matrix.target }}"
+        run: |
+          result="$RUNNER_TEMP/local-golden.jsonl"
+          while IFS= read -r language; do
+            python3 images/verify_cli.py \
+              --target "$TARGET" \
+              --language "$language" \
+              --backend local \
+              >>"$result"
+          done < <(jq --raw-output '.[]' <<<"$LANGUAGES")
+      - name: Verify source immutability
+        shell: bash
+        run: |
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+      - name: Upload local golden evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: "local-golden-${{ matrix.target }}"
+          path: "${{ runner.temp }}/local-golden.jsonl"
+          if-no-files-found: error
+
+  local-integration:
+    name: "${{ matrix.os }} / ${{ matrix.language }} local"
+    runs-on: "${{ matrix.os }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            language: markdown
+            fixture: fixtures/prettier/needs.md
+            filename: needs.md
+          - os: ubuntu-latest
+            language: bazel
+            fixture: fixtures/buildifier/BUILD
+            filename: BUILD
+          - os: ubuntu-latest
+            language: python
+            fixture: fixtures/black/needs.py
+            filename: needs.py
+          - os: ubuntu-latest
+            language: requirements
+            fixture: fixtures/requirements/requirements.txt
+            filename: requirements.txt
+          - os: macos-latest
+            language: markdown
+            fixture: fixtures/prettier/needs.md
+            filename: needs.md
+          - os: macos-latest
+            language: bazel
+            fixture: fixtures/buildifier/BUILD
+            filename: BUILD
+          - os: macos-latest
+            language: python
+            fixture: fixtures/black/needs.py
+            filename: needs.py
+          - os: macos-latest
+            language: requirements
+            fixture: fixtures/requirements/requirements.txt
+            filename: requirements.txt
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.13.14"
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "24.18.0"
+      - name: Install pinned Black
+        run: |
+          python -m pip install black==24.10.0
+          black --version
+      - name: Verify local formatter transaction
+        shell: bash
+        run: |
+          case_dir="$(mktemp -d \
+            "${RUNNER_TEMP}/lint-local.XXXXXX")"
+          trap 'rm -rf "$case_dir"' EXIT
+          cp "${{ matrix.fixture }}" \
+            "$case_dir/${{ matrix.filename }}"
+          set +e
+          python3 lint.py \
+            --json \
+            --cwd "$case_dir" \
+            --language "${{ matrix.language }}" \
+            >"$RUNNER_TEMP/read-only-result.json"
+          result=$?
+          set -e
+          test "$result" -eq 1
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          result = Path(os.environ["RUNNER_TEMP"]) / "read-only-result.json"
+          with result.open(encoding="utf-8") as handle:
+              response = json.load(handle)
+          if response["status"] != "needs_formatting":
+              raise SystemExit("read-only formatter integration failed")
+          if response["summary"]["would_change"] != 1:
+              raise SystemExit("read-only formatter changed-count failed")
+          PY
+          cmp "${{ matrix.fixture }}" \
+            "$case_dir/${{ matrix.filename }}"
+          python3 lint.py \
+            --write \
+            --cwd "$case_dir" \
+            --language "${{ matrix.language }}"
+          python3 lint.py \
+            --read-only \
+            --cwd "$case_dir" \
+            --language "${{ matrix.language }}"
+          git diff --exit-code
+          test -z "$(git status --porcelain)"
+      - name: Verify failed multi-language transaction
+        if: >-
+          matrix.os == 'ubuntu-latest' && matrix.language ==
+          'requirements'
+        shell: bash
+        run: |
+          case_dir="$(mktemp -d \
+            "${RUNNER_TEMP}/lint-write.XXXXXX")"
+          trap 'rm -rf "$case_dir"' EXIT
+          cp fixtures/requirements/requirements.txt \
+            "$case_dir/requirements-a.txt"
+          cp "$case_dir/requirements-a.txt" \
+            "$case_dir/requirements-a.before"
+          printf 'def broken(:\n' >"$case_dir/z-bad.py"
+          cp "$case_dir/z-bad.py" "$case_dir/z-bad.before"
+          set +e
+          python3 lint.py \
+            --write \
+            --cwd "$case_dir" \
+            >"$RUNNER_TEMP/transaction-result.txt" 2>&1
+          result=$?
+          set -e
+          test "$result" -eq 1
+          cmp "$case_dir/requirements-a.before" \
+            "$case_dir/requirements-a.txt"
+          cmp "$case_dir/z-bad.before" \
+            "$case_dir/z-bad.py"
+      - name: Exercise service API
+        run: python tests/http_service_test.py
+
+  repository:
+    runs-on: ubuntu-latest
+    steps:
+      # `make verify` replays the demo evidence manifest, which
+      # proves its recorded input commit is an ancestor of HEAD.
+      # A shallow checkout of the synthetic pull-request merge
+      # commit does not contain that commit, so the reachability
+      # proof cannot run. Fetch the full history instead of
+      # loosening the proof.
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: "3.13.14"
+      - name: Run repository verification
+        run: make verify
+      - name: Verify workflow syntax
+        run: >-
+          go run
+          github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
       - name: Verify read-only default
         shell: bash
         run: |
           set +e
           python3 lint.py \
             --json \
-            --cwd fixtures/requirements \
+            --cwd . \
+            --language requirements \
             >read-only-result.json
           result=$?
           set -e
           test "$result" -eq 1
+          python3 - <<'PY'
+          import json
+
+          with open("read-only-result.json", encoding="utf-8") as handle:
+              summary = json.load(handle)["summary"]
+          if summary["skipped"] < 1:
+              raise SystemExit("repository contract skipped no paths")
+          PY
           git diff --exit-code
       - name: Check Python formatting
-        run: >-
-          pipx run --spec black==24.10.0 black --check
-          --diff lint.py dlint.py service.py
-          action_entrypoint.py tests images scripts skills
-          tools
+        run: make pyformat
       - name: Check document codec
-        run: >-
-          npx -y prettier@3.7.4 --check --print-width 60
-          --prose-wrap always --trailing-comma none
-          README.md CONTRIBUTING.md SECURITY.md action.yml
-          .github/workflows .claude-plugin .codex-plugin
-          docs skills languages.json images/*.json
+        run: make codec
       - name: Upload contract result
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

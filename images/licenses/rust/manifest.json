@@ -1,0 +1,168 @@
+{
+  "entries": [
+    {
+      "component": "GCC runtime libraries",
+      "license": "GPL-3.0-or-later",
+      "path": "gcc-COPYING3",
+      "payload_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+      "version": "15.2.0-r2"
+    },
+    {
+      "component": "GCC runtime library",
+      "license": "GCC-exception-3.1",
+      "path": "gcc-COPYING.RUNTIME",
+      "payload_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+      "version": "15.2.0"
+    },
+    {
+      "component": "Rust",
+      "license": "Apache-2.0",
+      "path": "rust-LICENSE-APACHE",
+      "payload_sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "source_sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSE-APACHE",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust",
+      "license": "MIT",
+      "path": "rust-LICENSE-MIT",
+      "payload_sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "source_sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSE-MIT",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled Apache-2.0 terms",
+      "license": "Apache-2.0",
+      "path": "rust-Apache-2.0.txt",
+      "payload_sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "source_sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/Apache-2.0.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled BSD-2-Clause terms",
+      "license": "BSD-2-Clause",
+      "path": "rust-BSD-2-Clause.txt",
+      "payload_sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+      "source_sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/BSD-2-Clause.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled CC-BY-SA-4.0 terms",
+      "license": "CC-BY-SA-4.0",
+      "path": "rust-CC-BY-SA-4.0.txt",
+      "payload_sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+      "source_sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/CC-BY-SA-4.0.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled GCC-exception-3.1 terms",
+      "license": "GCC-exception-3.1",
+      "path": "rust-GCC-exception-3.1.txt",
+      "payload_sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54",
+      "source_sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/GCC-exception-3.1.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled GPL-2.0-only terms",
+      "license": "GPL-2.0-only",
+      "path": "rust-GPL-2.0-only.txt",
+      "payload_sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af",
+      "source_sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/GPL-2.0-only.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled GPL-3.0-or-later terms",
+      "license": "GPL-3.0-or-later",
+      "path": "rust-GPL-3.0-or-later.txt",
+      "payload_sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2",
+      "source_sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/GPL-3.0-or-later.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled ISC terms",
+      "license": "ISC",
+      "path": "rust-ISC.txt",
+      "payload_sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381",
+      "source_sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/ISC.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled LLVM-exception terms",
+      "license": "LLVM-exception",
+      "path": "rust-LLVM-exception.txt",
+      "payload_sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e",
+      "source_sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/LLVM-exception.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled MIT terms",
+      "license": "MIT",
+      "path": "rust-MIT.txt",
+      "payload_sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "source_sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/MIT.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled NCSA terms",
+      "license": "NCSA",
+      "path": "rust-NCSA.txt",
+      "payload_sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630",
+      "source_sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/NCSA.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled OFL-1.1 terms",
+      "license": "OFL-1.1",
+      "path": "rust-OFL-1.1.txt",
+      "payload_sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+      "source_sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/OFL-1.1.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled Unicode-3.0 terms",
+      "license": "Unicode-3.0",
+      "path": "rust-Unicode-3.0.txt",
+      "payload_sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443",
+      "source_sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/Unicode-3.0.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust copyright notices",
+      "license": "Notice",
+      "path": "rust-COPYRIGHT",
+      "payload_sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af",
+      "source_sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/COPYRIGHT",
+      "version": "1.97.1"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "path": "musl-COPYRIGHT",
+      "payload_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    }
+  ],
+  "schema_version": 4,
+  "target": "rust"
+}

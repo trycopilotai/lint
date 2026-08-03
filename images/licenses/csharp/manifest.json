@@ -1,0 +1,159 @@
+{
+  "entries": [
+    {
+      "component": ".NET runtime and Microsoft.Extensions",
+      "license": "MIT",
+      "path": "dotnet-LICENSE.TXT",
+      "payload_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
+      "source_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
+      "source_url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/LICENSE.TXT",
+      "version": "10.0.10"
+    },
+    {
+      "component": ".NET runtime and Microsoft.Extensions",
+      "license": "MIT and other terms in the payload",
+      "path": "dotnet-THIRD-PARTY-NOTICES.TXT",
+      "payload_sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
+      "source_sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
+      "source_url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/THIRD-PARTY-NOTICES.TXT",
+      "version": "10.0.10"
+    },
+    {
+      "component": "Alpine apk-tools runtime",
+      "license": "GPL-2.0-only",
+      "path": "apk-tools-LICENSE",
+      "payload_sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "source_sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "source_url": "https://raw.githubusercontent.com/alpinelinux/apk-tools/v3.0.6/LICENSE",
+      "version": "3.0.6-r0"
+    },
+    {
+      "component": "CSharpier and CSharpier.Core",
+      "license": "MIT",
+      "path": "csharpier-LICENSE",
+      "payload_sha256": "0ed797a602216813b874392c4668e5e5611fc9e3b89af6a1989add2e3d825b37",
+      "source_sha256": "0ed797a602216813b874392c4668e5e5611fc9e3b89af6a1989add2e3d825b37",
+      "source_url": "https://raw.githubusercontent.com/belav/csharpier/c3fe3f22a4f091eaf759e0b5aa8f3b9d3565e51b/LICENSE",
+      "version": "1.3.0"
+    },
+    {
+      "component": "CSharpier runtime dependency inventory",
+      "license": "Exact package inventory bound to the pinned application archive",
+      "path": "csharpier-runtime-dependencies.txt",
+      "payload_sha256": "d53a0a75629ccc60498dceeec0c76c5a820145b2473810e9886d45df74a8cd63",
+      "source_sha256": "87089e1284137004f2299219ec241258034f06ffa9112860e9c0d75391087b15",
+      "source_url": "https://api.nuget.org/v3-flatcontainer/csharpier/1.3.0/csharpier.1.3.0.nupkg",
+      "version": "1.3.0 net10.0"
+    },
+    {
+      "component": "GCC runtime libraries",
+      "license": "GPL-3.0-or-later",
+      "path": "gcc-COPYING3",
+      "payload_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+      "version": "15.2.0-r2"
+    },
+    {
+      "component": "GCC runtime library",
+      "license": "GCC-exception-3.1",
+      "path": "gcc-COPYING.RUNTIME",
+      "payload_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+      "version": "15.2.0"
+    },
+    {
+      "component": "LovettSoftware.XmlDiff",
+      "license": "MIT",
+      "path": "xmldiff-LICENSE",
+      "payload_sha256": "ba5c88068ad58a174e67390404c6b1fda4d04f067b39295eda8d2a8638fd1b16",
+      "source_sha256": "ba5c88068ad58a174e67390404c6b1fda4d04f067b39295eda8d2a8638fd1b16",
+      "source_url": "https://raw.githubusercontent.com/lovettchris/xmldiff/0cc21e7053768ca5fc32c432279f7508f985fb2a/LICENSE",
+      "version": "1.1.0"
+    },
+    {
+      "component": "NReco.Logging.File",
+      "license": "MIT",
+      "path": "nreco-logging-LICENSE",
+      "payload_sha256": "567276183908f3f7f62dd49e590cff9e05bc4d60c6345d929a4666964d5b6601",
+      "source_sha256": "567276183908f3f7f62dd49e590cff9e05bc4d60c6345d929a4666964d5b6601",
+      "source_url": "https://raw.githubusercontent.com/NReco/Logging/2396077ef65844a23795f91d6e3777c781d031ad/LICENSE",
+      "version": "1.2.2"
+    },
+    {
+      "component": "OpenSSL runtime",
+      "license": "Apache-2.0 with component notice",
+      "path": "openssl-LICENSE.txt",
+      "payload_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "source_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "source_url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.7/LICENSE.txt",
+      "version": "3.5.7-r0"
+    },
+    {
+      "component": "Roslyn",
+      "license": "MIT",
+      "path": "roslyn-LICENSE.txt",
+      "payload_sha256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b",
+      "source_sha256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b",
+      "source_url": "https://raw.githubusercontent.com/dotnet/roslyn/16f9bd284cd49604ac82998bfe778a8eb16d4347/License.txt",
+      "version": "5.3.0"
+    },
+    {
+      "component": "System.CommandLine",
+      "license": "MIT",
+      "path": "system-commandline-LICENSE.md",
+      "payload_sha256": "58fd5ebf25d75b5bb5f4cd407a9fef3befd3641e1af90a1d0716618e6430fc19",
+      "source_sha256": "58fd5ebf25d75b5bb5f4cd407a9fef3befd3641e1af90a1d0716618e6430fc19",
+      "source_url": "https://raw.githubusercontent.com/dotnet/command-line-api/209b724a3c843253d3071e8348c353b297b0b8b5/LICENSE.md",
+      "version": "2.0.0-beta4.22272.1"
+    },
+    {
+      "component": "System.IO.Abstractions",
+      "license": "MIT",
+      "path": "system-io-abstractions-LICENSE",
+      "payload_sha256": "9b4f46dc8e65bb14714479eb4de76b7a1e2e7f9eff7ab1eb0e9dea712f19b1ed",
+      "source_sha256": "9b4f46dc8e65bb14714479eb4de76b7a1e2e7f9eff7ab1eb0e9dea712f19b1ed",
+      "source_url": "https://raw.githubusercontent.com/TestableIO/System.IO.Abstractions/a091ac7f9655f61aeaeb28baf452c1a96c546ba8/LICENSE",
+      "version": "22.1.1"
+    },
+    {
+      "component": "Testably.Abstractions",
+      "license": "MIT",
+      "path": "testably-abstractions-LICENSE.md",
+      "payload_sha256": "024f2e034ea52d1b47be884bda1bd9b776ceddbfb2a7cc4d49f79255c8ed483c",
+      "source_sha256": "024f2e034ea52d1b47be884bda1bd9b776ceddbfb2a7cc4d49f79255c8ed483c",
+      "source_url": "https://raw.githubusercontent.com/Testably/Testably.Abstractions/1253c6bd6309cb15623fac09bd841e782bbca626/LICENSE",
+      "version": "10.1.0"
+    },
+    {
+      "component": "YamlDotNet",
+      "license": "MIT",
+      "path": "yamldotnet-LICENSE.txt",
+      "payload_sha256": "daea8b7f1b2bab48ea12ad50b0ce91634669d99d7dd0cb64aed8dffeeef69ed3",
+      "source_sha256": "daea8b7f1b2bab48ea12ad50b0ce91634669d99d7dd0cb64aed8dffeeef69ed3",
+      "source_url": "https://raw.githubusercontent.com/aaubry/YamlDotNet/ae480660f4fb26f3eb0b41c1d1fcf21c0e9d9e73/LICENSE.txt",
+      "version": "16.3.0"
+    },
+    {
+      "component": "ini-parser-netstandard",
+      "license": "MIT",
+      "path": "ini-parser-LICENSE",
+      "payload_sha256": "fda26a0d6e53a13085976f4b8758c7e43dc7260c7cb548c1a3999860ec2245fa",
+      "source_sha256": "fda26a0d6e53a13085976f4b8758c7e43dc7260c7cb548c1a3999860ec2245fa",
+      "source_url": "https://raw.githubusercontent.com/rickyah/ini-parser/c4dbf0eed984b0d57841bd6288040a2d5250e66e/LICENSE",
+      "version": "2.5.3"
+    },
+    {
+      "component": "zlib runtime",
+      "license": "Zlib with component copyright",
+      "path": "zlib-LICENSE",
+      "payload_sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "source_sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "source_url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE",
+      "version": "1.3.2-r0"
+    }
+  ],
+  "schema_version": 4,
+  "target": "csharp"
+}

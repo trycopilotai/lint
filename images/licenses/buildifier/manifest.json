@@ -1,0 +1,51 @@
+{
+  "entries": [
+    {
+      "component": "Bazel Buildtools",
+      "license": "Apache-2.0",
+      "path": "buildtools-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/bazelbuild/buildtools/v8.2.1/LICENSE",
+      "version": "8.2.1"
+    },
+    {
+      "component": "Go",
+      "license": "BSD-3-Clause",
+      "path": "go-LICENSE",
+      "payload_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE",
+      "version": "1.26.5"
+    },
+    {
+      "component": "Go patents grant",
+      "license": "Patent grant",
+      "path": "go-PATENTS",
+      "payload_sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "source_sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.5/PATENTS",
+      "version": "1.26.5"
+    },
+    {
+      "component": "github.com/golang/protobuf",
+      "license": "BSD-3-Clause",
+      "path": "golang-protobuf-LICENSE",
+      "payload_sha256": "8778a9fc1eaffb03ab873caae251df2d224f6b5502be8777d3cd573a4dd43903",
+      "source_sha256": "8778a9fc1eaffb03ab873caae251df2d224f6b5502be8777d3cd573a4dd43903",
+      "source_url": "https://raw.githubusercontent.com/golang/protobuf/v1.5.0/LICENSE",
+      "version": "1.5.0"
+    },
+    {
+      "component": "google.golang.org/protobuf",
+      "license": "BSD-3-Clause",
+      "path": "protobuf-go-LICENSE",
+      "payload_sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "source_sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "source_url": "https://raw.githubusercontent.com/protocolbuffers/protobuf-go/v1.33.0/LICENSE",
+      "version": "1.33.0"
+    }
+  ],
+  "schema_version": 4,
+  "target": "buildifier"
+}

@@ -1,0 +1,1674 @@
+{
+  "archive_bundles": [
+    {
+      "component": "CSharpier runtime dependency inventory",
+      "license": "Exact package inventory bound to the pinned application archive",
+      "members": ["tools/net10.0/any/CSharpier.deps.json"],
+      "output": "csharpier-runtime-dependencies.txt",
+      "payload_sha256": "d53a0a75629ccc60498dceeec0c76c5a820145b2473810e9886d45df74a8cd63",
+      "sha256": "87089e1284137004f2299219ec241258034f06ffa9112860e9c0d75391087b15",
+      "targets": ["csharp"],
+      "url": "https://api.nuget.org/v3-flatcontainer/csharpier/1.3.0/csharpier.1.3.0.nupkg",
+      "version": "1.3.0 net10.0"
+    },
+    {
+      "component": "KtLint embedded legal corpus",
+      "license": "Copyright notices and terms in the pinned application archive",
+      "members": [
+        "META-INF/LICENSE",
+        "META-INF/LICENSE.txt",
+        "org/jetbrains/kotlin/com/intellij/util/lang/fastutil/LICENSE.txt"
+      ],
+      "output": "ktlint-embedded-legal-payload.txt",
+      "payload_sha256": "61f783e7410f5be8c85277d3ddafa1dd2daf1ce3c34e31bde1727d9d8ed3286d",
+      "sha256": "01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985",
+      "targets": ["kotlin"],
+      "url": "https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint",
+      "version": "1.3.0"
+    },
+    {
+      "component": "Alpine attr runtime source legal corpus",
+      "license": "LGPL-2.1-or-later and GPL-2.0-or-later",
+      "members": ["doc/COPYING", "doc/COPYING.LGPL"],
+      "output": "attr-source-legal-payload.txt",
+      "payload_sha256": "5a47e9f61405f6abfc7b1f7cc4e94318c3d757a63e961ba5615216f21dd1c1f6",
+      "sha256": "39bf67452fa41d0948c2197601053f48b3d78a029389734332a6309a680c6c87",
+      "targets": ["kotlin"],
+      "url": "https://download-mirror.savannah.gnu.org/releases/attr/attr-2.5.2.tar.gz",
+      "version": "2.5.2-r2"
+    },
+    {
+      "component": "Alpine ACL runtime source legal corpus",
+      "license": "LGPL-2.1-or-later and GPL-2.0-or-later",
+      "members": ["doc/COPYING", "doc/COPYING.LGPL"],
+      "output": "acl-source-legal-payload.txt",
+      "payload_sha256": "4dfa827918852725bf50427144edff7f26b972d75910c32ccbc8b34ac4960b82",
+      "sha256": "5f2bdbad629707aa7d85c623f994aa8a1d2dec55a73de5205bac0bf6058a2f7c",
+      "targets": ["kotlin"],
+      "url": "https://download-mirror.savannah.gnu.org/releases/acl/acl-2.3.2.tar.gz",
+      "version": "2.3.2-r1"
+    },
+    {
+      "component": "Alpine gettext libintl runtime source legal corpus",
+      "license": "LGPL-2.1-or-later with component authors",
+      "members": [
+        "gettext-runtime/AUTHORS",
+        "gettext-runtime/intl/COPYING.LIB"
+      ],
+      "output": "gettext-runtime-legal-payload.txt",
+      "payload_sha256": "8c82ee17b9c3c5abfca94aa1a4ce87aee64eb86bf8be5c25bea411feb493b077",
+      "sha256": "6164ec7aa61653ac9cdfb41d5c2344563b21f707da1562712e48715f1d2052a6",
+      "targets": ["kotlin"],
+      "url": "https://ftp.gnu.org/gnu/gettext/gettext-0.24.1.tar.xz",
+      "version": "0.24.1-r1"
+    },
+    {
+      "component": "Alpine GMP runtime source legal corpus",
+      "license": "LGPL-3.0-or-later OR GPL-2.0-or-later with component authors",
+      "members": [
+        "AUTHORS",
+        "COPYING.LESSERv3",
+        "COPYINGv2"
+      ],
+      "output": "gmp-source-legal-payload.txt",
+      "payload_sha256": "8071abab7521e47d74f6e0b94487bbe6d5ba23bcc1d8bfbfd5f45d3d4ba085f8",
+      "sha256": "a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898",
+      "targets": ["kotlin"],
+      "url": "https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz",
+      "version": "6.3.0-r4"
+    },
+    {
+      "component": "Alpine GnuTLS runtime source legal corpus",
+      "license": "LGPL-2.1-or-later and bundled terms with component authors",
+      "members": [
+        "AUTHORS",
+        "COPYING.LESSERv2",
+        "doc/examples/tlsproxy/LICENSE",
+        "lib/accelerated/x86/license.txt",
+        "lib/crau/LICENSE",
+        "lib/inih/LICENSE.txt"
+      ],
+      "output": "gnutls-source-legal-payload.txt",
+      "payload_sha256": "759a7ea995e4ecbab282d7ea11c898f68b7c2549d3ddbb3538521ea482e94459",
+      "sha256": "ffed8ec1bf09c2426d4f14aae377de4753b53e537d685e604e99a8b16ca9c97e",
+      "targets": ["kotlin"],
+      "url": "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.13.tar.xz",
+      "version": "3.8.13-r0"
+    },
+    {
+      "component": "Alpine libtasn1 runtime source legal corpus",
+      "license": "LGPL-2.1-or-later with component authors",
+      "members": ["AUTHORS", "COPYING.LESSERv2"],
+      "output": "libtasn1-source-legal-payload.txt",
+      "payload_sha256": "e1e6ac85841a0d5c983def06042e7e2e426e3d2872adc56e2567fed21e034d7b",
+      "sha256": "1d8a444a223cc5464240777346e125de51d8e6abf0b8bac742ac84609167dc87",
+      "targets": ["kotlin"],
+      "url": "https://ftp.gnu.org/gnu/libtasn1/libtasn1-4.21.0.tar.gz",
+      "version": "4.21.0-r0"
+    },
+    {
+      "component": "Alpine libunistring runtime source legal corpus",
+      "license": "LGPL-3.0-or-later OR GPL-2.0-or-later with component authors",
+      "members": ["AUTHORS", "COPYING", "COPYING.LIB"],
+      "output": "libunistring-source-legal-payload.txt",
+      "payload_sha256": "fcdee1073ce370533cccf2feacddbde20ab532122e2d5b13480a54e9f39162ad",
+      "sha256": "67d88430892527861903788868c77802a217b0959990f7449f2976126a307763",
+      "targets": ["kotlin"],
+      "url": "https://ftp.gnu.org/gnu/libunistring/libunistring-1.4.1.tar.xz",
+      "version": "1.4.1-r0"
+    },
+    {
+      "component": "Alpine GDBM runtime source legal corpus",
+      "license": "GPL-3.0-or-later with component authors",
+      "members": ["AUTHORS", "COPYING"],
+      "output": "gdbm-source-legal-payload.txt",
+      "payload_sha256": "078aaffa9298c9a56e5ea5d6187ae1685d175825b6893d4563ab4b9171106b9b",
+      "sha256": "6a24504a14de4a744103dcb936be976df6fbe88ccff26065e54c1c47946f4a5e",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz",
+      "version": "1.26-r0"
+    }
+  ],
+  "cargo_bundles": [
+    {
+      "component": "Taplo Cargo.lock dependency closure",
+      "license": "License expressions, copyright notices, and terms in the payload",
+      "lock_sha256": "a30e2f1fc4302f4112d77aed2d2e0a25f110473915cb8791c77ed4e361c54ec8",
+      "lock_url": "https://raw.githubusercontent.com/tamasfe/taplo/0.10.0/Cargo.lock",
+      "output": "cargo-lock-legal-payload.txt",
+      "package_count": 309,
+      "packages_sha256": "38d65165a4840bf4cc0a8663fe596033702c85b730be5401704139cd418c33cb",
+      "payload_sha256": "f91afbffc7816fa12bde527576fd4d4060e7b400f06ee8e3907d74bd454663ef",
+      "target": "taplo",
+      "url_template": "https://static.crates.io/crates/{name}/{name}-{version}.crate",
+      "version": "Cargo.lock at Taplo 0.10.0"
+    }
+  ],
+  "cargo_supplements": [
+    {
+      "checksum": "4b46cbb362ab8752921c97e041f5e366ee6297bd428a31275b9fcf1e380f7299",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "anes",
+      "payload_sha256": "6040142f8c572bad45cd471540c0b4399cba15ad37525d12030186d718ae64ab",
+      "repository_commit": "378ac7461ecac29fde9e10df7b08359d1315a9ad",
+      "sources": [
+        {
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "url": "https://raw.githubusercontent.com/zrzka/anes-rs/378ac7461ecac29fde9e10df7b08359d1315a9ad/LICENSE-APACHE"
+        },
+        {
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+          "url": "https://raw.githubusercontent.com/zrzka/anes-rs/378ac7461ecac29fde9e10df7b08359d1315a9ad/LICENSE-MIT"
+        }
+      ],
+      "version": "0.1.6"
+    },
+    {
+      "checksum": "3538270d33cc669650c4b093848450d380def10c331d38c768e34cac80576e6e",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "codespan-reporting",
+      "payload_sha256": "06b6fa86d7edcead7d7bba638a319e4cddf78d2fd45fe99ffb68a9c1aaa8f071",
+      "repository_commit": "fd389a13f5bb6d625b71e2e4694b26e127f393f9",
+      "sources": [
+        {
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/brendanzab/codespan/fd389a13f5bb6d625b71e2e4694b26e127f393f9/LICENSE"
+        }
+      ],
+      "version": "0.11.1"
+    },
+    {
+      "checksum": "7a81dae078cea95a014a339291cec439d2f232ebe854a9d672b796c6afafa9b7",
+      "evidence": "The published crate and its source-control-bound upstream commit contain no legal file; the crate declares MIT, so the pinned canonical SPDX MIT terms are supplied.",
+      "name": "crunchy",
+      "payload_sha256": "89ac1fb12d0cd8c58e22862ad3d75f43ff721dbfd98e55a1c8aabd3f51a4fd51",
+      "repository_commit": "1bf90cf2d0a8cfcb2c5592275a23ab028dff6468",
+      "sources": [
+        {
+          "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/MIT.txt"
+        }
+      ],
+      "version": "0.2.2"
+    },
+    {
+      "checksum": "c35da53b5a021d2484a7cc49b2ac7f2d840f8236a286f84202369bd338d761ea",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "equator",
+      "payload_sha256": "6e90e9c4de7571734150ce504e47d8d9653993a8b65326ab73f37a3e111b986d",
+      "repository_commit": "9d4107bdd6a75598aed4a60fe46200c9e9f4e653",
+      "sources": [
+        {
+          "sha256": "97d3424e347e8fa236806725ce9837bb453d4dfc9ce1d4733fd6023a8038000a",
+          "url": "https://raw.githubusercontent.com/sarah-ek/equator/9d4107bdd6a75598aed4a60fe46200c9e9f4e653/LICENSE"
+        }
+      ],
+      "version": "0.2.2"
+    },
+    {
+      "checksum": "3bf679796c0322556351f287a51b49e48f7c4986e727b5dd78c972d30e2e16cc",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "equator-macro",
+      "payload_sha256": "e5932a5c097f867d3124ba36664440944b26ee36f844e0da4d5fd1a85699fb79",
+      "repository_commit": "c9061f3da9a7cc53b0d388f26ab6bb95422823c3",
+      "sources": [
+        {
+          "sha256": "97d3424e347e8fa236806725ce9837bb453d4dfc9ce1d4733fd6023a8038000a",
+          "url": "https://raw.githubusercontent.com/sarah-ek/equator/c9061f3da9a7cc53b0d388f26ab6bb95422823c3/LICENSE"
+        }
+      ],
+      "version": "0.2.1"
+    },
+    {
+      "checksum": "2a071f4f7efc9a9118dfb627a0a94ef247986e1ab8606a4c806ae2b3aa3b6978",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "jsonschema",
+      "payload_sha256": "c75843714ca17a20b2e392f82a09da161b6e80a66c031d3c6b88f0c15971b8dc",
+      "repository_commit": "8a2fa1f5a6783b3f531a1b30f5f0eaa1ad465dbd",
+      "sources": [
+        {
+          "sha256": "1f20c5f6df32fedf6f8451ea6b3246842fc56debf14b6a6761a06e2b13f46a1f",
+          "url": "https://raw.githubusercontent.com/Stranger6667/jsonschema-rs/8a2fa1f5a6783b3f531a1b30f5f0eaa1ad465dbd/LICENSE"
+        }
+      ],
+      "version": "0.17.1"
+    },
+    {
+      "checksum": "bf8b031682c67a8e3d5446840f9573eb7fe26efe7ec8d195c9ac4c0647c502f1",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "logos",
+      "payload_sha256": "c161a87626fea389f122d322a77653f4ae61c5a4f7e316baa9e121693bb31b04",
+      "repository_commit": "5dd386a6d55eb2f1feb6f7a7de8ed90e9d820e37",
+      "sources": [
+        {
+          "sha256": "f30735c11407534952947e1c7b7457ddf28847000bb038402495ad66f3d020a4",
+          "url": "https://raw.githubusercontent.com/maciejhirsz/logos/5dd386a6d55eb2f1feb6f7a7de8ed90e9d820e37/LICENSE-APACHE"
+        },
+        {
+          "sha256": "112fcdb9f4935988cc2313e4cc38faaeccfff53eb1296499e618932d472908e0",
+          "url": "https://raw.githubusercontent.com/maciejhirsz/logos/5dd386a6d55eb2f1feb6f7a7de8ed90e9d820e37/LICENSE-MIT"
+        }
+      ],
+      "version": "0.12.1"
+    },
+    {
+      "checksum": "a1d849148dbaf9661a6151d1ca82b13bb4c4c128146a88d05253b38d4e2f496c",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "logos-derive",
+      "payload_sha256": "c5e31651445145d5c9d3b8b03eb66b6e23e504fa08fc331bc7493fa37f2c59d5",
+      "repository_commit": "5dd386a6d55eb2f1feb6f7a7de8ed90e9d820e37",
+      "sources": [
+        {
+          "sha256": "f30735c11407534952947e1c7b7457ddf28847000bb038402495ad66f3d020a4",
+          "url": "https://raw.githubusercontent.com/maciejhirsz/logos/5dd386a6d55eb2f1feb6f7a7de8ed90e9d820e37/LICENSE-APACHE"
+        },
+        {
+          "sha256": "112fcdb9f4935988cc2313e4cc38faaeccfff53eb1296499e618932d472908e0",
+          "url": "https://raw.githubusercontent.com/maciejhirsz/logos/5dd386a6d55eb2f1feb6f7a7de8ed90e9d820e37/LICENSE-MIT"
+        }
+      ],
+      "version": "0.12.1"
+    },
+    {
+      "checksum": "d2c224ba00d7cadd4d5c660deaf2098e5e80e07846537c51f9cfa4be50c1fd45",
+      "evidence": "The published crate legal file is only a ../LICENSE pointer; its source-control receipt binds it to the named upstream commit.",
+      "name": "plotters",
+      "payload_sha256": "7ed56061200fb10bf8289aaa566211e4b4263378fe066210823e09a31bac0f74",
+      "repository_commit": "8aeeba24564f3395aa4c759afb404ac854d4d8dd",
+      "sources": [
+        {
+          "sha256": "cab8ff38785be68c4c914b6a01f871711b7c983e98c8f5c5f7057e31c46fe05c",
+          "url": "https://raw.githubusercontent.com/plotters-rs/plotters/8aeeba24564f3395aa4c759afb404ac854d4d8dd/LICENSE"
+        }
+      ],
+      "version": "0.3.5"
+    },
+    {
+      "checksum": "9e76628b4d3a7581389a35d5b6e2139607ad7c75b17aed325f210aa91f4a9609",
+      "evidence": "The published crate legal file is only a ../LICENSE pointer; its source-control receipt binds it to the named upstream commit.",
+      "name": "plotters-backend",
+      "payload_sha256": "f43742db0d50ec57e014c465557518c8d4001aa4be0ce49cae83f5c2893d4141",
+      "repository_commit": "73663bf8f9a5151c02e28bfbdab3e240bb8c1811",
+      "sources": [
+        {
+          "sha256": "cab8ff38785be68c4c914b6a01f871711b7c983e98c8f5c5f7057e31c46fe05c",
+          "url": "https://raw.githubusercontent.com/plotters-rs/plotters/73663bf8f9a5151c02e28bfbdab3e240bb8c1811/LICENSE"
+        }
+      ],
+      "version": "0.3.5"
+    },
+    {
+      "checksum": "38f6d39893cca0701371e3c27294f09797214b86f1fb951b89ade8ec04e2abab",
+      "evidence": "The published crate legal file is only a ../LICENSE pointer; its source-control receipt binds it to the named upstream commit.",
+      "name": "plotters-svg",
+      "payload_sha256": "29253bc86611c24f7c6d00e3fda60328c4c7f2415a8c4a3b92364b1c9c2c7c4d",
+      "repository_commit": "8aeeba24564f3395aa4c759afb404ac854d4d8dd",
+      "sources": [
+        {
+          "sha256": "cab8ff38785be68c4c914b6a01f871711b7c983e98c8f5c5f7057e31c46fe05c",
+          "url": "https://raw.githubusercontent.com/plotters-rs/plotters/8aeeba24564f3395aa4c759afb404ac854d4d8dd/LICENSE"
+        }
+      ],
+      "version": "0.3.5"
+    },
+    {
+      "checksum": "16629323a4ec5268ad23a575110a724ad4544aae623451de600c747bf87b36cf",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "symbolic-common",
+      "payload_sha256": "56eb94cfde507f8c6c05a8999245d6176c56eae61538de50163e5eb02c7341ef",
+      "repository_commit": "8195608572aa9e855304ba6fdaff313d9ec9c76b",
+      "sources": [
+        {
+          "sha256": "989aeccdc0127d426c2509116eff70f21b4552f08ebe9f468acc539cd121a692",
+          "url": "https://raw.githubusercontent.com/getsentry/symbolic/8195608572aa9e855304ba6fdaff313d9ec9c76b/LICENSE"
+        }
+      ],
+      "version": "12.10.0"
+    },
+    {
+      "checksum": "ba3a3adc5c275d719af8cb4272ea1c4a6d668a777f37e115f6d11ddbc1c8e0e7",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "system-configuration",
+      "payload_sha256": "51554fab914a088077f02794a2a93e91562f2c2d70fdd2092323c9c68d6e24a4",
+      "repository_commit": "56e415eb24b0897bef96a9a38fe7883cfbe2bb94",
+      "sources": [
+        {
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "url": "https://raw.githubusercontent.com/mullvad/system-configuration-rs/56e415eb24b0897bef96a9a38fe7883cfbe2bb94/LICENSE-APACHE"
+        },
+        {
+          "sha256": "35b228510156c3d7bf94b129c81b7e3cc72d347586e632be15686232b342562a",
+          "url": "https://raw.githubusercontent.com/mullvad/system-configuration-rs/56e415eb24b0897bef96a9a38fe7883cfbe2bb94/LICENSE-MIT"
+        }
+      ],
+      "version": "0.5.1"
+    },
+    {
+      "checksum": "a75fb188eb626b924683e3b95e3a48e63551fcfb51949de2f06a9d91dbee93c9",
+      "evidence": "The published crate has no legal file and its source-control receipt commit is no longer reachable upstream; the crate declares MIT OR Apache-2.0, so pinned canonical SPDX terms are supplied.",
+      "name": "system-configuration-sys",
+      "payload_sha256": "53482e915193176a4ca3e0fbb9229e679ec9e6d33bbe2f77960a6c9200f6d25d",
+      "repository_commit": "592a485494be9d63a60e54944dd2fcc4f077ec58",
+      "sources": [
+        {
+          "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/Apache-2.0.txt"
+        },
+        {
+          "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/MIT.txt"
+        }
+      ],
+      "version": "0.5.0"
+    },
+    {
+      "checksum": "830b7e5d4d90034032940e4ace0d9a9a057e7a45cd94e6c007832e39edb82f6d",
+      "evidence": "The published crate has no usable legal file; its source-control receipt or exact release tag binds it to the named upstream commit.",
+      "name": "valuable",
+      "payload_sha256": "f4b80d2e5af5989664964a5dfc3a16585c910c330790a6999d22a66e102d988f",
+      "repository_commit": "e89de8805f524aefafdbcc1fcd1b20ecfd0d22b6",
+      "sources": [
+        {
+          "sha256": "ed60d479b8fd1f64e9cbc3de449a16a53ac1b3d1b6aeb9bf9d190a8e93061b44",
+          "url": "https://raw.githubusercontent.com/tokio-rs/valuable/e89de8805f524aefafdbcc1fcd1b20ecfd0d22b6/LICENSE"
+        }
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "checksum": "ac3b87c63620426dd9b991e5ce0329eff545bccbbb34f3be09ff6fb6ab51b7b6",
+      "evidence": "The generated target crate has no legal file or source-control receipt; it declares MIT OR Apache-2.0, so pinned canonical SPDX terms are supplied and bound to the SPDX repository commit.",
+      "name": "winapi-i686-pc-windows-gnu",
+      "payload_sha256": "16405b6b8b02293a185dd1289ee053e15b2673ecb8f298aabc75df932f684c0c",
+      "repository_commit": "8c0ba506bd1be224c2a5454b7b12cfe080068e5c",
+      "sources": [
+        {
+          "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/Apache-2.0.txt"
+        },
+        {
+          "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/MIT.txt"
+        }
+      ],
+      "version": "0.4.0"
+    },
+    {
+      "checksum": "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f",
+      "evidence": "The generated target crate has no legal file or source-control receipt; it declares MIT OR Apache-2.0, so pinned canonical SPDX terms are supplied and bound to the SPDX repository commit.",
+      "name": "winapi-x86_64-pc-windows-gnu",
+      "payload_sha256": "cadce8b47a8e12bb6a72c8cbc3a36c68682809433551a3c12e458a3eba23794a",
+      "repository_commit": "8c0ba506bd1be224c2a5454b7b12cfe080068e5c",
+      "sources": [
+        {
+          "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/Apache-2.0.txt"
+        },
+        {
+          "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+          "url": "https://raw.githubusercontent.com/spdx/license-list-data/8c0ba506bd1be224c2a5454b7b12cfe080068e5c/text/MIT.txt"
+        }
+      ],
+      "version": "0.4.0"
+    }
+  ],
+  "schema_version": 4,
+  "sources": [
+    {
+      "component": "Prettier",
+      "license": "MIT",
+      "output": "prettier-LICENSE",
+      "sha256": "b0f2417199889f1c0d28ec4e0244eacf1a15de5819d61f641dd7d8f45153ac9c",
+      "targets": ["prettier"],
+      "url": "https://raw.githubusercontent.com/prettier/prettier/3.7.4/LICENSE",
+      "version": "3.7.4"
+    },
+    {
+      "component": "Node.js and bundled components",
+      "license": "MIT and other terms in the payload",
+      "output": "node-LICENSE",
+      "sha256": "148eacf7863ef4329224a29398623077200a27194aa075569faf4a0a85566ca5",
+      "targets": ["prettier"],
+      "url": "https://raw.githubusercontent.com/nodejs/node/v24.18.0/LICENSE",
+      "version": "24.18.0"
+    },
+    {
+      "component": "Bazel Buildtools",
+      "license": "Apache-2.0",
+      "output": "buildtools-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["buildifier"],
+      "url": "https://raw.githubusercontent.com/bazelbuild/buildtools/v8.2.1/LICENSE",
+      "version": "8.2.1"
+    },
+    {
+      "component": "github.com/golang/protobuf",
+      "license": "BSD-3-Clause",
+      "output": "golang-protobuf-LICENSE",
+      "sha256": "8778a9fc1eaffb03ab873caae251df2d224f6b5502be8777d3cd573a4dd43903",
+      "targets": ["buildifier"],
+      "url": "https://raw.githubusercontent.com/golang/protobuf/v1.5.0/LICENSE",
+      "version": "1.5.0"
+    },
+    {
+      "component": "google.golang.org/protobuf",
+      "license": "BSD-3-Clause",
+      "output": "protobuf-go-LICENSE",
+      "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "targets": ["buildifier"],
+      "url": "https://raw.githubusercontent.com/protocolbuffers/protobuf-go/v1.33.0/LICENSE",
+      "version": "1.33.0"
+    },
+    {
+      "component": "Black",
+      "license": "MIT",
+      "output": "black-LICENSE",
+      "sha256": "9c0428f0c3b4779850cf5bd96e11aaa8afc72d4a86d4a36223d7aba2e58d6e00",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/psf/black/24.10.0/LICENSE",
+      "version": "24.10.0"
+    },
+    {
+      "component": "Click",
+      "license": "BSD-3-Clause",
+      "output": "click-LICENSE.rst",
+      "sha256": "9a8ad106a394e853bfe21f42f4e72d592819a22805d991b5f3275029292b658d",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/pallets/click/8.1.7/LICENSE.rst",
+      "version": "8.1.7"
+    },
+    {
+      "component": "mypy-extensions",
+      "license": "MIT",
+      "output": "mypy-extensions-LICENSE",
+      "sha256": "a50450da1d53cd777b80ced77c58ff96abe0ccd879706bd142c3ec20e245f0b4",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/python/mypy_extensions/1.0.0/LICENSE",
+      "version": "1.0.0"
+    },
+    {
+      "component": "packaging",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "output": "packaging-LICENSE",
+      "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/pypa/packaging/24.1/LICENSE",
+      "version": "24.1"
+    },
+    {
+      "component": "packaging Apache terms",
+      "license": "Apache-2.0",
+      "output": "packaging-LICENSE.APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/pypa/packaging/24.1/LICENSE.APACHE",
+      "version": "24.1"
+    },
+    {
+      "component": "packaging BSD terms",
+      "license": "BSD-2-Clause",
+      "output": "packaging-LICENSE.BSD",
+      "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/pypa/packaging/24.1/LICENSE.BSD",
+      "version": "24.1"
+    },
+    {
+      "component": "pathspec",
+      "license": "MPL-2.0",
+      "output": "pathspec-LICENSE",
+      "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/cpburnz/python-pathspec/v0.12.1/LICENSE",
+      "version": "0.12.1"
+    },
+    {
+      "component": "platformdirs",
+      "license": "MIT",
+      "output": "platformdirs-LICENSE",
+      "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
+      "targets": ["black"],
+      "url": "https://raw.githubusercontent.com/tox-dev/platformdirs/4.3.6/LICENSE",
+      "version": "4.3.6"
+    },
+    {
+      "component": "CPython",
+      "license": "PSF-2.0",
+      "output": "python-LICENSE",
+      "sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "targets": ["black", "requirements"],
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.14/LICENSE",
+      "version": "3.13.14"
+    },
+    {
+      "component": "shfmt",
+      "license": "BSD-3-Clause",
+      "output": "shfmt-LICENSE",
+      "sha256": "ce63850f77649f00d1394045e2794ffb09a5596beabac51c9548edd958845d7c",
+      "targets": ["shfmt"],
+      "url": "https://raw.githubusercontent.com/mvdan/sh/v3.13.1/LICENSE",
+      "version": "3.13.1"
+    },
+    {
+      "component": "github.com/google/renameio/v2",
+      "license": "Apache-2.0",
+      "output": "renameio-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["shfmt"],
+      "url": "https://raw.githubusercontent.com/google/renameio/v2.0.2/LICENSE",
+      "version": "2.0.2"
+    },
+    {
+      "component": "github.com/rogpeppe/go-internal",
+      "license": "BSD-3-Clause",
+      "output": "go-internal-LICENSE",
+      "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "targets": ["shfmt"],
+      "url": "https://raw.githubusercontent.com/rogpeppe/go-internal/v1.14.1/LICENSE",
+      "version": "1.14.1"
+    },
+    {
+      "component": "golang.org/x/term",
+      "license": "BSD-3-Clause",
+      "output": "x-term-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "targets": ["shfmt"],
+      "url": "https://raw.githubusercontent.com/golang/term/v0.41.0/LICENSE",
+      "version": "0.41.0"
+    },
+    {
+      "component": "golang.org/x/sys",
+      "license": "BSD-3-Clause",
+      "output": "x-sys-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "targets": ["shfmt"],
+      "url": "https://raw.githubusercontent.com/golang/sys/v0.42.0/LICENSE",
+      "version": "0.42.0"
+    },
+    {
+      "component": "mvdan.cc/editorconfig",
+      "license": "BSD-3-Clause",
+      "output": "editorconfig-LICENSE",
+      "sha256": "3ffd3576875cec2ca5d8e0f6ec7d871d6fba8cb87cfb2285347fddce108fc57c",
+      "targets": ["shfmt"],
+      "url": "https://raw.githubusercontent.com/mvdan/editorconfig/v0.3.0/LICENSE",
+      "version": "0.3.0"
+    },
+    {
+      "component": "LLVM clang-format",
+      "license": "Apache-2.0 WITH LLVM-exception",
+      "output": "llvm-LICENSE.TXT",
+      "sha256": "8d85c1057d742e597985c7d4e6320b015a9139385cff4cbae06ffc0ebe89afee",
+      "targets": ["clang"],
+      "url": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-18.1.8/LICENSE.TXT",
+      "version": "18.1.8"
+    },
+    {
+      "component": "google-java-format",
+      "license": "Apache-2.0",
+      "output": "google-java-format-LICENSE",
+      "sha256": "2c7e23c8000fe553b6f380b5e365dd72198439174f1b6821d5e3b190b54af0dc",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/google-java-format/v1.35.0/LICENSE",
+      "version": "1.35.0"
+    },
+    {
+      "component": "Guava",
+      "license": "Apache-2.0",
+      "output": "guava-COPYING",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/guava/v32.1.3/LICENSE",
+      "version": "32.1.3-jre"
+    },
+    {
+      "component": "failureaccess",
+      "license": "Apache-2.0",
+      "output": "failureaccess-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/guava/failureaccess-v1.0.1/COPYING",
+      "version": "1.0.1"
+    },
+    {
+      "component": "jspecify",
+      "license": "Apache-2.0",
+      "output": "jspecify-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/jspecify/jspecify/v1.0.0/LICENSE",
+      "version": "1.0.0"
+    },
+    {
+      "component": "Error Prone annotations",
+      "license": "Apache-2.0",
+      "output": "error-prone-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/error-prone/v2.47.0/COPYING",
+      "version": "2.47.0"
+    },
+    {
+      "component": "AutoValue annotations",
+      "license": "Apache-2.0",
+      "output": "auto-value-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/auto/auto-value-1.9/LICENSE",
+      "version": "1.9"
+    },
+    {
+      "component": "AutoService annotations",
+      "license": "Apache-2.0",
+      "output": "auto-service-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/auto/auto-service-1.0.1/LICENSE",
+      "version": "1.0.1"
+    },
+    {
+      "component": "GraalVM Community Edition",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "output": "graalvm-LICENSE",
+      "sha256": "38cf84d41117b11c7232e5a8d51bb5a42d2b03e85e51e36a5e1291e46033dc5a",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/oracle/graal/vm-25.0.2/LICENSE",
+      "version": "25.0.2+10.1"
+    },
+    {
+      "component": "Go",
+      "license": "BSD-3-Clause",
+      "output": "go-LICENSE",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "targets": ["buildifier", "go", "shfmt"],
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE",
+      "version": "1.26.5"
+    },
+    {
+      "component": "Go patents grant",
+      "license": "Patent grant",
+      "output": "go-PATENTS",
+      "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "targets": ["buildifier", "go", "shfmt"],
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/PATENTS",
+      "version": "1.26.5"
+    },
+    {
+      "component": "Rust",
+      "license": "Apache-2.0",
+      "output": "rust-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSE-APACHE",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust",
+      "license": "MIT",
+      "output": "rust-LICENSE-MIT",
+      "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSE-MIT",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust copyright notices",
+      "license": "Notice",
+      "output": "rust-COPYRIGHT",
+      "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/COPYRIGHT",
+      "version": "1.97.1"
+    },
+    {
+      "component": "GCC runtime library",
+      "license": "GCC-exception-3.1",
+      "output": "gcc-COPYING.RUNTIME",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "targets": [
+        "black",
+        "csharp",
+        "kotlin",
+        "prettier",
+        "requirements",
+        "rust"
+      ],
+      "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+      "version": "15.2.0"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "output": "musl-COPYRIGHT",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "targets": [
+        "black",
+        "clang",
+        "kotlin",
+        "prettier",
+        "requirements",
+        "rust",
+        "taplo",
+        "xml"
+      ],
+      "url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    },
+    {
+      "component": "ktlint",
+      "license": "MIT",
+      "output": "ktlint-LICENSE",
+      "sha256": "b45bdb3357e761d4b1300470833cf5e5e9fafc32a5f98efef214ba926b0120d5",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/ktlint/ktlint/1.3.0/LICENSE",
+      "version": "1.3.0"
+    },
+    {
+      "component": "OpenJDK",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "output": "openjdk-LICENSE",
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/adoptium/jdk21u/jdk-21.0.10%2B7/LICENSE",
+      "version": "21.0.10+7"
+    },
+    {
+      "component": "Kotlin",
+      "license": "Apache-2.0",
+      "output": "kotlin-LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/JetBrains/kotlin/v1.9.24/license/LICENSE.txt",
+      "version": "1.9.24"
+    },
+    {
+      "component": "Clikt",
+      "license": "Apache-2.0",
+      "output": "clikt-LICENSE",
+      "sha256": "bda1e56eafb83ea7ef64fe5669a155d446a37d44db2b1d9ded34ec194921f176",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/ajalt/clikt/4.4.0/LICENSE.txt",
+      "version": "4.4.0"
+    },
+    {
+      "component": "Logback",
+      "license": "EPL-1.0 OR LGPL-2.1-only",
+      "output": "logback-LICENSE.txt",
+      "sha256": "94a99c6ee7e8b5ba3ef66a1d234c22a55c149e93584040d66a7f6694d552e7ea",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/qos-ch/logback/v_1.3.14/LICENSE.txt",
+      "version": "1.3.14"
+    },
+    {
+      "component": "SLF4J",
+      "license": "MIT",
+      "output": "slf4j-LICENSE.txt",
+      "sha256": "6fbe2eaf44b193b8a40eed9208f52848572224ad8d7672dd09418aa174847e73",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/qos-ch/slf4j/v_2.0.7/LICENSE.txt",
+      "version": "2.0.7"
+    },
+    {
+      "component": "Taplo CLI",
+      "license": "MIT",
+      "output": "taplo-LICENSE",
+      "sha256": "b23690ab205e06bf09725ef88e0b321175cbc2dd4d9f8ec7f7cd0577302c244d",
+      "targets": ["taplo"],
+      "url": "https://raw.githubusercontent.com/tamasfe/taplo/0.10.0/LICENSE",
+      "version": "0.10.0"
+    },
+    {
+      "component": "Rust standard library used by Taplo",
+      "license": "Apache-2.0",
+      "output": "rust-1.87-LICENSE-APACHE",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "targets": ["taplo"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.87.0/LICENSE-APACHE",
+      "version": "1.87.0"
+    },
+    {
+      "component": "Rust standard library used by Taplo",
+      "license": "MIT",
+      "output": "rust-1.87-LICENSE-MIT",
+      "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "targets": ["taplo"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.87.0/LICENSE-MIT",
+      "version": "1.87.0"
+    },
+    {
+      "component": "libxml2",
+      "license": "MIT",
+      "output": "libxml2-Copyright",
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "targets": ["xml"],
+      "url": "https://gitlab.gnome.org/GNOME/libxml2/-/raw/v2.15.3/Copyright",
+      "version": "2.15.3"
+    },
+    {
+      "component": "swift-format",
+      "license": "Apache-2.0",
+      "output": "swift-format-LICENSE.txt",
+      "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/swiftlang/swift-format/603.0.0/LICENSE.txt",
+      "version": "603.0.0"
+    },
+    {
+      "component": "Swift runtime",
+      "license": "Apache-2.0",
+      "output": "swift-LICENSE.txt",
+      "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/swiftlang/swift/swift-6.3-RELEASE/LICENSE.txt",
+      "version": "6.3"
+    },
+    {
+      "component": "swift-argument-parser",
+      "license": "Apache-2.0",
+      "output": "swift-argument-parser-LICENSE.txt",
+      "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/apple/swift-argument-parser/6a52f3251125d74daf04fcbd5e6f08a75d074382/LICENSE.txt",
+      "version": "1.8.2 (6a52f3251125d74daf04fcbd5e6f08a75d074382)"
+    },
+    {
+      "component": "swift-markdown",
+      "license": "Apache-2.0",
+      "output": "swift-markdown-LICENSE.txt",
+      "sha256": "167beb36f181bd163c93c6feb45c68e5f9462fe1af55b278f7bfd1df20e673a3",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/swiftlang/swift-markdown/3c6f9523da3a1ec2fd829673e472d95b8097a3b8/LICENSE.txt",
+      "version": "0.8.0 (3c6f9523da3a1ec2fd829673e472d95b8097a3b8)"
+    },
+    {
+      "component": "swift-markdown notices",
+      "license": "Notice",
+      "output": "swift-markdown-NOTICE.txt",
+      "sha256": "ee7da43afcac4a52196a2141024573ec2ceb84b14e74dfed38522d94586fbc52",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/swiftlang/swift-markdown/3c6f9523da3a1ec2fd829673e472d95b8097a3b8/NOTICE.txt",
+      "version": "0.8.0 (3c6f9523da3a1ec2fd829673e472d95b8097a3b8)"
+    },
+    {
+      "component": "swift-syntax",
+      "license": "Apache-2.0",
+      "output": "swift-syntax-LICENSE.txt",
+      "sha256": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/swiftlang/swift-syntax/79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1/LICENSE.txt",
+      "version": "603.0.2 (79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1)"
+    },
+    {
+      "component": "swift-cmark",
+      "license": "BSD-2-Clause and other terms in the payload",
+      "output": "swift-cmark-COPYING",
+      "sha256": "c22e885f33b821bddb24cf007145e5540655b6c0f403e49e6c76a93c28e6d9a9",
+      "targets": ["swift"],
+      "url": "https://raw.githubusercontent.com/swiftlang/swift-cmark/924936d0427cb25a61169739a7660230bffa6ea6/COPYING",
+      "version": "0.8.0 (924936d0427cb25a61169739a7660230bffa6ea6)"
+    },
+    {
+      "component": "CSharpier and CSharpier.Core",
+      "license": "MIT",
+      "output": "csharpier-LICENSE",
+      "sha256": "0ed797a602216813b874392c4668e5e5611fc9e3b89af6a1989add2e3d825b37",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/belav/csharpier/c3fe3f22a4f091eaf759e0b5aa8f3b9d3565e51b/LICENSE",
+      "version": "1.3.0"
+    },
+    {
+      "component": "LovettSoftware.XmlDiff",
+      "license": "MIT",
+      "output": "xmldiff-LICENSE",
+      "sha256": "ba5c88068ad58a174e67390404c6b1fda4d04f067b39295eda8d2a8638fd1b16",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/lovettchris/xmldiff/0cc21e7053768ca5fc32c432279f7508f985fb2a/LICENSE",
+      "version": "1.1.0"
+    },
+    {
+      "component": ".NET runtime and Microsoft.Extensions",
+      "license": "MIT and other terms in the payload",
+      "output": "dotnet-THIRD-PARTY-NOTICES.TXT",
+      "sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/THIRD-PARTY-NOTICES.TXT",
+      "version": "10.0.10"
+    },
+    {
+      "component": ".NET runtime and Microsoft.Extensions",
+      "license": "MIT",
+      "output": "dotnet-LICENSE.TXT",
+      "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/LICENSE.TXT",
+      "version": "10.0.10"
+    },
+    {
+      "component": "Roslyn",
+      "license": "MIT",
+      "output": "roslyn-LICENSE.txt",
+      "sha256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/dotnet/roslyn/16f9bd284cd49604ac82998bfe778a8eb16d4347/License.txt",
+      "version": "5.3.0"
+    },
+    {
+      "component": "System.CommandLine",
+      "license": "MIT",
+      "output": "system-commandline-LICENSE.md",
+      "sha256": "58fd5ebf25d75b5bb5f4cd407a9fef3befd3641e1af90a1d0716618e6430fc19",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/dotnet/command-line-api/209b724a3c843253d3071e8348c353b297b0b8b5/LICENSE.md",
+      "version": "2.0.0-beta4.22272.1"
+    },
+    {
+      "component": "System.IO.Abstractions",
+      "license": "MIT",
+      "output": "system-io-abstractions-LICENSE",
+      "sha256": "9b4f46dc8e65bb14714479eb4de76b7a1e2e7f9eff7ab1eb0e9dea712f19b1ed",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/TestableIO/System.IO.Abstractions/a091ac7f9655f61aeaeb28baf452c1a96c546ba8/LICENSE",
+      "version": "22.1.1"
+    },
+    {
+      "component": "Testably.Abstractions",
+      "license": "MIT",
+      "output": "testably-abstractions-LICENSE.md",
+      "sha256": "024f2e034ea52d1b47be884bda1bd9b776ceddbfb2a7cc4d49f79255c8ed483c",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/Testably/Testably.Abstractions/1253c6bd6309cb15623fac09bd841e782bbca626/LICENSE",
+      "version": "10.1.0"
+    },
+    {
+      "component": "YamlDotNet",
+      "license": "MIT",
+      "output": "yamldotnet-LICENSE.txt",
+      "sha256": "daea8b7f1b2bab48ea12ad50b0ce91634669d99d7dd0cb64aed8dffeeef69ed3",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/aaubry/YamlDotNet/ae480660f4fb26f3eb0b41c1d1fcf21c0e9d9e73/LICENSE.txt",
+      "version": "16.3.0"
+    },
+    {
+      "component": "NReco.Logging.File",
+      "license": "MIT",
+      "output": "nreco-logging-LICENSE",
+      "sha256": "567276183908f3f7f62dd49e590cff9e05bc4d60c6345d929a4666964d5b6601",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/NReco/Logging/2396077ef65844a23795f91d6e3777c781d031ad/LICENSE",
+      "version": "1.2.2"
+    },
+    {
+      "component": "ini-parser-netstandard",
+      "license": "MIT",
+      "output": "ini-parser-LICENSE",
+      "sha256": "fda26a0d6e53a13085976f4b8758c7e43dc7260c7cb548c1a3999860ec2245fa",
+      "targets": ["csharp"],
+      "url": "https://raw.githubusercontent.com/rickyah/ini-parser/c4dbf0eed984b0d57841bd6288040a2d5250e66e/LICENSE",
+      "version": "2.5.3"
+    },
+    {
+      "component": "Julia and bundled components",
+      "license": "MIT and other terms in the payload",
+      "output": "julia-LICENSE.md",
+      "sha256": "c349becf11ee093ce16f0c0526c0a26c970444171ce9a2a281f230dc07dbfb66",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/JuliaLang/julia/v1.12.6/LICENSE.md",
+      "version": "1.12.6"
+    },
+    {
+      "component": "JuliaFormatter",
+      "license": "MIT",
+      "output": "juliaformatter-LICENSE",
+      "sha256": "8ac3e9b27630654348e4c4eccab4aa00d397afd117343596d4d4b441f82dd855",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/JuliaEditorSupport/JuliaFormatter.jl/v2.12.3/LICENSE",
+      "version": "2.12.3"
+    },
+    {
+      "component": "CommonMark.jl",
+      "license": "MIT",
+      "output": "commonmark-LICENSE",
+      "sha256": "1840fe1b989208725f1c45bfffb8ba8714389bea3311491bfd00d1d3fd3c6dc4",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/MichaelHatherly/CommonMark.jl/v1.0.3/LICENSE",
+      "version": "1.0.3"
+    },
+    {
+      "component": "Glob.jl",
+      "license": "MIT",
+      "output": "glob-LICENSE.md",
+      "sha256": "7bd205a2f6e3d02eb3f68ed38712e621b849e67228b131f1a6a55eb058bb34fb",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/vtjnash/Glob.jl/v1.5.0/LICENSE.md",
+      "version": "1.5.0"
+    },
+    {
+      "component": "JuliaSyntax.jl",
+      "license": "MIT",
+      "output": "juliasyntax-LICENSE.md",
+      "sha256": "b38844ba3d737e9550f6fb161718f7d254dd8adb5d984418340fbeb04ffd1e14",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/JuliaLang/JuliaSyntax.jl/v1.0.2/LICENSE.md",
+      "version": "1.0.2"
+    },
+    {
+      "component": "PrecompileTools.jl",
+      "license": "MIT",
+      "output": "precompiletools-LICENSE",
+      "sha256": "4102721694be71a80322c1fd3f3e33b9a017faaf0a0eb785ebd0c9558ddeffeb",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/JuliaLang/PrecompileTools.jl/v1.3.4/LICENSE",
+      "version": "1.3.4"
+    },
+    {
+      "component": "Preferences.jl",
+      "license": "MIT",
+      "output": "preferences-LICENSE.md",
+      "sha256": "7d20d9825893f292496271edd11fda1e39dacacf64d6c0fb8c8b10bdf66cf0fb",
+      "targets": ["julia"],
+      "url": "https://raw.githubusercontent.com/JuliaPackaging/Preferences.jl/v1.5.2/LICENSE.md",
+      "version": "1.5.2"
+    },
+    {
+      "component": "Rust bundled Apache-2.0 terms",
+      "license": "Apache-2.0",
+      "output": "rust-Apache-2.0.txt",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/Apache-2.0.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled BSD-2-Clause terms",
+      "license": "BSD-2-Clause",
+      "output": "rust-BSD-2-Clause.txt",
+      "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/BSD-2-Clause.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled CC-BY-SA-4.0 terms",
+      "license": "CC-BY-SA-4.0",
+      "output": "rust-CC-BY-SA-4.0.txt",
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/CC-BY-SA-4.0.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled GCC-exception-3.1 terms",
+      "license": "GCC-exception-3.1",
+      "output": "rust-GCC-exception-3.1.txt",
+      "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/GCC-exception-3.1.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled GPL-2.0-only terms",
+      "license": "GPL-2.0-only",
+      "output": "rust-GPL-2.0-only.txt",
+      "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/GPL-2.0-only.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled GPL-3.0-or-later terms",
+      "license": "GPL-3.0-or-later",
+      "output": "rust-GPL-3.0-or-later.txt",
+      "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/GPL-3.0-or-later.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled ISC terms",
+      "license": "ISC",
+      "output": "rust-ISC.txt",
+      "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/ISC.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled LLVM-exception terms",
+      "license": "LLVM-exception",
+      "output": "rust-LLVM-exception.txt",
+      "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/LLVM-exception.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled MIT terms",
+      "license": "MIT",
+      "output": "rust-MIT.txt",
+      "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/MIT.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled NCSA terms",
+      "license": "NCSA",
+      "output": "rust-NCSA.txt",
+      "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/NCSA.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled OFL-1.1 terms",
+      "license": "OFL-1.1",
+      "output": "rust-OFL-1.1.txt",
+      "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/OFL-1.1.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "Rust bundled Unicode-3.0 terms",
+      "license": "Unicode-3.0",
+      "output": "rust-Unicode-3.0.txt",
+      "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443",
+      "targets": ["rust"],
+      "url": "https://raw.githubusercontent.com/rust-lang/rust/1.97.1/LICENSES/Unicode-3.0.txt",
+      "version": "1.97.1"
+    },
+    {
+      "component": "kotlin-logging-jvm",
+      "license": "Apache-2.0 with component copyright",
+      "output": "kotlin-logging-LICENSE",
+      "sha256": "91ee885fa6bcd18b35dbb38859863eb927bf05eb6a6165baaf26c7f3bfb79e3a",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/oshai/kotlin-logging/6.0.9/LICENSE",
+      "version": "6.0.9"
+    },
+    {
+      "component": "Poko annotations JVM",
+      "license": "Apache-2.0",
+      "output": "poko-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/drewhamilton/Poko/0.15.3/LICENSE",
+      "version": "0.15.3"
+    },
+    {
+      "component": "Poko annotations JVM metadata",
+      "license": "Apache-2.0 metadata",
+      "output": "poko-annotations-jvm.pom",
+      "sha256": "37e199dfa3571969b5dffd75447122c74deaf777658e6d7f36dfb01f07590dcb",
+      "targets": ["kotlin"],
+      "url": "https://repo1.maven.org/maven2/dev/drewhamilton/poko/poko-annotations-jvm/0.15.3/poko-annotations-jvm-0.15.3.pom",
+      "version": "0.15.3"
+    },
+    {
+      "component": "JetBrains annotations metadata",
+      "license": "Apache-2.0 metadata",
+      "output": "jetbrains-annotations.pom",
+      "sha256": "965aeb2bedff369819bdde1bf7a0b3b89b8247dd69c88b86375d76163bb8c397",
+      "targets": ["kotlin"],
+      "url": "https://repo1.maven.org/maven2/org/jetbrains/annotations/13.0/annotations-13.0.pom",
+      "version": "13.0"
+    },
+    {
+      "component": "IntelliJ trove4j terms",
+      "license": "LGPL-2.1-only",
+      "output": "trove4j-LICENSE.txt",
+      "sha256": "fda19750542df9f65d0d95a771a96b1337ff40e9610d63d6785d920f5124090a",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/JetBrains/intellij-deps-trove4j/6ff9e87f72de433eaf6fbc45e1263dd976bee5c4/LICENSE.txt",
+      "version": "1.0.20200330; terms at 6ff9e87f72de433eaf6fbc45e1263dd976bee5c4"
+    },
+    {
+      "component": "IntelliJ trove4j metadata",
+      "license": "LGPL-2.1-only metadata",
+      "output": "trove4j.pom",
+      "sha256": "87721cbaa65a3c97d8b1ba9d207840f164c9fe38759fc9ea10ffe26565f8d3e9",
+      "targets": ["kotlin"],
+      "url": "https://repo1.maven.org/maven2/org/jetbrains/intellij/deps/trove4j/1.0.20200330/trove4j-1.0.20200330.pom",
+      "version": "1.0.20200330"
+    },
+    {
+      "component": "EditorConfig Core Java",
+      "license": "Apache-2.0",
+      "output": "ec4j-LICENSE",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/ec4j/ec4j/0.3.0/LICENSE",
+      "version": "0.3.0"
+    },
+    {
+      "component": "Mordant",
+      "license": "Apache-2.0",
+      "output": "mordant-LICENSE.txt",
+      "sha256": "bda1e56eafb83ea7ef64fe5669a155d446a37d44db2b1d9ded34ec194921f176",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/ajalt/mordant/2.5.0/LICENSE.txt",
+      "version": "2.5.0"
+    },
+    {
+      "component": "Colormath",
+      "license": "MIT with component copyright",
+      "output": "colormath-LICENSE",
+      "sha256": "ab1cd8a3d0e92e1f69e95e8ca839127c52d4bd32fa2824d683d0dc66cc8fe21f",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/ajalt/colormath/3.5.0/LICENSE",
+      "version": "3.5.0"
+    },
+    {
+      "component": "JetBrains Markdown terms",
+      "license": "Apache-2.0",
+      "output": "jetbrains-markdown-LICENSE",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/JetBrains/markdown/14e35f17db892a48287fd6882ae69edb162f14bd/LICENSE",
+      "version": "0.7.0; terms at 14e35f17db892a48287fd6882ae69edb162f14bd"
+    },
+    {
+      "component": "JetBrains Markdown JVM metadata",
+      "license": "Apache-2.0 metadata",
+      "output": "jetbrains-markdown-jvm.pom",
+      "sha256": "d15b0ad2e9a573f97cecffa9ed40cfe534d5fc76b32e280f85dd02fe55489fce",
+      "targets": ["kotlin"],
+      "url": "https://repo1.maven.org/maven2/org/jetbrains/markdown-jvm/0.7.0/markdown-jvm-0.7.0.pom",
+      "version": "0.7.0"
+    },
+    {
+      "component": "fastutil-core",
+      "license": "Apache-2.0",
+      "output": "fastutil-LICENSE-2.0",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/vigna/fastutil/8.5.12/LICENSE-2.0",
+      "version": "8.5.12"
+    },
+    {
+      "component": "Java Native Access",
+      "license": "Apache-2.0 OR LGPL-2.1",
+      "output": "jna-LICENSE",
+      "sha256": "521bb271ac56e0e29a1b1b688b94af17d00d378fc8e63478d8c8b2a7c4a229d0",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/java-native-access/jna/5.14.0/LICENSE",
+      "version": "5.14.0"
+    },
+    {
+      "component": "Sarif4k",
+      "license": "Apache-2.0",
+      "output": "sarif4k-LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/detekt/sarif4k/0.6.0/LICENSE",
+      "version": "0.6.0"
+    },
+    {
+      "component": "Sarif4k JVM metadata",
+      "license": "Apache-2.0 metadata",
+      "output": "sarif4k-jvm.pom",
+      "sha256": "8b90fc3745f008f510886ce707539f6bb71bbdd1b7c9db8fd1db0ae566a1c0af",
+      "targets": ["kotlin"],
+      "url": "https://repo1.maven.org/maven2/io/github/detekt/sarif4k/sarif4k-jvm/0.6.0/sarif4k-jvm-0.6.0.pom",
+      "version": "0.6.0"
+    },
+    {
+      "component": "kotlinx.serialization core and JSON",
+      "license": "Apache-2.0",
+      "output": "kotlinx-serialization-LICENSE.txt",
+      "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/Kotlin/kotlinx.serialization/v1.4.1/LICENSE.txt",
+      "version": "1.4.1"
+    },
+    {
+      "component": "Checker Framework qualifiers",
+      "license": "MIT with component copyright",
+      "output": "checker-qual-LICENSE.txt",
+      "sha256": "e90eaa08dea089df10f2bf7f9dba63a5f6237c01562c4741e2e86773e78582d5",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/typetools/checker-framework/checker-framework-3.37.0/checker-qual/LICENSE.txt",
+      "version": "3.37.0"
+    },
+    {
+      "component": "J2ObjC annotations",
+      "license": "Apache-2.0 and bundled terms",
+      "output": "j2objc-LICENSE",
+      "sha256": "f93fac82dc22bed7ccc04bef47c3313b7db8ea350eadd85f3672acbdae3cfad1",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/google/j2objc/2.8/LICENSE",
+      "version": "2.8"
+    },
+    {
+      "component": "JSR-305 metadata",
+      "license": "Apache-2.0 metadata",
+      "output": "jsr305-3.0.2.pom",
+      "sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe",
+      "targets": ["java"],
+      "url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom",
+      "version": "3.0.2"
+    },
+    {
+      "component": "Alpine apk-tools runtime",
+      "license": "GPL-2.0-only",
+      "output": "apk-tools-LICENSE",
+      "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "targets": [
+        "black",
+        "csharp",
+        "kotlin",
+        "prettier",
+        "requirements"
+      ],
+      "url": "https://raw.githubusercontent.com/alpinelinux/apk-tools/v3.0.6/LICENSE",
+      "version": "3.0.6-r0"
+    },
+    {
+      "component": "OpenSSL runtime",
+      "license": "Apache-2.0 with component notice",
+      "output": "openssl-LICENSE.txt",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "targets": [
+        "black",
+        "csharp",
+        "kotlin",
+        "prettier",
+        "requirements"
+      ],
+      "url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.7/LICENSE.txt",
+      "version": "3.5.7-r0"
+    },
+    {
+      "component": "zlib runtime",
+      "license": "Zlib with component copyright",
+      "output": "zlib-LICENSE",
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "targets": [
+        "black",
+        "csharp",
+        "kotlin",
+        "prettier",
+        "requirements"
+      ],
+      "url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE",
+      "version": "1.3.2-r0"
+    },
+    {
+      "component": "bzip2 runtime",
+      "license": "bzip2-1.0.6 with component copyright",
+      "output": "bzip2-LICENSE",
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://raw.githubusercontent.com/libarchive/bzip2/bzip2-1.0.8/LICENSE",
+      "version": "1.0.8-r6"
+    },
+    {
+      "component": "libffi runtime",
+      "license": "MIT with component copyrights",
+      "output": "libffi-LICENSE",
+      "sha256": "d5699fa516968e3a1550e6c902b7441c78856f2603d61bedd0b0662a26655366",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://raw.githubusercontent.com/libffi/libffi/v3.5.2/LICENSE",
+      "version": "3.5.2-r0"
+    },
+    {
+      "component": "ncurses runtime",
+      "license": "X11 with component copyrights",
+      "output": "ncurses-COPYING",
+      "sha256": "0413b2f4ea863194c174673032f0fca84f1ea1ed4eed6476baea68c075a631ce",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://raw.githubusercontent.com/mirror/ncurses/87c2c84cbd2332d6d94b12a1dcaf12ad1a51a938/COPYING",
+      "version": "6.5_p20251123-r0; terms at 87c2c84cbd2332d6d94b12a1dcaf12ad1a51a938"
+    },
+    {
+      "component": "util-linux libuuid runtime",
+      "license": "GPL-2.0-or-later and bundled terms",
+      "output": "util-linux-COPYING",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://raw.githubusercontent.com/util-linux/util-linux/v2.41.4/COPYING",
+      "version": "2.41.4-r0"
+    },
+    {
+      "component": "readline runtime",
+      "license": "GPL-3.0-or-later",
+      "output": "readline-COPYING",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://raw.githubusercontent.com/gnu-mirror-unofficial/readline/5263c0d88064fda96292335d12eec1733f91cdc9/COPYING",
+      "version": "8.3.1-r0; terms at 5263c0d88064fda96292335d12eec1733f91cdc9"
+    },
+    {
+      "component": "XZ Utils runtime",
+      "license": "GPL-2.0-or-later, 0BSD, public domain, and LGPL-2.1-or-later",
+      "output": "xz-COPYING",
+      "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.8.3/COPYING",
+      "version": "5.8.3-r0"
+    },
+    {
+      "component": "SQLite runtime public-domain dedication",
+      "license": "blessing and public-domain dedication",
+      "output": "sqlite-copyright.html",
+      "sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
+      "targets": ["black", "kotlin", "requirements"],
+      "url": "https://www.sqlite.org/copyright.html",
+      "version": "3.51.2-r0; fetched content pinned by SHA-256"
+    },
+    {
+      "component": "GCC runtime libraries",
+      "license": "GPL-3.0-or-later",
+      "output": "gcc-COPYING3",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "targets": [
+        "black",
+        "csharp",
+        "kotlin",
+        "prettier",
+        "requirements",
+        "rust"
+      ],
+      "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+      "version": "15.2.0-r2"
+    },
+    {
+      "component": "Brotli runtime",
+      "license": "MIT with component copyrights",
+      "output": "brotli-LICENSE",
+      "sha256": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/google/brotli/v1.2.0/LICENSE",
+      "version": "1.2.0-r0"
+    },
+    {
+      "component": "fontconfig runtime",
+      "license": "MIT with component copyrights",
+      "output": "fontconfig-COPYING",
+      "sha256": "51a51aa9823704fd90bccc616cdd17ebabb5b2b3e9cbde886ca02c7002288067",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/fontconfig/fontconfig/2.17.1/COPYING",
+      "version": "2.17.1-r0"
+    },
+    {
+      "component": "FreeType runtime",
+      "license": "FTL with component copyrights",
+      "output": "freetype-FTL.TXT",
+      "sha256": "5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/freetype/freetype/VER-2-14-3/docs/FTL.TXT",
+      "version": "2.14.3-r0"
+    },
+    {
+      "component": "Jansson runtime",
+      "license": "MIT with component copyrights",
+      "output": "jansson-LICENSE",
+      "sha256": "150d90904cd8de73609bb177b42edd3867b07b4b7b786dbba319f30de39fcda2",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/akheron/jansson/v2.14.1/LICENSE",
+      "version": "2.14.1-r0"
+    },
+    {
+      "component": "libassuan runtime",
+      "license": "LGPL-2.1-or-later",
+      "output": "libassuan-COPYING.LIB",
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/gpg/libassuan/libassuan-3.0.2/COPYING.LIB",
+      "version": "3.0.2-r0"
+    },
+    {
+      "component": "Expat runtime",
+      "license": "MIT with component copyrights",
+      "output": "expat-COPYING",
+      "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/libexpat/libexpat/R_2_8_2/expat/COPYING",
+      "version": "2.8.2-r0"
+    },
+    {
+      "component": "libfontenc runtime",
+      "license": "MIT with component copyrights",
+      "output": "libfontenc-COPYING",
+      "sha256": "a4dda7a643b517794bfa23dc9605da030055df38ac8a5b9e1905e690975a59c4",
+      "targets": ["kotlin"],
+      "url": "https://gitlab.freedesktop.org/xorg/lib/libfontenc/-/raw/libfontenc-1.1.8/COPYING",
+      "version": "1.1.8-r0"
+    },
+    {
+      "component": "libgcrypt runtime",
+      "license": "LGPL-2.1-or-later and GPL-2.0-or-later",
+      "output": "libgcrypt-COPYING.LIB",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/gpg/libgcrypt/libgcrypt-1.11.2/COPYING.LIB",
+      "version": "1.11.2-r0"
+    },
+    {
+      "component": "libgpg-error runtime",
+      "license": "LGPL-2.1-or-later and GPL-2.0-or-later",
+      "output": "libgpg-error-COPYING.LIB",
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/gpg/libgpg-error/libgpg-error-1.55/COPYING.LIB",
+      "version": "1.55-r0"
+    },
+    {
+      "component": "libidn2 runtime",
+      "license": "LGPL-3.0-or-later",
+      "output": "libidn2-COPYING.LESSERv3",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/libidn/libidn2/v2.3.8/COPYING.LESSERv3",
+      "version": "2.3.8-r0"
+    },
+    {
+      "component": "libksba runtime",
+      "license": "LGPL-3.0-only, GPL-2.0-only, and GPL-3.0-only",
+      "output": "libksba-COPYING",
+      "sha256": "6197b98c6bf69838c624809c509d84333de1bc847155168c0e84527446a27076",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/gpg/libksba/libksba-1.6.7/COPYING",
+      "version": "1.6.7-r0"
+    },
+    {
+      "component": "OpenLDAP runtime",
+      "license": "OLDAP-2.8 with component copyrights",
+      "output": "openldap-LICENSE",
+      "sha256": "310fe25c858a9515fc8c8d7d1f24a67c9496f84a91e0a0e41ea9975b1371e569",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/openldap/openldap/OPENLDAP_REL_ENG_2_6_13/LICENSE",
+      "version": "2.6.13-r0"
+    },
+    {
+      "component": "libpng runtime",
+      "license": "Libpng with component copyrights",
+      "output": "libpng-LICENSE",
+      "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/pnggroup/libpng/v1.6.58/LICENSE",
+      "version": "1.6.58-r1"
+    },
+    {
+      "component": "Cyrus SASL runtime",
+      "license": "BSD terms with component copyrights",
+      "output": "cyrus-sasl-COPYING",
+      "sha256": "9d6e5d1632140a6c135b251260953650d17d87cd1124f87aaf72192aa4580d4b",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/cyrusimap/cyrus-sasl/cyrus-sasl-2.1.28/COPYING",
+      "version": "2.1.28-r9"
+    },
+    {
+      "component": "Nettle runtime",
+      "license": "LGPL-3.0-or-later",
+      "output": "nettle-COPYING.LESSERv3",
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/gnutls/nettle/nettle_3.10.2_release_20250626/COPYING.LESSERv3",
+      "version": "3.10.2-r0"
+    },
+    {
+      "component": "nPth runtime",
+      "license": "LGPL-2.0-or-later",
+      "output": "npth-COPYING.LIB",
+      "sha256": "ce64d5f7b49ea6d80fdb6d4cdee6839d1a94274f7493dc797c3b55b65ec8e9ed",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/gpg/npth/npth-1.8/COPYING.LIB",
+      "version": "1.8-r0"
+    },
+    {
+      "component": "p11-kit runtime",
+      "license": "BSD-3-Clause with component copyrights",
+      "output": "p11-kit-COPYING",
+      "sha256": "2e1ba993904df807a10c3eda1e5c272338edc35674b679773a8b3ad460731054",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/p11-glue/p11-kit/0.26.2/COPYING",
+      "version": "0.26.2-r0"
+    },
+    {
+      "component": "skalibs runtime",
+      "license": "ISC with component copyright",
+      "output": "skalibs-COPYING",
+      "sha256": "cadf2c7d05a2c425250211c01db2ff33fa2bc31e293c8c040227b046ce1cb77f",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/skarnet/skalibs/v2.14.4.0/COPYING",
+      "version": "2.14.4.0-r0"
+    },
+    {
+      "component": "utmps runtime",
+      "license": "ISC with component copyright",
+      "output": "utmps-COPYING",
+      "sha256": "0f415da77eb45ab52dad82f23c1f46e827bacb0b68d6f42c919ae8f3d254fb97",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/skarnet/utmps/v0.1.3.1/COPYING",
+      "version": "0.1.3.1-r0"
+    },
+    {
+      "component": "Zstandard runtime",
+      "license": "BSD-3-Clause with component copyright",
+      "output": "zstd-LICENSE",
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "targets": ["kotlin"],
+      "url": "https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE",
+      "version": "1.5.7-r2"
+    },
+    {
+      "component": "OpenJDK used by GraalVM Native Image",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "output": "openjdk-25-LICENSE",
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/openjdk/jdk25u/jdk-25.0.2-ga/LICENSE",
+      "version": "25.0.2+10"
+    },
+    {
+      "component": "GraalVM bundled third-party components",
+      "license": "Terms and component copyrights in the payload",
+      "output": "graalvm-THIRD_PARTY_LICENSE.txt",
+      "sha256": "86446ef6768691560d8d2e6e93852607333171478c2fa0360e4e3d6ce9267e66",
+      "targets": ["java"],
+      "url": "https://raw.githubusercontent.com/oracle/graal/vm-25.0.2/THIRD_PARTY_LICENSE.txt",
+      "version": "25.0.2+10.1"
+    }
+  ]
+}

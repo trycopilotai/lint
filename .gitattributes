@@ -1,0 +1,36 @@
+# Each legal payload is bound by the SHA-256 in its target
+# manifest. Some payloads intentionally contain mixed line
+# endings, so preserve the blob bytes instead of normalizing
+# them during checkout.
+images/licenses/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+
+# These generated dependency receipts and formatter lockfiles
+# are also bound by checked-in SHA-256 values.
+images/closures/** -text
+images/julia/Manifest.toml -text
+images/julia/Project.toml -text
+images/swift/Package.resolved -text
+
+# Golden fixtures, canonical OCI inventories, and comparison
+# captures are compared as exact bytes rather than host-native
+# text files.
+fixtures/** -text
+images/inventories/** -text
+evidence/comparison-source-excerpts/** -text
+
+# evidence/demo-manifest.json records a SHA-256 for each path
+# below, and scripts/demo.sh is read by a POSIX shell. A
+# checkout that translated their line endings would hand the
+# verifier different bytes than the ones it hashed, and would
+# hand the shell a script full of carriage returns. Git for
+# Windows defaults to core.autocrlf=true, which is what
+# GitHub's Windows runner checks out with, so the canonical
+# bytes have to be stated here rather than assumed.
+assets/demo.svg -text
+evidence/demo-transcript.txt -text
+images/matrix.json -text
+languages.json -text
+lint.py -text
+scripts/demo.sh -text
+scripts/generate_demo.py -text
+skills/lint/** -text

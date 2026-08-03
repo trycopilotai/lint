@@ -1,0 +1,1 @@
+GitHub - pre-commit/pre-commit: A framework for managing and maintaining multi-language pre-commit hooks. · GitHub Skip to content Navigation Menu Toggle navigation Sign in Appearance settings Platform AI CODE CREATION GitHub Copilot Write better code with AI GitHub Copilot app Direct agents from issue to merge MCP Registry Integrate external 

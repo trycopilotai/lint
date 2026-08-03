@@ -1,6 +1,6 @@
 name: "lint"
 description:
-  "Check or apply pinned mixed-language formatting"
+  "Check or apply canonical mixed-language formatting"
 inputs:
   mode:
     description:

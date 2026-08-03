@@ -1,0 +1,2751 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/db",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/installed",
+      "role": "runtime",
+      "sha256": "924888bfad4c47074b804085ba0f1aa25adfec797156ea16644ac896cef8c28b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0600",
+      "path": "lib/apk/db/lock",
+      "role": "runtime",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/scripts.tar.gz",
+      "role": "runtime",
+      "sha256": "64f288606cce2acb0122b688314f2ac7de032c3f1ccd91e90580658815e80c8e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/triggers",
+      "role": "runtime",
+      "sha256": "e49972cdd2512b80e4a1c7886a91a57cd0a8a9d83e03aa469366b95255096702",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/exec",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/firmware",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/ld-musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "type": "regular"
+    },
+    {
+      "link_target": "ld-musl-x86_64.so.1",
+      "mode": "0777",
+      "path": "lib/libc.musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/csharp",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/apk-tools-LICENSE",
+      "role": "license",
+      "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/csharpier-LICENSE",
+      "role": "license",
+      "sha256": "0ed797a602216813b874392c4668e5e5611fc9e3b89af6a1989add2e3d825b37",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/csharpier-runtime-dependencies.txt",
+      "role": "license",
+      "sha256": "d53a0a75629ccc60498dceeec0c76c5a820145b2473810e9886d45df74a8cd63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/dotnet-LICENSE.TXT",
+      "role": "license",
+      "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/dotnet-THIRD-PARTY-NOTICES.TXT",
+      "role": "license",
+      "sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/gcc-COPYING.RUNTIME",
+      "role": "license",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/gcc-COPYING3",
+      "role": "license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/ini-parser-LICENSE",
+      "role": "license",
+      "sha256": "fda26a0d6e53a13085976f4b8758c7e43dc7260c7cb548c1a3999860ec2245fa",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/manifest.json",
+      "role": "license",
+      "sha256": "88a88942e2d861127ebed37a0aef8b6da54e4ff095dda5007e580e597e94b5b2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/nreco-logging-LICENSE",
+      "role": "license",
+      "sha256": "567276183908f3f7f62dd49e590cff9e05bc4d60c6345d929a4666964d5b6601",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/openssl-LICENSE.txt",
+      "role": "license",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/roslyn-LICENSE.txt",
+      "role": "license",
+      "sha256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/system-commandline-LICENSE.md",
+      "role": "license",
+      "sha256": "58fd5ebf25d75b5bb5f4cd407a9fef3befd3641e1af90a1d0716618e6430fc19",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/system-io-abstractions-LICENSE",
+      "role": "license",
+      "sha256": "9b4f46dc8e65bb14714479eb4de76b7a1e2e7f9eff7ab1eb0e9dea712f19b1ed",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/testably-abstractions-LICENSE.md",
+      "role": "license",
+      "sha256": "024f2e034ea52d1b47be884bda1bd9b776ceddbfb2a7cc4d49f79255c8ed483c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/xmldiff-LICENSE",
+      "role": "license",
+      "sha256": "ba5c88068ad58a174e67390404c6b1fda4d04f067b39295eda8d2a8638fd1b16",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/yamldotnet-LICENSE.txt",
+      "role": "license",
+      "sha256": "daea8b7f1b2bab48ea12ad50b0ce91634669d99d7dd0cb64aed8dffeeef69ed3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/csharp/zlib-LICENSE",
+      "role": "license",
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "0696adfdc1f340b53a31c22b794834702dfc9adc69f4da65679e01209d0bbea6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/CSharpier.Core.dll",
+      "role": "formatter",
+      "sha256": "f281b3b07e339e458bad774f0a6507880707aedd414b82693a2c00aa2bdea924",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/CSharpier.deps.json",
+      "role": "formatter",
+      "sha256": "27aa859cb746516dad76f5ee66be48f047c89916f3692f066992b285af1927d1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/CSharpier.dll",
+      "role": "formatter",
+      "sha256": "1ea3ca8af83f199365af78bc98fdb40b5a747c8ad993220ade96cf897088782e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/CSharpier.runtimeconfig.json",
+      "role": "formatter",
+      "sha256": "7f62be048d31660d1b5b8693150b48164cfa32ea030c4587b02f23dfd671f4eb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/DotnetToolSettings.xml",
+      "role": "formatter",
+      "sha256": "003c9d9b4a2403480d20eae2afcc229e545e1e38b65fdd9b8db14316f5640be0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/INIFileParser.dll",
+      "role": "formatter",
+      "sha256": "8cf56be6ee819711b776493fb0b5bc44d37c1656954e0e979a51554e52b62392",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.CodeAnalysis.CSharp.dll",
+      "role": "formatter",
+      "sha256": "54142770a00e594942ee8923726ea49126303d0c523932886c2417eb66dc07f8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.CodeAnalysis.dll",
+      "role": "formatter",
+      "sha256": "ad857f1ce7f8e26c2722ade705fac3f90502a47590c14075df1327210f10b1ef",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Configuration.Abstractions.dll",
+      "role": "formatter",
+      "sha256": "fefcdb267a73099cb90e5af56b5ef2bca59bed974339b3a6810352bde23537a6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Configuration.Binder.dll",
+      "role": "formatter",
+      "sha256": "beac12f7bba4e22cda2acd9ddfe944a4ed56abec414e084edd147bd5dad3c032",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Configuration.dll",
+      "role": "formatter",
+      "sha256": "b5cd9da2c3364a5b201cecb0c80e25227d27ba44d96343d2894ff8ef3fd81550",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+      "role": "formatter",
+      "sha256": "dcdde5edd29094982d76d1bebbea68b1ade46c14ec2d1e8a5dd61eae8a45f135",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.DependencyInjection.dll",
+      "role": "formatter",
+      "sha256": "a9a3142eef44473b388e48a3e0384463ea01f0c10463fc44b05b1bed1f431043",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Logging.Abstractions.dll",
+      "role": "formatter",
+      "sha256": "fba0e4f32dfbe3fdec1223c7cafa3b7a5944e5868cf6af56faac35e4a882e49e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Logging.Configuration.dll",
+      "role": "formatter",
+      "sha256": "372dcb44f6f9243346cb82db99bb01f27a0f3c8019902481bd45d65c311a732d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Logging.dll",
+      "role": "formatter",
+      "sha256": "d3348de97258426c21f8cc6f6092660ca6c26a3248a8896a9967ece745c6c3f9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Options.ConfigurationExtensions.dll",
+      "role": "formatter",
+      "sha256": "b9ea7bb70bfecf5c649f2559300fce232729257cfdb4221dc96f1ea778227353",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Options.dll",
+      "role": "formatter",
+      "sha256": "c193f3233595dfec545afcfd0942dfb086de0931531188fbf2a88f85f51d2f1f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Microsoft.Extensions.Primitives.dll",
+      "role": "formatter",
+      "sha256": "a9d8e39a2e1bcd8a592e4013721ba4fde591c9377cc0f384314e8daf9ca265ff",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/NReco.Logging.File.dll",
+      "role": "formatter",
+      "sha256": "2d317ddcaa4f2c834ab97d650c907af5d03c0d271acf27fbb6c2672a3c69f7d3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/System.CommandLine.dll",
+      "role": "formatter",
+      "sha256": "2158cfc2c484ebdec95fd9959c7eecaebe44657e1e1dee5abb78fc971276829f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/System.IO.Abstractions.TestingHelpers.dll",
+      "role": "formatter",
+      "sha256": "aae0267027ad1e94b2f1d860e66d9b3aca768888569789850851f00df15f1df7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/System.IO.Abstractions.dll",
+      "role": "formatter",
+      "sha256": "ff31c7bc7e65cccd6764228bfc4baa261ee9dd567825f6fedeadd960cd738acd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/System.IO.Hashing.dll",
+      "role": "formatter",
+      "sha256": "02a13c0da34c7ff89e068b747645c53f7a493062455402ec56cb425106863008",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/TestableIO.System.IO.Abstractions.TestingHelpers.dll",
+      "role": "formatter",
+      "sha256": "6caf1623e5967045ffb9c600641b9420f6dea062f2d8a0c7e631adfee9d3961a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/TestableIO.System.IO.Abstractions.Wrappers.dll",
+      "role": "formatter",
+      "sha256": "7a131018963a6f70535a199ba231e0d17fc063cc368a8a22f07f29ce009798a8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/TestableIO.System.IO.Abstractions.dll",
+      "role": "formatter",
+      "sha256": "b67b1633678ccc9cb5a5c322e549d1b6fc2c6447013634686ed04c30010d73b1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/Testably.Abstractions.FileSystem.Interface.dll",
+      "role": "formatter",
+      "sha256": "e4e2bd926c0f353b30866f2fd70aa5525aec5540b2ef3424ab0d0138c090cf47",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/XmlDiffPatch.View.dll",
+      "role": "formatter",
+      "sha256": "79c51c180cb28c16dabee9189fb77ecf9fad83b56091abfbedffa017e0224067",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/XmlDiffPatch.dll",
+      "role": "formatter",
+      "sha256": "953399ecde944ae82f41643d0247e6433c7bc7f5825c951b7512522a01db7551",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/YamlDotNet.dll",
+      "role": "formatter",
+      "sha256": "86f873f682c619a0c24e263dcdd15fe027104666641c92f503516671d61edda6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/cs",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "96841406a8fffdc7e4f82048939eb5193d0e53454119368a4e8266bdddfedea3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/cs/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "8640bd05a77d031c3e106b98a368e4f51618e2aacf1027f9e0e28b260997839f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/cs/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "80a66497a01e9ea5be7d68ce19069719751c4b720f9774660c09ab33ac8f8e6e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/de",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "f2ef12aae4aff749ed5963075da86aa8fd3dec43890e5fd7b00bc227daad28b6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/de/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "94d6757fb39d637408cae00569779a58ed5ba91cfe17484b7d9c37b5e686ea85",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/de/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "3dfa07de8267c771be47a10217e2eafd0e57e68933c536a239b65284dc6f09da",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/es",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "be4dc7f5d2b6c074601d4acf1404350fad40196d8edb0a4e3d04d59ea3dd530d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/es/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "99940d1871054ae5bbd831d93f827bf3f46cfac13ec637d630be4490ce80e537",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/es/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "4283743428f7abb509eab0d523d8000ee7a89fd354dc1db96dc8424b37ce714f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/fr",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "cb54a8579e7d85a17e08bb72b1a675264ee92f51b00a1d5e9a3b88367da85ef9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/fr/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "6034effb82164c43030f0452400b537d8955b1e9a84b7ae76e5f7a1f7fecf728",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/fr/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "e52478e38b6ac9ecd85999aa5ad181097c41833c9adba62b87bd9fa443b2a8ea",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/it",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "683c808be9efd6c87ce6a7de06d7fc8df152324db3d72bdcffce209a382a75ae",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/it/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "d1ed76fd23fac3e03ba72ebb66b129f7dc2771cdf9d8ba441b2dd4046dccb769",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/it/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "291da56b4c02bded6ad0e707999370b1e6ad592b74c4691e299c8097fbe44f97",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/ja",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "dddc1b5e4a5492699e66596d5398e3ba7aeff0c1a4417baede5a44f8419f8967",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ja/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "06baf68aeeee8eed6a6d6e8ce9036ef3edcfeb12de876583eddb8eaec60db2bb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ja/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "8b03127957ea51ca2c4e17512d9b84fb545b6c6995047e96c7c1b674d2a3fc83",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/ko",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "3d6defb5ce07fd17cb00ca5633e57a3a65e5ab7967732d506af1a16e09f0baa0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ko/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "0166f80f1a55d947ca4151cb70f36f0cead39fad1fcf648ebe2419c3de1f9538",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ko/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "b4d7904ec3b87b632cec7fd479c6feb063caa7394c79c7f5165df506a45ee0ba",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/pl",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "a9387ec315713a7e32861425159954939e6139b6dee171feb785b27d1d31ca85",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/pl/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "f87d2a495d891868696e24c725d2c480779757df7e3bd22bc66ae927228f181a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/pl/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "5a51caed53a75d8339df176c8f5118cf609f38e73e39097c6d7edf73721678a0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/pt-BR",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "a7c1c4307ac34be111639f5addfa1729725fe7748703ff24add55d4bda35851b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/pt-BR/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "95f373f7055ac0342c2a116710688015ea3a662cc19b8aa66c5484409aa49369",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/pt-BR/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "8fd9272f780e6d46d69ff25bf320e7a5caf5d61fbfb0c89781fbc8f64dab6596",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/ru",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "e180f350d6b38a19464045c2b1f0c3e409d303843e02321b8bfcf61d0616d513",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ru/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "34b77c23625160b340098b33045997138ff042ca87fccf90f9bfab9deb132f8a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/ru/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "a56ee9d0fd2254b0581f256495b61cc24135a3f1fffdb4edd70db87eff6db3ab",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/tr",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "c31ef90f3205755bac7b531c92d2ce790f78950a360f438856222593ebddc784",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/tr/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "32cb2b00f6460aaa372930b25adc772709e9d93ea983a6ca295ff5bc1c6b7472",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/tr/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "795abf08b10483a5d58a95dda7190fa62cfa56bfe91fba84dc71ff4918f6ef21",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/zh-Hans",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "b8b3c8a39143420dfecb2f64e51bb53613f554f1847a23245e8edd402a3cc9b1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "2555883f0feefe4491755e37feb6cb03e75d2448a88081270b5f240f5673e8d0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/zh-Hans/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "b964e741986ad049f2a66daffdfb4a44a1d2a63852245ee95ffc429ee6887891",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "tools/zh-Hant",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
+      "role": "formatter",
+      "sha256": "a1b9563e0b16da3afa1bb80514bb3d93282208b9ac14d4afa9a429369a7d89a0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
+      "role": "formatter",
+      "sha256": "d8fb1c7d7135620d9d5ac330cc97face8912cd0afdd53c72ebd7875d3534b559",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "tools/zh-Hant/System.CommandLine.resources.dll",
+      "role": "formatter",
+      "sha256": "5536a72bf99553442693acd0bdfa5d0f8f892a422f088e3b4c612ea284c85fb9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/afalg.so",
+      "role": "runtime",
+      "sha256": "c095af87bcd32431c0898d7d6d3585d6eac5046f9ff30662fe0f449f26b0d5b9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/capi.so",
+      "role": "runtime",
+      "sha256": "1897fafd326cf649e083f6ceb1074110b8bcce646163b5c3de5c5bbc50901ba2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/loader_attic.so",
+      "role": "runtime",
+      "sha256": "8c3a24e4c1c8364c092c9ce4c5edb58ba664dc641dca4f3b8225ab0395b9f078",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/padlock.so",
+      "role": "runtime",
+      "sha256": "ed94e152a9f195676bc856ff2847d882a68577ef4e2857e2fd44a5187bcdfc8d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libapk.so.3.0.0",
+      "role": "runtime",
+      "sha256": "267f845f9c8a4502e8eca74237019c4db867f91351763c9211605dd88906ebcf",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libcrypto.so.3",
+      "role": "runtime",
+      "sha256": "5e860b4eb92cd6671dfe557ecffd506778f6549030b0e6142e94cb8e340c871d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libgcc_s.so.1",
+      "role": "runtime",
+      "sha256": "0f3c933942935150d3864bcd3b20b7922c8d95a66959fe1da5e2da73ba986e8a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libssl.so.3",
+      "role": "runtime",
+      "sha256": "e5511fdc20200c254a01ff8c801828139cfc36be4fca2d52b3fdac54f041f978",
+      "type": "regular"
+    },
+    {
+      "link_target": "libstdc++.so.6.0.34",
+      "mode": "0777",
+      "path": "usr/lib/libstdc++.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libstdc++.so.6.0.34",
+      "role": "runtime",
+      "sha256": "ae81a1dd9b4fbab42a1014dda6b9ed13834610583781fe562f84e3cf65ea669b",
+      "type": "regular"
+    },
+    {
+      "link_target": "libz.so.1.3.2",
+      "mode": "0777",
+      "path": "usr/lib/libz.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libz.so.1.3.2",
+      "role": "runtime",
+      "sha256": "60997f0db81cadd7cd12e787f3cc7de3c1e0946bc9bf28160c10199cceb59fef",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/os-release",
+      "role": "runtime",
+      "sha256": "ef917e0c302643d0a479f9fb1327d196edbbbddb9c352c84f60999f032dd2cb8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/ossl-modules",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/ossl-modules/legacy.so",
+      "role": "runtime",
+      "sha256": "02b03d1347c880f8d5076931a4454b876b8e9601536f48a94bf6f64e338f7387",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/sysctl.d/00-alpine.conf",
+      "role": "runtime",
+      "sha256": "ee169bea2cb6859420b55ca7a9c23fb68b50adc1d26c951f904dec9e8f767380",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/LICENSE.txt",
+      "role": "runtime",
+      "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/ThirdPartyNotices.txt",
+      "role": "runtime",
+      "sha256": "2dc8f8c5a39401e928b5784ab564eb8b3ceb99ead3df8f260e0cab7e0bbecc7a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/dotnet",
+      "role": "entrypoint",
+      "sha256": "21223c032edde9d134f8382d1d89435147949bbcde0c34ad537ca6d54f9cb255",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/host",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/host/fxr",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/host/fxr/10.0.10",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/host/fxr/10.0.10/libhostfxr.so",
+      "role": "runtime",
+      "sha256": "338383e3d6251012492333ec73a88979f88087240ad425b68d6b12ed9e5951bd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/.version",
+      "role": "runtime",
+      "sha256": "c520743af56fb2b85d443acfa406a6704a37699a1776f34e48d589ab916b99d7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.CSharp.dll",
+      "role": "runtime",
+      "sha256": "666c042ce26604d1b025b7bf0bb78af9c5edca3f0b1f05c983c116ff7010e8dc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.NETCore.App.deps.json",
+      "role": "runtime",
+      "sha256": "dd71c1169bb29b699f354ec4cc3c983d5d23a3a7a070522c2937b04bd03fc8eb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.NETCore.App.runtimeconfig.json",
+      "role": "runtime",
+      "sha256": "b0389faed3531f74a620de69039790f308c6e08affe1ebd21bc51c3b80cde8b5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.VisualBasic.Core.dll",
+      "role": "runtime",
+      "sha256": "5bea40d340267cc6fdf8af088037fb7d39c5aaff0389a3d792a93cfd437d6dcb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.VisualBasic.dll",
+      "role": "runtime",
+      "sha256": "d3d9288afcc7df5239584127494293a322033a90b2d6c87f6a1f7168771306e7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.Win32.Primitives.dll",
+      "role": "runtime",
+      "sha256": "f6959fdd00f4d0ffe6a1816ac6e22128fdc0aa630e8104c23ec1cb3ca716193c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/Microsoft.Win32.Registry.dll",
+      "role": "runtime",
+      "sha256": "5dace28ea82b55a787ec7e626aa9dc0505450b3524d9180e6b4d6e98117ed1c2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.AppContext.dll",
+      "role": "runtime",
+      "sha256": "8f3c0e2672caef6176c2782465308c7a9883b630f679280870669616de08cbde",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Buffers.dll",
+      "role": "runtime",
+      "sha256": "eaf420e5daf8b378c98ee876fc9d611e033cc0feb3ba36bb0024faa741edcec0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Collections.Concurrent.dll",
+      "role": "runtime",
+      "sha256": "84d8fec9f80af44fdb51d48093f724507acf5a3f243fa9b09d239970eec33f92",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Collections.Immutable.dll",
+      "role": "runtime",
+      "sha256": "5e028f62482201499511f688e739b938eb7613857bbb1d51c4a70afc0e6d9fb2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Collections.NonGeneric.dll",
+      "role": "runtime",
+      "sha256": "80e0d4268b6389e67b1195d732f3e98559b6dbb3f37d8a7b3af5418ddb839917",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Collections.Specialized.dll",
+      "role": "runtime",
+      "sha256": "2ca6c5491d8674abd55008a8719e1aec3a5f995ff9a30a0dcb045d875d9a28f2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Collections.dll",
+      "role": "runtime",
+      "sha256": "898b8f5280e23c832bd5f4f7eb1dcc350b67da48fc6ce6eb08f4d832a1ed25ed",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ComponentModel.Annotations.dll",
+      "role": "runtime",
+      "sha256": "71b86d1c36eb1008e8cebfe7d168f222c58867dd8b66023c8c46f66a734cd8b4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ComponentModel.DataAnnotations.dll",
+      "role": "runtime",
+      "sha256": "34d4a737b0ffc8ad6e25442763d610c3afb3d13be2fda4a29359c110faffd49a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ComponentModel.EventBasedAsync.dll",
+      "role": "runtime",
+      "sha256": "70d5757b075303b897b62c33a44af4f9497e7d3dc65d7bac60aa40974a71acba",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ComponentModel.Primitives.dll",
+      "role": "runtime",
+      "sha256": "3ded507945acf4335c890e9a58f1782dfb45e4ff7cf3d79401c2d2a338996717",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ComponentModel.TypeConverter.dll",
+      "role": "runtime",
+      "sha256": "2ebe2424efbf8f77056a65af7a73c8bd6dd997f36fdc9bc151bd96dbd247a480",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ComponentModel.dll",
+      "role": "runtime",
+      "sha256": "5d62c64f63a5a3990cdfd88c74616cc3cd6ab73251365273bd690ac48c7fa519",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Configuration.dll",
+      "role": "runtime",
+      "sha256": "21eb82e7c7c67284f12eb3cdfa28a77c9f8ad07b35c14a6f0e7f7c917feb2699",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Console.dll",
+      "role": "runtime",
+      "sha256": "2af07f5de2671f959cceceed90ee7cda3c040da3fb8313826a73522ea96c2a7d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Core.dll",
+      "role": "runtime",
+      "sha256": "46dbe8a375f7d9948941901354def8c77d3c77575c779cda47f42b07613bf83d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Data.Common.dll",
+      "role": "runtime",
+      "sha256": "601304999a598d9aa790555b4904872523732fb9a16d915939d69b6fc18d8cb1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Data.DataSetExtensions.dll",
+      "role": "runtime",
+      "sha256": "57d6e931812d205b1b62339deab0221d04963f71365ec171c7f2d4d2987812aa",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Data.dll",
+      "role": "runtime",
+      "sha256": "0ae433f10c83b48726a5a17146bf769dc514b502ec512514f068e9179263c557",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.Contracts.dll",
+      "role": "runtime",
+      "sha256": "8d70bba98be275a27482a1d5dc86f02d418c8a9c032ad2065d4b7cab0b99738f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.Debug.dll",
+      "role": "runtime",
+      "sha256": "3da5a7bab99c6b03cdc795b5fe01214cc85134c3cfa85a99f94b10e6163d9e29",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.DiagnosticSource.dll",
+      "role": "runtime",
+      "sha256": "3c007b2ddbbf5c511cb2cb3d0cff9abf15b97a77b1f46a5f0fbcfd8fac2b685a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.FileVersionInfo.dll",
+      "role": "runtime",
+      "sha256": "986ef5e912559c84e44239a6fc9e41c1714cd7b371188da346bea9c10c0f6284",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.Process.dll",
+      "role": "runtime",
+      "sha256": "6bf1b2b613b597cb6fd7667f8311b7a4b4580e5d8b82a270c7248f169ab4cd7c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.StackTrace.dll",
+      "role": "runtime",
+      "sha256": "e8adf734714fe318ea4d265ba8130729e8556b88234db85ede92ade0cfe11574",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.TextWriterTraceListener.dll",
+      "role": "runtime",
+      "sha256": "3b06c124d261c18170811cdf37f37066b36c6fe12c14a1e3958df6b1b84ef450",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.Tools.dll",
+      "role": "runtime",
+      "sha256": "24506564b48694cd47e6c770c2e94c2cfa08106e5b7435d1ab1f320ce3786ff8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.TraceSource.dll",
+      "role": "runtime",
+      "sha256": "7b2413f6363387e23ed140e74de00365a5c66da78393f707fee11bb5f6819ba3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Diagnostics.Tracing.dll",
+      "role": "runtime",
+      "sha256": "19737e3cc1052c1578c396f01bd613608e3ad5a9cfce9045b295313ed4fe5773",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Drawing.Primitives.dll",
+      "role": "runtime",
+      "sha256": "be7bbab0bef3d63ca3b6a30b14c2f1dc4745c9d2f6ed7058a1fa8cbc346d88eb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Drawing.dll",
+      "role": "runtime",
+      "sha256": "3518e4b5733ed28c029ac463a8a915b0673b2073fb19769b2372a113b8c36e71",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Dynamic.Runtime.dll",
+      "role": "runtime",
+      "sha256": "a47bfb2291945ac69195396c287741e75dabb01ba7a09a4c0d57a7fc813ff32b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Formats.Asn1.dll",
+      "role": "runtime",
+      "sha256": "680ac04a90df7f0c6c9fdf4a6e15bd6e90c7dddd779615d3c6fa1b7c33445280",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Formats.Tar.dll",
+      "role": "runtime",
+      "sha256": "ef47c6fe0011f29272cd3ef4ea485ce571dd34a5adf3bc37e4aeef01925ff29b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Globalization.Calendars.dll",
+      "role": "runtime",
+      "sha256": "8b4363d3f0d7f6c88898185203d327328aa4c611897dd3f37c4c033988d5302b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Globalization.Extensions.dll",
+      "role": "runtime",
+      "sha256": "b4899ee8c6beaa3c7be1835d8428afed9785c630a948cad552d3cc01140e945b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Globalization.dll",
+      "role": "runtime",
+      "sha256": "83419d507f95f1ff5fbc4dce99cb6dbbf5cd0a9e5d22cf3adbced309631a38db",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Compression.Brotli.dll",
+      "role": "runtime",
+      "sha256": "5dd25890ad77d432e98844439650e8e808601335adde835f52c590f9c3af89a3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Compression.FileSystem.dll",
+      "role": "runtime",
+      "sha256": "77db66c89b78f78f6041541fd49ecd019fdbc550b834c0abc90abad8d7df54ea",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Compression.ZipFile.dll",
+      "role": "runtime",
+      "sha256": "21d003ffdd7b832564f941116c42ad81a7f0369ac2ec1119d13451e32982dce8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Compression.dll",
+      "role": "runtime",
+      "sha256": "d992cedb5a430823c7a6a9fc4ba4de70a883bb8741e89b6bab7d78894d2663cd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.FileSystem.AccessControl.dll",
+      "role": "runtime",
+      "sha256": "ef780106a453fe284df8c65de5a3bc10b9876473ec5bb3b666882eb21ca202cf",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.FileSystem.DriveInfo.dll",
+      "role": "runtime",
+      "sha256": "bc95ee7ca796ef9eb96fd3acef279df5d0c6f0d6cbe9b9e8c74f95b243c2e3b5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.FileSystem.Primitives.dll",
+      "role": "runtime",
+      "sha256": "ebff25e669c74358aab06f5dd03580b58005493a9a9837c131ea0d419930d6c5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.FileSystem.Watcher.dll",
+      "role": "runtime",
+      "sha256": "cce8bbae6e92c420d5fe2eb808063601f3b11ccce0bd360a195d9b37d011fa2d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.FileSystem.dll",
+      "role": "runtime",
+      "sha256": "7889b0b6ef1b3a573b5dd5e9c979317bfd75f4da513cc8abaefb8ac902dac053",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.IsolatedStorage.dll",
+      "role": "runtime",
+      "sha256": "72301bc92d5843c5618ddf7b96ce51d229faf0a81e1d71f786fd084559abf19e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.MemoryMappedFiles.dll",
+      "role": "runtime",
+      "sha256": "82d34568cef532ba540c87ea00b595973d5f5285b91cc3b51c049fab11112a5a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Pipelines.dll",
+      "role": "runtime",
+      "sha256": "86b34f0b5d16c013bf11c5a86a9de0af874216b916dc31308e1ba432d0dc40ad",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Pipes.AccessControl.dll",
+      "role": "runtime",
+      "sha256": "2d572bffa524ec88fc7c6a3019755d1d56dba2ea1edea0f397e808ee2a2d622f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.Pipes.dll",
+      "role": "runtime",
+      "sha256": "cf2e5a4d9ef2b5fefb8d1d4c92bc7d328f24a36b802f76efa635f40b68a0f015",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.UnmanagedMemoryStream.dll",
+      "role": "runtime",
+      "sha256": "f1d39a4b9bfd38e513da0d699db84dcfd03d79aba4e5b53a75d025d797c42afa",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.IO.dll",
+      "role": "runtime",
+      "sha256": "26e8ca10103439603c24ebd5af4ff16d699943cae0a2418aec86861fb144f1c1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Linq.AsyncEnumerable.dll",
+      "role": "runtime",
+      "sha256": "cd06501960025c555174a96d241b949bd27ffc83bc0aa92a9d7218be05b65742",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Linq.Expressions.dll",
+      "role": "runtime",
+      "sha256": "eb4de34f250fec01b8b7b96fcc867f3476d36633048797293254f1e942d0e33d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Linq.Parallel.dll",
+      "role": "runtime",
+      "sha256": "370dcb853faa5d02a80eef003801f35ccea3b247603f6d965fb6b53d31262be1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Linq.Queryable.dll",
+      "role": "runtime",
+      "sha256": "3711766939cf9ae7df9a9e560192a162c0c40dd85841094f37a832e29a90a514",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Linq.dll",
+      "role": "runtime",
+      "sha256": "38236f8f028771353b4f80066b40b1b6192e8c73e2067edf081d6469340532c6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Memory.dll",
+      "role": "runtime",
+      "sha256": "6d1b71bdb05405eeffb7fe05bb55daf74c26c28c25e79dc63c1f9ab63ae91d48",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Http.Json.dll",
+      "role": "runtime",
+      "sha256": "7c06b6613c3d577e0f68af1e2f7c6d9fab5f7bf773c789c6c599a02659e6fea0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Http.dll",
+      "role": "runtime",
+      "sha256": "b7935312057a90a8ab5151736cd16118a55d02b54cf9dd0abe043b3aa22f30a0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.HttpListener.dll",
+      "role": "runtime",
+      "sha256": "b3c41d25148ef12246d44e3fc71938ca027af1b8c02b4149e12781a56d4055d8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Mail.dll",
+      "role": "runtime",
+      "sha256": "7279672f456985deb6d8cfed10b1e3242a005dea11022bfe4ab46fa6f5f81a88",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.NameResolution.dll",
+      "role": "runtime",
+      "sha256": "16af8b1f5c525dabcb858546532a58445bd15ab886866d1956fda8f406230d91",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.NetworkInformation.dll",
+      "role": "runtime",
+      "sha256": "0c8ec6c21ced876603ca86d2518f4cbb02f0b14a95efd818d669e1d5083c9b1b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Ping.dll",
+      "role": "runtime",
+      "sha256": "615092d8981412e29c26c3f064282cc0ec85600de200ec8c19b6e83e05996360",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Primitives.dll",
+      "role": "runtime",
+      "sha256": "6aa17aa8fa355b0155b1ccbbd822c5d60de7c6475851289e84d8e6a2fd7d9e48",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Quic.dll",
+      "role": "runtime",
+      "sha256": "ebfaa79fa9ab0371d3661ef569e2881bebe748b847a8f2302bb4c57b7c28a43a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Requests.dll",
+      "role": "runtime",
+      "sha256": "907462dbef239ce43a55bda72fd91f2bafff1db1965d3a15e702e947ef1066df",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Security.dll",
+      "role": "runtime",
+      "sha256": "fb4a708979b638eb9c469ee149b4cecac48b341d7528a0d41f74410670a427e7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.ServerSentEvents.dll",
+      "role": "runtime",
+      "sha256": "40e41ea0d72b18b809bc93a30d5034625d1921759426b477a2f206119c8a355c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.ServicePoint.dll",
+      "role": "runtime",
+      "sha256": "88559757c3cec643e1653b291fdf9d9a17982ce0c73ce7e34a22147131368a31",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.Sockets.dll",
+      "role": "runtime",
+      "sha256": "f877de7f759e60670e37af7ca736b794bd65952f69536730fe105ba0d9f82e64",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.WebClient.dll",
+      "role": "runtime",
+      "sha256": "06fd30fd396b40b7040c498c1674dceb9ad0f8f4738a40f50b2b71a0b3c9742b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.WebHeaderCollection.dll",
+      "role": "runtime",
+      "sha256": "66d05a6aa9c3e28a7a2e33e8adc4f33dbb3a4af688e833f1d1da9be8d25da413",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.WebProxy.dll",
+      "role": "runtime",
+      "sha256": "2dc6d89ea882fb806fc8f2fdb94d28a2a7ff268790ac8cc51ff85ce4ecd2795d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.WebSockets.Client.dll",
+      "role": "runtime",
+      "sha256": "c98cd86f47a2ff14ebb0a8c6e73193f48cf23fede0fc0f6dff1e89861b378989",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.WebSockets.dll",
+      "role": "runtime",
+      "sha256": "d97eb82d2502284857395df1dc0b1c38f1893a5e0af60be831e26a5c8b9237c2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Net.dll",
+      "role": "runtime",
+      "sha256": "f081a1d88b84f9c9e807171b4ce225ba3067f51f9840fc17bbfa322750d5def3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Numerics.Vectors.dll",
+      "role": "runtime",
+      "sha256": "35f562ccf88c0d96b61ccb317dd9589d0c0a049d3061d5374d808693d08c0a7c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Numerics.dll",
+      "role": "runtime",
+      "sha256": "99188a01a0a63b649e643aede84ea76fa979f97d1c298975b5ad793badb0797b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ObjectModel.dll",
+      "role": "runtime",
+      "sha256": "ed61d0c2ff7813f5006034592c1f11e8e1159cf30ce987f678f2abae104bf964",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Private.CoreLib.dll",
+      "role": "runtime",
+      "sha256": "c7d48d54443cdfd70bac5b52d73dbe7dfb5de151d15dbf7e4e9e48ad234006c7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Private.DataContractSerialization.dll",
+      "role": "runtime",
+      "sha256": "812ddc7b701260e61b6bb56c53238ab9403a1808a2087b5f6ee4815dd3a6db86",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Private.Uri.dll",
+      "role": "runtime",
+      "sha256": "0eb7217e33310db6a5cbfd98b62aa59f34e3b8d2b425c71887ea8b0b0162ceec",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Private.Xml.Linq.dll",
+      "role": "runtime",
+      "sha256": "fcb70c6ff183fb9be051b82fdc1b7219d0b55efd03f7ce6173363ef408efda9f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Private.Xml.dll",
+      "role": "runtime",
+      "sha256": "2c1c431d8fe2ed282084b2ccaff051180ff3e4600dfe6987c4a6089ccee65a94",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.DispatchProxy.dll",
+      "role": "runtime",
+      "sha256": "0750e30e7b061d38df77f05eb12be2cd76d2eb62e5a1c0e85b9979cb9f50f6dd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.Emit.ILGeneration.dll",
+      "role": "runtime",
+      "sha256": "e6b9f9bd0d2fecbf6107948c6f7bbf43c017b1b34b264fc9fb9037e7d3ddd898",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.Emit.Lightweight.dll",
+      "role": "runtime",
+      "sha256": "183541aab54dd090f92b650e03464f372e532bc837c3b53d82cf32026e717568",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.Emit.dll",
+      "role": "runtime",
+      "sha256": "618a91f46a0ddf078c2341198a7670fa18f75bf14179465e9242804c761582f6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.Extensions.dll",
+      "role": "runtime",
+      "sha256": "6002e708f1628c285ade821a47a428e4e33b4b142457dbbfc88870794c7348b6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.Metadata.dll",
+      "role": "runtime",
+      "sha256": "92c3e85e96ca54c5d04ba8387e2548cb49526d83db37fca2193a23d5e90ea685",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.Primitives.dll",
+      "role": "runtime",
+      "sha256": "14412529d49976db5c43c7ce2ff3bcb19e83aeb7c45e19db8ff5c60901e5cdc5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.TypeExtensions.dll",
+      "role": "runtime",
+      "sha256": "b813886b9b6212f1d9d1e498f1c11ca970fed6fee012df3f36df997effcc797e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Reflection.dll",
+      "role": "runtime",
+      "sha256": "081391334a6f77bb750063f7fea0d0f23eaa88eb6f9989fa4622e5800d8c9f5f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Resources.Reader.dll",
+      "role": "runtime",
+      "sha256": "26af9b3baa75c58317a16f755fb389f92e3e5da8bedc5c9c9f6d2f2b0329f890",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Resources.ResourceManager.dll",
+      "role": "runtime",
+      "sha256": "e4e2e89b2e241e854277c2da20a1891b9a1d536fc75baade87bbe31c45e45aa7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Resources.Writer.dll",
+      "role": "runtime",
+      "sha256": "f3f62f114cd18f9edb8ddc6d204cf23b37ad344e44c640ccd42f286193edfa67",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.CompilerServices.Unsafe.dll",
+      "role": "runtime",
+      "sha256": "fa38d91f75589fb980a4fdd6a600e9488c75d5e9ccb76b80224804be5f1d9c12",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.CompilerServices.VisualC.dll",
+      "role": "runtime",
+      "sha256": "1f2265ee58e3dd98dde918ea406f879f66f5852d0e862c49b958529c6f2190b8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Extensions.dll",
+      "role": "runtime",
+      "sha256": "5ca3605ad4a45346677fd27cc0d8734b63e0fc680db74976e9ee2ce272b2a61d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Handles.dll",
+      "role": "runtime",
+      "sha256": "9633bfeffbb7148dfc809a4ba87dd4ee3c876a83257a17e86392193123585521",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.InteropServices.JavaScript.dll",
+      "role": "runtime",
+      "sha256": "2727c81340f6bf964b36c409d0d61c29441fe15a3a379f24a6a888d8508fea6f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.InteropServices.RuntimeInformation.dll",
+      "role": "runtime",
+      "sha256": "b86dbb11c30373a565cfa95bcba847e123bc2b5dca9916024ce29cfffebafcfd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.InteropServices.dll",
+      "role": "runtime",
+      "sha256": "e57f2e4da327461f171edd7ab11f79cbff6c9c4e6f37c2dd23856e8d90ef0fe5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Intrinsics.dll",
+      "role": "runtime",
+      "sha256": "534ede9cd572235ebdcf4d193fd11f16b6dc8cd515991b2a1764c1cdcb258e18",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Loader.dll",
+      "role": "runtime",
+      "sha256": "433c2bebcd61cd6f7fa7d5f06fad55085bcbe15751bac0420fa589186658804f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Numerics.dll",
+      "role": "runtime",
+      "sha256": "09653cc9db2e76ca271a847f5362d61546487cf709c0b33c41c0d790f78ac58a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Serialization.Formatters.dll",
+      "role": "runtime",
+      "sha256": "bf186c97675a43dda2aff9ea2c59b4a35034994f7a5f1cf218e66b763514747c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Serialization.Json.dll",
+      "role": "runtime",
+      "sha256": "2e36ed3a64722a9cbb60a92e11a049ec0b58ea28cc2e66f6f1f0161ddf0747fb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Serialization.Primitives.dll",
+      "role": "runtime",
+      "sha256": "7d6815c88a2356071f6959fbf81ddea7a281ab03b1068464267902d4eec88633",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Serialization.Xml.dll",
+      "role": "runtime",
+      "sha256": "3529b956fc33d877d6df1a7e5ba70d8eb20c5ce8f549ed009ddc4dd9660442a5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.Serialization.dll",
+      "role": "runtime",
+      "sha256": "a01d224248170cb7ca857e54efd734ee31e9214b0ce7f88a7ee1beab261ebb9a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Runtime.dll",
+      "role": "runtime",
+      "sha256": "90013c6d5a2bf60e457d2ec683c3fc609c0b84b99e41fd7ab7e6c8fcc9b46ca5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.AccessControl.dll",
+      "role": "runtime",
+      "sha256": "fcdcdacf6b3b87dd11a1a61cf19f0d46e9319d977a57d8dcf2108911d3223d57",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Claims.dll",
+      "role": "runtime",
+      "sha256": "58ae27c0bc85c353eedb88492678df705c7dbe053a3a7bf58bbf92c09d225114",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.Algorithms.dll",
+      "role": "runtime",
+      "sha256": "fe90cedecfdc88cb160c1a4746a2636d80f850c0612b725a68a3ef6c90d70ca2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.Cng.dll",
+      "role": "runtime",
+      "sha256": "abc601491ef18006961d5f5e6756b2e48e9d4aef3e3ccecb55d48d81d59a2e1d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.Csp.dll",
+      "role": "runtime",
+      "sha256": "a50312acfba89ec435e24caa0dba1a09ae1aeea3313d4c4dee62299d2d775e35",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.Encoding.dll",
+      "role": "runtime",
+      "sha256": "46285978975cd461eaf50cecda9d7330adcb048b5540da7b62d18b75464f11df",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.OpenSsl.dll",
+      "role": "runtime",
+      "sha256": "6bc9b01435633157c170bd02f25acc3c22b1f866cfbb429c2d3b4393baea60b1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.Primitives.dll",
+      "role": "runtime",
+      "sha256": "a6b0c7c91cf615860f94922f2fd60ee87f19a53f817f0ceffd5565d0209b2472",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.X509Certificates.dll",
+      "role": "runtime",
+      "sha256": "b017406912f45b23a699affaddeb223b7f4d8d7b4a4e689e572fc6c877479c58",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Cryptography.dll",
+      "role": "runtime",
+      "sha256": "0b3e09611428ab8de4677812dfde9682a25e98d1dd900a689783ef255ccb69e5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Principal.Windows.dll",
+      "role": "runtime",
+      "sha256": "90aed4ced84764102fcaa69a52db6a0f44ee65dd6109103d58a93441397f9fb6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.Principal.dll",
+      "role": "runtime",
+      "sha256": "78113c083810838cc563d96ae518abf26297c05d3191a1d4b602de6ab34d8b43",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.SecureString.dll",
+      "role": "runtime",
+      "sha256": "fd590ef3859ab0b55ae5a49cd0a08818bc83a06ca1f4584d155346dbf901e2a2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Security.dll",
+      "role": "runtime",
+      "sha256": "63c032d59413248bc358eb6d4b334f5239555776ca7f16594ded5cee36a177dd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ServiceModel.Web.dll",
+      "role": "runtime",
+      "sha256": "f5a4af0029d6d8a26c0af319942dcd4219686c583a209ecbdd2085552ff048ed",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ServiceProcess.dll",
+      "role": "runtime",
+      "sha256": "cfb378bc6e746a8d7dad5c3a4b3c3a026efa439c68f40d6ee22c71622e3e9fc1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Text.Encoding.CodePages.dll",
+      "role": "runtime",
+      "sha256": "117800f79031f21e70354e6c033bdcbcf468f990af95e6d153a5a7ccc43a2f78",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Text.Encoding.Extensions.dll",
+      "role": "runtime",
+      "sha256": "c42490f145f40beb392037663d38a2a7829ce9e2511d5cdd62d2999196f5b90a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Text.Encoding.dll",
+      "role": "runtime",
+      "sha256": "9337d8b51a11f1c2b63842557a86b9833d346adf052f71c2d95490ebfbb5612a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Text.Encodings.Web.dll",
+      "role": "runtime",
+      "sha256": "12a6a7823c5e950c4f2cedc3ebbeec0b1604ecea898b00ef2b36440e098957a6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Text.Json.dll",
+      "role": "runtime",
+      "sha256": "7a7a7002e9f5376d0f4b2fab30b2a6b541bb23f4262eaeee005a62c4a315a105",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Text.RegularExpressions.dll",
+      "role": "runtime",
+      "sha256": "c5d3be9f36cbc66bcedc578d8eed181a8d579f82452c62ce680fa543072af3b9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.AccessControl.dll",
+      "role": "runtime",
+      "sha256": "2b902d27319b1a2bd8462b34aa4171c4dc6a3c470f791649b2faf15c3b6c93a3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Channels.dll",
+      "role": "runtime",
+      "sha256": "1891fabf8dc871e28536bc2fa58d4014b657b082a8e021524b3815061abc9603",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Overlapped.dll",
+      "role": "runtime",
+      "sha256": "fa0ab6e2bd43f78583778c45282417fd7829280b22d56b8a25eca3a46a537b11",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Tasks.Dataflow.dll",
+      "role": "runtime",
+      "sha256": "83751644ce3ef95e9f8a585408a41f3a4928409375f852c738819621f45d65a3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Tasks.Extensions.dll",
+      "role": "runtime",
+      "sha256": "5e095a8429d2d240e9d41acab398f1a0e1cb466556b124fded0963ff9c72e7dc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Tasks.Parallel.dll",
+      "role": "runtime",
+      "sha256": "9420e8508e45b70f750236e4bff42f5232a10b7cbe408de627508f361b4f7eba",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Tasks.dll",
+      "role": "runtime",
+      "sha256": "43981986d24c9bbcba7b114decd5153b6519f49e5cc16f2725905a38e7c995be",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Thread.dll",
+      "role": "runtime",
+      "sha256": "e48b8420bb6f1fb3e21cb797d64b9dc64d7797a8439049621fd3a011b907562c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.ThreadPool.dll",
+      "role": "runtime",
+      "sha256": "c74dd38bd513563ff43ceac3994401a787618e2bac24644b40602e4868866ccb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.Timer.dll",
+      "role": "runtime",
+      "sha256": "93f72b1bc33d87ad23b70e492e93b5eb1a7ec3385698acd8a555cb1aafcd47c1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Threading.dll",
+      "role": "runtime",
+      "sha256": "cc3a19987aa3100bf2959be2665dfb9459d388dc09c61dc678f15e8dfb8117a6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Transactions.Local.dll",
+      "role": "runtime",
+      "sha256": "80610993723f745e6cfa996f630f384286cc0b3eb336fdfee81aa1c29819fbef",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Transactions.dll",
+      "role": "runtime",
+      "sha256": "e20c5891cd5f2ef6303bffed76d8d51980b639bd9f2d8eaf74d774f9a362a9d7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.ValueTuple.dll",
+      "role": "runtime",
+      "sha256": "2ffc986aed16696d6e93c9b89773e086cb1f3140d624b0e8687043cdd30f71ec",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Web.HttpUtility.dll",
+      "role": "runtime",
+      "sha256": "c13c9ce7f74e666527ccd4679b9287172ba040ac5e96e06dd5a654dc4038a36a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Web.dll",
+      "role": "runtime",
+      "sha256": "2f80c8ecec82eae362ba3e9e83f08db19c105fa1ab16983c016a148c0c8851d6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Windows.dll",
+      "role": "runtime",
+      "sha256": "7c93eee0c34f5907458b7bb15d9e5f2a87d61f1d221c3bf85e3ce63ab24d68b2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.Linq.dll",
+      "role": "runtime",
+      "sha256": "b59094db695439850d5349afccc2c354945ba086686a94be1a0e23be3781d05f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.ReaderWriter.dll",
+      "role": "runtime",
+      "sha256": "1f35403303089ab848f4f47900e9325ac28a4394d9633a5a62cd358de84f2068",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.Serialization.dll",
+      "role": "runtime",
+      "sha256": "dbf28db989f77f9c3c77654c2fe873e2fddcd9ccdad2998b55b263f630ef845f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.XDocument.dll",
+      "role": "runtime",
+      "sha256": "9049a718b89c35bcd78d135c9b252b929f82def998b0de3fdf5dac3786f2d8b5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.XPath.XDocument.dll",
+      "role": "runtime",
+      "sha256": "8d8fb2bef0ea6d20984db4e38cb6b6993d7cd1db68d7d2edc4fefdda78dcccc4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.XPath.dll",
+      "role": "runtime",
+      "sha256": "6f4dee9f96501c213ab49f926e1625272a440f6bea1446ea9b4e17fb996af60c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.XmlDocument.dll",
+      "role": "runtime",
+      "sha256": "35a19b12c9bffd3b9f433403cf52875fadf54de8b751ee542abd6038fe4c8957",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.XmlSerializer.dll",
+      "role": "runtime",
+      "sha256": "f82c686f3ea0a34c191f21265961c013e6ecc8d5a0eb682d6bc49a7533824be7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.Xml.dll",
+      "role": "runtime",
+      "sha256": "8932b11be7962eac0732cca0cb2e7ed73dc58a576320701730b137e41a715b66",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/System.dll",
+      "role": "runtime",
+      "sha256": "24c98a9136e2e6d7f6252f27a2990b82866a02c524b76227222717ccfb4fbee8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/WindowsBase.dll",
+      "role": "runtime",
+      "sha256": "f29760823a135fd20a621815129461a73547f896a5db8ed71fd95fb9ae03eda4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/createdump",
+      "role": "runtime",
+      "sha256": "02a50091e682db8ddbf094c5757eb7391511a88039b86337e615052203dda9e1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libSystem.Globalization.Native.so",
+      "role": "runtime",
+      "sha256": "a4dae4c55f7f9b95fbe2506db87b3a30015edb930db264c9c1f0dab6bf61ea40",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libSystem.IO.Compression.Native.so",
+      "role": "runtime",
+      "sha256": "e0fe119bed656305347e248f2e2f53e530f3b6956f8572b9ecaf45ec1ac44821",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libSystem.Native.so",
+      "role": "runtime",
+      "sha256": "3133f7318f513bc026e43c31fdaf69f705fb9b248c395904a9ed26ac1bc2c83e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libSystem.Net.Security.Native.so",
+      "role": "runtime",
+      "sha256": "9ff013d7b8e68fcc6299840b162e8a9b276edf3b43bb69641b9e53174aaca688",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libSystem.Security.Cryptography.Native.OpenSsl.so",
+      "role": "runtime",
+      "sha256": "d4e482fa1296cd7023c8d7941bb78428c474ed85245c38cb5cd3d1016b08711f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libclrgc.so",
+      "role": "runtime",
+      "sha256": "8b14883a4378236d9818fc89a6b08a957d5a92b81e3fbad04603fc1ec2e26f94",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libclrgcexp.so",
+      "role": "runtime",
+      "sha256": "9dfeb0bd7d1bdfd551d1a1667953941df39dc270d11062c7b20f5d12664b9038",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libclrjit.so",
+      "role": "runtime",
+      "sha256": "f2bcde235c9b3b805aefbce1a31c8691b088865849e17b3b786c854f7addc0a7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libcoreclr.so",
+      "role": "runtime",
+      "sha256": "50fd3aaa67fc09b740ebfea1b50ba6ea00428407ece67954f1e4ef0e95ddcf1e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libcoreclrtraceptprovider.so",
+      "role": "runtime",
+      "sha256": "130b2e12fe0d31bdee0f3bcb77f50992372b824a1309350305283441347232e9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libhostpolicy.so",
+      "role": "runtime",
+      "sha256": "e0206eccabdfc22531826831eebe67d989b90af2865f22a2ba7facd2eb51a883",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libmscordaccore.so",
+      "role": "runtime",
+      "sha256": "265d91164d2ea2ec9dd3588b8e77fa87101967a7b4ea92c1c0a8ea9ec8d7589e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/libmscordbi.so",
+      "role": "runtime",
+      "sha256": "0db9bd45674be151d28ffc7b63bc6a573423183738501e1fac4b66e58f2fc26d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/mscorlib.dll",
+      "role": "runtime",
+      "sha256": "1c8fc4f354f2319fbab9a335d8d46f323f0d5a7302d5dcf777ae9874535ef412",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/share/dotnet/shared/Microsoft.NETCore.App/10.0.10/netstandard.dll",
+      "role": "runtime",
+      "sha256": "074d18b7000f678ed89c749177a481c05125b5979bb657b3d69b925b1273d99b",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "csharp"
+}

@@ -98,7 +98,7 @@
         $ python3 lint.py --cwd demo-work --write
       </text>
       <text x="72" y="385" fill="#55d6be">
-        requirements.txt written
+        requirements.txt changed
       </text>
     </g>
     <g class="step-three">
@@ -106,7 +106,7 @@
         $ python3 lint.py --cwd demo-work
       </text>
       <text x="72" y="545" fill="#55d6be">
-        clean · 1 selected · 0 changed
+        clean · 1 selected · 0 would change
       </text>
     </g>
   </g>

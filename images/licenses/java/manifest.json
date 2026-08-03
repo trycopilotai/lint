@@ -1,0 +1,123 @@
+{
+  "entries": [
+    {
+      "component": "AutoService annotations",
+      "license": "Apache-2.0",
+      "path": "auto-service-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/google/auto/auto-service-1.0.1/LICENSE",
+      "version": "1.0.1"
+    },
+    {
+      "component": "AutoValue annotations",
+      "license": "Apache-2.0",
+      "path": "auto-value-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/google/auto/auto-value-1.9/LICENSE",
+      "version": "1.9"
+    },
+    {
+      "component": "Checker Framework qualifiers",
+      "license": "MIT with component copyright",
+      "path": "checker-qual-LICENSE.txt",
+      "payload_sha256": "e90eaa08dea089df10f2bf7f9dba63a5f6237c01562c4741e2e86773e78582d5",
+      "source_sha256": "e90eaa08dea089df10f2bf7f9dba63a5f6237c01562c4741e2e86773e78582d5",
+      "source_url": "https://raw.githubusercontent.com/typetools/checker-framework/checker-framework-3.37.0/checker-qual/LICENSE.txt",
+      "version": "3.37.0"
+    },
+    {
+      "component": "Error Prone annotations",
+      "license": "Apache-2.0",
+      "path": "error-prone-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/google/error-prone/v2.47.0/COPYING",
+      "version": "2.47.0"
+    },
+    {
+      "component": "GraalVM Community Edition",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "path": "graalvm-LICENSE",
+      "payload_sha256": "38cf84d41117b11c7232e5a8d51bb5a42d2b03e85e51e36a5e1291e46033dc5a",
+      "source_sha256": "38cf84d41117b11c7232e5a8d51bb5a42d2b03e85e51e36a5e1291e46033dc5a",
+      "source_url": "https://raw.githubusercontent.com/oracle/graal/vm-25.0.2/LICENSE",
+      "version": "25.0.2+10.1"
+    },
+    {
+      "component": "GraalVM bundled third-party components",
+      "license": "Terms and component copyrights in the payload",
+      "path": "graalvm-THIRD_PARTY_LICENSE.txt",
+      "payload_sha256": "86446ef6768691560d8d2e6e93852607333171478c2fa0360e4e3d6ce9267e66",
+      "source_sha256": "86446ef6768691560d8d2e6e93852607333171478c2fa0360e4e3d6ce9267e66",
+      "source_url": "https://raw.githubusercontent.com/oracle/graal/vm-25.0.2/THIRD_PARTY_LICENSE.txt",
+      "version": "25.0.2+10.1"
+    },
+    {
+      "component": "Guava",
+      "license": "Apache-2.0",
+      "path": "guava-COPYING",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/google/guava/v32.1.3/LICENSE",
+      "version": "32.1.3-jre"
+    },
+    {
+      "component": "J2ObjC annotations",
+      "license": "Apache-2.0 and bundled terms",
+      "path": "j2objc-LICENSE",
+      "payload_sha256": "f93fac82dc22bed7ccc04bef47c3313b7db8ea350eadd85f3672acbdae3cfad1",
+      "source_sha256": "f93fac82dc22bed7ccc04bef47c3313b7db8ea350eadd85f3672acbdae3cfad1",
+      "source_url": "https://raw.githubusercontent.com/google/j2objc/2.8/LICENSE",
+      "version": "2.8"
+    },
+    {
+      "component": "JSR-305 metadata",
+      "license": "Apache-2.0 metadata",
+      "path": "jsr305-3.0.2.pom",
+      "payload_sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe",
+      "source_sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe",
+      "source_url": "https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.pom",
+      "version": "3.0.2"
+    },
+    {
+      "component": "OpenJDK used by GraalVM Native Image",
+      "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+      "path": "openjdk-25-LICENSE",
+      "payload_sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "source_sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "source_url": "https://raw.githubusercontent.com/openjdk/jdk25u/jdk-25.0.2-ga/LICENSE",
+      "version": "25.0.2+10"
+    },
+    {
+      "component": "failureaccess",
+      "license": "Apache-2.0",
+      "path": "failureaccess-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/google/guava/failureaccess-v1.0.1/COPYING",
+      "version": "1.0.1"
+    },
+    {
+      "component": "google-java-format",
+      "license": "Apache-2.0",
+      "path": "google-java-format-LICENSE",
+      "payload_sha256": "2c7e23c8000fe553b6f380b5e365dd72198439174f1b6821d5e3b190b54af0dc",
+      "source_sha256": "2c7e23c8000fe553b6f380b5e365dd72198439174f1b6821d5e3b190b54af0dc",
+      "source_url": "https://raw.githubusercontent.com/google/google-java-format/v1.35.0/LICENSE",
+      "version": "1.35.0"
+    },
+    {
+      "component": "jspecify",
+      "license": "Apache-2.0",
+      "path": "jspecify-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/jspecify/jspecify/v1.0.0/LICENSE",
+      "version": "1.0.0"
+    }
+  ],
+  "schema_version": 4,
+  "target": "java"
+}

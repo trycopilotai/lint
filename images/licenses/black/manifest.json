@@ -1,0 +1,213 @@
+{
+  "entries": [
+    {
+      "component": "Alpine GDBM runtime source legal corpus",
+      "license": "GPL-3.0-or-later with component authors",
+      "path": "gdbm-source-legal-payload.txt",
+      "payload_sha256": "078aaffa9298c9a56e5ea5d6187ae1685d175825b6893d4563ab4b9171106b9b",
+      "source_sha256": "6a24504a14de4a744103dcb936be976df6fbe88ccff26065e54c1c47946f4a5e",
+      "source_url": "https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz",
+      "version": "1.26-r0"
+    },
+    {
+      "component": "Alpine apk-tools runtime",
+      "license": "GPL-2.0-only",
+      "path": "apk-tools-LICENSE",
+      "payload_sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "source_sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "source_url": "https://raw.githubusercontent.com/alpinelinux/apk-tools/v3.0.6/LICENSE",
+      "version": "3.0.6-r0"
+    },
+    {
+      "component": "Black",
+      "license": "MIT",
+      "path": "black-LICENSE",
+      "payload_sha256": "9c0428f0c3b4779850cf5bd96e11aaa8afc72d4a86d4a36223d7aba2e58d6e00",
+      "source_sha256": "9c0428f0c3b4779850cf5bd96e11aaa8afc72d4a86d4a36223d7aba2e58d6e00",
+      "source_url": "https://raw.githubusercontent.com/psf/black/24.10.0/LICENSE",
+      "version": "24.10.0"
+    },
+    {
+      "component": "CPython",
+      "license": "PSF-2.0",
+      "path": "python-LICENSE",
+      "payload_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "source_sha256": "78b12c3a81360b357002334f0e70ea0e92eebf7a9b358805c03c48484945f3bb",
+      "source_url": "https://raw.githubusercontent.com/python/cpython/v3.13.14/LICENSE",
+      "version": "3.13.14"
+    },
+    {
+      "component": "Click",
+      "license": "BSD-3-Clause",
+      "path": "click-LICENSE.rst",
+      "payload_sha256": "9a8ad106a394e853bfe21f42f4e72d592819a22805d991b5f3275029292b658d",
+      "source_sha256": "9a8ad106a394e853bfe21f42f4e72d592819a22805d991b5f3275029292b658d",
+      "source_url": "https://raw.githubusercontent.com/pallets/click/8.1.7/LICENSE.rst",
+      "version": "8.1.7"
+    },
+    {
+      "component": "GCC runtime libraries",
+      "license": "GPL-3.0-or-later",
+      "path": "gcc-COPYING3",
+      "payload_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+      "version": "15.2.0-r2"
+    },
+    {
+      "component": "GCC runtime library",
+      "license": "GCC-exception-3.1",
+      "path": "gcc-COPYING.RUNTIME",
+      "payload_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+      "version": "15.2.0"
+    },
+    {
+      "component": "OpenSSL runtime",
+      "license": "Apache-2.0 with component notice",
+      "path": "openssl-LICENSE.txt",
+      "payload_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "source_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "source_url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.7/LICENSE.txt",
+      "version": "3.5.7-r0"
+    },
+    {
+      "component": "SQLite runtime public-domain dedication",
+      "license": "blessing and public-domain dedication",
+      "path": "sqlite-copyright.html",
+      "payload_sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
+      "source_sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
+      "source_url": "https://www.sqlite.org/copyright.html",
+      "version": "3.51.2-r0; fetched content pinned by SHA-256"
+    },
+    {
+      "component": "XZ Utils runtime",
+      "license": "GPL-2.0-or-later, 0BSD, public domain, and LGPL-2.1-or-later",
+      "path": "xz-COPYING",
+      "payload_sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "source_sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "source_url": "https://raw.githubusercontent.com/tukaani-project/xz/v5.8.3/COPYING",
+      "version": "5.8.3-r0"
+    },
+    {
+      "component": "bzip2 runtime",
+      "license": "bzip2-1.0.6 with component copyright",
+      "path": "bzip2-LICENSE",
+      "payload_sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "source_sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "source_url": "https://raw.githubusercontent.com/libarchive/bzip2/bzip2-1.0.8/LICENSE",
+      "version": "1.0.8-r6"
+    },
+    {
+      "component": "libffi runtime",
+      "license": "MIT with component copyrights",
+      "path": "libffi-LICENSE",
+      "payload_sha256": "d5699fa516968e3a1550e6c902b7441c78856f2603d61bedd0b0662a26655366",
+      "source_sha256": "d5699fa516968e3a1550e6c902b7441c78856f2603d61bedd0b0662a26655366",
+      "source_url": "https://raw.githubusercontent.com/libffi/libffi/v3.5.2/LICENSE",
+      "version": "3.5.2-r0"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "path": "musl-COPYRIGHT",
+      "payload_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    },
+    {
+      "component": "mypy-extensions",
+      "license": "MIT",
+      "path": "mypy-extensions-LICENSE",
+      "payload_sha256": "a50450da1d53cd777b80ced77c58ff96abe0ccd879706bd142c3ec20e245f0b4",
+      "source_sha256": "a50450da1d53cd777b80ced77c58ff96abe0ccd879706bd142c3ec20e245f0b4",
+      "source_url": "https://raw.githubusercontent.com/python/mypy_extensions/1.0.0/LICENSE",
+      "version": "1.0.0"
+    },
+    {
+      "component": "ncurses runtime",
+      "license": "X11 with component copyrights",
+      "path": "ncurses-COPYING",
+      "payload_sha256": "0413b2f4ea863194c174673032f0fca84f1ea1ed4eed6476baea68c075a631ce",
+      "source_sha256": "0413b2f4ea863194c174673032f0fca84f1ea1ed4eed6476baea68c075a631ce",
+      "source_url": "https://raw.githubusercontent.com/mirror/ncurses/87c2c84cbd2332d6d94b12a1dcaf12ad1a51a938/COPYING",
+      "version": "6.5_p20251123-r0; terms at 87c2c84cbd2332d6d94b12a1dcaf12ad1a51a938"
+    },
+    {
+      "component": "packaging",
+      "license": "Apache-2.0 OR BSD-2-Clause",
+      "path": "packaging-LICENSE",
+      "payload_sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "source_sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48",
+      "source_url": "https://raw.githubusercontent.com/pypa/packaging/24.1/LICENSE",
+      "version": "24.1"
+    },
+    {
+      "component": "packaging Apache terms",
+      "license": "Apache-2.0",
+      "path": "packaging-LICENSE.APACHE",
+      "payload_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "source_sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "source_url": "https://raw.githubusercontent.com/pypa/packaging/24.1/LICENSE.APACHE",
+      "version": "24.1"
+    },
+    {
+      "component": "packaging BSD terms",
+      "license": "BSD-2-Clause",
+      "path": "packaging-LICENSE.BSD",
+      "payload_sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "source_sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5",
+      "source_url": "https://raw.githubusercontent.com/pypa/packaging/24.1/LICENSE.BSD",
+      "version": "24.1"
+    },
+    {
+      "component": "pathspec",
+      "license": "MPL-2.0",
+      "path": "pathspec-LICENSE",
+      "payload_sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "source_sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "source_url": "https://raw.githubusercontent.com/cpburnz/python-pathspec/v0.12.1/LICENSE",
+      "version": "0.12.1"
+    },
+    {
+      "component": "platformdirs",
+      "license": "MIT",
+      "path": "platformdirs-LICENSE",
+      "payload_sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
+      "source_sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6",
+      "source_url": "https://raw.githubusercontent.com/tox-dev/platformdirs/4.3.6/LICENSE",
+      "version": "4.3.6"
+    },
+    {
+      "component": "readline runtime",
+      "license": "GPL-3.0-or-later",
+      "path": "readline-COPYING",
+      "payload_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_url": "https://raw.githubusercontent.com/gnu-mirror-unofficial/readline/5263c0d88064fda96292335d12eec1733f91cdc9/COPYING",
+      "version": "8.3.1-r0; terms at 5263c0d88064fda96292335d12eec1733f91cdc9"
+    },
+    {
+      "component": "util-linux libuuid runtime",
+      "license": "GPL-2.0-or-later and bundled terms",
+      "path": "util-linux-COPYING",
+      "payload_sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "source_sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "source_url": "https://raw.githubusercontent.com/util-linux/util-linux/v2.41.4/COPYING",
+      "version": "2.41.4-r0"
+    },
+    {
+      "component": "zlib runtime",
+      "license": "Zlib with component copyright",
+      "path": "zlib-LICENSE",
+      "payload_sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "source_sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "source_url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE",
+      "version": "1.3.2-r0"
+    }
+  ],
+  "schema_version": 4,
+  "target": "black"
+}

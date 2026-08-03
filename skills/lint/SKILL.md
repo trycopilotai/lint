@@ -3,7 +3,7 @@ name: lint
 description: >-
   Check or apply canonical formatting across a
   mixed-language repository with a read-only default and
-  optional pinned language-specific containers. Use when the
+  optional versioned language-specific containers. Use when
   user asks to lint, format, check formatting, apply
   formatting, inspect modified files, or add a repository
   lint command.
@@ -59,8 +59,12 @@ stable JSON object.
   invalid.
 - Exit 3 means the engine failed internally.
 
-Report the exact command, mode, selected count, changed
-count, and any files that still need formatting. Do not call
+Report the exact command, mode, selected count, and any
+files that still need formatting. Read-only runs report
+`would_change`, which counts files whose formatting differs
+without rewriting any of them; write runs report `changed`,
+which counts files actually rewritten. Never describe a
+read-only count as files that were changed. Do not call
 write mode to make a read-only request pass.
 
 ## Safety

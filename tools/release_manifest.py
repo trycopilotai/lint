@@ -15,6 +15,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 IMAGE_PREFIX = "ghcr.io/trycopilotai/lint-"
 DIGEST_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")
+SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 
 
 def sha256(path: Path) -> str:
@@ -58,6 +59,34 @@ def expected_images() -> set[str]:
                 raise ValueError(f"duplicate image in release matrix: {image}")
             images.add(image)
     return images
+
+
+def canonical_json_sha256(value: Any) -> str:
+    payload = (json.dumps(value, sort_keys=True, indent=2) + "\n").encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def validate_digest_map(value: Any) -> dict[str, str]:
+    if not isinstance(value, dict):
+        raise ValueError("image digest manifest is missing images")
+    digests: dict[str, str] = {}
+    for image, digest in value.items():
+        if not isinstance(image, str):
+            raise ValueError("image names must be strings")
+        if not isinstance(digest, str):
+            raise ValueError(f"{image} digest must be a string")
+        if DIGEST_PATTERN.fullmatch(digest) is None:
+            raise ValueError(f"{image} has an invalid digest")
+        digests[image] = digest
+    expected = expected_images()
+    actual = set(digests)
+    if actual != expected:
+        missing = sorted(expected - actual)
+        extra = sorted(actual - expected)
+        raise ValueError(
+            f"image digest coverage differs: missing={missing} extra={extra}"
+        )
+    return digests
 
 
 def image_digests(
@@ -116,11 +145,7 @@ def main() -> int:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("--version", required=True)
     argument_parser.add_argument("--archive", type=Path)
-    argument_parser.add_argument(
-        "--digests",
-        required=True,
-        type=Path,
-    )
+    argument_parser.add_argument("--digests", type=Path, required=True)
     argument_parser.add_argument("--output", type=Path)
     argument_parser.add_argument("--verify-only", action="store_true")
     arguments = argument_parser.parse_args()
@@ -134,7 +159,12 @@ def main() -> int:
     if arguments.verify_only:
         if arguments.archive is not None or arguments.output is not None:
             argument_parser.error("--verify-only does not accept archive output")
-        print(json.dumps({"images": len(digests), "status": "ok"}, sort_keys=True))
+        print(
+            json.dumps(
+                {"images": len(digests), "mode": "built", "status": "ok"},
+                sort_keys=True,
+            )
+        )
         return 0
     if arguments.archive is None:
         argument_parser.error("--archive is required unless --verify-only is used")
@@ -143,7 +173,6 @@ def main() -> int:
 
     tools = json.loads((ROOT / "languages.json").read_text(encoding="utf-8"))["tools"]
     manifest: dict[str, Any] = {
-        "schema_version": 1,
         "release": arguments.version,
         "source": {
             "commit": revision,
@@ -151,8 +180,9 @@ def main() -> int:
             "sha256": sha256(arguments.archive),
         },
         "tools": tools,
-        "images": digests,
     }
+    manifest["schema_version"] = 1
+    manifest["images"] = digests
     arguments.output.write_text(
         json.dumps(manifest, sort_keys=True, indent=2) + "\n",
         encoding="utf-8",

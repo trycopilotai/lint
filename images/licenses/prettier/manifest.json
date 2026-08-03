@@ -1,0 +1,78 @@
+{
+  "entries": [
+    {
+      "component": "Alpine apk-tools runtime",
+      "license": "GPL-2.0-only",
+      "path": "apk-tools-LICENSE",
+      "payload_sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "source_sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "source_url": "https://raw.githubusercontent.com/alpinelinux/apk-tools/v3.0.6/LICENSE",
+      "version": "3.0.6-r0"
+    },
+    {
+      "component": "GCC runtime libraries",
+      "license": "GPL-3.0-or-later",
+      "path": "gcc-COPYING3",
+      "payload_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING3",
+      "version": "15.2.0-r2"
+    },
+    {
+      "component": "GCC runtime library",
+      "license": "GCC-exception-3.1",
+      "path": "gcc-COPYING.RUNTIME",
+      "payload_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "source_url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-15.2.0/COPYING.RUNTIME",
+      "version": "15.2.0"
+    },
+    {
+      "component": "Node.js and bundled components",
+      "license": "MIT and other terms in the payload",
+      "path": "node-LICENSE",
+      "payload_sha256": "148eacf7863ef4329224a29398623077200a27194aa075569faf4a0a85566ca5",
+      "source_sha256": "148eacf7863ef4329224a29398623077200a27194aa075569faf4a0a85566ca5",
+      "source_url": "https://raw.githubusercontent.com/nodejs/node/v24.18.0/LICENSE",
+      "version": "24.18.0"
+    },
+    {
+      "component": "OpenSSL runtime",
+      "license": "Apache-2.0 with component notice",
+      "path": "openssl-LICENSE.txt",
+      "payload_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "source_sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "source_url": "https://raw.githubusercontent.com/openssl/openssl/openssl-3.5.7/LICENSE.txt",
+      "version": "3.5.7-r0"
+    },
+    {
+      "component": "Prettier",
+      "license": "MIT",
+      "path": "prettier-LICENSE",
+      "payload_sha256": "b0f2417199889f1c0d28ec4e0244eacf1a15de5819d61f641dd7d8f45153ac9c",
+      "source_sha256": "b0f2417199889f1c0d28ec4e0244eacf1a15de5819d61f641dd7d8f45153ac9c",
+      "source_url": "https://raw.githubusercontent.com/prettier/prettier/3.7.4/LICENSE",
+      "version": "3.7.4"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "path": "musl-COPYRIGHT",
+      "payload_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    },
+    {
+      "component": "zlib runtime",
+      "license": "Zlib with component copyright",
+      "path": "zlib-LICENSE",
+      "payload_sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "source_sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "source_url": "https://raw.githubusercontent.com/madler/zlib/v1.3.2/LICENSE",
+      "version": "1.3.2-r0"
+    }
+  ],
+  "schema_version": 4,
+  "target": "prettier"
+}

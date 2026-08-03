@@ -1,0 +1,87 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "gofmt",
+      "role": "entrypoint",
+      "sha256": "198a3d0a83314900388906b849ef9f6238cc8112fc8230fd4be466d90cc4e0e5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/go",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/go/go-LICENSE",
+      "role": "license",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/go/go-PATENTS",
+      "role": "license",
+      "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/go/manifest.json",
+      "role": "license",
+      "sha256": "3f4a618cbcc02f1b9e1b30b582bb856b79e36495eecbcbd1d3d1213be90fb056",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "1510d78991be5f2ae342d9ee21a049393b0e8af7e11ac1d0b35bd2cad28ab932",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "go"
+}
