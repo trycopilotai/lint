@@ -46,7 +46,7 @@
       "mode": "0644",
       "path": "lib/apk/db/installed",
       "role": "runtime",
-      "sha256": "952c49c7879fb4cee2c4f25bef1571c693334e61662714ed799bc4d1f65344cc",
+      "sha256": "34395d279af6bccddc2ed8e90ca7a332827548a28c7c57025a88329c5a7c1cd9",
       "type": "regular"
     },
     {
@@ -2170,7 +2170,7 @@
       "type": "regular"
     },
     {
-      "link_target": "libexpat.so.1.12.1",
+      "link_target": "libexpat.so.1.12.2",
       "mode": "0777",
       "path": "usr/lib/libexpat.so.1",
       "role": "runtime",
@@ -2180,9 +2180,9 @@
     {
       "link_target": null,
       "mode": "0755",
-      "path": "usr/lib/libexpat.so.1.12.1",
+      "path": "usr/lib/libexpat.so.1.12.2",
       "role": "runtime",
-      "sha256": "b27fd578c2c2dcc6f04fc5c68b41b2b21cf56b1a99d9fd229c56485733805d38",
+      "sha256": "d446e66c67bdd3d59b8435320d1c563ae6a2095f021c032f0884bf0ab8113701",
       "type": "regular"
     },
     {
@@ -2522,7 +2522,7 @@
       "type": "regular"
     },
     {
-      "link_target": "libp11-kit.so.0.4.1",
+      "link_target": "libp11-kit.so.0.4.8",
       "mode": "0777",
       "path": "usr/lib/libp11-kit.so.0",
       "role": "runtime",
@@ -2532,9 +2532,9 @@
     {
       "link_target": null,
       "mode": "0755",
-      "path": "usr/lib/libp11-kit.so.0.4.1",
+      "path": "usr/lib/libp11-kit.so.0.4.8",
       "role": "runtime",
-      "sha256": "a21d1ef9e1851cee0c43f898dbb10c942a38f73528f855045f72ee2826510f0c",
+      "sha256": "266618704e75fbea439e4cbb4e39035e54cdca78c39e3862c03570ad5f52d976",
       "type": "regular"
     },
     {
@@ -2766,7 +2766,7 @@
       "mode": "0755",
       "path": "usr/lib/pkcs11/p11-kit-trust.so",
       "role": "runtime",
-      "sha256": "565f61ea45e5f2bd53f671e92a09429d32ce3f2c54d4e15eea9f631564841a96",
+      "sha256": "c8ba61a5ea36a014899098b95dfec2df313efb7a787e9de4bc5dbab7319d45dc",
       "type": "regular"
     },
     {
