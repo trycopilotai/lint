@@ -1090,6 +1090,18 @@ class RepositoryVerificationWiringTest(unittest.TestCase):
 
 
 class LaunchSurfaceTest(unittest.TestCase):
+    def test_technical_article_is_published(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        article = ROOT / "docs" / "one-formatting-interface.md"
+
+        self.assertTrue(article.is_file())
+        self.assertIn(
+            "[One formatting interface for mixed-language repositories]"
+            "(docs/one-formatting-interface.md)",
+            readme,
+        )
+        self.assertFalse((ROOT / "docs" / "article-draft.md").exists())
+
     def test_readme_has_an_icon_and_every_workflow_badge(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         icon = ROOT / "assets" / "icon.svg"

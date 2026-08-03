@@ -65,6 +65,10 @@ that add a formatter, an exact formatter golden, or
 release-provenance coverage while keeping `make verify`
 passing. Repository stars are not the success metric.
 
+The technical note
+[One formatting interface for mixed-language repositories](docs/one-formatting-interface.md)
+explains the transaction and container design.
+
 ## Quick start
 
 Check every supported file under the current directory:
