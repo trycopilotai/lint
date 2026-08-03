@@ -34,7 +34,7 @@ allowed-signers file. The trusted ED25519 fingerprint is
 ```sh
 git -c gpg.format=ssh \
   -c gpg.ssh.allowedSignersFile=.github/release-allowed-signers \
-  verify-tag v0.1.5
+  verify-tag v0.1.6
 ```
 
 This local command proves that the tag matches the key in

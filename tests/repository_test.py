@@ -96,6 +96,57 @@ def workflow_sources() -> dict[str, str]:
     return sources
 
 
+def workflow_step_script(workflow: str, step_name: str) -> str:
+    """Return the shell body a named workflow step runs.
+
+    Reading the step back out and running it is the difference
+    between checking that a guard is written down and checking
+    that it stops what it claims to stop.
+    """
+
+    step = workflow.split(f"- name: {step_name}", 1)[1].split("- name:", 1)[0]
+    body = step.split("run: |\n", 1)[1]
+    lines = body.splitlines()
+    indent = len(lines[0]) - len(lines[0].lstrip())
+    script: list[str] = []
+    for line in lines:
+        if line.strip() == "":
+            script.append("")
+            continue
+        if len(line) - len(line.lstrip()) < indent:
+            break
+        script.append(line[indent:])
+    return "\n".join(script) + "\n"
+
+
+SVG_NAMESPACE = "{http://www.w3.org/2000/svg}"
+
+
+def load_demo_generator():
+    path = ROOT / "scripts" / "generate_demo.py"
+    specification = importlib.util.spec_from_file_location(
+        "demo_generator_under_test",
+        path,
+    )
+    if specification is None:
+        raise RuntimeError("could not create demo generator specification")
+    if specification.loader is None:
+        raise RuntimeError("demo generator specification has no loader")
+    module = importlib.util.module_from_spec(specification)
+    sys.modules[specification.name] = module
+    specification.loader.exec_module(module)
+    return module
+
+
+def svg_text_lines(root: ET.Element) -> list[str]:
+    """Return every rendered text run of an SVG in document order."""
+
+    lines: list[str] = []
+    for element in root.iter(f"{SVG_NAMESPACE}text"):
+        lines.append(" ".join("".join(element.itertext()).split()))
+    return lines
+
+
 RELEASE_MATRIX = load_release_matrix()
 IMAGE_VERIFIER = load_image_verifier()
 
@@ -485,6 +536,141 @@ class ReleaseWorkflowTest(unittest.TestCase):
         )
         self.assertIn('verify-tag "$RELEASE_REF"', release)
 
+    def test_release_controller_is_bound_to_the_checked_out_target(self) -> None:
+        """A controller from another commit stops before any build.
+
+        `actions/checkout` takes the release ref, but the
+        workflow file itself comes from `github.workflow_sha`.
+        A tag push reads both from the same commit. A dispatch
+        reads the controller from the ref it was started on, so
+        an unsigned branch could drive the signed tag's release
+        with steps the tag never carried.
+        """
+
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        step_name = "Verify release controller commit"
+        verify_job = release.split("\n  verify:\n", 1)[1].split("\n  matrix:\n", 1)[0]
+        images_job = release.split("\n  images:\n", 1)[1].split("\n  promote:\n", 1)[0]
+
+        # The guard has to sit in the job the image build waits
+        # on. In its own job, or in a later one, the images are
+        # already pushed by the time it runs.
+        self.assertIn(f"- name: {step_name}", verify_job)
+        self.assertIn('WORKFLOW_SHA: "${{ github.workflow_sha }}"', verify_job)
+        self.assertIn("needs: [matrix, verify]", images_job)
+
+        script = workflow_step_script(release, step_name)
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory) / "release"
+            repository.mkdir()
+            script_path = Path(directory) / "controller.sh"
+            script_path.write_text(script, encoding="utf-8")
+            subprocess.run(
+                ["git", "init", "-q", "-b", "main", str(repository)], check=True
+            )
+            for name, value in (
+                ("user.name", "Release Test"),
+                ("user.email", "release-test@example.invalid"),
+            ):
+                subprocess.run(
+                    ["git", "-C", str(repository), "config", name, value],
+                    check=True,
+                )
+            (repository / "README.md").write_text("tagged\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repository), "add", "."], check=True)
+            subprocess.run(
+                ["git", "-C", str(repository), "commit", "-qm", "tagged"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(repository), "tag", "-am", "release", "v9.9.9"],
+                check=True,
+            )
+            (repository / "README.md").write_text("later\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repository), "add", "."], check=True)
+            subprocess.run(
+                ["git", "-C", str(repository), "commit", "-qm", "later"],
+                check=True,
+            )
+            other_sha = subprocess.run(
+                ["git", "-C", str(repository), "rev-parse", "HEAD"],
+                check=True,
+                stdout=subprocess.PIPE,
+                text=True,
+            ).stdout.strip()
+            subprocess.run(
+                ["git", "-C", str(repository), "checkout", "-q", "--detach", "v9.9.9"],
+                check=True,
+            )
+            tagged_sha = subprocess.run(
+                ["git", "-C", str(repository), "rev-parse", "HEAD"],
+                check=True,
+                stdout=subprocess.PIPE,
+                text=True,
+            ).stdout.strip()
+
+            def checkout(revision: str) -> None:
+                subprocess.run(
+                    [
+                        "git",
+                        "-C",
+                        str(repository),
+                        "checkout",
+                        "-q",
+                        "--detach",
+                        revision,
+                    ],
+                    check=True,
+                )
+
+            def run_guard(workflow_sha: str) -> subprocess.CompletedProcess[str]:
+                environment = {
+                    **os.environ,
+                    "RELEASE_REF": "v9.9.9",
+                    "WORKFLOW_SHA": workflow_sha,
+                }
+                return subprocess.run(
+                    [
+                        "bash",
+                        "--noprofile",
+                        "--norc",
+                        "-eo",
+                        "pipefail",
+                        str(script_path),
+                    ],
+                    cwd=repository,
+                    env=environment,
+                    check=False,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                )
+
+            # A signed tag push: the controller, the peeled tag,
+            # and the checkout are one commit.
+            tag_push = run_guard(tagged_sha)
+            # A dispatch of the tag from another branch.
+            other_controller = run_guard(other_sha)
+            absent_controller = run_guard("")
+            # The remaining two disagreements, each of which
+            # only one of the guard's comparisons catches.
+            checkout(other_sha)
+            head_only = run_guard(other_sha)
+            tag_only = run_guard(tagged_sha)
+
+        self.assertNotEqual(tagged_sha, other_sha)
+        self.assertEqual(0, tag_push.returncode, tag_push.stderr)
+        for name, stopped in (
+            ("other controller", other_controller),
+            ("absent controller", absent_controller),
+            ("controller matches only the checkout", head_only),
+            ("controller matches only the peeled tag", tag_only),
+        ):
+            with self.subTest(case=name):
+                self.assertNotEqual(0, stopped.returncode, stopped.stdout)
+
     def test_candidate_signer_cannot_authorize_a_release(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             repository = Path(directory) / "candidate"
@@ -594,7 +780,7 @@ class ReleaseWorkflowTest(unittest.TestCase):
         security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
         normalized = " ".join(security.split())
 
-        self.assertIn("verify-tag v0.1.5", security)
+        self.assertIn("verify-tag v0.1.6", security)
         self.assertIn(".github/release-allowed-signers", security)
         self.assertIn(RELEASE_TRUST_ROOT, security)
         self.assertIn(
@@ -997,11 +1183,12 @@ class PublicWordingTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "retired visibility wording"):
                     self.verifier.verify_public_wording(mutated, self.version)
 
-    def test_dropping_an_install_condition_fails(self) -> None:
+    def test_dropping_a_pinned_launch_command_fails(self) -> None:
         conditions = (
-            f"Once the matching `v{self.version}` tag is published",
-            f"Once the matching `v{self.version}` release is published",
-            "which resolves\nonly once the matching image package is published",
+            f"uses: trycopilotai/lint@v{self.version}",
+            f"release=v{self.version}",
+            f"--image-manifest release-manifest-{self.version}.json",
+            f"`ghcr.io/trycopilotai/lint-<language>:{self.version}`",
         )
         for condition in conditions:
             with self.subTest(condition=condition):
@@ -1009,6 +1196,24 @@ class PublicWordingTest(unittest.TestCase):
                 mutated["README.md"] = mutated["README.md"].replace(condition, "", 1)
                 self.assertNotEqual(self.documents["README.md"], mutated["README.md"])
                 with self.assertRaisesRegex(ValueError, "README states"):
+                    self.verifier.verify_public_wording(mutated, self.version)
+
+    def test_deferring_the_published_release_again_fails(self) -> None:
+        # These are the phrases the README carried while the
+        # release was still unpublished. A reader who follows
+        # them today is told to wait for something that already
+        # shipped, so each one has to stay out.
+        deferrals = (
+            "Once the matching `v{version}` tag is published, use the\ncomposite",
+            "Once the matching `v{version}` release is published,\ninstall the",
+            "which resolves\nonly once the matching image package is published",
+        )
+        for template in deferrals:
+            deferral = template.format(version=self.version)
+            with self.subTest(deferral=deferral):
+                mutated = dict(self.documents)
+                mutated["README.md"] = f"{mutated['README.md']}\n{deferral}\n"
+                with self.assertRaisesRegex(ValueError, "defers the published"):
                     self.verifier.verify_public_wording(mutated, self.version)
 
     def test_readme_denies_the_inventory_it_does_not_have(self) -> None:
@@ -1030,10 +1235,10 @@ class PublicWordingTest(unittest.TestCase):
     def test_claiming_an_arm64_inventory_set_fails(self) -> None:
         canonical = IMAGE_VERIFIER.CANONICAL_INVENTORY_ARCHITECTURES
         mutated = self.documents["README.md"].replace(
-            "The checked-in canonical inventory set covers the 15 AMD64\nimages.",
-            "The checked-in canonical inventory set covers the 15 AMD64\n"
-            "images. The checked-in canonical inventory set covers the 15\n"
-            "ARM64 images.",
+            "canonical inventory set covers the 15 AMD64 formatter build\ntargets",
+            "canonical inventory set covers the 15 AMD64 formatter build\n"
+            "targets. The checked-in canonical inventory set covers the 15\n"
+            "ARM64 formatter build targets",
             1,
         )
         self.assertNotEqual(self.documents["README.md"], mutated)
@@ -1303,7 +1508,7 @@ class LaunchSurfaceTest(unittest.TestCase):
         release_base = "https://github.com/trycopilotai/lint/releases/download/$release"
 
         self.assertEqual(2, readme.count(release_base))
-        self.assertEqual(2, readme.count("release=v0.1.5"))
+        self.assertEqual(2, readme.count("release=v0.1.6"))
         self.assertEqual(2, readme.count('version="${release#v}"'))
         # The auto-generated tag tarball is the one artifact
         # no checksum is published for, so both installs take
@@ -1328,14 +1533,10 @@ class LaunchSurfaceTest(unittest.TestCase):
         self.assertEqual(claude_manifest["name"], codex_manifest["name"])
         selector = f'{claude_manifest["name"]}@trycopilotai'
         self.assertEqual(2, readme.count(selector))
-        self.assertEqual(
-            2,
-            normalized.count(
-                "Once the matching `v0.5.0` marketplace release is published"
-            ),
-        )
-        self.assertIn("https://github.com/trycopilotai/skills.git#v0.5.0", readme)
-        self.assertIn("trycopilotai/skills --ref v0.5.0", normalized)
+        self.assertNotIn("marketplace release is published", normalized)
+        self.assertEqual(2, normalized.count("pinned `v0.5.1` marketplace release"))
+        self.assertIn("https://github.com/trycopilotai/skills.git#v0.5.1", readme)
+        self.assertIn("trycopilotai/skills --ref v0.5.1", normalized)
         self.assertEqual(2, readme.count("npx @anthropic-ai/claude-code@2.1.220"))
         self.assertEqual(2, readme.count("npx -y @openai/codex@0.146.0"))
 
@@ -1372,26 +1573,28 @@ class LaunchSurfaceTest(unittest.TestCase):
         private_launch_phrase = " ".join(("Private", "prelaunch"))
         self.assertNotIn(private_launch_phrase, readme)
 
-    def test_recipient_surface_qualifies_unpublished_integrations(self) -> None:
+    def test_recipient_surface_states_the_pinned_release_directly(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         normalized = " ".join(readme.split())
+        version = json.loads((ROOT / "images" / "matrix.json").read_text())["version"]
 
-        # The repository is public, so nothing may be deferred to
-        # a launch that has already happened. What is still
-        # unavailable is the tag, the release, and the image
-        # package, and each install block says so.
+        # This release is published, so a reader gets the exact
+        # command rather than a condition to wait on. The
+        # marketplace distribution lives in a different
+        # repository and is pinned independently.
         self.assertIn(
-            "Once the matching `v0.1.5` tag is published, use the composite",
+            f"Use the composite GitHub Action, pinned to `v{version}`", readme
+        )
+        self.assertNotIn("tag is published", normalized)
+        self.assertNotIn(
+            f"Once the matching `v{version}` release is published",
             normalized,
         )
-        self.assertEqual(
-            2,
-            normalized.count("Once the matching `v0.1.5` release is published"),
-        )
-        self.assertIn(
+        self.assertNotIn(
             "which resolves only once the matching image package is published",
             normalized,
         )
+        self.assertEqual(2, normalized.count("pinned `v0.5.1` marketplace release"))
         self.assertIn("prefers-reduced-motion", readme)
         self.assertNotIn("static reduced-motion poster", readme)
 
@@ -1557,7 +1760,7 @@ class LaunchSurfaceTest(unittest.TestCase):
         # together. If they drift, the README promises an image
         # build that the tag skips, and --docker pulls a tag that
         # was never published.
-        self.assertEqual("0.1.5", version)
+        self.assertEqual("0.1.6", version)
         self.assertIn(
             'return f"{IMAGE_PREFIX}{language.id}:{image_version()}"',
             lint_source,
@@ -1586,6 +1789,94 @@ class LaunchSurfaceTest(unittest.TestCase):
         # publish a manifest with no images behind it.
         self.assertIn("publish_images", release)
         self.assertNotIn("images/inherited-release.json", release)
+
+
+class ReducedMotionPosterTest(unittest.TestCase):
+    """The reduced-motion source has to be the same demo, still.
+
+    `assets/poster.svg` is what a reader who asks the operating
+    system to reduce motion sees instead of `assets/demo.svg`.
+    It was a differently shaped marketing poster carrying none
+    of the commands, so that reader was served neither the
+    demonstration nor its reconstruction disclosure.
+    """
+
+    def setUp(self) -> None:
+        self.demo = ET.parse(ROOT / "assets" / "demo.svg").getroot()
+        self.poster = ET.parse(ROOT / "assets" / "poster.svg").getroot()
+
+    def test_poster_keeps_the_demo_geometry(self) -> None:
+        # Asserted against the demo and against the literal
+        # frame, so a poster that copied a resized demo still
+        # fails.
+        self.assertEqual("1200", self.demo.attrib["width"])
+        self.assertEqual("700", self.demo.attrib["height"])
+        self.assertEqual("0 0 1200 700", self.demo.attrib["viewBox"])
+        for attribute in ("width", "height", "viewBox"):
+            with self.subTest(attribute=attribute):
+                self.assertEqual(
+                    self.demo.attrib[attribute],
+                    self.poster.attrib[attribute],
+                )
+
+    def test_poster_shows_every_demo_command_and_outcome(self) -> None:
+        demo_lines = svg_text_lines(self.demo)
+        poster_lines = svg_text_lines(self.poster)
+
+        # The demo reveals its steps over time, so its final
+        # frame is every line at once. Comparing the whole
+        # ordered list, rather than a chosen phrase, is what
+        # makes a dropped outcome fail.
+        self.assertEqual(8, len(demo_lines))
+        self.assertEqual(demo_lines, poster_lines)
+        self.assertIn("$ python3 lint.py --cwd demo-work --write", poster_lines)
+        self.assertIn("clean · 1 selected · 0 would change", poster_lines)
+        self.assertIn(
+            "Reconstructed from evidence/demo-transcript.txt",
+            poster_lines,
+        )
+
+    def test_poster_outcomes_come_from_the_demo_transcript(self) -> None:
+        # `scripts/verify_demo.py` binds `assets/demo.svg` to a
+        # replay of the transcript. Rendering from the same
+        # transcript here carries that binding to the poster,
+        # so neither file can quote an outcome the demo run did
+        # not produce.
+        generator = load_demo_generator()
+        transcript = (ROOT / "evidence" / "demo-transcript.txt").read_text(
+            encoding="utf-8"
+        )
+        rendered = ET.fromstring(generator.render_svg(transcript))
+
+        self.assertEqual(svg_text_lines(rendered), svg_text_lines(self.poster))
+
+    def test_poster_carries_no_animation(self) -> None:
+        demo = (ROOT / "assets" / "demo.svg").read_text(encoding="utf-8")
+        poster = (ROOT / "assets" / "poster.svg").read_text(encoding="utf-8")
+
+        for marker in ("@keyframes", "animation:", "opacity: 0"):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, demo)
+                self.assertNotIn(marker, poster)
+        self.assertNotEqual([], self.demo.findall(f".//{SVG_NAMESPACE}style"))
+        self.assertEqual([], self.poster.findall(f".//{SVG_NAMESPACE}style"))
+        self.assertEqual(
+            [],
+            [
+                element.tag
+                for element in self.poster.iter()
+                if "class" in element.attrib
+            ],
+        )
+
+    def test_readme_serves_the_poster_to_reduced_motion_readers(self) -> None:
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn('alt="Lint command demo"', readme)
+        self.assertNotIn('alt="Animated lint command demo"', readme)
+        self.assertIn('media="(prefers-reduced-motion: reduce)"', readme)
+        self.assertIn('srcset="assets/poster.svg"', readme)
+        self.assertIn('src="assets/demo.svg"', readme)
 
 
 if __name__ == "__main__":

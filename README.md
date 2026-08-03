@@ -24,7 +24,7 @@ Each language has an independently addressable Docker image.
   />
   <img
     src="assets/demo.svg"
-    alt="Animated lint command demo"
+    alt="Lint command demo"
   />
 </picture>
 
@@ -109,13 +109,12 @@ make dlint_markdown
 make dlint_less
 ```
 
-Once the matching `v0.1.5` tag is published, use the
-composite GitHub Action:
+Use the composite GitHub Action, pinned to `v0.1.6`:
 
 ```yaml
 steps:
   - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
-  - uses: trycopilotai/lint@v0.1.5
+  - uses: trycopilotai/lint@v0.1.6
     with:
       mode: read-only
       cwd: .
@@ -137,8 +136,8 @@ verified release manifest:
 
 ```sh
 python3 lint.py --docker \
-  --image-manifest release-manifest-0.1.5.json
-make lint ARGS="--docker --image-manifest release-manifest-0.1.5.json"
+  --image-manifest release-manifest-0.1.6.json
+make lint ARGS="--docker --image-manifest release-manifest-0.1.6.json"
 ```
 
 The manifest must exactly match this release's source
@@ -191,18 +190,16 @@ The default policy covers:
 Pinned versions are recorded in `languages.json`. Local runs
 report an install hint when a required executable is absent.
 Docker runs pull
-`ghcr.io/trycopilotai/lint-<language>:0.1.5`, which resolves
-only once the matching image package is published. The
-release workflow checks each built image against its
-compressed-size budget. For Linux AMD64 it also compares
-every final filesystem path, type, mode, link target,
-regular-file SHA-256, and reviewed role against the
-checked-in canonical inventory for that target. An extra,
-missing, or changed entry fails verification. A matching
-v0.1.5 tag builds and publishes the image set for Linux
-AMD64 and Linux ARM64. The release manifest records each
-promoted image digest alongside the source archive and its
-checksums.
+`ghcr.io/trycopilotai/lint-<language>:0.1.6`. The release
+workflow checks each built image against its compressed-size
+budget. For Linux AMD64 it also compares every final
+filesystem path, type, mode, link target, regular-file
+SHA-256, and reviewed role against the checked-in canonical
+inventory for that target. An extra, missing, or changed
+entry fails verification. A matching v0.1.6 tag builds and
+publishes the image set for Linux AMD64 and Linux ARM64. The
+release manifest records each promoted image digest
+alongside the source archive and its checksums.
 
 Prettier always uses `printWidth: 60`, `proseWrap: always`,
 and `trailingComma: none`; Black always uses line length 88.
@@ -271,8 +268,13 @@ own those surfaces; `python3 images/verify_images.py` checks
 the manifest, pins, Dockerfile policy, and local images
 supplied with `--local-prefix`.
 
-The checked-in canonical inventory set covers the 15 AMD64
-images. No ARM64 canonical inventory exists, so no job
+The 28 independently addressable language images are built
+from 15 distinct formatter targets, because several
+languages share one formatter; `images/matrix.json` maps
+each target to the languages it serves. The checked-in
+canonical inventory set covers the 15 AMD64 formatter build
+targets, one inventory file per target rather than one per
+language. No ARM64 canonical inventory exists, so no job
 compares ARM64 image contents against one. The Images and
 Release workflows still build every ARM64 image and check
 its formatter identity, smoke behavior, golden output
@@ -301,14 +303,13 @@ Starter tasks use `good first issue`.
 
 ## Claude Code
 
-Once the matching `v0.1.5` release is published, install the
-pinned standalone skill without authentication:
+Install the pinned standalone skill without authentication:
 
 ```sh
 archive="$(mktemp -d)"
 target="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/lint"
 install -d "$target"
-release=v0.1.5
+release=v0.1.6
 version="${release#v}"
 base="https://github.com/trycopilotai/lint/releases/download/$release"
 curl --fail --location "$base/lint-$version.tar.gz" \
@@ -323,15 +324,14 @@ cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
 cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
-The standalone invocation is `/lint`. Once the matching
-`v0.5.0` marketplace release is published, install the
-Claude distribution from
+The standalone invocation is `/lint`. Install the Claude
+distribution from the pinned `v0.5.1` marketplace release in
 [`trycopilotai/skills`](https://github.com/trycopilotai/skills):
 
 ```sh
 npx @anthropic-ai/claude-code@2.1.220 plugin \
   marketplace add \
-  https://github.com/trycopilotai/skills.git#v0.5.0
+  https://github.com/trycopilotai/skills.git#v0.5.1
 npx @anthropic-ai/claude-code@2.1.220 plugin \
   install lint@trycopilotai
 ```
@@ -340,15 +340,14 @@ Its invocation is `/lint:lint`.
 
 ## Codex
 
-Once the matching `v0.1.5` release is published, install the
-same pinned skill into the Codex skill store without
-authentication:
+Install the same pinned skill into the Codex skill store
+without authentication:
 
 ```sh
 archive="$(mktemp -d)"
 target="${CODEX_HOME:-$HOME/.codex}/skills/lint"
 install -d "$target"
-release=v0.1.5
+release=v0.1.6
 version="${release#v}"
 base="https://github.com/trycopilotai/lint/releases/download/$release"
 curl --fail --location "$base/lint-$version.tar.gz" \
@@ -363,14 +362,13 @@ cp "$target/skills/lint/SKILL.md" "$target/SKILL.md"
 cp "$target/skills/lint/run.py" "$target/run.py"
 ```
 
-The standalone invocation is `$lint`. Once the matching
-`v0.5.0` marketplace release is published, install the Codex
-distribution from
+The standalone invocation is `$lint`. Install the Codex
+distribution from the pinned `v0.5.1` marketplace release in
 [`trycopilotai/skills`](https://github.com/trycopilotai/skills):
 
 ```sh
 npx -y @openai/codex@0.146.0 plugin marketplace add \
-  trycopilotai/skills --ref v0.5.0
+  trycopilotai/skills --ref v0.5.1
 npx -y @openai/codex@0.146.0 plugin add \
   lint@trycopilotai
 ```

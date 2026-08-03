@@ -9,7 +9,7 @@ on:
         description: "Existing signed release tag"
         required: true
         type: string
-        default: v0.1.5
+        default: v0.1.6
 
 permissions:
   contents: read
@@ -57,6 +57,25 @@ jobs:
             -c gpg.format=ssh \
             -c "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/.github/release-allowed-signers" \
             verify-tag "$RELEASE_REF"
+      - name: Verify release controller commit
+        shell: bash
+        env:
+          WORKFLOW_SHA: "${{ github.workflow_sha }}"
+        run: |
+          # github.workflow_sha is the commit this workflow
+          # file was read from. A tag push reads the controller
+          # from the pushed tag, so the two agree. A dispatch
+          # reads it from whatever ref was selected, which need
+          # not be the signed release target checked out above,
+          # and every later job would then run steps the tag
+          # never carried. Bind them here, in the job the image
+          # build waits on, so a mismatch stops before anything
+          # is built or published.
+          release_sha="$(git rev-list -n 1 "$RELEASE_REF")"
+          head_sha="$(git rev-parse HEAD)"
+          test -n "$WORKFLOW_SHA"
+          test "$WORKFLOW_SHA" = "$release_sha"
+          test "$WORKFLOW_SHA" = "$head_sha"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:

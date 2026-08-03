@@ -284,7 +284,7 @@ def verify_manifests() -> None:
         ROOT / ".codex-plugin" / "plugin.json",
     ):
         data = json.loads(manifest.read_text(encoding="utf-8"))
-        if data["version"] != "0.1.5":
+        if data["version"] != "0.1.6":
             raise ValueError(f"wrong plugin version: {manifest}")
 
 
@@ -487,14 +487,25 @@ def verify_public_wording(documents: dict[str, str], version: str) -> None:
             if phrase in lowered:
                 raise ValueError(f"retired visibility wording in {name}: {phrase}")
     readme = " ".join(documents["README.md"].split())
+    # This release is published, so nothing about it may be
+    # deferred to a publication that already happened. The
+    # marketplace distribution in `trycopilotai/skills` is a
+    # different repository's release, but it is pinned too and
+    # must not retain a future-publication qualification.
+    deferred = (
+        "tag is published",
+        "only once the matching image package is published",
+        f"Once the matching `v{version}` release is published",
+        "marketplace release is published",
+    )
+    for phrase in deferred:
+        if phrase in readme:
+            raise ValueError(f"README defers the published release: {phrase}")
     conditions = (
-        (f"Once the matching `v{version}` tag is published", 1),
-        (f"Once the matching `v{version}` release is published", 2),
-        (
-            f"`ghcr.io/trycopilotai/lint-<language>:{version}`, which resolves "
-            "only once the matching image package is published",
-            1,
-        ),
+        (f"uses: trycopilotai/lint@v{version}", 1),
+        (f"release=v{version}", 2),
+        (f"--image-manifest release-manifest-{version}.json", 2),
+        (f"`ghcr.io/trycopilotai/lint-<language>:{version}`", 1),
     )
     for phrase, count in conditions:
         if readme.count(phrase) != count:
@@ -513,9 +524,13 @@ def verify_inventory_documentation(
     normalized = " ".join(readme.split())
     for architecture in sorted(canonical):
         label = ARCHITECTURE_LABELS[architecture]
+        # One inventory exists per formatter build target, not
+        # per language image. Calling the set a count of images
+        # read as a claim that 13 of the 28 published images
+        # have no checked-in inventory behind them.
         claim = (
             "The checked-in canonical inventory set covers the "
-            f"{inventory_count} {label} images."
+            f"{inventory_count} {label} formatter build targets"
         )
         if claim not in normalized:
             raise ValueError(f"README does not state the {architecture} inventory set")
@@ -611,7 +626,7 @@ def verify_release_surfaces() -> None:
     release_base = "https://github.com/trycopilotai/lint/releases/download/$release"
     if readme.count(release_base) != 2:
         raise ValueError("public skill installs must use the release archive")
-    if readme.count("release=v0.1.5") != 2:
+    if readme.count("release=v0.1.6") != 2:
         raise ValueError("public skill installs must pin the release tag")
     if readme.count('version="${release#v}"') != 2:
         raise ValueError("public skill installs must derive the archive version")
