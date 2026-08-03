@@ -13,7 +13,7 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def checksum_bound_paths() -> set[str]:
+def exact_byte_paths() -> set[str]:
     paths: set[str] = set()
 
     demo = load_json(ROOT / "evidence" / "demo-manifest.json")
@@ -38,13 +38,24 @@ def checksum_bound_paths() -> set[str]:
             payload_path = manifest_path.parent / relative
             paths.add(payload_path.relative_to(ROOT).as_posix())
 
+    comparisons = load_json(ROOT / "evidence" / "comparison-sources.json")
+    for source in comparisons["sources"]:
+        paths.add(source["capture"]["context_path"])
+
+    for path in sorted((ROOT / "fixtures").rglob("*")):
+        if path.is_file():
+            paths.add(path.relative_to(ROOT).as_posix())
+
+    for path in sorted((ROOT / "images" / "inventories").glob("*.json")):
+        paths.add(path.relative_to(ROOT).as_posix())
+
     return paths
 
 
 class CheckoutIntegrityTest(unittest.TestCase):
-    def test_checksum_bound_paths_disable_checkout_translation(self) -> None:
-        paths = checksum_bound_paths()
-        self.assertGreater(len(paths), 100)
+    def test_exact_byte_paths_disable_checkout_translation(self) -> None:
+        paths = exact_byte_paths()
+        self.assertGreater(len(paths), 300)
         for path in paths:
             with self.subTest(path=path):
                 self.assertTrue((ROOT / path).is_file())
@@ -75,7 +86,7 @@ class CheckoutIntegrityTest(unittest.TestCase):
         self.assertEqual(
             [],
             translated,
-            "checksum-bound paths permit checkout byte translation",
+            "exact-byte paths permit checkout byte translation",
         )
 
 
