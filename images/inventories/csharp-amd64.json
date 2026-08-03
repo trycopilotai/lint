@@ -123,7 +123,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/apk-tools-LICENSE",
       "role": "license",
       "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
@@ -131,7 +131,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/csharpier-LICENSE",
       "role": "license",
       "sha256": "0ed797a602216813b874392c4668e5e5611fc9e3b89af6a1989add2e3d825b37",
@@ -139,7 +139,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/csharpier-runtime-dependencies.txt",
       "role": "license",
       "sha256": "d53a0a75629ccc60498dceeec0c76c5a820145b2473810e9886d45df74a8cd63",
@@ -147,7 +147,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/dotnet-LICENSE.TXT",
       "role": "license",
       "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
@@ -155,7 +155,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/dotnet-THIRD-PARTY-NOTICES.TXT",
       "role": "license",
       "sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
@@ -163,7 +163,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/gcc-COPYING.RUNTIME",
       "role": "license",
       "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
@@ -171,7 +171,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/gcc-COPYING3",
       "role": "license",
       "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
@@ -179,7 +179,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/ini-parser-LICENSE",
       "role": "license",
       "sha256": "fda26a0d6e53a13085976f4b8758c7e43dc7260c7cb548c1a3999860ec2245fa",
@@ -187,7 +187,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/manifest.json",
       "role": "license",
       "sha256": "88a88942e2d861127ebed37a0aef8b6da54e4ff095dda5007e580e597e94b5b2",
@@ -195,7 +195,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/nreco-logging-LICENSE",
       "role": "license",
       "sha256": "567276183908f3f7f62dd49e590cff9e05bc4d60c6345d929a4666964d5b6601",
@@ -203,7 +203,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/openssl-LICENSE.txt",
       "role": "license",
       "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
@@ -211,7 +211,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/roslyn-LICENSE.txt",
       "role": "license",
       "sha256": "ae48df11a335dc1a615f4f938b69cba73bcf4485c4f97af49b38efb0f216353b",
@@ -219,7 +219,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/system-commandline-LICENSE.md",
       "role": "license",
       "sha256": "58fd5ebf25d75b5bb5f4cd407a9fef3befd3641e1af90a1d0716618e6430fc19",
@@ -227,7 +227,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/system-io-abstractions-LICENSE",
       "role": "license",
       "sha256": "9b4f46dc8e65bb14714479eb4de76b7a1e2e7f9eff7ab1eb0e9dea712f19b1ed",
@@ -235,7 +235,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/testably-abstractions-LICENSE.md",
       "role": "license",
       "sha256": "024f2e034ea52d1b47be884bda1bd9b776ceddbfb2a7cc4d49f79255c8ed483c",
@@ -243,7 +243,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/xmldiff-LICENSE",
       "role": "license",
       "sha256": "ba5c88068ad58a174e67390404c6b1fda4d04f067b39295eda8d2a8638fd1b16",
@@ -251,7 +251,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/yamldotnet-LICENSE.txt",
       "role": "license",
       "sha256": "daea8b7f1b2bab48ea12ad50b0ce91634669d99d7dd0cb64aed8dffeeef69ed3",
@@ -259,7 +259,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/csharp/zlib-LICENSE",
       "role": "license",
       "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
@@ -275,7 +275,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
       "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
@@ -283,7 +283,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
       "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",

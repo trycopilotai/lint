@@ -123,7 +123,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/clang/llvm-LICENSE.TXT",
       "role": "license",
       "sha256": "8d85c1057d742e597985c7d4e6320b015a9139385cff4cbae06ffc0ebe89afee",
@@ -131,7 +131,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/clang/manifest.json",
       "role": "license",
       "sha256": "a3c59ce527a4018b56b48a8c216a191ab021917d5a2b015f82fc32c3d742e2d5",
@@ -139,7 +139,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/clang/musl-COPYRIGHT",
       "role": "license",
       "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
@@ -155,7 +155,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
       "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
@@ -163,7 +163,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
       "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",

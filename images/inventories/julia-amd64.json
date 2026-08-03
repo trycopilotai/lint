@@ -10803,7 +10803,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/commonmark-LICENSE",
       "role": "license",
       "sha256": "1840fe1b989208725f1c45bfffb8ba8714389bea3311491bfd00d1d3fd3c6dc4",
@@ -10811,7 +10811,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/glob-LICENSE.md",
       "role": "license",
       "sha256": "7bd205a2f6e3d02eb3f68ed38712e621b849e67228b131f1a6a55eb058bb34fb",
@@ -10819,7 +10819,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/julia-LICENSE.md",
       "role": "license",
       "sha256": "c349becf11ee093ce16f0c0526c0a26c970444171ce9a2a281f230dc07dbfb66",
@@ -10827,7 +10827,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/juliaformatter-LICENSE",
       "role": "license",
       "sha256": "8ac3e9b27630654348e4c4eccab4aa00d397afd117343596d4d4b441f82dd855",
@@ -10835,7 +10835,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/juliasyntax-LICENSE.md",
       "role": "license",
       "sha256": "b38844ba3d737e9550f6fb161718f7d254dd8adb5d984418340fbeb04ffd1e14",
@@ -10843,7 +10843,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/manifest.json",
       "role": "license",
       "sha256": "b3ef6e14d220f781f65a3385f761b14899f54f94cb2303adb471e7e896ffd7fe",
@@ -10851,7 +10851,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/precompiletools-LICENSE",
       "role": "license",
       "sha256": "4102721694be71a80322c1fd3f3e33b9a017faaf0a0eb785ebd0c9558ddeffeb",
@@ -10859,7 +10859,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/julia/preferences-LICENSE.md",
       "role": "license",
       "sha256": "7d20d9825893f292496271edd11fda1e39dacacf64d6c0fb8c8b10bdf66cf0fb",
@@ -10875,7 +10875,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
       "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
@@ -10883,7 +10883,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
       "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
@@ -11499,7 +11499,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "opt/julia-depot/environments/v1.12/Manifest.toml",
       "role": "formatter",
       "sha256": "68ac859b5d87a9f835ed8a30ed669b21bc7c7402e833f8b5ffc1a9260669d505",
@@ -11507,7 +11507,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "opt/julia-depot/environments/v1.12/Project.toml",
       "role": "formatter",
       "sha256": "37746ac54a1c1565e2629782a858586e64581469e5b23b6e1a212c839824198f",

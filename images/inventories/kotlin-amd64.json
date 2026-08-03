@@ -139,7 +139,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/acl-source-legal-payload.txt",
       "role": "license",
       "sha256": "4dfa827918852725bf50427144edff7f26b972d75910c32ccbc8b34ac4960b82",
@@ -147,7 +147,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/apk-tools-LICENSE",
       "role": "license",
       "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
@@ -155,7 +155,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/attr-source-legal-payload.txt",
       "role": "license",
       "sha256": "5a47e9f61405f6abfc7b1f7cc4e94318c3d757a63e961ba5615216f21dd1c1f6",
@@ -163,7 +163,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/brotli-LICENSE",
       "role": "license",
       "sha256": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
@@ -171,7 +171,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/bzip2-LICENSE",
       "role": "license",
       "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
@@ -179,7 +179,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/clikt-LICENSE",
       "role": "license",
       "sha256": "bda1e56eafb83ea7ef64fe5669a155d446a37d44db2b1d9ded34ec194921f176",
@@ -187,7 +187,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/colormath-LICENSE",
       "role": "license",
       "sha256": "ab1cd8a3d0e92e1f69e95e8ca839127c52d4bd32fa2824d683d0dc66cc8fe21f",
@@ -195,7 +195,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/cyrus-sasl-COPYING",
       "role": "license",
       "sha256": "9d6e5d1632140a6c135b251260953650d17d87cd1124f87aaf72192aa4580d4b",
@@ -203,7 +203,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/ec4j-LICENSE",
       "role": "license",
       "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
@@ -211,7 +211,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/expat-COPYING",
       "role": "license",
       "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
@@ -219,7 +219,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/fastutil-LICENSE-2.0",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -227,7 +227,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/fontconfig-COPYING",
       "role": "license",
       "sha256": "51a51aa9823704fd90bccc616cdd17ebabb5b2b3e9cbde886ca02c7002288067",
@@ -235,7 +235,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/freetype-FTL.TXT",
       "role": "license",
       "sha256": "5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f",
@@ -243,7 +243,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/gcc-COPYING.RUNTIME",
       "role": "license",
       "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
@@ -251,7 +251,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/gcc-COPYING3",
       "role": "license",
       "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
@@ -259,7 +259,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/gdbm-source-legal-payload.txt",
       "role": "license",
       "sha256": "078aaffa9298c9a56e5ea5d6187ae1685d175825b6893d4563ab4b9171106b9b",
@@ -267,7 +267,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/gettext-runtime-legal-payload.txt",
       "role": "license",
       "sha256": "8c82ee17b9c3c5abfca94aa1a4ce87aee64eb86bf8be5c25bea411feb493b077",
@@ -275,7 +275,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/gmp-source-legal-payload.txt",
       "role": "license",
       "sha256": "8071abab7521e47d74f6e0b94487bbe6d5ba23bcc1d8bfbfd5f45d3d4ba085f8",
@@ -283,7 +283,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/gnutls-source-legal-payload.txt",
       "role": "license",
       "sha256": "759a7ea995e4ecbab282d7ea11c898f68b7c2549d3ddbb3538521ea482e94459",
@@ -291,7 +291,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/jansson-LICENSE",
       "role": "license",
       "sha256": "150d90904cd8de73609bb177b42edd3867b07b4b7b786dbba319f30de39fcda2",
@@ -299,7 +299,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/jetbrains-annotations.pom",
       "role": "license",
       "sha256": "965aeb2bedff369819bdde1bf7a0b3b89b8247dd69c88b86375d76163bb8c397",
@@ -307,7 +307,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/jetbrains-markdown-LICENSE",
       "role": "license",
       "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
@@ -315,7 +315,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/jetbrains-markdown-jvm.pom",
       "role": "license",
       "sha256": "d15b0ad2e9a573f97cecffa9ed40cfe534d5fc76b32e280f85dd02fe55489fce",
@@ -323,7 +323,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/jna-LICENSE",
       "role": "license",
       "sha256": "521bb271ac56e0e29a1b1b688b94af17d00d378fc8e63478d8c8b2a7c4a229d0",
@@ -331,7 +331,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/kotlin-LICENSE",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -339,7 +339,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/kotlin-logging-LICENSE",
       "role": "license",
       "sha256": "91ee885fa6bcd18b35dbb38859863eb927bf05eb6a6165baaf26c7f3bfb79e3a",
@@ -347,7 +347,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/kotlinx-serialization-LICENSE.txt",
       "role": "license",
       "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
@@ -355,7 +355,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/ktlint-LICENSE",
       "role": "license",
       "sha256": "b45bdb3357e761d4b1300470833cf5e5e9fafc32a5f98efef214ba926b0120d5",
@@ -363,7 +363,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/ktlint-embedded-legal-payload.txt",
       "role": "license",
       "sha256": "61f783e7410f5be8c85277d3ddafa1dd2daf1ce3c34e31bde1727d9d8ed3286d",
@@ -371,7 +371,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libassuan-COPYING.LIB",
       "role": "license",
       "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
@@ -379,7 +379,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libffi-LICENSE",
       "role": "license",
       "sha256": "d5699fa516968e3a1550e6c902b7441c78856f2603d61bedd0b0662a26655366",
@@ -387,7 +387,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libfontenc-COPYING",
       "role": "license",
       "sha256": "a4dda7a643b517794bfa23dc9605da030055df38ac8a5b9e1905e690975a59c4",
@@ -395,7 +395,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libgcrypt-COPYING.LIB",
       "role": "license",
       "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
@@ -403,7 +403,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libgpg-error-COPYING.LIB",
       "role": "license",
       "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
@@ -411,7 +411,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libidn2-COPYING.LESSERv3",
       "role": "license",
       "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
@@ -419,7 +419,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libksba-COPYING",
       "role": "license",
       "sha256": "6197b98c6bf69838c624809c509d84333de1bc847155168c0e84527446a27076",
@@ -427,7 +427,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libpng-LICENSE",
       "role": "license",
       "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
@@ -435,7 +435,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libtasn1-source-legal-payload.txt",
       "role": "license",
       "sha256": "e1e6ac85841a0d5c983def06042e7e2e426e3d2872adc56e2567fed21e034d7b",
@@ -443,7 +443,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/libunistring-source-legal-payload.txt",
       "role": "license",
       "sha256": "fcdee1073ce370533cccf2feacddbde20ab532122e2d5b13480a54e9f39162ad",
@@ -451,7 +451,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/logback-LICENSE.txt",
       "role": "license",
       "sha256": "94a99c6ee7e8b5ba3ef66a1d234c22a55c149e93584040d66a7f6694d552e7ea",
@@ -459,7 +459,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/manifest.json",
       "role": "license",
       "sha256": "d4ab85c4fda8f24b8c1900c35e7659731e9e9d3ae14399dfa52e5397ade97cde",
@@ -467,7 +467,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/mordant-LICENSE.txt",
       "role": "license",
       "sha256": "bda1e56eafb83ea7ef64fe5669a155d446a37d44db2b1d9ded34ec194921f176",
@@ -475,7 +475,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/musl-COPYRIGHT",
       "role": "license",
       "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
@@ -483,7 +483,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/ncurses-COPYING",
       "role": "license",
       "sha256": "0413b2f4ea863194c174673032f0fca84f1ea1ed4eed6476baea68c075a631ce",
@@ -491,7 +491,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/nettle-COPYING.LESSERv3",
       "role": "license",
       "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
@@ -499,7 +499,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/npth-COPYING.LIB",
       "role": "license",
       "sha256": "ce64d5f7b49ea6d80fdb6d4cdee6839d1a94274f7493dc797c3b55b65ec8e9ed",
@@ -507,7 +507,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/openjdk-LICENSE",
       "role": "license",
       "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
@@ -515,7 +515,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/openldap-LICENSE",
       "role": "license",
       "sha256": "310fe25c858a9515fc8c8d7d1f24a67c9496f84a91e0a0e41ea9975b1371e569",
@@ -523,7 +523,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/openssl-LICENSE.txt",
       "role": "license",
       "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
@@ -531,7 +531,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/p11-kit-COPYING",
       "role": "license",
       "sha256": "2e1ba993904df807a10c3eda1e5c272338edc35674b679773a8b3ad460731054",
@@ -539,7 +539,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/poko-LICENSE",
       "role": "license",
       "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
@@ -547,7 +547,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/poko-annotations-jvm.pom",
       "role": "license",
       "sha256": "37e199dfa3571969b5dffd75447122c74deaf777658e6d7f36dfb01f07590dcb",
@@ -555,7 +555,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/readline-COPYING",
       "role": "license",
       "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
@@ -563,7 +563,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/sarif4k-LICENSE",
       "role": "license",
       "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
@@ -571,7 +571,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/sarif4k-jvm.pom",
       "role": "license",
       "sha256": "8b90fc3745f008f510886ce707539f6bb71bbdd1b7c9db8fd1db0ae566a1c0af",
@@ -579,7 +579,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/skalibs-COPYING",
       "role": "license",
       "sha256": "cadf2c7d05a2c425250211c01db2ff33fa2bc31e293c8c040227b046ce1cb77f",
@@ -587,7 +587,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/slf4j-LICENSE.txt",
       "role": "license",
       "sha256": "6fbe2eaf44b193b8a40eed9208f52848572224ad8d7672dd09418aa174847e73",
@@ -595,7 +595,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/sqlite-copyright.html",
       "role": "license",
       "sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
@@ -603,7 +603,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/trove4j-LICENSE.txt",
       "role": "license",
       "sha256": "fda19750542df9f65d0d95a771a96b1337ff40e9610d63d6785d920f5124090a",
@@ -611,7 +611,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/trove4j.pom",
       "role": "license",
       "sha256": "87721cbaa65a3c97d8b1ba9d207840f164c9fe38759fc9ea10ffe26565f8d3e9",
@@ -619,7 +619,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/util-linux-COPYING",
       "role": "license",
       "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
@@ -627,7 +627,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/utmps-COPYING",
       "role": "license",
       "sha256": "0f415da77eb45ab52dad82f23c1f46e827bacb0b68d6f42c919ae8f3d254fb97",
@@ -635,7 +635,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/xz-COPYING",
       "role": "license",
       "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
@@ -643,7 +643,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/zlib-LICENSE",
       "role": "license",
       "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
@@ -651,7 +651,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/kotlin/zstd-LICENSE",
       "role": "license",
       "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
@@ -667,7 +667,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
       "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
@@ -675,7 +675,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
       "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",

@@ -123,7 +123,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
       "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
@@ -131,7 +131,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
       "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
@@ -147,7 +147,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/apk-tools-LICENSE",
       "role": "license",
       "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
@@ -155,7 +155,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/gcc-COPYING.RUNTIME",
       "role": "license",
       "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
@@ -163,7 +163,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/gcc-COPYING3",
       "role": "license",
       "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
@@ -171,7 +171,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/manifest.json",
       "role": "license",
       "sha256": "cdcdd6b791d19193e37ef354b1b2a2d65cf66644080daba6cc4715a79f0a3f16",
@@ -179,7 +179,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/musl-COPYRIGHT",
       "role": "license",
       "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
@@ -187,7 +187,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/node-LICENSE",
       "role": "license",
       "sha256": "148eacf7863ef4329224a29398623077200a27194aa075569faf4a0a85566ca5",
@@ -195,7 +195,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/openssl-LICENSE.txt",
       "role": "license",
       "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
@@ -203,7 +203,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/prettier-LICENSE",
       "role": "license",
       "sha256": "b0f2417199889f1c0d28ec4e0244eacf1a15de5819d61f641dd7d8f45153ac9c",
@@ -211,7 +211,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/prettier/zlib-LICENSE",
       "role": "license",
       "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",

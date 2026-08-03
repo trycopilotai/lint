@@ -299,7 +299,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/auto-service-LICENSE",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -307,7 +307,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/auto-value-LICENSE",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -315,7 +315,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/checker-qual-LICENSE.txt",
       "role": "license",
       "sha256": "e90eaa08dea089df10f2bf7f9dba63a5f6237c01562c4741e2e86773e78582d5",
@@ -323,7 +323,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/error-prone-LICENSE",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -331,7 +331,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/failureaccess-LICENSE",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -339,7 +339,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/google-java-format-LICENSE",
       "role": "license",
       "sha256": "2c7e23c8000fe553b6f380b5e365dd72198439174f1b6821d5e3b190b54af0dc",
@@ -347,7 +347,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/graalvm-LICENSE",
       "role": "license",
       "sha256": "38cf84d41117b11c7232e5a8d51bb5a42d2b03e85e51e36a5e1291e46033dc5a",
@@ -355,7 +355,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/graalvm-THIRD_PARTY_LICENSE.txt",
       "role": "license",
       "sha256": "86446ef6768691560d8d2e6e93852607333171478c2fa0360e4e3d6ce9267e66",
@@ -363,7 +363,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/guava-COPYING",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -371,7 +371,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/j2objc-LICENSE",
       "role": "license",
       "sha256": "f93fac82dc22bed7ccc04bef47c3313b7db8ea350eadd85f3672acbdae3cfad1",
@@ -379,7 +379,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/jspecify-LICENSE",
       "role": "license",
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -387,7 +387,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/jsr305-3.0.2.pom",
       "role": "license",
       "sha256": "19889dbdf1b254b2601a5ee645b8147a974644882297684c798afe5d63d78dfe",
@@ -395,7 +395,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/manifest.json",
       "role": "license",
       "sha256": "06e40db6ce4555bab5785a3c66fee243cf8b4049d3d60400103bc994e1e1162d",
@@ -403,7 +403,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/java/openjdk-25-LICENSE",
       "role": "license",
       "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
@@ -419,7 +419,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
       "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
@@ -427,7 +427,7 @@
     },
     {
       "link_target": null,
-      "mode": "0664",
+      "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
       "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
