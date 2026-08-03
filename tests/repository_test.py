@@ -541,6 +541,7 @@ class ReleaseWorkflowTest(unittest.TestCase):
         )
         self.assertIn('verify-tag "$RELEASE_REF"', release)
 
+    @unittest.skipIf(os.name == "nt", "release guard runs on ubuntu-latest")
     def test_release_controller_is_bound_to_the_checked_out_target(self) -> None:
         """A controller from another commit stops before any build.
 
