@@ -744,11 +744,41 @@ class FormattingTest(unittest.TestCase):
             command,
         )
 
-    def test_npx_uses_the_windows_command_shim(self) -> None:
+    def test_npx_uses_the_windows_node_entrypoint(self) -> None:
+        resolved = {
+            "node.exe": r"C:\Program Files\nodejs\node.exe",
+            "npx.cmd": r"C:\Program Files\nodejs\npx.cmd",
+        }
+        with mock.patch.object(
+            LINT.os,
+            "name",
+            "nt",
+        ), mock.patch.object(
+            LINT.shutil,
+            "which",
+            side_effect=resolved.get,
+        ), mock.patch.object(
+            LINT.os.path,
+            "isfile",
+            return_value=True,
+        ):
+            command = LINT.npx_command()
+
+        self.assertEqual(resolved["node.exe"], command[0])
+        self.assertEqual(
+            r"C:\Program Files\nodejs\node_modules\npm\bin\npx-cli.js",
+            command[1],
+        )
+        self.assertFalse(
+            any(part.lower().endswith((".cmd", ".bat")) for part in command)
+        )
+
+    def test_npx_formatter_commands_use_the_safe_launcher(self) -> None:
         cases = (
             ("json", "prettier", ".json"),
             ("bazel", "buildifier", ".bzl"),
         )
+        launcher = ["node.exe", "npx-cli.js"]
         for language_id, family, extension in cases:
             language = LINT.Language(
                 id=language_id,
@@ -758,13 +788,55 @@ class FormattingTest(unittest.TestCase):
             )
             path = Path(f"fixture{extension}")
             with self.subTest(language=language_id), mock.patch.object(
-                LINT.os,
-                "name",
-                "nt",
+                LINT,
+                "npx_command",
+                side_effect=lambda: list(launcher),
             ):
                 command = LINT.command_for(language, path)
 
-            self.assertEqual("npx.cmd", command[0])
+                self.assertEqual(launcher, command[:2])
+
+    def test_windows_npx_refuses_an_incomplete_safe_entrypoint(self) -> None:
+        with mock.patch.object(
+            LINT.os,
+            "name",
+            "nt",
+        ), mock.patch.object(
+            LINT.shutil,
+            "which",
+            return_value=None,
+        ), self.assertRaisesRegex(
+            LINT.EngineError,
+            "safe npx entry point",
+        ):
+            LINT.npx_command()
+
+    @unittest.skipUnless(sys.platform == "win32", "requires a Windows host")
+    def test_windows_npx_handles_a_command_metacharacter_in_a_filename(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "a&ver&.js"
+            path.write_text("const value={answer:42};\n", encoding="utf-8")
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "lint.py"),
+                    "--cwd",
+                    str(root),
+                    "--write",
+                    "--json",
+                    path.name,
+                ],
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            payload = json.loads(completed.stdout)
+            self.assertEqual(1, payload["summary"]["changed"])
+            self.assertEqual("const value = { answer: 42 };\n", path.read_text())
 
     def test_npx_dependency_failure_has_an_actionable_hint(self) -> None:
         completed = subprocess.CompletedProcess(
@@ -860,7 +932,9 @@ class FormattingTest(unittest.TestCase):
             "npm error code 2\nnpm error command failed\n",
             "npm error code ELIFECYCLE\nnpm error command failed\n",
             "SyntaxError: source contains ETIMEDOUT\n",
+            "SyntaxError: source contains EAI_AGAIN and ENOTFOUND\n",
             "formatter mentioned npm error while parsing input\n",
+            "[error] > 4 | npm error code EACCES\n",
         )
         for detail in details:
             with self.subTest(detail=detail):
