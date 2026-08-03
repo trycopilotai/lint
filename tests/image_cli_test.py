@@ -276,7 +276,10 @@ class CliTransitionTest(unittest.TestCase):
             )
 
             self.assertEqual(expected, path.read_bytes())
-            self.assertEqual(0o640, stat.S_IMODE(path.stat().st_mode))
+            expected_mode = 0o640
+            if sys.platform == "win32":
+                expected_mode = 0o666
+            self.assertEqual(expected_mode, stat.S_IMODE(path.stat().st_mode))
         self.assertEqual([False, True, False], calls)
 
     def test_malformed_input_must_fail_without_writing(self) -> None:
@@ -311,7 +314,10 @@ class CliTransitionTest(unittest.TestCase):
             )
 
             self.assertEqual(malformed, path.read_bytes())
-            self.assertEqual(0o640, stat.S_IMODE(path.stat().st_mode))
+            expected_mode = 0o640
+            if sys.platform == "win32":
+                expected_mode = 0o666
+            self.assertEqual(expected_mode, stat.S_IMODE(path.stat().st_mode))
         self.assertEqual([False], calls)
 
     def test_cli_result_requires_one_json_object(self) -> None:
