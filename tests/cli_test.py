@@ -811,6 +811,52 @@ class FormattingTest(unittest.TestCase):
         ):
             LINT.npx_command()
 
+    def test_windows_npx_refuses_a_relative_safe_entrypoint(self) -> None:
+        resolved = {
+            "node.exe": r".\node.exe",
+            "npx.cmd": r".\npx.cmd",
+        }
+        with mock.patch.object(
+            LINT.os,
+            "name",
+            "nt",
+        ), mock.patch.object(
+            LINT.shutil,
+            "which",
+            side_effect=resolved.get,
+        ), mock.patch.object(
+            LINT.os.path,
+            "isfile",
+            return_value=True,
+        ), self.assertRaisesRegex(
+            LINT.EngineError,
+            "safe npx entry point",
+        ):
+            LINT.npx_command()
+
+    def test_windows_npx_refuses_a_missing_cli_script(self) -> None:
+        resolved = {
+            "node.exe": r"C:\Program Files\nodejs\node.exe",
+            "npx.cmd": r"C:\Program Files\nodejs\npx.cmd",
+        }
+        with mock.patch.object(
+            LINT.os,
+            "name",
+            "nt",
+        ), mock.patch.object(
+            LINT.shutil,
+            "which",
+            side_effect=resolved.get,
+        ), mock.patch.object(
+            LINT.os.path,
+            "isfile",
+            return_value=False,
+        ), self.assertRaisesRegex(
+            LINT.EngineError,
+            "safe npx entry point",
+        ):
+            LINT.npx_command()
+
     @unittest.skipUnless(sys.platform == "win32", "requires a Windows host")
     def test_windows_npx_handles_a_command_metacharacter_in_a_filename(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

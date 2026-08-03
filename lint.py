@@ -593,6 +593,11 @@ def npx_command() -> list[str]:
             "safe npx entry point is unavailable; "
             "install Node.js with npm or use --docker"
         )
+    if not ntpath.isabs(shim) or not ntpath.isabs(node):
+        raise EngineError(
+            "safe npx entry point is unavailable; "
+            "install Node.js with npm or use --docker"
+        )
     entrypoint = ntpath.join(
         ntpath.dirname(shim),
         "node_modules",
