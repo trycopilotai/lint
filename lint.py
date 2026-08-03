@@ -724,7 +724,6 @@ def npx_engine_failure(returncode: int, detail: str) -> bool:
         "could not determine executable",
         "eai_again",
         "enotfound",
-        "npm error",
     )
     return any(marker in lowered for marker in markers)
 
