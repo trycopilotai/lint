@@ -5,8 +5,8 @@
     "assets/demo.svg": "38074406b19fc7c14da374e72834d9903346473485cd7ade50940e910b5a58c0",
     "evidence/demo-transcript.txt": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065"
   },
-  "input_commit": "6df47445a03d7734fa10eeb3f84813eb39114d18",
-  "input_tree": "8fe27519b198f8b74298b7ce487599f35b10c7d8",
+  "input_commit": "4f0cfc8c450afa3aefa8b39d9da2bc8356402216",
+  "input_tree": "aa8ec1911b182f6661eeef408ab0b83a264195aa",
   "invocation": "./scripts/demo.sh demo-work",
   "invocation_date": "2026-08-03",
   "output_path": "evidence/demo-transcript.txt",
