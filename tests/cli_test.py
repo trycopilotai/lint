@@ -808,6 +808,64 @@ class FormattingTest(unittest.TestCase):
                     )
                 self.assertIn(install_command, str(caught.exception))
 
+    def test_npx_engine_failure_recognizes_npm_outages(self) -> None:
+        details = (
+            "npm error code ECONNREFUSED\n",
+            "npm error code ECONNRESET\n",
+            "npm error code ETIMEDOUT\n",
+            "npm error code ENETUNREACH\n",
+            "npm error code EHOSTUNREACH\n",
+            "npm error code EAI_AGAIN\n",
+            "npm error code ENOTFOUND\n",
+            "npm error code E404\n",
+            "npm error code E403\n",
+            "npm error code EACCES\n",
+            "npm error code EPERM\n",
+            "npm error code ENOSPC\n",
+            "npm error network request timed out\n",
+            "npm ERR! code ECONNREFUSED\n",
+            "npm ERR! network request timed out\n",
+        )
+        language = LINT.Language(
+            id="json",
+            family="prettier",
+            extensions=(".json",),
+            filenames=(),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "fixture.json"
+            path.write_text('{"value": true}\n', encoding="utf-8")
+            for detail in details:
+                completed = subprocess.CompletedProcess(
+                    args=[],
+                    returncode=1,
+                    stdout=b"",
+                    stderr=detail.encode("utf-8"),
+                )
+                with self.subTest(detail=detail), mock.patch.object(
+                    LINT.subprocess,
+                    "run",
+                    return_value=completed,
+                ), self.assertRaises(LINT.EngineError):
+                    LINT.run_formatter(
+                        language=language,
+                        path=path,
+                        cwd=root,
+                        timeout_seconds=30,
+                    )
+
+    def test_npx_engine_failure_ignores_formatter_output(self) -> None:
+        details = (
+            "npm error code 2\nnpm error command failed\n",
+            "npm error code ELIFECYCLE\nnpm error command failed\n",
+            "SyntaxError: source contains ETIMEDOUT\n",
+            "formatter mentioned npm error while parsing input\n",
+        )
+        for detail in details:
+            with self.subTest(detail=detail):
+                self.assertFalse(LINT.npx_engine_failure(1, detail))
+
     def test_windows_npx_dependency_failure_stays_actionable(self) -> None:
         completed = subprocess.CompletedProcess(
             args=[],
