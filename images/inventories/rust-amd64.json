@@ -1,0 +1,359 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "bin",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "bin/rustfmt",
+      "role": "entrypoint",
+      "sha256": "3c93e19e9941499285108f2ad76f2c3448bcf4492085dd8307f208430c4933da",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/db",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/installed",
+      "role": "runtime",
+      "sha256": "5a43ad046634b508338f6be1ff1556891b97a0e8d17834301a9ebad2f0d1185a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0600",
+      "path": "lib/apk/db/lock",
+      "role": "runtime",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/scripts.tar.gz",
+      "role": "runtime",
+      "sha256": "5c01f2e9bbb9bf45531b564699af3476a7e56ad373b07c5192b07de159d94a4d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/triggers",
+      "role": "runtime",
+      "sha256": "9619fc74d859f3040758001f54518496ac2854e1f798ec8254dedba702b583d8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/exec",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/firmware",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/ld-musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "type": "regular"
+    },
+    {
+      "link_target": "ld-musl-x86_64.so.1",
+      "mode": "0777",
+      "path": "lib/libc.musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/librustc_driver-8977967ee3f28adf.so",
+      "role": "runtime",
+      "sha256": "2b98a34fb9e149c93ac780708e8f5d29955ad487fb821d006bafb7130f610506",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/rust",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/gcc-COPYING.RUNTIME",
+      "role": "license",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/gcc-COPYING3",
+      "role": "license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/manifest.json",
+      "role": "license",
+      "sha256": "e4912c25a8ba3142e14b5ca7706ea28adf5e788f2ad17bdf2518080a9740f923",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/musl-COPYRIGHT",
+      "role": "license",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-Apache-2.0.txt",
+      "role": "license",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-BSD-2-Clause.txt",
+      "role": "license",
+      "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-CC-BY-SA-4.0.txt",
+      "role": "license",
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-COPYRIGHT",
+      "role": "license",
+      "sha256": "172020dbfd5b53a226dfde77616190a48dcff519b0bc0e6deb91a8450782c4af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-GCC-exception-3.1.txt",
+      "role": "license",
+      "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-GPL-2.0-only.txt",
+      "role": "license",
+      "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-GPL-3.0-or-later.txt",
+      "role": "license",
+      "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-ISC.txt",
+      "role": "license",
+      "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-LICENSE-APACHE",
+      "role": "license",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-LICENSE-MIT",
+      "role": "license",
+      "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-LLVM-exception.txt",
+      "role": "license",
+      "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-MIT.txt",
+      "role": "license",
+      "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-NCSA.txt",
+      "role": "license",
+      "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-OFL-1.1.txt",
+      "role": "license",
+      "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/rust/rust-Unicode-3.0.txt",
+      "role": "license",
+      "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "6a994d0d13058afd8012fa066cfcbf66f4694558fb1771027308d438004d01c2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libgcc_s.so.1",
+      "role": "runtime",
+      "sha256": "0f3c933942935150d3864bcd3b20b7922c8d95a66959fe1da5e2da73ba986e8a",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "rust"
+}

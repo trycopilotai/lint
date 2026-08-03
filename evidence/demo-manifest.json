@@ -1,20 +1,30 @@
 {
   "agent": "Codex",
-  "agent_version": "unreported",
-  "demo_path": "assets/demo.svg",
-  "demo_sha256": "d79226f49b868619d87fefec1b5b13e3d2cf4626b70a680e21f1d5857ed7d76e",
-  "generator_path": "scripts/generate_demo.py",
-  "generator_sha256": "e899ffd2f66677a2fe96e1f2dd17f594717d2fef2e0e1e122e11030133da16d2",
-  "input_commit": "02f64de66bb61e8186a6455d38e96ba0118d6764",
+  "agent_version": "codex-cli 0.146.0",
+  "artifact_sha256": {
+    "assets/demo.svg": "38074406b19fc7c14da374e72834d9903346473485cd7ade50940e910b5a58c0",
+    "evidence/demo-transcript.txt": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065"
+  },
+  "input_commit": "192800c0d2d066df5f876e5357d04b0594081826",
+  "input_tree": "8f2ec7117ec824a70b525fb4c6adc9db39c3b012",
   "invocation": "./scripts/demo.sh demo-work",
-  "invocation_date": "2026-07-30",
-  "invocation_script_path": "scripts/demo.sh",
-  "invocation_script_sha256": "5539216ac60a9c16fcb3d5a8ac8a12dde0e7acb1dee42afb6410bc9a56578662",
+  "invocation_date": "2026-08-02",
   "output_path": "evidence/demo-transcript.txt",
-  "output_sha256": "03c1f3e3b68aa8b2c0329b44343a88d10bc4ff94b9a188d5f53386938ccfb90d",
-  "schema_version": 1,
-  "skill_path": "skills/lint/SKILL.md",
-  "skill_sha256": "de15893c52c36b080103a93b53209a9c8086a08650dc6e59399625b5f8e02102",
-  "transcript_edited": true,
-  "transcript_note": "Command output was assembled into a readable transcript without changing JSON result bytes."
+  "output_sha256": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065",
+  "protocol_path": "skills/lint/SKILL.md",
+  "protocol_sha256": "7f55e67977b54af2da441c8ca0bcf98c0451eee2da96e7bdb3f6bba629d50493",
+  "raw_result_sha256": {
+    "final": "76afa93e11fed17c03881be9c2d7d5e3d39eb79420a5b35a39f818159ee2cd6a",
+    "read-only": "9e74a21dde4f277cc985c8dfa2577f7dcc1a652349b5ff8fbec0e81eef54e69d",
+    "write": "2faad02e65c048d28c27e6f760743a2352458b80649bc6f84e7e368a82983c77"
+  },
+  "schema_version": 2,
+  "source_sha256": {
+    "languages.json": "b3fc78139712be1af133489766fb308bb02fc35f80e7bbb66899674316fc0602",
+    "lint.py": "86e82d257f8cffad467a9403f3dc71e6fd769c3896e53e1762d2c8aa7432012f",
+    "scripts/demo.sh": "a1085f8d35a42407eec2230068d77f7423fd28a40556ead6a7861caa0d088f3c",
+    "scripts/generate_demo.py": "ab75ee01a79c02c54259fc9c2f65a0114e47a3be7ee60fb44e25392f439f6524",
+    "skills/lint/SKILL.md": "7f55e67977b54af2da441c8ca0bcf98c0451eee2da96e7bdb3f6bba629d50493"
+  },
+  "transcript_edited": false
 }

@@ -1,0 +1,2871 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "kotlin-format",
+      "role": "entrypoint",
+      "sha256": "9a8259bae12b2a5059d138d79c4841e4bccd0a709f9d76922a6c29f03a695627",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "ktlint.jar",
+      "role": "formatter",
+      "sha256": "01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/db",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/installed",
+      "role": "runtime",
+      "sha256": "952c49c7879fb4cee2c4f25bef1571c693334e61662714ed799bc4d1f65344cc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0600",
+      "path": "lib/apk/db/lock",
+      "role": "runtime",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/scripts.tar.gz",
+      "role": "runtime",
+      "sha256": "44598b24944a0e9cfd0765a44e3a3c4755dcae7bf29e5b5b1ef460043b1e77d0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/triggers",
+      "role": "runtime",
+      "sha256": "55866a267db6836b67a2b91a164091700c25df3c791cd0f55d38650457f6ce01",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/exec",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/firmware",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/ld-musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "type": "regular"
+    },
+    {
+      "link_target": "ld-musl-x86_64.so.1",
+      "mode": "0777",
+      "path": "lib/libc.musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/kotlin",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/acl-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "4dfa827918852725bf50427144edff7f26b972d75910c32ccbc8b34ac4960b82",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/apk-tools-LICENSE",
+      "role": "license",
+      "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/attr-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "5a47e9f61405f6abfc7b1f7cc4e94318c3d757a63e961ba5615216f21dd1c1f6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/brotli-LICENSE",
+      "role": "license",
+      "sha256": "3d180008e36922a4e8daec11c34c7af264fed5962d07924aea928c38e8663c94",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/bzip2-LICENSE",
+      "role": "license",
+      "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/clikt-LICENSE",
+      "role": "license",
+      "sha256": "bda1e56eafb83ea7ef64fe5669a155d446a37d44db2b1d9ded34ec194921f176",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/colormath-LICENSE",
+      "role": "license",
+      "sha256": "ab1cd8a3d0e92e1f69e95e8ca839127c52d4bd32fa2824d683d0dc66cc8fe21f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/cyrus-sasl-COPYING",
+      "role": "license",
+      "sha256": "9d6e5d1632140a6c135b251260953650d17d87cd1124f87aaf72192aa4580d4b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/ec4j-LICENSE",
+      "role": "license",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/expat-COPYING",
+      "role": "license",
+      "sha256": "31b15de82aa19a845156169a17a5488bf597e561b2c318d159ed583139b25e87",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/fastutil-LICENSE-2.0",
+      "role": "license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/fontconfig-COPYING",
+      "role": "license",
+      "sha256": "51a51aa9823704fd90bccc616cdd17ebabb5b2b3e9cbde886ca02c7002288067",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/freetype-FTL.TXT",
+      "role": "license",
+      "sha256": "5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/gcc-COPYING.RUNTIME",
+      "role": "license",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/gcc-COPYING3",
+      "role": "license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/gdbm-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "078aaffa9298c9a56e5ea5d6187ae1685d175825b6893d4563ab4b9171106b9b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/gettext-runtime-legal-payload.txt",
+      "role": "license",
+      "sha256": "8c82ee17b9c3c5abfca94aa1a4ce87aee64eb86bf8be5c25bea411feb493b077",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/gmp-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "8071abab7521e47d74f6e0b94487bbe6d5ba23bcc1d8bfbfd5f45d3d4ba085f8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/gnutls-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "759a7ea995e4ecbab282d7ea11c898f68b7c2549d3ddbb3538521ea482e94459",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/jansson-LICENSE",
+      "role": "license",
+      "sha256": "150d90904cd8de73609bb177b42edd3867b07b4b7b786dbba319f30de39fcda2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/jetbrains-annotations.pom",
+      "role": "license",
+      "sha256": "965aeb2bedff369819bdde1bf7a0b3b89b8247dd69c88b86375d76163bb8c397",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/jetbrains-markdown-LICENSE",
+      "role": "license",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/jetbrains-markdown-jvm.pom",
+      "role": "license",
+      "sha256": "d15b0ad2e9a573f97cecffa9ed40cfe534d5fc76b32e280f85dd02fe55489fce",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/jna-LICENSE",
+      "role": "license",
+      "sha256": "521bb271ac56e0e29a1b1b688b94af17d00d378fc8e63478d8c8b2a7c4a229d0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/kotlin-LICENSE",
+      "role": "license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/kotlin-logging-LICENSE",
+      "role": "license",
+      "sha256": "91ee885fa6bcd18b35dbb38859863eb927bf05eb6a6165baaf26c7f3bfb79e3a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/kotlinx-serialization-LICENSE.txt",
+      "role": "license",
+      "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/ktlint-LICENSE",
+      "role": "license",
+      "sha256": "b45bdb3357e761d4b1300470833cf5e5e9fafc32a5f98efef214ba926b0120d5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/ktlint-embedded-legal-payload.txt",
+      "role": "license",
+      "sha256": "61f783e7410f5be8c85277d3ddafa1dd2daf1ce3c34e31bde1727d9d8ed3286d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libassuan-COPYING.LIB",
+      "role": "license",
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libffi-LICENSE",
+      "role": "license",
+      "sha256": "d5699fa516968e3a1550e6c902b7441c78856f2603d61bedd0b0662a26655366",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libfontenc-COPYING",
+      "role": "license",
+      "sha256": "a4dda7a643b517794bfa23dc9605da030055df38ac8a5b9e1905e690975a59c4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libgcrypt-COPYING.LIB",
+      "role": "license",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libgpg-error-COPYING.LIB",
+      "role": "license",
+      "sha256": "a9bdde5616ecdd1e980b44f360600ee8783b1f99b8cc83a2beb163a0a390e861",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libidn2-COPYING.LESSERv3",
+      "role": "license",
+      "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libksba-COPYING",
+      "role": "license",
+      "sha256": "6197b98c6bf69838c624809c509d84333de1bc847155168c0e84527446a27076",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libpng-LICENSE",
+      "role": "license",
+      "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libtasn1-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "e1e6ac85841a0d5c983def06042e7e2e426e3d2872adc56e2567fed21e034d7b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/libunistring-source-legal-payload.txt",
+      "role": "license",
+      "sha256": "fcdee1073ce370533cccf2feacddbde20ab532122e2d5b13480a54e9f39162ad",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/logback-LICENSE.txt",
+      "role": "license",
+      "sha256": "94a99c6ee7e8b5ba3ef66a1d234c22a55c149e93584040d66a7f6694d552e7ea",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/manifest.json",
+      "role": "license",
+      "sha256": "d4ab85c4fda8f24b8c1900c35e7659731e9e9d3ae14399dfa52e5397ade97cde",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/mordant-LICENSE.txt",
+      "role": "license",
+      "sha256": "bda1e56eafb83ea7ef64fe5669a155d446a37d44db2b1d9ded34ec194921f176",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/musl-COPYRIGHT",
+      "role": "license",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/ncurses-COPYING",
+      "role": "license",
+      "sha256": "0413b2f4ea863194c174673032f0fca84f1ea1ed4eed6476baea68c075a631ce",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/nettle-COPYING.LESSERv3",
+      "role": "license",
+      "sha256": "a853c2ffec17057872340eee242ae4d96cbf2b520ae27d903e1b2fef1a5f9d1c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/npth-COPYING.LIB",
+      "role": "license",
+      "sha256": "ce64d5f7b49ea6d80fdb6d4cdee6839d1a94274f7493dc797c3b55b65ec8e9ed",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/openjdk-LICENSE",
+      "role": "license",
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/openldap-LICENSE",
+      "role": "license",
+      "sha256": "310fe25c858a9515fc8c8d7d1f24a67c9496f84a91e0a0e41ea9975b1371e569",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/openssl-LICENSE.txt",
+      "role": "license",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/p11-kit-COPYING",
+      "role": "license",
+      "sha256": "2e1ba993904df807a10c3eda1e5c272338edc35674b679773a8b3ad460731054",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/poko-LICENSE",
+      "role": "license",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/poko-annotations-jvm.pom",
+      "role": "license",
+      "sha256": "37e199dfa3571969b5dffd75447122c74deaf777658e6d7f36dfb01f07590dcb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/readline-COPYING",
+      "role": "license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/sarif4k-LICENSE",
+      "role": "license",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/sarif4k-jvm.pom",
+      "role": "license",
+      "sha256": "8b90fc3745f008f510886ce707539f6bb71bbdd1b7c9db8fd1db0ae566a1c0af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/skalibs-COPYING",
+      "role": "license",
+      "sha256": "cadf2c7d05a2c425250211c01db2ff33fa2bc31e293c8c040227b046ce1cb77f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/slf4j-LICENSE.txt",
+      "role": "license",
+      "sha256": "6fbe2eaf44b193b8a40eed9208f52848572224ad8d7672dd09418aa174847e73",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/sqlite-copyright.html",
+      "role": "license",
+      "sha256": "44ca9f793055c8e32fc65f65a4f5bcf813a33f5bdaaa084067dd617a4ed3cc70",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/trove4j-LICENSE.txt",
+      "role": "license",
+      "sha256": "fda19750542df9f65d0d95a771a96b1337ff40e9610d63d6785d920f5124090a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/trove4j.pom",
+      "role": "license",
+      "sha256": "87721cbaa65a3c97d8b1ba9d207840f164c9fe38759fc9ea10ffe26565f8d3e9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/util-linux-COPYING",
+      "role": "license",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/utmps-COPYING",
+      "role": "license",
+      "sha256": "0f415da77eb45ab52dad82f23c1f46e827bacb0b68d6f42c919ae8f3d254fb97",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/xz-COPYING",
+      "role": "license",
+      "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/zlib-LICENSE",
+      "role": "license",
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/kotlin/zstd-LICENSE",
+      "role": "license",
+      "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "d1e9ae00f5011aa5a4b1ee412825dddc9e543047fd838cf3ec9fa1b51cb90f4e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/bin",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/bin/java",
+      "role": "runtime",
+      "sha256": "5f2d7a29f51e14c48bcf4d0408608ccfd5682c7d4aeaa82a2e575f19852ffd00",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/conf",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/jaxp.properties",
+      "role": "runtime",
+      "sha256": "7d95c49465d0c836d608d02856d3b097934dfb5dc4bd2279affaf337d045b708",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/logging.properties",
+      "role": "runtime",
+      "sha256": "b62d2733ab99556b108a1951d894c5a8d76b1ac7a00c02c388f9eb9be046c56f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/net.properties",
+      "role": "runtime",
+      "sha256": "2e070ed1d97052f0ce8771ed2ef74a38d7c260a45fde7a3682c8844e5fdf58a4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/conf/sdp",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/sdp/sdp.conf.template",
+      "role": "runtime",
+      "sha256": "e9441e51f0d29e25313d33a9005640f11ad93c27f01bc46a34bf02f2a98ffd6b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/conf/security",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/java.policy",
+      "role": "runtime",
+      "sha256": "d51bcab7ed301caeff3779a5e777e6019864cecee5e2abc102ef991b0de77af2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/java.security",
+      "role": "runtime",
+      "sha256": "277798f20cef3933b0c00d26afdbf938acbe306cf24f9a17f2a8d30055237ded",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/conf/security/policy",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/policy/README.txt",
+      "role": "runtime",
+      "sha256": "6da0747334b0fea7592fd92614b2bbc8b126535e129b1fee483774d914e98eb5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/conf/security/policy/limited",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/policy/limited/default_US_export.policy",
+      "role": "runtime",
+      "sha256": "758b930a526fc670ab7537f8c26321527050a31f5f42149a2dda623c56a0a1a9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/policy/limited/default_local.policy",
+      "role": "runtime",
+      "sha256": "2b2627548e61316150d47ffc3e6cad465ca05b3cccd4785eb7d21aa7baa0f441",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/policy/limited/exempt_local.policy",
+      "role": "runtime",
+      "sha256": "8c3d7648abcd95a272ce12db870082937f4d7f6878d730d83cb7fbb31eb8b2c9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/conf/security/policy/unlimited",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/policy/unlimited/default_US_export.policy",
+      "role": "runtime",
+      "sha256": "758b930a526fc670ab7537f8c26321527050a31f5f42149a2dda623c56a0a1a9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/security/policy/unlimited/default_local.policy",
+      "role": "runtime",
+      "sha256": "8d8a318e6d90dfd7e26612d2b6385aa704f686ca6134c551f8928418d92b851a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/conf/sound.properties",
+      "role": "runtime",
+      "sha256": "299c2360b6155eb28990ec49cd21753f97e43442fe8fab03e04f3e213df43a66",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.base",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/LICENSE",
+      "role": "runtime",
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/aes.md",
+      "role": "runtime",
+      "sha256": "45c6d4da48325edfbff3dcf71c704e504c057904435ed23c6d57046d551eb69d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/asm.md",
+      "role": "runtime",
+      "sha256": "683be15695bd248272d60f5b7fbe5e126a935ea6bf231a624a9aa164733e1d1d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/c-libutl.md",
+      "role": "runtime",
+      "sha256": "bef40679922d6fdfb7e4ddb223ad6722300f6054ba737bbf6188d60fcec517f9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/cldr.md",
+      "role": "runtime",
+      "sha256": "19515e14a240e022640e95b61b5095127fa9690755950b4a2b0a02e783e08163",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/gcc.md",
+      "role": "runtime",
+      "sha256": "589e34f142cdf7d1430daa573e61c2e3dd0330c9eb5a2c00d4a98b3a4450810b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/icu.md",
+      "role": "runtime",
+      "sha256": "1bf28459c6e0af9f3429f4f8becd1668d6544055f8df240277456bc4b3d8a752",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/public_suffix.md",
+      "role": "runtime",
+      "sha256": "d7818e02ebfc4e5cd82613e003e7ba6be2e9d5949ea4aa0ba88d4d2f7ca69999",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/siphash.md",
+      "role": "runtime",
+      "sha256": "5a792b5a74ad2a5f3d6a7ad8b7a841116e58a772c18bc6e392320a365b222c76",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/unicode.md",
+      "role": "runtime",
+      "sha256": "6f72f10d166b2c2e8a395e03e734c5afc852b59aeca73ced124f6b9c96268d53",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.base/zlib.md",
+      "role": "runtime",
+      "sha256": "c9c70c36a1f0325e8788771906202d42ba6ab4205caca44ec0f665707e83226b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.compiler",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.compiler/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.compiler/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.compiler/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.datatransfer",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.datatransfer/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.datatransfer/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.datatransfer/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.desktop",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.desktop/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.desktop/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.desktop/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/colorimaging.md",
+      "role": "runtime",
+      "sha256": "04d61e3e8e71dd452ebe52008af5378d9f6640d14578aeb515dc5375973b0189",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/freetype.md",
+      "role": "runtime",
+      "sha256": "81b380959fad26d66928c0f4547c2fe25914e6f2bcab264971b3261c3fbee1c5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/giflib.md",
+      "role": "runtime",
+      "sha256": "4fdfc68f8c5e461ee899cec851290cc713e17673a0466f46973178866ddc9ed0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/harfbuzz.md",
+      "role": "runtime",
+      "sha256": "9050c60ce9a0c2b212e746bf5b3eb8ccb064d2c41a77ac7b681b3a6eb22cc304",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/jpeg.md",
+      "role": "runtime",
+      "sha256": "c1dfb9719a71ad9f861f8728550542d681e25c8ef40e6393606e6e2a0c1d653a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/lcms.md",
+      "role": "runtime",
+      "sha256": "fc1d7f60c7cdc96b5cadafd4f3610c6a74f2d0afa08852036929c7a1474ebab6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/libpng.md",
+      "role": "runtime",
+      "sha256": "46e55b9dc9cc25bfd3ff2bb6d48b9b9caa1b8f85e69473630ec5b41d22afc3c2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/mesa3d.md",
+      "role": "runtime",
+      "sha256": "63f4e6f75caebbccb95d903fb43e46ac7111b3624d0a34f146b276d7d9e7b152",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/pipewire.md",
+      "role": "runtime",
+      "sha256": "56a8fb1652c70ac204d13bb52ca4d678162e7d21a97d10209c2a633de8082de0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.desktop/xwd.md",
+      "role": "runtime",
+      "sha256": "1d4ffa93c87f35084b02a7aa90a21084b4019db4fe1003c2e5ce775b4a384f59",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.logging",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.logging/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.logging/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.logging/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.management",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.management/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.management/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.management/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.naming",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.naming/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.naming/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.naming/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.prefs",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.prefs/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.prefs/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.prefs/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.rmi",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.rmi/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.rmi/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.rmi/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.scripting",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.scripting/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.scripting/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.scripting/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.security.sasl",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.security.sasl/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.security.sasl/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.security.sasl/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/java.xml",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.xml/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.xml/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/java.xml/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.xml/bcel.md",
+      "role": "runtime",
+      "sha256": "cd578186ad93de46cca29ec8ace2b11f9da751987f3f140e6095c528596cc8c1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.xml/dom.md",
+      "role": "runtime",
+      "sha256": "6686e8877667584a3a7c07344baadca1a03e29f677162d87c3c0811e990d1148",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.xml/jcup.md",
+      "role": "runtime",
+      "sha256": "8d5dcfdf50455a3c34c753a98f21e953248af200415a9084e3f102cb6c43b8bf",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.xml/xalan.md",
+      "role": "runtime",
+      "sha256": "c27eb875da4be683d4d7422be986e5e30f636ede31958ff1d39f9cd6109e7a00",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/java.xml/xerces.md",
+      "role": "runtime",
+      "sha256": "4a6bf6b367193ee68681cb2d9fed30ffc5d62dd2d477bd62e0271707d71b3244",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/jdk.compiler",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.compiler/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.compiler/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.compiler/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/jdk.internal.opt",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.internal.opt/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.internal.opt/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.internal.opt/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0444",
+      "path": "opt/ktlint-java/legal/jdk.internal.opt/jopt-simple.md",
+      "role": "runtime",
+      "sha256": "99bc67f93cf57d6d20e6047731c93fbb267d70fbdd4115d119e0f85c6efe5c05",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/jdk.unsupported",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.unsupported/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.unsupported/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.unsupported/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/legal/jdk.zipfs",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "../java.base/ADDITIONAL_LICENSE_INFO",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.zipfs/ADDITIONAL_LICENSE_INFO",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/ASSEMBLY_EXCEPTION",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.zipfs/ASSEMBLY_EXCEPTION",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "../java.base/LICENSE",
+      "mode": "0777",
+      "path": "opt/ktlint-java/legal/jdk.zipfs/LICENSE",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/classlist",
+      "role": "runtime",
+      "sha256": "e5ef97a1545ec5d99da80d2216620b71e0d43022f2333b36242121d05f61b6b1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/ct.sym",
+      "role": "runtime",
+      "sha256": "cbf513de24d1aa724b6ee577e85f1c3bec9de974f121f9d3f1e2b7ac36517a36",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/lib/jexec",
+      "role": "runtime",
+      "sha256": "41d8bafea802dece261aae4ce2a0580c2cf5bd2077fc6766b173f799c6f92e35",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/jrt-fs.jar",
+      "role": "runtime",
+      "sha256": "e551d0cfe50d4467db1a5a11021863e1a6995fbc06ec78f6aab9cab9e3e525af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/lib/jspawnhelper",
+      "role": "runtime",
+      "sha256": "d53161e83ab368c674237e35b8c37582b0b200e1c75176534b6236362cbbe8bb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/jvm.cfg",
+      "role": "runtime",
+      "sha256": "aa9efb969444c1484e29adecab55a122458090616e766b2f1230ef05bc3867e0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libawt.so",
+      "role": "runtime",
+      "sha256": "954d1e002d9195691e7630f0f4edd2a3efe52fb4920c3f99cbdb342aa3866f4d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libawt_headless.so",
+      "role": "runtime",
+      "sha256": "930dce2ae9b6a3a29a595b8122e319452b8939f825b7feb469bcd04b4a97d779",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libfontmanager.so",
+      "role": "runtime",
+      "sha256": "0e72a4be31cff84d243ca3501bc1d8672a1a0876d3fc010968557abf88ee80ae",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libfreetype.so",
+      "role": "runtime",
+      "sha256": "b0f92f490e28eb7cb94093a1a196f4ff8aa72ba98004dc5b95d20f5a0c515bc9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjava.so",
+      "role": "runtime",
+      "sha256": "2225178f022e309961e4d8e504a9d844fdd8bc7189e7c0fffda8153a945e809d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjavajpeg.so",
+      "role": "runtime",
+      "sha256": "af2571025e361a676a15168a58b170a4a3acc45a8fd99b7155a250abc4f4f0e5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjawt.so",
+      "role": "runtime",
+      "sha256": "7a6f18cb13df5f22eab3f1c8849321d99daaefbc9fac3a22108d75c40393343d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjimage.so",
+      "role": "runtime",
+      "sha256": "f6b52a6bbd1850d252056ea6a047d948df5573027e5725d143714119114fd0a3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjli.so",
+      "role": "runtime",
+      "sha256": "482433186a9bc880f5110b7869ee1abd3107e774bdfc25806d2d330079ab90d5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjsig.so",
+      "role": "runtime",
+      "sha256": "cd8011c9b3b67bc54e43ae135e030ccf27a82c7236ec89ca52b68dcc4edd09e0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libjsound.so",
+      "role": "runtime",
+      "sha256": "ba8e2f809358e8c158bc3bf8e5204761a33918772d8f431cac68101519a1a670",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/liblcms.so",
+      "role": "runtime",
+      "sha256": "5ec04cd955b45b8d6b0524f0b692b9ff7496a1032107ef002b1ceb88b8a1b20d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libmanagement.so",
+      "role": "runtime",
+      "sha256": "2371990e76920673c37b6b7e07cf7a74183004891f8ee131b17930a294e358a2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libmlib_image.so",
+      "role": "runtime",
+      "sha256": "8247e0ed42fe7b1adc1d33bce4f3686e1b6ed13d948c28f0d84db7d36f44617e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libnet.so",
+      "role": "runtime",
+      "sha256": "5ee5dfd50880243ccddb1ed7c165a9584812d155f4eee696e46297da06f238db",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libnio.so",
+      "role": "runtime",
+      "sha256": "8b3fff14fd8fc9d74f21ed9c2fb7d04bcc8cb4abf21262cf807e97d91fce4864",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libprefs.so",
+      "role": "runtime",
+      "sha256": "0992a549e153c2a32c319a4b43dcb227cef2caca21a6c55d7babcbb19a865061",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/librmi.so",
+      "role": "runtime",
+      "sha256": "2af00dd5069f2afd770a80a0e823e8c0b7c9c2df9dcc880e437c2e0664a597b5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libsyslookup.so",
+      "role": "runtime",
+      "sha256": "a15386ea80b088ea42d6743457a6302f39f2b5c819427e660dae068d5d563143",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libverify.so",
+      "role": "runtime",
+      "sha256": "f1374f639dcd79822aedf0a44f7f1c0e808c3b804d8a98ff214fc64f3b1c9309",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/libzip.so",
+      "role": "runtime",
+      "sha256": "90ee1b0724256271fb59b104e3eec3b94ed8d27208650cbfbef9d70ff33df7bb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/modules",
+      "role": "runtime",
+      "sha256": "59edf26961df0629900fe433b93b7ddf7d6e490f40a3872d6a41729db8aa80e8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/psfont.properties.ja",
+      "role": "runtime",
+      "sha256": "5a4bd51b969bf187ff86d94f4a71fdfbfa602762975fa3c73d264b4575f7c78f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/psfontj2d.properties",
+      "role": "runtime",
+      "sha256": "780c565d5af3ee6f68b887b75c041cdf46a0592f67012f12eeb691283e92630a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/lib/security",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/security/blocked.certs",
+      "role": "runtime",
+      "sha256": "96572f243f31c2ef81a6e627542e596f6a9295cff3c7ae095c1b595cb1457ded",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/security/cacerts",
+      "role": "runtime",
+      "sha256": "c3ca801bfc5d9f9e50c69f55537e78dc83e4e50c1ddea30db81e4b672b5a8aee",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/security/default.policy",
+      "role": "runtime",
+      "sha256": "2bd418aab30b091b136962f80be7ddf39dcba85f082a558a6993848ae65366ae",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/security/public_suffix_list.dat",
+      "role": "runtime",
+      "sha256": "5a3a571cc2e016fee10c221036cf1d2b52ee8ba39288ef20abe2667828ca30b4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/ktlint-java/lib/server",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/server/libjsig.so",
+      "role": "runtime",
+      "sha256": "cd8011c9b3b67bc54e43ae135e030ccf27a82c7236ec89ca52b68dcc4edd09e0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/server/libjvm.so",
+      "role": "runtime",
+      "sha256": "5154fcaabcefdfe8bfb71fe435dcbe89e749b1af68bb732edafe13bc92bfd95c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/lib/tzdb.dat",
+      "role": "runtime",
+      "sha256": "36cf71e63ce2816fe4456e9195e6c27fa7c9cd431c89ba762eba394ec2c7a1e3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/ktlint-java/release",
+      "role": "runtime",
+      "sha256": "90fbeeefdc3f4f9b4cdb59b06cd2c89f73a18aca7973ba494168c4e47ab97dd3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/bfd-plugins",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/bfd-plugins/libdep.so",
+      "role": "runtime",
+      "sha256": "e77b44fede635a0442cdb6f47b8d14c89ed9ff1e01e18454ae3a62a939f55616",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/afalg.so",
+      "role": "runtime",
+      "sha256": "c095af87bcd32431c0898d7d6d3585d6eac5046f9ff30662fe0f449f26b0d5b9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/capi.so",
+      "role": "runtime",
+      "sha256": "1897fafd326cf649e083f6ceb1074110b8bcce646163b5c3de5c5bbc50901ba2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/loader_attic.so",
+      "role": "runtime",
+      "sha256": "8c3a24e4c1c8364c092c9ce4c5edb58ba664dc641dca4f3b8225ab0395b9f078",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/padlock.so",
+      "role": "runtime",
+      "sha256": "ed94e152a9f195676bc856ff2847d882a68577ef4e2857e2fd44a5187bcdfc8d",
+      "type": "regular"
+    },
+    {
+      "link_target": "libacl.so.1.1.2302",
+      "mode": "0777",
+      "path": "usr/lib/libacl.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libacl.so.1.1.2302",
+      "role": "runtime",
+      "sha256": "fb50043fbecf5280c9767f8231717da9f411f746193d28ade4cabd9f86fab78d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libapk.so.3.0.0",
+      "role": "runtime",
+      "sha256": "267f845f9c8a4502e8eca74237019c4db867f91351763c9211605dd88906ebcf",
+      "type": "regular"
+    },
+    {
+      "link_target": "libassuan.so.9.0.2",
+      "mode": "0777",
+      "path": "usr/lib/libassuan.so.9",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libassuan.so.9.0.2",
+      "role": "runtime",
+      "sha256": "4ea9bbb6f16d4b1102fe05cd28fd6045e310cd464f67035409d3aceb5214004b",
+      "type": "regular"
+    },
+    {
+      "link_target": "libattr.so.1.1.2502",
+      "mode": "0777",
+      "path": "usr/lib/libattr.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libattr.so.1.1.2502",
+      "role": "runtime",
+      "sha256": "0d744298bb2c1bc4f5246d29b297053294464810fa8cad695e30435c4b7fcbc1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libbfd-2.45.1.so",
+      "role": "runtime",
+      "sha256": "a715f6ba676532f4e65621810b950f782eb3da7b0e69ac86c9981b76b240d50b",
+      "type": "regular"
+    },
+    {
+      "link_target": "libbrotlicommon.so.1.2.0",
+      "mode": "0777",
+      "path": "usr/lib/libbrotlicommon.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libbrotlicommon.so.1.2.0",
+      "role": "runtime",
+      "sha256": "9fed16348185577fd61e1bf16f40806d77ac1633bd93f74f976eb23e104bc0c0",
+      "type": "regular"
+    },
+    {
+      "link_target": "libbrotlidec.so.1.2.0",
+      "mode": "0777",
+      "path": "usr/lib/libbrotlidec.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libbrotlidec.so.1.2.0",
+      "role": "runtime",
+      "sha256": "41546aefb19d31d685b3fb0a973f4fce3231196e973e226047772b244e4b82e2",
+      "type": "regular"
+    },
+    {
+      "link_target": "libbrotlienc.so.1.2.0",
+      "mode": "0777",
+      "path": "usr/lib/libbrotlienc.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libbrotlienc.so.1.2.0",
+      "role": "runtime",
+      "sha256": "bcb52e3a89b791684557426df553e7fb4b12b28582f79d48c04cb2423a1b7234",
+      "type": "regular"
+    },
+    {
+      "link_target": "libbz2.so.1.0.8",
+      "mode": "0777",
+      "path": "usr/lib/libbz2.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libbz2.so.1.0.8",
+      "role": "runtime",
+      "sha256": "5d1515e67fc6d35ca88c2911c60c9cb4802bb34149b219e9153e6b77f22bd9e5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libcrypto.so.3",
+      "role": "runtime",
+      "sha256": "5e860b4eb92cd6671dfe557ecffd506778f6549030b0e6142e94cb8e340c871d",
+      "type": "regular"
+    },
+    {
+      "link_target": "libctf-nobfd.so.0.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libctf-nobfd.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libctf-nobfd.so.0.0.0",
+      "role": "runtime",
+      "sha256": "47c08a4511ad18a6b6312faf6a840f4eb67714a62887e10183a35b8c4d1fb501",
+      "type": "regular"
+    },
+    {
+      "link_target": "libctf.so.0.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libctf.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libctf.so.0.0.0",
+      "role": "runtime",
+      "sha256": "9e770db4550f2fdca6ee00b2446e25a7040c87310bbe1ab824e3172b6d0a2d8d",
+      "type": "regular"
+    },
+    {
+      "link_target": "libexpat.so.1.12.1",
+      "mode": "0777",
+      "path": "usr/lib/libexpat.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libexpat.so.1.12.1",
+      "role": "runtime",
+      "sha256": "b27fd578c2c2dcc6f04fc5c68b41b2b21cf56b1a99d9fd229c56485733805d38",
+      "type": "regular"
+    },
+    {
+      "link_target": "libffi.so.8.2.0",
+      "mode": "0777",
+      "path": "usr/lib/libffi.so.8",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libffi.so.8.2.0",
+      "role": "runtime",
+      "sha256": "6e1cf629307e93920d25dd92f4ba7d2d3904f469f6ce08c82299968cd5332243",
+      "type": "regular"
+    },
+    {
+      "link_target": "libfontconfig.so.1.16.1",
+      "mode": "0777",
+      "path": "usr/lib/libfontconfig.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libfontconfig.so.1.16.1",
+      "role": "runtime",
+      "sha256": "81226964dd5e001ad8082fb43a1b0851bcdcf9c7ced1afbb75440ebf21022d02",
+      "type": "regular"
+    },
+    {
+      "link_target": "libfontenc.so.1.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libfontenc.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libfontenc.so.1.0.0",
+      "role": "runtime",
+      "sha256": "dced2980e1f223bbb0fc3a5fb0a35e8dab5adfbf1c2d06b8a58e7ce372cab807",
+      "type": "regular"
+    },
+    {
+      "link_target": "libfreetype.so.6.20.4",
+      "mode": "0777",
+      "path": "usr/lib/libfreetype.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libfreetype.so.6.20.4",
+      "role": "runtime",
+      "sha256": "d3ada74f106abe87831434cfd86924748c158d7e4e173e69438b47cbd0ca113d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libgcc_s.so.1",
+      "role": "runtime",
+      "sha256": "0f3c933942935150d3864bcd3b20b7922c8d95a66959fe1da5e2da73ba986e8a",
+      "type": "regular"
+    },
+    {
+      "link_target": "libgcrypt.so.20.6.0",
+      "mode": "0777",
+      "path": "usr/lib/libgcrypt.so.20",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libgcrypt.so.20.6.0",
+      "role": "runtime",
+      "sha256": "819b190bb79b465f4afe916ad0fac973d7818e0f2f10bdab08e9be3f4bb31819",
+      "type": "regular"
+    },
+    {
+      "link_target": "libgdbm.so.6.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libgdbm.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libgdbm.so.6.0.0",
+      "role": "runtime",
+      "sha256": "63dce44fa35592402170cd00a90bfc90bb7dd148473a23ac11dfe697da30f3ff",
+      "type": "regular"
+    },
+    {
+      "link_target": "libgdbm_compat.so.4.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libgdbm_compat.so.4",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libgdbm_compat.so.4.0.0",
+      "role": "runtime",
+      "sha256": "bbf11004a54f1cae21e54b5c06c76406cb274e6ab553c3d624343d4223f64e82",
+      "type": "regular"
+    },
+    {
+      "link_target": "libgmp.so.10.5.0",
+      "mode": "0777",
+      "path": "usr/lib/libgmp.so.10",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libgmp.so.10.5.0",
+      "role": "runtime",
+      "sha256": "2892d049d8f445b6d93c1acf365192a6620cf36b066c7c95129aa9d03f4a3ab0",
+      "type": "regular"
+    },
+    {
+      "link_target": "libgnutls.so.30.42.0",
+      "mode": "0777",
+      "path": "usr/lib/libgnutls.so.30",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libgnutls.so.30.42.0",
+      "role": "runtime",
+      "sha256": "2763bc16a51c0215f9bfdc2ab573c35ab299742fe72b5c9da76d012323848869",
+      "type": "regular"
+    },
+    {
+      "link_target": "libgpg-error.so.0.39.3",
+      "mode": "0777",
+      "path": "usr/lib/libgpg-error.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libgpg-error.so.0.39.3",
+      "role": "runtime",
+      "sha256": "6edd171000f4fbca2a686f4225c29585fb19382d5650074b31dab8c757d02f55",
+      "type": "regular"
+    },
+    {
+      "link_target": "libhogweed.so.6.11",
+      "mode": "0777",
+      "path": "usr/lib/libhogweed.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libhogweed.so.6.11",
+      "role": "runtime",
+      "sha256": "f7ac0624806386b247ae6a810d2a274508d98f7afe85bc6a76756a4d82cd2a39",
+      "type": "regular"
+    },
+    {
+      "link_target": "libidn2.so.0.4.0",
+      "mode": "0777",
+      "path": "usr/lib/libidn2.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libidn2.so.0.4.0",
+      "role": "runtime",
+      "sha256": "39d9a7191ab8cb4412787eb5d43047e14ec12ac2a138d2cba70495c42035a82d",
+      "type": "regular"
+    },
+    {
+      "link_target": "libintl.so.8.4.3",
+      "mode": "0777",
+      "path": "usr/lib/libintl.so.8",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libintl.so.8.4.3",
+      "role": "runtime",
+      "sha256": "f2b0a302fd5650564860cb0bb59cb147e102c220a03ee2136deafcaf74836ebc",
+      "type": "regular"
+    },
+    {
+      "link_target": "libjansson.so.4.14.1",
+      "mode": "0777",
+      "path": "usr/lib/libjansson.so.4",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libjansson.so.4.14.1",
+      "role": "runtime",
+      "sha256": "90bef6297bc967b662e844992915296c543b33612d7fcee5106e7f881b8733a6",
+      "type": "regular"
+    },
+    {
+      "link_target": "libksba.so.8.14.7",
+      "mode": "0777",
+      "path": "usr/lib/libksba.so.8",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libksba.so.8.14.7",
+      "role": "runtime",
+      "sha256": "df34f3787a70c086addca945679e0e0051b63e6a94bf67479a24b1a1262fe80b",
+      "type": "regular"
+    },
+    {
+      "link_target": "liblber.so.2.0.200",
+      "mode": "0777",
+      "path": "usr/lib/liblber.so.2",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/liblber.so.2.0.200",
+      "role": "runtime",
+      "sha256": "521c84619d295415df37edc185e3ace616fde3e53cdeed52e1b20161606f55be",
+      "type": "regular"
+    },
+    {
+      "link_target": "libldap.so.2.0.200",
+      "mode": "0777",
+      "path": "usr/lib/libldap.so.2",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libldap.so.2.0.200",
+      "role": "runtime",
+      "sha256": "1fd9a9edd014a95d5fc6179b5c793e925a963ebda8300ee87d83aa267801f4a8",
+      "type": "regular"
+    },
+    {
+      "link_target": "libncursesw.so.6.5",
+      "mode": "0777",
+      "path": "usr/lib/libncursesw.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libncursesw.so.6.5",
+      "role": "runtime",
+      "sha256": "746857d782c778108c40afea69c9081ba45ba1912e780a6359ef0110235d4dcb",
+      "type": "regular"
+    },
+    {
+      "link_target": "libnettle.so.8.11",
+      "mode": "0777",
+      "path": "usr/lib/libnettle.so.8",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libnettle.so.8.11",
+      "role": "runtime",
+      "sha256": "231ce111757b7f20470ef6964673c2596349ada57b3dc708708e66dc08184c32",
+      "type": "regular"
+    },
+    {
+      "link_target": "libnpth.so.0.3.0",
+      "mode": "0777",
+      "path": "usr/lib/libnpth.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libnpth.so.0.3.0",
+      "role": "runtime",
+      "sha256": "9edb92d5403a1ec86223b58aa9f7dee17252418aa98f5fa06890de8518184829",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libopcodes-2.45.1.so",
+      "role": "runtime",
+      "sha256": "f196c9a099ab454481c0cc3b68694dabd7fa14d759de6befe4a2824b5f7ae622",
+      "type": "regular"
+    },
+    {
+      "link_target": "libp11-kit.so.0.4.1",
+      "mode": "0777",
+      "path": "usr/lib/libp11-kit.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libp11-kit.so.0.4.1",
+      "role": "runtime",
+      "sha256": "a21d1ef9e1851cee0c43f898dbb10c942a38f73528f855045f72ee2826510f0c",
+      "type": "regular"
+    },
+    {
+      "link_target": "libpng16.so.16.58.0",
+      "mode": "0777",
+      "path": "usr/lib/libpng16.so.16",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libpng16.so.16.58.0",
+      "role": "runtime",
+      "sha256": "61839c42d49d5108ca125b1e432a34452175c32fe1b08676d6bb0bb99a9b877b",
+      "type": "regular"
+    },
+    {
+      "link_target": "libsasl2.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libsasl2.so.3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libsasl2.so.3.0.0",
+      "role": "runtime",
+      "sha256": "3e98af6838fb0b53ace34fdaee353e0ca24d2b0320931f252884b81e1c1bc853",
+      "type": "regular"
+    },
+    {
+      "link_target": "libsframe.so.2.0.0",
+      "mode": "0777",
+      "path": "usr/lib/libsframe.so.2",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libsframe.so.2.0.0",
+      "role": "runtime",
+      "sha256": "4c44ff4a4e8d0b66cc9365bce3434781845fd1c60889d9fe1cc362c08ba41c5c",
+      "type": "regular"
+    },
+    {
+      "link_target": "libskarnet.so.2.14.4.0",
+      "mode": "0777",
+      "path": "usr/lib/libskarnet.so.2.14",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libskarnet.so.2.14.4.0",
+      "role": "runtime",
+      "sha256": "dcd5605ce5ba2d6f43c81ae09c7d6f40e96005ad92742388b27927046de65925",
+      "type": "regular"
+    },
+    {
+      "link_target": "libsqlite3.so.3.51.2",
+      "mode": "0777",
+      "path": "usr/lib/libsqlite3.so.0",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libsqlite3.so.3.51.2",
+      "role": "runtime",
+      "sha256": "91c1425e737ab17234d55b6471bef80cfd3da87bb8e23ce5093265e654344d69",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libssl.so.3",
+      "role": "runtime",
+      "sha256": "e5511fdc20200c254a01ff8c801828139cfc36be4fca2d52b3fdac54f041f978",
+      "type": "regular"
+    },
+    {
+      "link_target": "libstdc++.so.6.0.34",
+      "mode": "0777",
+      "path": "usr/lib/libstdc++.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libstdc++.so.6.0.34",
+      "role": "runtime",
+      "sha256": "ae81a1dd9b4fbab42a1014dda6b9ed13834610583781fe562f84e3cf65ea669b",
+      "type": "regular"
+    },
+    {
+      "link_target": "libtasn1.so.6.6.5",
+      "mode": "0777",
+      "path": "usr/lib/libtasn1.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libtasn1.so.6.6.5",
+      "role": "runtime",
+      "sha256": "99acafac4d2d88ceb03a3e309c11326af4342504f7b69b36a1f129253ac83ec6",
+      "type": "regular"
+    },
+    {
+      "link_target": "libunistring.so.5.2.1",
+      "mode": "0777",
+      "path": "usr/lib/libunistring.so.5",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libunistring.so.5.2.1",
+      "role": "runtime",
+      "sha256": "019724bf2df8b72edb83669318f1857bee8fb5753bcf176c9ca487e24b91bff6",
+      "type": "regular"
+    },
+    {
+      "link_target": "libutmps.so.0.1.3.1",
+      "mode": "0777",
+      "path": "usr/lib/libutmps.so.0.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libutmps.so.0.1.3.1",
+      "role": "runtime",
+      "sha256": "c621ceacf9d2799b69263abfe8ea01b046c57ce593d81f96a52c239762ea0aa3",
+      "type": "regular"
+    },
+    {
+      "link_target": "libz.so.1.3.2",
+      "mode": "0777",
+      "path": "usr/lib/libz.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libz.so.1.3.2",
+      "role": "runtime",
+      "sha256": "60997f0db81cadd7cd12e787f3cc7de3c1e0946bc9bf28160c10199cceb59fef",
+      "type": "regular"
+    },
+    {
+      "link_target": "libzstd.so.1.5.7",
+      "mode": "0777",
+      "path": "usr/lib/libzstd.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libzstd.so.1.5.7",
+      "role": "runtime",
+      "sha256": "bbc46638607e551ffc8e9b4f0b02afb75cd52c8c560b386f7436a42fe840047f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/os-release",
+      "role": "runtime",
+      "sha256": "ef917e0c302643d0a479f9fb1327d196edbbbddb9c352c84f60999f032dd2cb8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/ossl-modules",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/ossl-modules/legacy.so",
+      "role": "runtime",
+      "sha256": "02b03d1347c880f8d5076931a4454b876b8e9601536f48a94bf6f64e338f7387",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/pkcs11",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/pkcs11/p11-kit-trust.so",
+      "role": "runtime",
+      "sha256": "565f61ea45e5f2bd53f671e92a09429d32ce3f2c54d4e15eea9f631564841a96",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sasl2",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": "libanonymous.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/sasl2/libanonymous.so",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "libanonymous.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/sasl2/libanonymous.so.3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sasl2/libanonymous.so.3.0.0",
+      "role": "runtime",
+      "sha256": "9aa36cf62310fad440268fad5da4898d69bf91e6ea4eaabf1de4082f0b048ed7",
+      "type": "regular"
+    },
+    {
+      "link_target": "libplain.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/sasl2/libplain.so",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "libplain.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/sasl2/libplain.so.3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sasl2/libplain.so.3.0.0",
+      "role": "runtime",
+      "sha256": "9ef816aaf90c6d2c3070e7b4a6390674d8384658a1b298bcf5d733b3c6c199f5",
+      "type": "regular"
+    },
+    {
+      "link_target": "libsasldb.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/sasl2/libsasldb.so",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "libsasldb.so.3.0.0",
+      "mode": "0777",
+      "path": "usr/lib/sasl2/libsasldb.so.3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sasl2/libsasldb.so.3.0.0",
+      "role": "runtime",
+      "sha256": "f1c7064a0c9c11df40ca096cfddbbeace3023ad4dca0b32f377cb88a9034f46e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/sysctl.d/00-alpine.conf",
+      "role": "runtime",
+      "sha256": "ee169bea2cb6859420b55ca7a9c23fb68b50adc1d26c951f904dec9e8f767380",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "kotlin"
+}

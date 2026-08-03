@@ -1,0 +1,24 @@
+{
+  "entries": [
+    {
+      "component": "libxml2",
+      "license": "MIT",
+      "path": "libxml2-Copyright",
+      "payload_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "source_sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "source_url": "https://gitlab.gnome.org/GNOME/libxml2/-/raw/v2.15.3/Copyright",
+      "version": "2.15.3"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "path": "musl-COPYRIGHT",
+      "payload_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    }
+  ],
+  "schema_version": 4,
+  "target": "xml"
+}

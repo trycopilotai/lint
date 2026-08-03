@@ -5,7 +5,11 @@ vulnerabilities:
     expired_at: 2026-10-31
     statement: >-
       Black is intentionally pinned for output
-      compatibility. It always passes --config /dev/null,
+      compatibility. The engine rejects the vulnerable
+      python-cell-magics option from project configuration,
       formats isolated temporary mirrors, and exposes no
-      project plugin or cache-path input. Reassess the pin
-      before this exception expires.
+      formatter-argument passthrough. The container also
+      runs unprivileged with a read-only root filesystem.
+      Direct Black use and direct image entrypoint
+      invocation remain affected outside this disposition.
+      Reassess the pin before this exception expires.

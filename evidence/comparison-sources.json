@@ -1,0 +1,133 @@
+{
+  "checked_at": "2026-08-02",
+  "regeneration_command": "python3 tools/capture_comparison_sources.py",
+  "schema_version": 2,
+  "sources": [
+    {
+      "capture": {
+        "body_bytes": 318825,
+        "context_path": "evidence/comparison-source-excerpts/megalinter-breadth.txt",
+        "context_sha256": "71e3209c90c33b5bca86a6e54009220d306cde72f361e5664c958b41d963c11f",
+        "final_url": "https://megalinter.io/latest/",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:49Z"
+      },
+      "column": "breadth",
+      "project": "MegaLinter",
+      "readme_claim": "Supports 69 languages, 23 formats, 22 tooling formats",
+      "source_url": "https://megalinter.io/latest/"
+    },
+    {
+      "capture": {
+        "body_bytes": 318825,
+        "context_path": "evidence/comparison-source-excerpts/megalinter-role.txt",
+        "context_sha256": "cb6e5ab845b01594987cac1da961fd4c88c7249deb3553da02b1ba9d00d00c80",
+        "final_url": "https://megalinter.io/latest/",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:49Z"
+      },
+      "column": "role",
+      "project": "MegaLinter",
+      "readme_claim": "At each pull request, it automatically analyzes all updated code across all languages.",
+      "source_url": "https://megalinter.io/latest/"
+    },
+    {
+      "capture": {
+        "body_bytes": 195001,
+        "context_path": "evidence/comparison-source-excerpts/megalinter-delivery.txt",
+        "context_sha256": "bea1df74deaf90577dac9873e8a4e7a5c7705a32e160f4eda034d57f0fc45e46",
+        "final_url": "https://megalinter.io/latest/flavors/",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:49Z"
+      },
+      "column": "delivery",
+      "project": "MegaLinter",
+      "readme_claim": "we provide flavored MegaLinter images containing only the linters related to a project type",
+      "source_url": "https://megalinter.io/latest/flavors/"
+    },
+    {
+      "capture": {
+        "body_bytes": 94571,
+        "context_path": "evidence/comparison-source-excerpts/trunk-breadth.txt",
+        "context_sha256": "9e73ed96bcb0ffda65e5a3800ddd2ec696a8c29a5d8441c76536503d09aa61d2",
+        "final_url": "https://marketplace.visualstudio.com/items?itemName=trunk.io",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:50Z"
+      },
+      "column": "breadth",
+      "project": "Trunk Code Quality",
+      "readme_claim": "Trunk Code Quality runs 100+ tools",
+      "source_url": "https://marketplace.visualstudio.com/items?itemName=trunk.io"
+    },
+    {
+      "capture": {
+        "body_bytes": 298499,
+        "context_path": "evidence/comparison-source-excerpts/trunk-role.txt",
+        "context_sha256": "1ec0bd842b1db136a89c1e18ac9bcbd64fd60c71545e53218bf7adb713805063",
+        "final_url": "https://docs.trunk.io/code-quality/overview",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:50Z"
+      },
+      "column": "role",
+      "project": "Trunk Code Quality",
+      "readme_claim": "Trunk consists of a C++ CLI that orchestrates the download, installation, and execution of third-party static analysis tools.",
+      "source_url": "https://docs.trunk.io/code-quality"
+    },
+    {
+      "capture": {
+        "body_bytes": 298499,
+        "context_path": "evidence/comparison-source-excerpts/trunk-delivery.txt",
+        "context_sha256": "6a8994dc4630e1eeaefd85d91f9478dc7455019d5e67e199d5039adcbb6369c7",
+        "final_url": "https://docs.trunk.io/code-quality/overview",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:51Z"
+      },
+      "column": "delivery",
+      "project": "Trunk Code Quality",
+      "readme_claim": "Trunk manages tools and their runtimes hermetically.",
+      "source_url": "https://docs.trunk.io/code-quality"
+    },
+    {
+      "capture": {
+        "body_bytes": 289524,
+        "context_path": "evidence/comparison-source-excerpts/pre-commit-breadth.txt",
+        "context_sha256": "529bf52a6eefadbddeb11a05b872ddc5b5f47ea754c6ac477e3d2ab08b2cb9f6",
+        "final_url": "https://github.com/pre-commit/pre-commit",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:51Z"
+      },
+      "column": "breadth",
+      "project": "pre-commit",
+      "readme_claim": "A framework for managing and maintaining multi-language pre-commit hooks.",
+      "source_url": "https://github.com/pre-commit/pre-commit"
+    },
+    {
+      "capture": {
+        "body_bytes": 147478,
+        "context_path": "evidence/comparison-source-excerpts/pre-commit-role.txt",
+        "context_sha256": "830ad80b143a96d759da66bc7b816c4bbbcb56d04bd9f72f95c089a868272cf0",
+        "final_url": "https://pre-commit.com/",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:52Z"
+      },
+      "column": "role",
+      "project": "pre-commit",
+      "readme_claim": "We run our hooks on every commit to automatically point out issues in code",
+      "source_url": "https://pre-commit.com/"
+    },
+    {
+      "capture": {
+        "body_bytes": 147478,
+        "context_path": "evidence/comparison-source-excerpts/pre-commit-delivery.txt",
+        "context_sha256": "7ee7064a623d70ae11d3bf46d72525a4c3be99f389064036b94be4452f7b1d1a",
+        "final_url": "https://pre-commit.com/",
+        "http_status": 200,
+        "retrieved_at": "2026-08-02T09:39:53Z"
+      },
+      "column": "delivery",
+      "project": "pre-commit",
+      "readme_claim": "pre-commit manages the installation and execution of any hook written in any language",
+      "source_url": "https://pre-commit.com/"
+    }
+  ]
+}

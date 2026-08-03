@@ -1,5 +1,5 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.5",
   "images": [
     {
       "languages": [
@@ -10,7 +10,9 @@
         "javascript",
         "typescript",
         "tsx",
-        "css"
+        "css",
+        "scss",
+        "less"
       ],
       "target": "prettier",
       "budget_mib": 80

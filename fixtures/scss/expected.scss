@@ -1,0 +1,7 @@
+$accent: #0af;
+.card {
+  color: $accent;
+  &:hover {
+    color: darken($accent, 10%);
+  }
+}

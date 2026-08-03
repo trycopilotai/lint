@@ -1,0 +1,919 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/db",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/installed",
+      "role": "runtime",
+      "sha256": "924888bfad4c47074b804085ba0f1aa25adfec797156ea16644ac896cef8c28b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0600",
+      "path": "lib/apk/db/lock",
+      "role": "runtime",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/scripts.tar.gz",
+      "role": "runtime",
+      "sha256": "64f288606cce2acb0122b688314f2ac7de032c3f1ccd91e90580658815e80c8e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/triggers",
+      "role": "runtime",
+      "sha256": "e49972cdd2512b80e4a1c7886a91a57cd0a8a9d83e03aa469366b95255096702",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/exec",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/firmware",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/ld-musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "type": "regular"
+    },
+    {
+      "link_target": "ld-musl-x86_64.so.1",
+      "mode": "0777",
+      "path": "lib/libc.musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/prettier",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/apk-tools-LICENSE",
+      "role": "license",
+      "sha256": "b3c87315aae4c9f276c37168f2655dd8bd990544d7a0bbfb929664155c7ab257",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/gcc-COPYING.RUNTIME",
+      "role": "license",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/gcc-COPYING3",
+      "role": "license",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/manifest.json",
+      "role": "license",
+      "sha256": "cdcdd6b791d19193e37ef354b1b2a2d65cf66644080daba6cc4715a79f0a3f16",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/musl-COPYRIGHT",
+      "role": "license",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/node-LICENSE",
+      "role": "license",
+      "sha256": "148eacf7863ef4329224a29398623077200a27194aa075569faf4a0a85566ca5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/openssl-LICENSE.txt",
+      "role": "license",
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/prettier-LICENSE",
+      "role": "license",
+      "sha256": "b0f2417199889f1c0d28ec4e0244eacf1a15de5819d61f641dd7d8f45153ac9c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/prettier/zlib-LICENSE",
+      "role": "license",
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "73c4edfcf0dd615d7788e18c15fb6c34089e9063d6001d508b8c33fb73bf6894",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/afalg.so",
+      "role": "runtime",
+      "sha256": "c095af87bcd32431c0898d7d6d3585d6eac5046f9ff30662fe0f449f26b0d5b9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/capi.so",
+      "role": "runtime",
+      "sha256": "1897fafd326cf649e083f6ceb1074110b8bcce646163b5c3de5c5bbc50901ba2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/loader_attic.so",
+      "role": "runtime",
+      "sha256": "8c3a24e4c1c8364c092c9ce4c5edb58ba664dc641dca4f3b8225ab0395b9f078",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/engines-3/padlock.so",
+      "role": "runtime",
+      "sha256": "ed94e152a9f195676bc856ff2847d882a68577ef4e2857e2fd44a5187bcdfc8d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libapk.so.3.0.0",
+      "role": "runtime",
+      "sha256": "267f845f9c8a4502e8eca74237019c4db867f91351763c9211605dd88906ebcf",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libcrypto.so.3",
+      "role": "runtime",
+      "sha256": "5e860b4eb92cd6671dfe557ecffd506778f6549030b0e6142e94cb8e340c871d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/libgcc_s.so.1",
+      "role": "runtime",
+      "sha256": "0f3c933942935150d3864bcd3b20b7922c8d95a66959fe1da5e2da73ba986e8a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libssl.so.3",
+      "role": "runtime",
+      "sha256": "e5511fdc20200c254a01ff8c801828139cfc36be4fca2d52b3fdac54f041f978",
+      "type": "regular"
+    },
+    {
+      "link_target": "libstdc++.so.6.0.34",
+      "mode": "0777",
+      "path": "usr/lib/libstdc++.so.6",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libstdc++.so.6.0.34",
+      "role": "runtime",
+      "sha256": "ae81a1dd9b4fbab42a1014dda6b9ed13834610583781fe562f84e3cf65ea669b",
+      "type": "regular"
+    },
+    {
+      "link_target": "libz.so.1.3.2",
+      "mode": "0777",
+      "path": "usr/lib/libz.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/libz.so.1.3.2",
+      "role": "runtime",
+      "sha256": "60997f0db81cadd7cd12e787f3cc7de3c1e0946bc9bf28160c10199cceb59fef",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/os-release",
+      "role": "runtime",
+      "sha256": "ef917e0c302643d0a479f9fb1327d196edbbbddb9c352c84f60999f032dd2cb8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/ossl-modules",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/ossl-modules/legacy.so",
+      "role": "runtime",
+      "sha256": "02b03d1347c880f8d5076931a4454b876b8e9601536f48a94bf6f64e338f7387",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/lib/sysctl.d/00-alpine.conf",
+      "role": "runtime",
+      "sha256": "ee169bea2cb6859420b55ca7a9c23fb68b50adc1d26c951f904dec9e8f767380",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local/bin",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local/bin/node",
+      "role": "entrypoint",
+      "sha256": "22b2706a093d40dac48e19b225016dbf1cedec32a73bffc34e288099c0fe9911",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local/lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local/lib/node_modules",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local/lib/node_modules/prettier",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/LICENSE",
+      "role": "formatter",
+      "sha256": "b0f2417199889f1c0d28ec4e0244eacf1a15de5819d61f641dd7d8f45153ac9c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/README.md",
+      "role": "formatter",
+      "sha256": "f1f5a86cd0fd0f6a288882527830a9bbbd5851e3238c4d7426b7bbb496165cd1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/THIRD-PARTY-NOTICES.md",
+      "role": "formatter",
+      "sha256": "6adbe5006e8aa3bdffb5a0d8bb6a697aebff9e069fd4257c30c7396c28d7efcf",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "2755",
+      "path": "usr/local/lib/node_modules/prettier/bin",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "usr/local/lib/node_modules/prettier/bin/prettier.cjs",
+      "role": "formatter",
+      "sha256": "ac5523cd57e7e9d8eac71caef7e022a8a8489bcdc19ca8a778b7e728ec103b93",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/doc.d.ts",
+      "role": "formatter",
+      "sha256": "f63cb353cd53da6be4a34f6fdece6316dac14fd62cccf9a4d2ce6bab2c37bc8c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/doc.js",
+      "role": "formatter",
+      "sha256": "acfa1c14a5b12be686c73ae92f33337a94a9ebdb8a91a9d261ef31a5c8496775",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/doc.mjs",
+      "role": "formatter",
+      "sha256": "bd23cdd69b73aeeadcc0b88ad8cb92f24f39d08db2401c28c281c5e69bcf7215",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/index.cjs",
+      "role": "formatter",
+      "sha256": "23dd863db13425311497f34cb3784abbda1fd4d551a038f671713a536fbfdd17",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/index.d.ts",
+      "role": "formatter",
+      "sha256": "705f2f47316c603344bb9e1aeb80be9f761feb0cd92bfee0bbc0cfd7abe9aae3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/index.mjs",
+      "role": "formatter",
+      "sha256": "b135bd776a870f16748c3bf28678da5fb96b746cdd06d1daec82664a21e6fc06",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "2755",
+      "path": "usr/local/lib/node_modules/prettier/internal",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/internal/experimental-cli-worker.mjs",
+      "role": "formatter",
+      "sha256": "be4fd759e0bd71af2b31a03a8c83206801823b68774b74882ca29d4ac2f38213",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/internal/experimental-cli.mjs",
+      "role": "formatter",
+      "sha256": "7bcee0bfd120f9eb5dc7164fa5c385f17bc899d72777466016f09bafeb75b770",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/internal/legacy-cli.mjs",
+      "role": "formatter",
+      "sha256": "db0cda3706a84792cde9259783e31925bd0ea7ac873bcd5e916b7a29e8b24b96",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/package.json",
+      "role": "formatter",
+      "sha256": "e8ac2499847ffd7b7491c98aaf46825fcda6546431a6793d6dcf4146fb17eee3",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "2755",
+      "path": "usr/local/lib/node_modules/prettier/plugins",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/acorn.d.ts",
+      "role": "formatter",
+      "sha256": "c25cb166f252a094fc146d0470422472fc7c7974adbf76a37f3d368899dfe7b0",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/acorn.js",
+      "role": "formatter",
+      "sha256": "1e4db38f6073e944f7d9edf2c50fa372e94283fc2e0e492241377d0ff05ef1d1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/acorn.mjs",
+      "role": "formatter",
+      "sha256": "4b49462e69c4dc279f9062c584bbcda2b9c6020e000656c5f40d65a573c427d5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/angular.d.ts",
+      "role": "formatter",
+      "sha256": "025fbe2956c42bd21b9692c6198b9f2ca3785686f60bcba0939a6721b06daa6e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/angular.js",
+      "role": "formatter",
+      "sha256": "aece58a77af6104e28d9087c94b28c13e3a9787d5cf0ade0341b2052db4a0fff",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/angular.mjs",
+      "role": "formatter",
+      "sha256": "e98698503a9681a642df476619a36c7ca6f6a4d824d668d5f22751e33aa99813",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/babel.d.ts",
+      "role": "formatter",
+      "sha256": "f63c500e01ac97d8868a75905c231a1b9e8bef75d79f476707fb2ee48b57a375",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/babel.js",
+      "role": "formatter",
+      "sha256": "d8134147310645c886009fb48662c927de2c290bcb8220c793671ae6e09be000",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/babel.mjs",
+      "role": "formatter",
+      "sha256": "14499debe04095513798068157399ec386e220f9f8ed00d55f2acc1582f00c55",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/estree.d.ts",
+      "role": "formatter",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/estree.js",
+      "role": "formatter",
+      "sha256": "7fef3cc4bfd4fe20d61bb095888d3710018f90c227dfe471e0d19eb0731f9277",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/estree.mjs",
+      "role": "formatter",
+      "sha256": "9cc219895f1793edf67e5b7171b351de067f951bd1e4fe11002187dd6bc944a8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/flow.d.ts",
+      "role": "formatter",
+      "sha256": "daddd33d442b517c56d78f6545285e8c5c7f09c514afbb3de111262ed1820270",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/flow.js",
+      "role": "formatter",
+      "sha256": "2e50e66a45bd0c29077dc442dd15d95ed64bbbab7cebb491a0de003103670ecd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/flow.mjs",
+      "role": "formatter",
+      "sha256": "1ec21b127dfd8ffd09c8129f7e95da316fc7735d3256bb56085c6f938e524b18",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/glimmer.d.ts",
+      "role": "formatter",
+      "sha256": "a01f55de3790d5a61630784a6d125a623db45883c3e7f18eb673eb67c3eb92cd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/glimmer.js",
+      "role": "formatter",
+      "sha256": "4cc26b758341153b768acb4cd606844bc7f761b93a6c906ea07a968b3382ccc7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/glimmer.mjs",
+      "role": "formatter",
+      "sha256": "45efd5d17569002c4ae0203831bca7eab120e05b8e0dd0c0e529e70a715397f7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/graphql.d.ts",
+      "role": "formatter",
+      "sha256": "652159c4b662e13b50d50333d00761137dbcef171c983edf870d15ca5a86e449",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/graphql.js",
+      "role": "formatter",
+      "sha256": "36ffee7626e1c29fe12f0cb3b9a4d6473a8484648042038ce3e9185dccd94d69",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/graphql.mjs",
+      "role": "formatter",
+      "sha256": "4d111a364bdec7a6ad4f7336107b26edf68c7cb4a32db9b2355daba203d21dfc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/html.d.ts",
+      "role": "formatter",
+      "sha256": "9ad35a7c6b0ec0ff8c79bdb08c89824c65fa74de0f1c64f36ed5e87a76f70980",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/html.js",
+      "role": "formatter",
+      "sha256": "4a0a5a7f78ecc87159a648338482615afe542f28b4bfad9504f7198118a13dca",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/html.mjs",
+      "role": "formatter",
+      "sha256": "82118ebc46e64483e93c8776ae0b1caff9240e58bcfd3f7bdce34ccfee25253e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/markdown.d.ts",
+      "role": "formatter",
+      "sha256": "1d078fe48bef1ae002241a2bffdb2e0e9c783d9f53f15bf9d6dea5fd3e78e6fc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/markdown.js",
+      "role": "formatter",
+      "sha256": "58acf40d9eaf490f923edd594fc411138e7259cc2517ea9fb13a6a36a2c685c6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/markdown.mjs",
+      "role": "formatter",
+      "sha256": "26bd3cfdbc612c54d251c6f3f78ea53c3990de0ea556297c991ad6a1c0b5aeb4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/meriyah.d.ts",
+      "role": "formatter",
+      "sha256": "7a764eac31a2b218ebed35e27f9dff2dfc85eee443472fbb871ba0999ba0b41a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/meriyah.js",
+      "role": "formatter",
+      "sha256": "e9c5f1d1820e20a902ef250364702d16f6533c81a75d6c02969a1d6da15a3542",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/meriyah.mjs",
+      "role": "formatter",
+      "sha256": "e9ba8bfa7c1a3ffab99fcb6ad4038fcc7e6ebeac03abc7dcf3ca5316c6366220",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/postcss.d.ts",
+      "role": "formatter",
+      "sha256": "0e8cc5081dc73d397c9438c3358a351e5cf90c33a579378489d74093daccb687",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/postcss.js",
+      "role": "formatter",
+      "sha256": "cd8b30767aa449b4db02e2680a6f7a3a6a4aa382a713fc2cad3d250f797f02f2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/postcss.mjs",
+      "role": "formatter",
+      "sha256": "3e86e9b0067fb4c9eca8421732be52df7c2e44b3b1f3a021b872f36c3b7c1e12",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/typescript.d.ts",
+      "role": "formatter",
+      "sha256": "f6b8391a3411a2ae9dee204645977fc70d39355df8b3e2f4ed8f3022fee41f2d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/typescript.js",
+      "role": "formatter",
+      "sha256": "f0b0a73ecef9608f92d388cefd4f8fc82c14a6c01b2fcf91c252093f29743f2d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/typescript.mjs",
+      "role": "formatter",
+      "sha256": "bf50c279afd95347b0fe910ffa9b6248e2a5f7bdd64fd5cc226d5592e8498d17",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/yaml.d.ts",
+      "role": "formatter",
+      "sha256": "8a900e38fabbc7fdc3461313e4771239f4f2d81043abb329c5ac8636c56df14b",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/yaml.js",
+      "role": "formatter",
+      "sha256": "3d46273d6b9ae1f1b6f44f356abcf8080786791e307a04263d759855855c245d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/plugins/yaml.mjs",
+      "role": "formatter",
+      "sha256": "60d26a0cdb92085b6ab8c48af4d579e873e7a5783b8b13b9e97da3643fb386ee",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/standalone.d.ts",
+      "role": "formatter",
+      "sha256": "3560ad5c0d0cc7fd20b953bb2350807eff9faad616226e3da9f946e5cbaeea32",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/standalone.js",
+      "role": "formatter",
+      "sha256": "32995b95337789dd0f0fc2b2c47d4176de66f661fc46c20e9e8d9102be1d578d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "usr/local/lib/node_modules/prettier/standalone.mjs",
+      "role": "formatter",
+      "sha256": "1d38508c39466a0797e7bab1519c071ee91ddebed669a4b3081c373158cd5d7a",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "prettier"
+}

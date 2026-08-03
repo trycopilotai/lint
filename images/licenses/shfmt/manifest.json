@@ -1,0 +1,78 @@
+{
+  "entries": [
+    {
+      "component": "Go",
+      "license": "BSD-3-Clause",
+      "path": "go-LICENSE",
+      "payload_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE",
+      "version": "1.26.5"
+    },
+    {
+      "component": "Go patents grant",
+      "license": "Patent grant",
+      "path": "go-PATENTS",
+      "payload_sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "source_sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.5/PATENTS",
+      "version": "1.26.5"
+    },
+    {
+      "component": "github.com/google/renameio/v2",
+      "license": "Apache-2.0",
+      "path": "renameio-LICENSE",
+      "payload_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_url": "https://raw.githubusercontent.com/google/renameio/v2.0.2/LICENSE",
+      "version": "2.0.2"
+    },
+    {
+      "component": "github.com/rogpeppe/go-internal",
+      "license": "BSD-3-Clause",
+      "path": "go-internal-LICENSE",
+      "payload_sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "source_sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "source_url": "https://raw.githubusercontent.com/rogpeppe/go-internal/v1.14.1/LICENSE",
+      "version": "1.14.1"
+    },
+    {
+      "component": "golang.org/x/sys",
+      "license": "BSD-3-Clause",
+      "path": "x-sys-LICENSE",
+      "payload_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_url": "https://raw.githubusercontent.com/golang/sys/v0.42.0/LICENSE",
+      "version": "0.42.0"
+    },
+    {
+      "component": "golang.org/x/term",
+      "license": "BSD-3-Clause",
+      "path": "x-term-LICENSE",
+      "payload_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "source_url": "https://raw.githubusercontent.com/golang/term/v0.41.0/LICENSE",
+      "version": "0.41.0"
+    },
+    {
+      "component": "mvdan.cc/editorconfig",
+      "license": "BSD-3-Clause",
+      "path": "editorconfig-LICENSE",
+      "payload_sha256": "3ffd3576875cec2ca5d8e0f6ec7d871d6fba8cb87cfb2285347fddce108fc57c",
+      "source_sha256": "3ffd3576875cec2ca5d8e0f6ec7d871d6fba8cb87cfb2285347fddce108fc57c",
+      "source_url": "https://raw.githubusercontent.com/mvdan/editorconfig/v0.3.0/LICENSE",
+      "version": "0.3.0"
+    },
+    {
+      "component": "shfmt",
+      "license": "BSD-3-Clause",
+      "path": "shfmt-LICENSE",
+      "payload_sha256": "ce63850f77649f00d1394045e2794ffb09a5596beabac51c9548edd958845d7c",
+      "source_sha256": "ce63850f77649f00d1394045e2794ffb09a5596beabac51c9548edd958845d7c",
+      "source_url": "https://raw.githubusercontent.com/mvdan/sh/v3.13.1/LICENSE",
+      "version": "3.13.1"
+    }
+  ],
+  "schema_version": 4,
+  "target": "shfmt"
+}

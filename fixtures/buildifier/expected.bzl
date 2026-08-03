@@ -1,0 +1,4 @@
+filegroup(
+    name = "fixture",
+    srcs = [],
+)

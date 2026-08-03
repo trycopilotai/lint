@@ -1,7 +1,4 @@
 $ ./scripts/demo.sh demo-work
-demo-work/read-only.json
-demo-work/write.json
-demo-work/final.json
 
 $ cat demo-work/read-only.json
 {
@@ -15,12 +12,12 @@ $ cat demo-work/read-only.json
   ],
   "mode": "read-only",
   "policy": "default",
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "needs_formatting",
   "summary": {
-    "changed": 1,
     "selected": 1,
-    "skipped": 0
+    "skipped": 0,
+    "would_change": 1
   }
 }
 
@@ -31,13 +28,13 @@ $ cat demo-work/write.json
     {
       "language": "requirements",
       "path": "requirements.txt",
-      "status": "written"
+      "status": "changed"
     }
   ],
   "mode": "write",
   "policy": "default",
-  "schema_version": 1,
-  "status": "clean",
+  "schema_version": 2,
+  "status": "changed",
   "summary": {
     "changed": 1,
     "selected": 1,
@@ -57,11 +54,11 @@ $ cat demo-work/final.json
   ],
   "mode": "read-only",
   "policy": "default",
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "clean",
   "summary": {
-    "changed": 0,
     "selected": 1,
-    "skipped": 0
+    "skipped": 0,
+    "would_change": 0
   }
 }

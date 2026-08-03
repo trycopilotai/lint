@@ -9,23 +9,90 @@ import dataclasses
 import fnmatch
 import json
 import os
+import re
 import shutil
 import stat
 import subprocess
 import sys
 import tempfile
 import time
+import tomllib
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 
 ROOT = Path(__file__).resolve().parent
 MANIFEST_PATH = ROOT / "languages.json"
+IMAGE_MATRIX_PATH = ROOT / "images" / "matrix.json"
 CONTAINER_MARKER = Path("/app/.lint-container")
+REQUIREMENTS_WORKER = "--internal-requirements-format"
+REQUIREMENT_NAME_PATTERN = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?")
+REQUIREMENT_SEPARATOR_PATTERN = re.compile(r"[-_.]+")
+RELEASE_COMMIT_PATTERN = re.compile(r"[0-9a-f]{40}")
+RELEASE_SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
+IMAGE_DIGEST_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")
+IMAGE_PREFIX = "ghcr.io/trycopilotai/lint-"
 EXIT_CLEAN = 0
 EXIT_FORMATTING = 1
 EXIT_SELECTION = 2
 EXIT_INTERNAL = 3
+FORMATTER_CONFIGURATION_NAMES = {
+    "prettier": (
+        ".editorconfig",
+        ".prettierrc",
+        ".prettierrc.cjs",
+        ".prettierrc.cts",
+        ".prettierrc.js",
+        ".prettierrc.json",
+        ".prettierrc.json5",
+        ".prettierrc.mjs",
+        ".prettierrc.mts",
+        ".prettierrc.toml",
+        ".prettierrc.ts",
+        ".prettierrc.yaml",
+        ".prettierrc.yml",
+        "package.json",
+        "prettier.config.cjs",
+        "prettier.config.cts",
+        "prettier.config.js",
+        "prettier.config.mjs",
+        "prettier.config.mts",
+        "prettier.config.ts",
+    ),
+    "black": ("pyproject.toml",),
+    "shfmt": (".editorconfig",),
+    "clang": (".clang-format", "_clang-format"),
+    "rust": (".rustfmt.toml", "rustfmt.toml"),
+    "kotlin": (".editorconfig",),
+    "toml": (".taplo.toml", "taplo.toml"),
+    "swift": (".swift-format",),
+    "csharp": (".csharpierrc", ".csharpierrc.json", ".editorconfig"),
+    "julia": (".JuliaFormatter.toml",),
+}
+EXECUTABLE_PRETTIER_CONFIGURATION_NAMES = frozenset(
+    {
+        ".prettierrc.cjs",
+        ".prettierrc.cts",
+        ".prettierrc.js",
+        ".prettierrc.mjs",
+        ".prettierrc.mts",
+        ".prettierrc.ts",
+        "prettier.config.cjs",
+        "prettier.config.cts",
+        "prettier.config.js",
+        "prettier.config.mjs",
+        "prettier.config.mts",
+        "prettier.config.ts",
+    }
+)
+BLACK_SELECTION_OPTIONS = frozenset(
+    {
+        "exclude",
+        "extend-exclude",
+        "force-exclude",
+        "include",
+    }
+)
 PRUNED_DIRECTORIES = frozenset(
     {
         ".git",
@@ -58,6 +125,14 @@ class Language:
     family: str
     extensions: tuple[str, ...]
     filenames: tuple[str, ...]
+
+
+@dataclasses.dataclass(frozen=True)
+class VersionProbe:
+    command: tuple[str, ...]
+    expected: tuple[str, ...]
+    description: str
+    grammar: str
 
 
 @dataclasses.dataclass(frozen=True)
@@ -163,6 +238,117 @@ def limits() -> dict[str, int]:
     return parsed
 
 
+def image_version() -> str:
+    with IMAGE_MATRIX_PATH.open("r", encoding="utf-8") as handle:
+        matrix = json.load(handle)
+    if not isinstance(matrix, dict):
+        raise FormatterError("image matrix must contain an object")
+    version = matrix.get("version")
+    if not isinstance(version, str):
+        raise FormatterError("image matrix is missing version")
+    return version
+
+
+def reject_duplicate_json_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    value: dict[str, Any] = {}
+    for key, item in pairs:
+        if key in value:
+            raise SelectionError(f"release manifest repeats key: {key}")
+        value[key] = item
+    return value
+
+
+def require_exact_keys(
+    value: dict[str, Any],
+    expected: frozenset[str],
+    label: str,
+) -> None:
+    actual = frozenset(value)
+    if actual == expected:
+        return
+    missing = sorted(expected - actual)
+    extra = sorted(actual - expected)
+    raise SelectionError(f"{label} keys differ: missing={missing} extra={extra}")
+
+
+def load_image_manifest(path: Path) -> dict[str, str]:
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            value = json.load(
+                handle,
+                object_pairs_hook=reject_duplicate_json_keys,
+            )
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise SelectionError(f"could not read image manifest: {error}") from error
+    if not isinstance(value, dict):
+        raise SelectionError("release manifest must contain an object")
+    require_exact_keys(
+        value,
+        frozenset({"schema_version", "release", "source", "tools", "images"}),
+        "release manifest",
+    )
+    schema_version = value["schema_version"]
+    if type(schema_version) is not int or schema_version != 1:
+        raise SelectionError("release manifest has the wrong schema version")
+
+    release = value["release"]
+    expected_release = image_version()
+    if release != expected_release:
+        raise SelectionError("release manifest has the wrong release version")
+
+    source = value["source"]
+    if not isinstance(source, dict):
+        raise SelectionError("release manifest source must contain an object")
+    require_exact_keys(
+        source,
+        frozenset({"archive", "commit", "sha256"}),
+        "release manifest source",
+    )
+    expected_archive = f"lint-{expected_release}.tar.gz"
+    if source["archive"] != expected_archive:
+        raise SelectionError("release manifest has the wrong archive name")
+    commit = source["commit"]
+    if not isinstance(commit, str):
+        raise SelectionError("release manifest has an invalid source commit")
+    if RELEASE_COMMIT_PATTERN.fullmatch(commit) is None:
+        raise SelectionError("release manifest has an invalid source commit")
+    source_sha256 = source["sha256"]
+    if not isinstance(source_sha256, str):
+        raise SelectionError("release manifest has an invalid source digest")
+    if RELEASE_SHA256_PATTERN.fullmatch(source_sha256) is None:
+        raise SelectionError("release manifest has an invalid source digest")
+
+    tools = value["tools"]
+    if tools != tool_versions():
+        raise SelectionError("release manifest has the wrong tool versions")
+
+    raw_images = value["images"]
+    if not isinstance(raw_images, dict):
+        raise SelectionError("release manifest images must contain an object")
+    languages = load_languages()
+    expected_images = {
+        f"{IMAGE_PREFIX}{language.id}": language.id for language in languages
+    }
+    actual_images = frozenset(raw_images)
+    expected_names = frozenset(expected_images)
+    if actual_images != expected_names:
+        missing = sorted(expected_names - actual_images)
+        extra = sorted(actual_images - expected_names)
+        raise SelectionError(
+            "release manifest image coverage differs: "
+            f"missing={missing} extra={extra}"
+        )
+    references: dict[str, str] = {}
+    for image in sorted(expected_images):
+        digest = raw_images[image]
+        if not isinstance(digest, str):
+            raise SelectionError(f"{image} has an invalid digest")
+        if IMAGE_DIGEST_PATTERN.fullmatch(digest) is None:
+            raise SelectionError(f"{image} has an invalid digest")
+        references[expected_images[image]] = f"{image}@{digest}"
+    return references
+
+
 def detect_language(path: Path, languages: Sequence[Language]) -> Language | None:
     name = path.name
     for language in languages:
@@ -211,6 +397,23 @@ def decode_nul_paths(output: bytes) -> list[str]:
             continue
         paths.append(item.decode("utf-8", errors="surrogateescape"))
     return paths
+
+
+def path_uses_symbolic_link(cwd: Path, candidate: Path) -> bool:
+    """Return whether a lexical path is or traverses a link."""
+
+    lexical_cwd = Path(os.path.abspath(cwd))
+    lexical = Path(os.path.abspath(candidate))
+    try:
+        relative = lexical.relative_to(lexical_cwd)
+    except ValueError:
+        return False
+    current = lexical_cwd
+    for part in relative.parts:
+        current = current / part
+        if current.is_symlink():
+            return True
+    return False
 
 
 def git_paths(cwd: Path, modified: bool) -> list[Path]:
@@ -263,11 +466,13 @@ def git_paths(cwd: Path, modified: bool) -> list[Path]:
     selected: list[Path] = []
     for name in sorted(set(names)):
         candidate = repository / name
-        if not candidate.exists():
-            continue
         try:
             candidate.relative_to(cwd)
         except ValueError:
+            continue
+        if not os.path.lexists(candidate):
+            continue
+        if path_uses_symbolic_link(cwd, candidate):
             continue
         selected.append(candidate)
     return selected
@@ -297,31 +502,42 @@ def walked_paths(cwd: Path) -> list[Path]:
     return selected
 
 
+def select_path(cwd: Path, candidate: Path, display_path: str) -> Path:
+    """Return one contained regular path without following links."""
+
+    return validate_selected_path(cwd, candidate, display_path)
+
+
+def validate_selected_path(cwd: Path, candidate: Path, display_path: str) -> Path:
+    lexical_cwd = Path(os.path.abspath(cwd))
+    lexical = Path(os.path.abspath(candidate))
+    try:
+        relative = lexical.relative_to(lexical_cwd)
+    except ValueError as error:
+        raise SelectionError(f"path escapes --cwd: {display_path}") from error
+    current = lexical_cwd
+    for part in relative.parts:
+        current = current / part
+        if current.is_symlink():
+            raise SelectionError(f"symbolic links are not accepted: {display_path}")
+    try:
+        resolved = lexical.resolve(strict=True)
+    except FileNotFoundError as error:
+        raise SelectionError(f"path does not exist: {display_path}") from error
+    try:
+        resolved.relative_to(cwd.resolve())
+    except ValueError as error:
+        raise SelectionError(f"path escapes --cwd: {display_path}") from error
+    return resolved
+
+
 def validate_explicit_path(cwd: Path, raw_path: str) -> Path:
     if "\x00" in raw_path:
         raise SelectionError("paths must not contain NUL bytes")
     candidate = Path(raw_path)
     if not candidate.is_absolute():
         candidate = cwd / candidate
-    lexical = Path(os.path.abspath(candidate))
-    try:
-        relative = lexical.relative_to(cwd)
-    except ValueError as error:
-        raise SelectionError(f"path escapes --cwd: {raw_path}") from error
-    current = cwd
-    for part in relative.parts:
-        current = current / part
-        if current.is_symlink():
-            raise SelectionError(f"symbolic links are not accepted: {raw_path}")
-    try:
-        resolved = candidate.resolve(strict=True)
-    except FileNotFoundError as error:
-        raise SelectionError(f"path does not exist: {raw_path}") from error
-    try:
-        resolved.relative_to(cwd)
-    except ValueError as error:
-        raise SelectionError(f"path escapes --cwd: {raw_path}") from error
-    return resolved
+    return validate_selected_path(cwd, candidate, raw_path)
 
 
 def expand_explicit_path(cwd: Path, raw_path: str) -> list[Path]:
@@ -329,15 +545,22 @@ def expand_explicit_path(cwd: Path, raw_path: str) -> list[Path]:
     if path.is_file():
         return [path]
     if path.is_dir():
-        return walked_paths(path)
+        selected: list[Path] = []
+        for candidate in walked_paths(path):
+            display_path = os.path.relpath(candidate, cwd)
+            selected.append(validate_selected_path(cwd, candidate, display_path))
+        return selected
     raise SelectionError(f"path is not a regular file or directory: {raw_path}")
 
 
 def read_files_from0(source: str) -> list[str]:
-    if source == "-":
-        payload = sys.stdin.buffer.read()
-    else:
-        payload = Path(source).read_bytes()
+    try:
+        if source == "-":
+            payload = sys.stdin.buffer.read()
+        else:
+            payload = Path(source).read_bytes()
+    except OSError as error:
+        raise SelectionError(f"--files-from0 cannot be read: {source}") from error
     return decode_nul_paths(payload)
 
 
@@ -361,6 +584,13 @@ def select_paths(
 def command_for(language: Language, path: Path) -> list[str]:
     versions = tool_versions()
     family = language.family
+    if family == "requirements":
+        return [
+            sys.executable,
+            str(ROOT / "lint.py"),
+            REQUIREMENTS_WORKER,
+            str(path),
+        ]
     if family == "prettier":
         executable = [
             "npx",
@@ -372,8 +602,6 @@ def command_for(language: Language, path: Path) -> list[str]:
         executable.extend(
             [
                 "--write",
-                "--no-config",
-                "--no-editorconfig",
                 "--ignore-path",
                 str(path.parent / ".lint-empty-ignore"),
                 "--print-width",
@@ -402,8 +630,6 @@ def command_for(language: Language, path: Path) -> list[str]:
             "--quiet",
             "--line-length",
             "88",
-            "--config",
-            os.devnull,
             str(path),
         ]
     if family == "shfmt":
@@ -415,7 +641,7 @@ def command_for(language: Language, path: Path) -> list[str]:
     if family == "go":
         return ["gofmt", "-w", str(path)]
     if family == "rust":
-        return ["rustfmt", str(path)]
+        return ["rustup", "run", versions["rust"], "rustfmt", str(path)]
     if family == "kotlin":
         return ["ktlint", "--format", str(path)]
     if family == "toml":
@@ -427,7 +653,10 @@ def command_for(language: Language, path: Path) -> list[str]:
     if family == "csharp":
         return ["csharpier", "format", "--no-cache", str(path)]
     if family == "julia":
-        expression = "using JuliaFormatter; " "format_file(ARGS[1], overwrite=true)"
+        expression = (
+            "using JuliaFormatter; "
+            "format_file(ARGS[1], overwrite=true, throw_on_error=true)"
+        )
         return [
             "julia",
             "--startup-file=no",
@@ -439,78 +668,258 @@ def command_for(language: Language, path: Path) -> list[str]:
     raise FormatterError(f"unsupported formatter family: {family}")
 
 
-def version_command(language: Language) -> tuple[list[str], str] | None:
+def formatter_install_command(language: Language) -> str:
+    """Return the pinned installation command for one formatter."""
+    versions = tool_versions()
+    family = language.family
+    if family == "prettier":
+        return f"npx -y prettier@{versions['prettier']} --version"
+    if family == "buildifier":
+        return f"npx -y @bazel/buildifier@{versions['buildifier']} --version"
+    if family == "black":
+        return f"pipx install --force black=={versions['black']}"
+    if family == "shfmt":
+        return f"go install mvdan.cc/sh/v3/cmd/shfmt@v{versions['shfmt']}"
+    if family == "clang":
+        return "pipx install --force clang-format==18.1.8"
+    if family == "java":
+        return f"docker pull {docker_image(language)}"
+    if family == "go":
+        return f"docker pull {docker_image(language)}"
+    if family == "rust":
+        return f"rustup toolchain install {versions['rust']} --component rustfmt"
+    if family == "kotlin":
+        return f"docker pull {docker_image(language)}"
+    if family == "toml":
+        return f"cargo install taplo-cli --version {versions['taplo']} --locked"
+    if family == "xml":
+        return f"docker pull {docker_image(language)}"
+    if family == "swift":
+        return f"docker pull {docker_image(language)}"
+    if family == "csharp":
+        return (
+            "dotnet tool install --global csharpier "
+            f"--version {versions['csharpier']}"
+        )
+    if family == "julia":
+        return f"docker pull {docker_image(language)}"
+    raise FormatterError(f"unsupported formatter family: {family}")
+
+
+def formatter_install_hint(language: Language) -> str:
+    """Return a formatter-specific recovery hint."""
+    command = formatter_install_command(language)
+    if command.startswith("docker pull "):
+        return f"run `{command}` and retry with --docker"
+    return f"use --docker or run `{command}`"
+
+
+def npx_engine_failure(returncode: int, detail: str) -> bool:
+    """Identify dependency resolution failures separately from bad input."""
+    if returncode == 127:
+        return True
+    lowered = detail.lower()
+    markers = (
+        "command not found",
+        "could not determine executable",
+        "eai_again",
+        "enotfound",
+        "npm error",
+    )
+    return any(marker in lowered for marker in markers)
+
+
+def libxml_numeric_version(version: str) -> str:
+    parts = version.split(".")
+    if len(parts) != 3:
+        raise FormatterError(f"invalid libxml2 version: {version}")
+    try:
+        major, minor, patch = (int(part) for part in parts)
+    except ValueError as error:
+        raise FormatterError(f"invalid libxml2 version: {version}") from error
+    return str(major * 10000 + minor * 100 + patch)
+
+
+def version_command(language: Language) -> VersionProbe | None:
     versions = tool_versions()
     family = language.family
     if family in {"prettier", "buildifier", "requirements"}:
         return None
     if family == "black":
-        return ["black", "--version"], versions["black"]
+        return VersionProbe(
+            command=("black", "--version"),
+            expected=(versions["black"],),
+            description=versions["black"],
+            grammar=(
+                r"black, (?P<version>[0-9]+\.[0-9]+\.[0-9]+)"
+                r" \(compiled: (?:yes|no)\)"
+                r"\r?\nPython \([^)]+\) [0-9]+\.[0-9]+\.[0-9]+"
+            ),
+        )
     if family == "shfmt":
-        return ["shfmt", "--version"], versions["shfmt"]
+        return VersionProbe(
+            command=("shfmt", "--version"),
+            expected=(versions["shfmt"],),
+            description=versions["shfmt"],
+            grammar=r"v(?P<version>[0-9]+\.[0-9]+\.[0-9]+)",
+        )
     if family == "clang":
-        return ["clang-format", "--version"], "version 18"
+        return VersionProbe(
+            command=("clang-format", "--version"),
+            expected=(versions["clang-format"],),
+            description=versions["clang-format"],
+            grammar=(
+                r"(?:Homebrew )?clang-format version "
+                r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)"
+            ),
+        )
     if family == "java":
-        return ["google-java-format", "--version"], versions["google-java-format"]
+        return VersionProbe(
+            command=("google-java-format", "--version"),
+            expected=(versions["google-java-format"],),
+            description=versions["google-java-format"],
+            grammar=(
+                r"google-java-format: Version " r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)"
+            ),
+        )
     if family == "go":
-        return ["go", "version"], f"go{versions['go']}"
+        gofmt = shutil.which("gofmt")
+        if gofmt is None:
+            raise EngineError(
+                "required formatter is not installed: gofmt; "
+                f"{formatter_install_hint(language)}"
+            )
+        return VersionProbe(
+            command=("go", "version", gofmt),
+            expected=(versions["go"],),
+            description=versions["go"],
+            grammar=(rf"{re.escape(gofmt)}: go" r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)"),
+        )
     if family == "rust":
-        return ["rustc", "--version"], f"rustc {versions['rust']}"
+        return VersionProbe(
+            command=("rustup", "run", versions["rust"], "rustfmt", "--version"),
+            expected=(versions["rustfmt"],),
+            description=(f"rustfmt {versions['rustfmt']} from Rust {versions['rust']}"),
+            grammar=(
+                r"rustfmt (?P<version>[0-9]+\.[0-9]+\.[0-9]+)"
+                r"(?:-stable \([0-9a-f]{10} [0-9]{4}-[0-9]{2}-[0-9]{2}\))?"
+            ),
+        )
     if family == "kotlin":
-        return ["ktlint", "--version"], versions["ktlint"]
+        return VersionProbe(
+            command=("ktlint", "--version"),
+            expected=(versions["ktlint"],),
+            description=versions["ktlint"],
+            grammar=(r"ktlint version " r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)"),
+        )
     if family == "toml":
-        return ["taplo", "--version"], versions["taplo"]
+        return VersionProbe(
+            command=("taplo", "--version"),
+            expected=(versions["taplo"],),
+            description=versions["taplo"],
+            grammar=(r"taplo " r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)"),
+        )
     if family == "xml":
-        return ["xmllint", "--version"], "21503"
+        return VersionProbe(
+            command=("xmllint", "--version"),
+            expected=(libxml_numeric_version(versions["libxml2"]),),
+            description=versions["libxml2"],
+            grammar=(
+                r"(?:[A-Za-z0-9_./-]*/)?xmllint: using libxml version "
+                r"(?P<version>[0-9]+)"
+                r"(?:\r?\n   compiled with: [A-Z][A-Za-z0-9]*"
+                r"(?: [A-Z][A-Za-z0-9]*)*)?"
+            ),
+        )
     if family == "swift":
-        return ["swift-format", "--version"], versions["swift-format"]
+        return VersionProbe(
+            command=("swift-format", "--version"),
+            expected=(versions["swift-format"],),
+            description=versions["swift-format"],
+            grammar=r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)",
+        )
     if family == "csharp":
-        return ["csharpier", "--version"], versions["csharpier"]
+        return VersionProbe(
+            command=("csharpier", "--version"),
+            expected=(versions["csharpier"],),
+            description=versions["csharpier"],
+            grammar=r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)",
+        )
     if family == "julia":
         expression = (
             "using JuliaFormatter; "
             'print(VERSION, "\\n", Base.pkgversion(JuliaFormatter))'
         )
-        expected = f"{versions['julia']}\n{versions['juliaformatter']}"
-        return [
-            "julia",
-            "--startup-file=no",
-            "-e",
-            expression,
-        ], expected
+        return VersionProbe(
+            command=(
+                "julia",
+                "--startup-file=no",
+                "-e",
+                expression,
+            ),
+            expected=(versions["julia"], versions["juliaformatter"]),
+            description=(
+                f"Julia {versions['julia']} and "
+                f"JuliaFormatter {versions['juliaformatter']}"
+            ),
+            grammar=(
+                r"(?P<version>[0-9]+\.[0-9]+\.[0-9]+)\r?\n"
+                r"(?P<secondary>[0-9]+\.[0-9]+\.[0-9]+)"
+            ),
+        )
     raise FormatterError(f"unsupported formatter family: {family}")
 
 
+def version_output_matches(probe: VersionProbe, output: str) -> bool:
+    normalized = output
+    if normalized.endswith("\r\n"):
+        normalized = normalized[:-2]
+    elif normalized.endswith("\n"):
+        normalized = normalized[:-1]
+    matched = re.fullmatch(probe.grammar, normalized)
+    if matched is None:
+        return False
+    reported = [matched.group("version")]
+    secondary = matched.groupdict().get("secondary")
+    if secondary is not None:
+        reported.append(secondary)
+    return tuple(reported) == probe.expected
+
+
 def verify_formatter_version(language: Language) -> None:
-    request = version_command(language)
-    if request is None:
+    probe = version_command(language)
+    if probe is None:
         return
-    command, expected = request
+    timeout_seconds = 10
+    if language.family == "julia":
+        timeout_seconds = 30
     try:
         completed = subprocess.run(
-            command,
+            probe.command,
             check=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=10,
+            timeout=timeout_seconds,
         )
     except FileNotFoundError as error:
         raise EngineError(
-            f"{command[0]} is not installed; use --docker or install "
-            "the pinned version from languages.json"
+            f"{probe.command[0]} is not installed; {formatter_install_hint(language)}"
         ) from error
     except subprocess.TimeoutExpired as error:
         raise FormatterError(
-            f"{command[0]} version check exceeded 10 seconds"
+            f"{probe.command[0]} version check exceeded {timeout_seconds} seconds"
         ) from error
     output = completed.stdout.decode(
         "utf-8", errors="replace"
     ) + completed.stderr.decode("utf-8", errors="replace")
-    if completed.returncode != 0 or expected not in output:
+    if completed.returncode != 0 or not version_output_matches(probe, output):
         found = output.strip()
         if found == "":
             found = f"exit {completed.returncode}"
-        raise EngineError(f"{command[0]} must match {expected}; found {found}")
+        raise EngineError(
+            f"{probe.command[0]} must match {probe.description}; found {found}; "
+            f"{formatter_install_hint(language)}"
+        )
 
 
 def requirement_records(section: list[str]) -> list[str]:
@@ -525,6 +934,16 @@ def requirement_records(section: list[str]) -> list[str]:
     if current:
         records.append("\n".join(current))
     return records
+
+
+def canonical_requirement_name(record: str) -> str:
+    """Return the normalized distribution name used for sorting."""
+
+    first_line = record.splitlines()[0].strip()
+    match = REQUIREMENT_NAME_PATTERN.match(first_line)
+    if match is None:
+        return first_line.casefold()
+    return REQUIREMENT_SEPARATOR_PATTERN.sub("-", match.group(0)).casefold()
 
 
 def requirements_output(payload: bytes) -> bytes:
@@ -552,11 +971,179 @@ def requirements_output(payload: bytes) -> bytes:
                 comments.append(record)
             else:
                 requirements.append(record)
-        requirements.sort(key=str.casefold)
+        requirements.sort(key=canonical_requirement_name)
         output_sections.append("\n".join(comments + requirements))
     if not output_sections:
         return b""
     return ("\n\n".join(output_sections) + "\n").encode("utf-8")
+
+
+def configuration_contains_key(value: Any, names: frozenset[str]) -> bool:
+    """Return whether a nested configuration contains a named key."""
+
+    if isinstance(value, dict):
+        for key, nested in value.items():
+            if isinstance(key, str) and key.casefold() in names:
+                return True
+            if configuration_contains_key(nested, names):
+                return True
+        return False
+    if isinstance(value, list):
+        for nested in value:
+            if configuration_contains_key(nested, names):
+                return True
+    return False
+
+
+def decode_configuration(path: Path, payload: bytes) -> str:
+    try:
+        return payload.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise FormatterError(
+            f"formatter configuration is not UTF-8: {path.name}"
+        ) from error
+
+
+def validate_prettier_configuration(path: Path, payload: bytes) -> None:
+    if path.name in EXECUTABLE_PRETTIER_CONFIGURATION_NAMES:
+        raise FormatterError(
+            f"executable Prettier configuration is not supported: {path.name}"
+        )
+    text = decode_configuration(path, payload)
+    plugin_names = frozenset({"plugin", "plugins", "pluginsearchdirs"})
+    parsed: Any | None = None
+    if path.name in {"package.json", ".prettierrc.json"}:
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError as error:
+            raise FormatterError(
+                f"invalid Prettier JSON configuration: {path.name}"
+            ) from error
+    if path.name == ".prettierrc.toml":
+        try:
+            parsed = tomllib.loads(text)
+        except tomllib.TOMLDecodeError as error:
+            raise FormatterError(
+                f"invalid Prettier TOML configuration: {path.name}"
+            ) from error
+    if parsed is not None:
+        if configuration_contains_key(parsed, plugin_names):
+            raise FormatterError(
+                f"project Prettier plugins are not supported: {path.name}"
+            )
+        return
+    plugin_pattern = re.compile(
+        r"(?im)^\s*[\"']?(?:plugin|plugins|pluginSearchDirs)[\"']?\s*[:=]"
+    )
+    if plugin_pattern.search(text) is not None:
+        raise FormatterError(f"project Prettier plugins are not supported: {path.name}")
+
+
+def validate_black_configuration(path: Path, payload: bytes) -> None:
+    text = decode_configuration(path, payload)
+    try:
+        parsed = tomllib.loads(text)
+    except tomllib.TOMLDecodeError as error:
+        raise FormatterError(
+            f"invalid Black TOML configuration: {path.name}"
+        ) from error
+    tool = parsed.get("tool")
+    if not isinstance(tool, dict):
+        return
+    black = tool.get("black")
+    if not isinstance(black, dict):
+        return
+    for name in black:
+        normalized_name = name.replace("--", "").replace("-", "_")
+        if normalized_name == "python_cell_magics":
+            raise FormatterError("Black python-cell-magics option is not supported")
+    for name in BLACK_SELECTION_OPTIONS:
+        if name in black:
+            raise FormatterError(f"Black selection option is not supported: {name}")
+
+
+def validate_formatter_configuration(
+    path: Path,
+    language: Language,
+    payload: bytes,
+) -> None:
+    if language.family == "prettier":
+        validate_prettier_configuration(path, payload)
+    if language.family == "black":
+        validate_black_configuration(path, payload)
+
+
+def formatter_configuration_paths(
+    cwd: Path,
+    path: Path,
+    language: Language,
+) -> list[Path]:
+    """Return bounded native configuration files for one formatter."""
+
+    names = FORMATTER_CONFIGURATION_NAMES.get(language.family)
+    if names is None:
+        return []
+    resolved_cwd = cwd.resolve()
+    relative_parent = path.parent.relative_to(resolved_cwd)
+    directories = [resolved_cwd]
+    current = resolved_cwd
+    for part in relative_parent.parts:
+        current = current / part
+        directories.append(current)
+
+    configurations: list[Path] = []
+    for directory in directories:
+        for name in names:
+            candidate = directory / name
+            if not os.path.lexists(candidate):
+                continue
+            display_path = os.path.relpath(candidate, resolved_cwd)
+            try:
+                checked = select_path(resolved_cwd, candidate, display_path)
+            except SelectionError as error:
+                raise FormatterError(
+                    f"symbolic formatter configuration is not accepted: "
+                    f"{display_path}"
+                ) from error
+            if not checked.is_file():
+                raise FormatterError(
+                    f"formatter configuration is not a regular file: " f"{display_path}"
+                )
+            configurations.append(checked)
+    return configurations
+
+
+def copy_formatter_configuration(
+    cwd: Path,
+    path: Path,
+    language: Language,
+    mirror_root: Path,
+    maximum_bytes: int,
+) -> None:
+    """Copy native formatter configuration into the temporary mirror."""
+
+    resolved_cwd = cwd.resolve()
+    for configuration in formatter_configuration_paths(
+        resolved_cwd,
+        path,
+        language,
+    ):
+        relative = configuration.relative_to(resolved_cwd)
+        payload = configuration.read_bytes()
+        if len(payload) > maximum_bytes:
+            raise FormatterError(
+                f"{relative}: formatter configuration exceeds " f"{maximum_bytes} bytes"
+            )
+        validate_formatter_configuration(configuration, language, payload)
+        mirror_path = mirror_root / relative
+        mirror_path.parent.mkdir(parents=True, exist_ok=True)
+        if mirror_path.exists():
+            if mirror_path.read_bytes() != payload:
+                raise FormatterError(
+                    f"formatter configuration changed during selection: " f"{relative}"
+                )
+            continue
+        mirror_path.write_bytes(payload)
 
 
 def run_formatter(
@@ -565,9 +1152,6 @@ def run_formatter(
     cwd: Path,
     timeout_seconds: int,
 ) -> None:
-    if language.family == "requirements":
-        path.write_bytes(requirements_output(path.read_bytes()))
-        return
     if language.family == "prettier":
         (path.parent / ".lint-empty-ignore").touch()
     command = command_for(language, path)
@@ -593,8 +1177,7 @@ def run_formatter(
         except FileNotFoundError as error:
             executable = command[0]
             raise EngineError(
-                f"{executable} is not installed; use --docker or install "
-                "the pinned version from languages.json"
+                f"{executable} is not installed; {formatter_install_hint(language)}"
             ) from error
         except subprocess.TimeoutExpired as error:
             raise FormatterError(
@@ -614,11 +1197,26 @@ def run_formatter(
                 detail = standard_output
             if detail == "":
                 detail = f"formatter exited {completed.returncode}"
+            if command[0] == "npx":
+                if npx_engine_failure(completed.returncode, detail):
+                    raise EngineError(f"{detail}; {formatter_install_hint(language)}")
             raise FormatterError(detail)
 
 
 def docker_image(language: Language) -> str:
-    return f"ghcr.io/trycopilotai/lint-{language.id}:0.1.4"
+    return f"{IMAGE_PREFIX}{language.id}:{image_version()}"
+
+
+def docker_user() -> str:
+    """Return a writable non-root bind-mount identity on each host."""
+    try:
+        user_id = os.getuid()
+        group_id = os.getgid()
+    except AttributeError:
+        return "65532:65532"
+    if user_id == 0 or group_id == 0:
+        return "65532:65532"
+    return f"{user_id}:{group_id}"
 
 
 def run_docker_formatter(
@@ -626,8 +1224,11 @@ def run_docker_formatter(
     mirror_root: Path,
     relative_path: Path,
     timeout_seconds: int,
+    image_reference: str | None = None,
 ) -> None:
     image = docker_image(language)
+    if image_reference is not None:
+        image = image_reference
     command = [
         "docker",
         "run",
@@ -645,10 +1246,12 @@ def run_docker_formatter(
         "512m",
         "--cpus",
         "2",
+        "--workdir",
+        "/work",
         "--tmpfs",
         "/tmp:rw,noexec,nosuid,size=64m",
         "--user",
-        "65532:65532",
+        docker_user(),
         "--mount",
         f"type=bind,src={mirror_root},dst=/work",
         image,
@@ -686,10 +1289,19 @@ def prepare_results(
     paths: Sequence[Path],
     requested_languages: frozenset[str],
     use_docker: bool,
+    language_overrides: dict[Path, str] | None = None,
+    image_references: dict[str, str] | None = None,
 ) -> tuple[list[FormatResult], list[Finding]]:
+    resolved_cwd = cwd.resolve()
     known_languages = load_languages()
+    languages_by_id = {language.id: language for language in known_languages}
     language_ids = frozenset(language.id for language in known_languages)
     unknown = requested_languages - language_ids
+    resolved_overrides: dict[Path, str] = {}
+    if language_overrides is not None:
+        for path, language_id in language_overrides.items():
+            resolved_overrides[path.resolve()] = language_id
+        unknown = unknown | (frozenset(resolved_overrides.values()) - language_ids)
     if unknown:
         values = ", ".join(sorted(unknown))
         raise SelectionError(f"unknown language: {values}")
@@ -697,8 +1309,15 @@ def prepare_results(
     selected: list[tuple[Path, Language]] = []
     findings: list[Finding] = []
     for path in paths:
-        language = detect_language(path, known_languages)
-        relative_path = path.relative_to(cwd).as_posix()
+        display_path = os.path.relpath(path, cwd)
+        checked = select_path(cwd, path, display_path)
+        path = checked
+        override = resolved_overrides.get(path)
+        if override is None:
+            language = detect_language(path, known_languages)
+        else:
+            language = languages_by_id[override]
+        relative_path = path.relative_to(resolved_cwd).as_posix()
         if language is None:
             findings.append(
                 Finding(
@@ -711,11 +1330,11 @@ def prepare_results(
             continue
         if requested_languages and language.id not in requested_languages:
             continue
-        if path.is_symlink():
-            raise SelectionError(f"symbolic links are not accepted: {relative_path}")
         if not path.is_file():
             raise SelectionError(f"not a regular file: {relative_path}")
         selected.append((path, language))
+
+    cwd = resolved_cwd
 
     request_limits = limits()
     maximum_bytes = request_limits["max_file_bytes"]
@@ -724,30 +1343,45 @@ def prepare_results(
     verified_families: set[str] = set()
     workspace = tempfile.mkdtemp(prefix="lint-work-")
     mirror_root = Path(workspace)
-    os.chmod(mirror_root, 0o777)
+    (mirror_root / ".lint-empty-ignore").write_bytes(b"")
     try:
         for path, language in selected:
             relative = path.relative_to(cwd)
             payload = path.read_bytes()
             if len(payload) > maximum_bytes:
                 raise FormatterError(f"{relative}: exceeds {maximum_bytes} bytes")
+            copy_formatter_configuration(
+                cwd,
+                path,
+                language,
+                mirror_root,
+                maximum_bytes,
+            )
             mirror_path = mirror_root / relative
             mirror_path.parent.mkdir(parents=True, exist_ok=True)
-            current = mirror_path.parent
-            while current != mirror_root:
-                os.chmod(current, 0o777)
-                current = current.parent
             mirror_path.write_bytes(payload)
             source_mode = stat.S_IMODE(path.stat().st_mode)
-            mirror_mode = source_mode | 0o666
+            mirror_mode = source_mode | stat.S_IWUSR
             os.chmod(mirror_path, mirror_mode)
             if use_docker:
-                run_docker_formatter(
-                    language,
-                    mirror_root,
-                    relative,
-                    timeout_seconds,
-                )
+                image_reference = None
+                if image_references is not None:
+                    image_reference = image_references[language.id]
+                if image_reference is None:
+                    run_docker_formatter(
+                        language,
+                        mirror_root,
+                        relative,
+                        timeout_seconds,
+                    )
+                else:
+                    run_docker_formatter(
+                        language,
+                        mirror_root,
+                        relative,
+                        timeout_seconds,
+                        image_reference,
+                    )
             else:
                 if language.family not in verified_families:
                     verify_formatter_version(language)
@@ -825,7 +1459,7 @@ def response_for(
         if result.changed:
             changed += 1
             if write:
-                status = "written"
+                status = "changed"
             else:
                 status = "needs_formatting"
         findings.append(
@@ -837,23 +1471,32 @@ def response_for(
         )
     findings.sort(key=lambda finding: finding.path)
     status = "clean"
-    if changed and not write:
-        status = "needs_formatting"
+    if changed:
+        if write:
+            status = "changed"
+        else:
+            status = "needs_formatting"
     mode = "read-only"
     if write:
         mode = "write"
+    # Read-only runs rewrite nothing, so reporting them as
+    # "changed" tells a reader that files moved when they did
+    # not. The count is the same number either way; only the
+    # name distinguishes what already happened from what would.
+    summary: dict[str, int] = {"selected": len(results)}
+    if write:
+        summary["changed"] = changed
+    else:
+        summary["would_change"] = changed
+    summary["skipped"] = len(skipped)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "policy": "default",
         "mode": mode,
         "backend": backend,
         "status": status,
         "files": [finding.as_dict() for finding in findings],
-        "summary": {
-            "selected": len(results),
-            "changed": changed,
-            "skipped": len(skipped),
-        },
+        "summary": summary,
     }
 
 
@@ -863,12 +1506,14 @@ def lint_files(
     requested_languages: frozenset[str],
     write: bool,
     use_docker: bool,
+    image_references: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     results, skipped = prepare_results(
         cwd=cwd,
         paths=paths,
         requested_languages=requested_languages,
         use_docker=use_docker,
+        image_references=image_references,
     )
     if write:
         apply_results(results)
@@ -932,7 +1577,13 @@ def parser() -> argparse.ArgumentParser:
         "--docker",
         "-d",
         action="store_true",
-        help="use pinned per-language container images",
+        help="use versioned per-language container images",
+    )
+    argument_parser.add_argument(
+        "--image-manifest",
+        type=Path,
+        metavar="PATH",
+        help="use exact Docker digests from a release manifest",
     )
     argument_parser.add_argument(
         "--list-languages",
@@ -948,6 +1599,30 @@ def parser() -> argparse.ArgumentParser:
     return argument_parser
 
 
+def parse_arguments(arguments: Sequence[str]) -> argparse.Namespace:
+    """Parse command-line arguments."""
+    return parser().parse_args(arguments)
+
+
+def validate_selection_arguments(parsed: argparse.Namespace) -> None:
+    """Reject combinations that select files through two routes."""
+    explicit_selection = bool(parsed.paths)
+    files_selection = parsed.files_from0 is not None
+    default_selection = parsed.all or parsed.modified
+    if explicit_selection and files_selection:
+        raise SelectionError("paths cannot be combined with --files-from0")
+    if (explicit_selection or files_selection) and default_selection:
+        raise SelectionError(
+            "explicit selection cannot be combined with --all or --modified"
+        )
+    if parsed.image_manifest is not None and not parsed.docker:
+        raise SelectionError("--image-manifest requires --docker")
+    if parsed.image_manifest is not None and parsed.list_languages:
+        raise SelectionError(
+            "--image-manifest cannot be combined with --list-languages"
+        )
+
+
 def human_response(response: dict[str, Any]) -> str:
     lines: list[str] = []
     files = response.get("files")
@@ -958,6 +1633,7 @@ def human_response(response: dict[str, Any]) -> str:
             path = finding.get("path")
             status = finding.get("status")
             language = finding.get("language")
+            message = finding.get("message")
             if not isinstance(path, str):
                 continue
             if not isinstance(status, str):
@@ -965,18 +1641,26 @@ def human_response(response: dict[str, Any]) -> str:
             if not isinstance(language, str):
                 continue
             display_status = status.replace("_", " ")
-            lines.append(f"{path}: {display_status} ({language})")
+            line = f"{path}: {display_status} ({language})"
+            if isinstance(message, str):
+                line = f"{line}: {message}"
+            lines.append(line)
     summary = response.get("summary")
     if isinstance(summary, dict):
         selected = summary.get("selected")
-        changed = summary.get("changed")
         skipped = summary.get("skipped")
         mode = response.get("mode")
         backend = response.get("backend")
         status = response.get("status")
         display_status = str(status).replace("_", " ")
+        if "changed" in summary:
+            count = summary.get("changed")
+            count_label = "changed"
+        else:
+            count = summary.get("would_change")
+            count_label = "would change"
         lines.append(
-            f"{display_status}: {selected} selected, {changed} changed, "
+            f"{display_status}: {selected} selected, {count} {count_label}, "
             f"{skipped} skipped; {mode}; {backend}"
         )
     message = response.get("message")
@@ -1002,23 +1686,35 @@ def print_response(
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    arguments = parser().parse_args(argv)
-    if arguments.list_languages:
-        print(json.dumps(load_manifest(), sort_keys=True, indent=2))
-        return EXIT_CLEAN
-
+    if argv is None:
+        raw_arguments = sys.argv[1:]
+    else:
+        raw_arguments = list(argv)
+    if len(raw_arguments) == 2 and raw_arguments[0] == REQUIREMENTS_WORKER:
+        path = Path(raw_arguments[1])
+        try:
+            path.write_bytes(requirements_output(path.read_bytes()))
+            return EXIT_CLEAN
+        except (FormatterError, OSError) as error:
+            print(str(error), file=sys.stderr)
+            return EXIT_FORMATTING
+    arguments = parse_arguments(raw_arguments)
     try:
-        cwd = Path(arguments.cwd).resolve(strict=True)
+        validate_selection_arguments(arguments)
+        if arguments.list_languages:
+            print(json.dumps(load_manifest(), sort_keys=True, indent=2))
+            return EXIT_CLEAN
+        image_references = None
+        if arguments.image_manifest is not None:
+            image_references = load_image_manifest(arguments.image_manifest)
+        try:
+            cwd = Path(arguments.cwd).resolve(strict=True)
+        except OSError as error:
+            raise SelectionError(
+                f"--cwd is not a directory: {arguments.cwd}"
+            ) from error
         if not cwd.is_dir():
             raise SelectionError(f"--cwd is not a directory: {cwd}")
-        if arguments.paths and (arguments.all or arguments.modified):
-            raise SelectionError(
-                "explicit paths cannot be combined with --all or --modified"
-            )
-        if arguments.files_from0 is not None and (arguments.all or arguments.modified):
-            raise SelectionError(
-                "--files-from0 cannot be combined with --all or --modified"
-            )
         paths = select_paths(
             cwd=cwd,
             explicit_paths=arguments.paths,
@@ -1031,6 +1727,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             requested_languages=frozenset(arguments.language),
             write=arguments.write,
             use_docker=arguments.docker,
+            image_references=image_references,
         )
         print_response(response, arguments.json)
         if response["status"] == "needs_formatting":
@@ -1038,7 +1735,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return EXIT_CLEAN
     except SelectionError as error:
         response = {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "selection_error",
             "message": str(error),
         }
@@ -1046,7 +1743,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return EXIT_SELECTION
     except EngineError as error:
         response = {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "engine_error",
             "message": str(error),
         }
@@ -1054,7 +1751,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return EXIT_INTERNAL
     except FormatterError as error:
         response = {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "formatter_error",
             "message": str(error),
         }
@@ -1062,7 +1759,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return EXIT_FORMATTING
     except (OSError, ValueError, KeyError) as error:
         response = {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "internal_error",
             "message": str(error),
         }

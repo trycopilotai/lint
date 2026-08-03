@@ -34,6 +34,19 @@ RUNNER = load_module(
 
 
 class ActionTest(unittest.TestCase):
+    def test_ci_contract_traverses_the_repository_root(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(
+            encoding="utf-8"
+        )
+        contract = workflow.split("- name: Verify read-only default", 1)[1].split(
+            "- name: Check Python formatting",
+            1,
+        )[0]
+
+        self.assertIn("--cwd .", contract)
+        self.assertIn("--language requirements", contract)
+        self.assertIn('summary["skipped"]', contract)
+
     def test_default_is_read_only_all_docker(self) -> None:
         environment = {"GITHUB_ACTION_PATH": str(ROOT)}
         with mock.patch.dict(os.environ, environment, clear=True):
@@ -61,6 +74,33 @@ class ActionTest(unittest.TestCase):
 
         self.assertIn("--modified", command)
         self.assertNotIn("--all", command)
+
+    def test_contradictory_selection_inputs_are_rejected(self) -> None:
+        combinations = (
+            {
+                "LINT_INPUT_PATHS": "one.py",
+                "LINT_INPUT_FILES_FROM0": "paths.bin",
+            },
+            {
+                "LINT_INPUT_PATHS": "one.py",
+                "LINT_INPUT_MODIFIED": "true",
+            },
+            {
+                "LINT_INPUT_FILES_FROM0": "paths.bin",
+                "LINT_INPUT_MODIFIED": "true",
+            },
+        )
+        for inputs in combinations:
+            environment = {
+                "GITHUB_ACTION_PATH": str(ROOT),
+                **inputs,
+            }
+            with self.subTest(inputs=inputs), mock.patch.dict(
+                os.environ,
+                environment,
+                clear=True,
+            ), self.assertRaisesRegex(ValueError, "selection input"):
+                ACTION.command()
 
     def test_write_docker_languages_are_typed(self) -> None:
         environment = {

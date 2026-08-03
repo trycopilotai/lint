@@ -1,6 +1,6 @@
 {
   "name": "lint",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Check or apply canonical formatting across mixed-language repositories with a read-only default.",
   "author": {
     "name": "trycopilot.ai"
@@ -17,7 +17,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "lint",
-    "shortDescription": "Check or apply pinned formatting",
+    "shortDescription": "Check or apply canonical mixed-language formatting",
     "longDescription": "Run canonical mixed-language formatting locally or in isolated language-specific containers.",
     "developerName": "trycopilot.ai",
     "category": "Developer Tools",

@@ -1,0 +1,111 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "buildifier",
+      "role": "entrypoint",
+      "sha256": "9ecd526fce53e9fcc4804898efd412ba0294b879722cd921ed67c884c595b513",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/buildifier",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/buildifier/buildtools-LICENSE",
+      "role": "license",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/buildifier/go-LICENSE",
+      "role": "license",
+      "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/buildifier/go-PATENTS",
+      "role": "license",
+      "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/buildifier/golang-protobuf-LICENSE",
+      "role": "license",
+      "sha256": "8778a9fc1eaffb03ab873caae251df2d224f6b5502be8777d3cd573a4dd43903",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/buildifier/manifest.json",
+      "role": "license",
+      "sha256": "80ff1538fbae31cdacf352f147aebb980ced2a53e77e0845b1d228b5fbefc054",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/buildifier/protobuf-go-LICENSE",
+      "role": "license",
+      "sha256": "4835612df0098ca95f8e7d9e3bffcb02358d435dbb38057c844c99d7f725eb20",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "97df695cb544fd942e3160724a13fc357238c0809462687cc8d1606b88d95421",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "buildifier"
+}

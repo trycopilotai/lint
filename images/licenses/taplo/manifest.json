@@ -1,0 +1,51 @@
+{
+  "entries": [
+    {
+      "component": "Rust standard library used by Taplo",
+      "license": "Apache-2.0",
+      "path": "rust-1.87-LICENSE-APACHE",
+      "payload_sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "source_sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.87.0/LICENSE-APACHE",
+      "version": "1.87.0"
+    },
+    {
+      "component": "Rust standard library used by Taplo",
+      "license": "MIT",
+      "path": "rust-1.87-LICENSE-MIT",
+      "payload_sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "source_sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "source_url": "https://raw.githubusercontent.com/rust-lang/rust/1.87.0/LICENSE-MIT",
+      "version": "1.87.0"
+    },
+    {
+      "component": "Taplo CLI",
+      "license": "MIT",
+      "path": "taplo-LICENSE",
+      "payload_sha256": "b23690ab205e06bf09725ef88e0b321175cbc2dd4d9f8ec7f7cd0577302c244d",
+      "source_sha256": "b23690ab205e06bf09725ef88e0b321175cbc2dd4d9f8ec7f7cd0577302c244d",
+      "source_url": "https://raw.githubusercontent.com/tamasfe/taplo/0.10.0/LICENSE",
+      "version": "0.10.0"
+    },
+    {
+      "component": "Taplo Cargo.lock dependency closure",
+      "license": "License expressions, copyright notices, and terms in the payload",
+      "path": "cargo-lock-legal-payload.txt",
+      "payload_sha256": "f91afbffc7816fa12bde527576fd4d4060e7b400f06ee8e3907d74bd454663ef",
+      "source_sha256": "a30e2f1fc4302f4112d77aed2d2e0a25f110473915cb8791c77ed4e361c54ec8",
+      "source_url": "https://raw.githubusercontent.com/tamasfe/taplo/0.10.0/Cargo.lock",
+      "version": "Cargo.lock at Taplo 0.10.0"
+    },
+    {
+      "component": "musl libc",
+      "license": "MIT",
+      "path": "musl-COPYRIGHT",
+      "payload_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "source_url": "https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT",
+      "version": "1.2.5"
+    }
+  ],
+  "schema_version": 4,
+  "target": "taplo"
+}

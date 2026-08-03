@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "closures": {
+    "cargo": {
+      "kind": "cargo_lock",
+      "source_path": "images/licenses/taplo/cargo-lock-legal-payload.txt",
+      "source_sha256": "f91afbffc7816fa12bde527576fd4d4060e7b400f06ee8e3907d74bd454663ef",
+      "receipt": {
+        "lock_sha256": "a30e2f1fc4302f4112d77aed2d2e0a25f110473915cb8791c77ed4e361c54ec8",
+        "package_count": 309,
+        "packages_sha256": "38d65165a4840bf4cc0a8663fe596033702c85b730be5401704139cd418c33cb"
+      },
+      "mappings": [
+        {
+          "match": "*",
+          "legal_outputs": ["cargo-lock-legal-payload.txt"]
+        }
+      ]
+    },
+    "csharpier": {
+      "kind": "dotnet_deps",
+      "source_path": "images/licenses/csharp/csharpier-runtime-dependencies.txt",
+      "source_sha256": "d53a0a75629ccc60498dceeec0c76c5a820145b2473810e9886d45df74a8cd63",
+      "source_download": "csharpier",
+      "mappings": [
+        {
+          "match": "CSharpier",
+          "legal_outputs": ["csharpier-LICENSE"]
+        },
+        {
+          "match": "LovettSoftware.XmlDiff",
+          "legal_outputs": ["xmldiff-LICENSE"]
+        },
+        {
+          "match": "Microsoft.CodeAnalysis",
+          "legal_outputs": ["roslyn-LICENSE.txt"]
+        },
+        {
+          "match": "Microsoft.Extensions",
+          "legal_outputs": [
+            "dotnet-LICENSE.TXT",
+            "dotnet-THIRD-PARTY-NOTICES.TXT"
+          ]
+        },
+        {
+          "match": "NReco.Logging.File",
+          "legal_outputs": ["nreco-logging-LICENSE"]
+        },
+        {
+          "match": "System.CommandLine",
+          "legal_outputs": ["system-commandline-LICENSE.md"]
+        },
+        {
+          "match": "System.IO.Abstractions",
+          "legal_outputs": [
+            "system-io-abstractions-LICENSE"
+          ]
+        },
+        {
+          "match": "System.IO.Hashing",
+          "legal_outputs": [
+            "dotnet-LICENSE.TXT",
+            "dotnet-THIRD-PARTY-NOTICES.TXT"
+          ]
+        },
+        {
+          "match": "TestableIO.System.IO.Abstractions",
+          "legal_outputs": [
+            "system-io-abstractions-LICENSE"
+          ]
+        },
+        {
+          "match": "Testably.Abstractions",
+          "legal_outputs": [
+            "testably-abstractions-LICENSE.md"
+          ]
+        },
+        {
+          "match": "YamlDotNet",
+          "legal_outputs": ["yamldotnet-LICENSE.txt"]
+        },
+        {
+          "match": "ini-parser-netstandard",
+          "legal_outputs": ["ini-parser-LICENSE"]
+        }
+      ]
+    },
+    "go_buildifier": {
+      "kind": "go_build_info",
+      "source_path": "images/closures/buildifier-go-build-info.txt",
+      "source_sha256": "1e0beb84ae3322ef5ecc94807b04de96b36c17731b37c0a0592a937659eb0fe7",
+      "source_download": "buildifier_source",
+      "receipt": {
+        "go_version": "go1.26.5",
+        "main": {
+          "path": "github.com/bazelbuild/buildtools",
+          "version": "(devel)"
+        },
+        "modules": [
+          {
+            "path": "github.com/golang/protobuf",
+            "sum": "h1:LUVKkCeviFUMKqHa4tXIIij/lbhnMbP7Fn5wKdKkRh4=",
+            "version": "v1.5.0"
+          },
+          {
+            "path": "google.golang.org/protobuf",
+            "sum": "h1:uNO2rsAINq/JlFpSdYEKIZ0uKD/R9cpdv0T+yoGwGmI=",
+            "version": "v1.33.0"
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "match": "github.com/bazelbuild/buildtools",
+          "legal_outputs": ["buildtools-LICENSE"]
+        },
+        {
+          "match": "github.com/golang/protobuf",
+          "legal_outputs": ["golang-protobuf-LICENSE"]
+        },
+        {
+          "match": "go:stdlib",
+          "legal_outputs": ["go-LICENSE", "go-PATENTS"]
+        },
+        {
+          "match": "google.golang.org/protobuf",
+          "legal_outputs": ["protobuf-go-LICENSE"]
+        }
+      ]
+    },
+    "go_shfmt": {
+      "kind": "go_build_info",
+      "source_path": "images/closures/shfmt-go-build-info.txt",
+      "source_sha256": "392b0632345c166f49d45a08c09c46faeb0cf40636e6209326fa6460a92788f3",
+      "source_module": "shfmt",
+      "receipt": {
+        "go_version": "go1.26.5",
+        "main": {
+          "path": "mvdan.cc/sh/v3",
+          "sum": "h1:DP3TfgZhDkT7lerUdnp6PTGKyxxzz6T+cOlY/xEvfWk=",
+          "version": "v3.13.1"
+        },
+        "modules": [
+          {
+            "path": "github.com/google/renameio/v2",
+            "sum": "h1:qKZs+tfn+arruZZhQ7TKC/ergJunuJicWS6gLDt/dGw=",
+            "version": "v2.0.2"
+          },
+          {
+            "path": "github.com/rogpeppe/go-internal",
+            "sum": "h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=",
+            "version": "v1.14.1"
+          },
+          {
+            "path": "golang.org/x/sys",
+            "sum": "h1:omrd2nAlyT5ESRdCLYdm3+fMfNFE/+Rf4bDIQImRJeo=",
+            "version": "v0.42.0"
+          },
+          {
+            "path": "golang.org/x/term",
+            "sum": "h1:QCgPso/Q3RTJx2Th4bDLqML4W6iJiaXFq2/ftQF13YU=",
+            "version": "v0.41.0"
+          },
+          {
+            "path": "mvdan.cc/editorconfig",
+            "sum": "h1:D1D2wLYEYGpawWT5SpM5pRivgEgXjtEXwC9MWhEY0gQ=",
+            "version": "v0.3.0"
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "match": "github.com/google/renameio/v2",
+          "legal_outputs": ["renameio-LICENSE"]
+        },
+        {
+          "match": "github.com/rogpeppe/go-internal",
+          "legal_outputs": ["go-internal-LICENSE"]
+        },
+        {
+          "match": "go:stdlib",
+          "legal_outputs": ["go-LICENSE", "go-PATENTS"]
+        },
+        {
+          "match": "golang.org/x/sys",
+          "legal_outputs": ["x-sys-LICENSE"]
+        },
+        {
+          "match": "golang.org/x/term",
+          "legal_outputs": ["x-term-LICENSE"]
+        },
+        {
+          "match": "mvdan.cc/editorconfig",
+          "legal_outputs": ["editorconfig-LICENSE"]
+        },
+        {
+          "match": "mvdan.cc/sh/v3",
+          "legal_outputs": ["shfmt-LICENSE"]
+        }
+      ]
+    },
+    "julia": {
+      "kind": "julia_manifest",
+      "source_path": "images/julia/Manifest.toml",
+      "source_sha256": "68ac859b5d87a9f835ed8a30ed669b21bc7c7402e833f8b5ffc1a9260669d505",
+      "mappings": [
+        {
+          "match": "CommonMark@1.0.3#7e0e715804be2cfdc251d9a4bd10ace7a1b791e5",
+          "legal_outputs": ["commonmark-LICENSE"]
+        },
+        {
+          "match": "Glob@1.5.0#246c628cec062230b7d183aab88841fa94fcabe9",
+          "legal_outputs": ["glob-LICENSE.md"]
+        },
+        {
+          "match": "JuliaFormatter@2.12.3#local",
+          "legal_outputs": ["juliaformatter-LICENSE"]
+        },
+        {
+          "match": "JuliaSyntax@1.0.2#0d4b3dab95018bcf3925204475693d9f09dc45b8",
+          "legal_outputs": ["juliasyntax-LICENSE.md"]
+        },
+        {
+          "match": "PrecompileTools@1.3.4#edbeefc7a4889f528644251bdb5fc9ab5348bc2c",
+          "legal_outputs": ["precompiletools-LICENSE"]
+        },
+        {
+          "match": "Preferences@1.5.2#8b770b60760d4451834fe79dd483e318eee709c4",
+          "legal_outputs": ["preferences-LICENSE.md"]
+        }
+      ]
+    },
+    "ktlint": {
+      "kind": "gradle_runtime_classpath",
+      "source_path": "images/closures/ktlint-runtime-classpath.txt",
+      "source_sha256": "b85ac63c09dbbf12d25f50d1ba73ce7c409ac4e4a2f7aff83c46e060b33ac760",
+      "source_download": "ktlint",
+      "receipt": {
+        "source_commit": "5b30b47f598aeadb8c159c64ff0cd1a3e2a74dc5",
+        "components": [
+          "ch.qos.logback:logback-classic:1.3.14",
+          "ch.qos.logback:logback-core:1.3.14",
+          "com.github.ajalt.clikt:clikt-jvm:4.4.0",
+          "com.github.ajalt.colormath:colormath-jvm:3.5.0",
+          "com.github.ajalt.mordant:mordant-jvm:2.5.0",
+          "dev.drewhamilton.poko:poko-annotations-jvm:0.15.3",
+          "io.github.detekt.sarif4k:sarif4k-jvm:0.6.0",
+          "io.github.oshai:kotlin-logging-jvm:6.0.9",
+          "it.unimi.dsi:fastutil-core:8.5.12",
+          "net.java.dev.jna:jna:5.14.0",
+          "org.ec4j.core:ec4j-core:0.3.0",
+          "org.jetbrains.intellij.deps:trove4j:1.0.20200330",
+          "org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.24",
+          "org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.24",
+          "org.jetbrains.kotlin:kotlin-reflect:1.6.10",
+          "org.jetbrains.kotlin:kotlin-script-runtime:1.9.24",
+          "org.jetbrains.kotlin:kotlin-stdlib:1.9.24",
+          "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.4.1",
+          "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.4.1",
+          "org.jetbrains:annotations:13.0",
+          "org.jetbrains:markdown-jvm:0.7.0",
+          "org.slf4j:slf4j-api:2.0.7",
+          "project:ktlint:1.3.0"
+        ]
+      },
+      "mappings": [
+        {
+          "match": "ch.qos.logback:logback-classic:1.3.14",
+          "legal_outputs": ["logback-LICENSE.txt"]
+        },
+        {
+          "match": "ch.qos.logback:logback-core:1.3.14",
+          "legal_outputs": ["logback-LICENSE.txt"]
+        },
+        {
+          "match": "com.github.ajalt.clikt:clikt-jvm:4.4.0",
+          "legal_outputs": ["clikt-LICENSE"]
+        },
+        {
+          "match": "com.github.ajalt.colormath:colormath-jvm:3.5.0",
+          "legal_outputs": ["colormath-LICENSE"]
+        },
+        {
+          "match": "com.github.ajalt.mordant:mordant-jvm:2.5.0",
+          "legal_outputs": ["mordant-LICENSE.txt"]
+        },
+        {
+          "match": "dev.drewhamilton.poko:poko-annotations-jvm:0.15.3",
+          "legal_outputs": ["poko-LICENSE"]
+        },
+        {
+          "match": "io.github.detekt.sarif4k:sarif4k-jvm:0.6.0",
+          "legal_outputs": ["sarif4k-LICENSE"]
+        },
+        {
+          "match": "io.github.oshai:kotlin-logging-jvm:6.0.9",
+          "legal_outputs": ["kotlin-logging-LICENSE"]
+        },
+        {
+          "match": "it.unimi.dsi:fastutil-core:8.5.12",
+          "legal_outputs": ["fastutil-LICENSE-2.0"]
+        },
+        {
+          "match": "net.java.dev.jna:jna:5.14.0",
+          "legal_outputs": ["jna-LICENSE"]
+        },
+        {
+          "match": "org.ec4j.core:ec4j-core:0.3.0",
+          "legal_outputs": ["ec4j-LICENSE"]
+        },
+        {
+          "match": "org.jetbrains.intellij.deps:trove4j:1.0.20200330",
+          "legal_outputs": ["trove4j-LICENSE.txt"]
+        },
+        {
+          "match": "org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.24",
+          "legal_outputs": ["kotlin-LICENSE"]
+        },
+        {
+          "match": "org.jetbrains.kotlin:kotlin-daemon-embeddable:1.9.24",
+          "legal_outputs": ["kotlin-LICENSE"]
+        },
+        {
+          "match": "org.jetbrains.kotlin:kotlin-reflect:1.6.10",
+          "legal_outputs": ["kotlin-LICENSE"]
+        },
+        {
+          "match": "org.jetbrains.kotlin:kotlin-script-runtime:1.9.24",
+          "legal_outputs": ["kotlin-LICENSE"]
+        },
+        {
+          "match": "org.jetbrains.kotlin:kotlin-stdlib:1.9.24",
+          "legal_outputs": ["kotlin-LICENSE"]
+        },
+        {
+          "match": "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.4.1",
+          "legal_outputs": [
+            "kotlinx-serialization-LICENSE.txt"
+          ]
+        },
+        {
+          "match": "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.4.1",
+          "legal_outputs": [
+            "kotlinx-serialization-LICENSE.txt"
+          ]
+        },
+        {
+          "match": "org.jetbrains:annotations:13.0",
+          "legal_outputs": ["jetbrains-annotations.pom"]
+        },
+        {
+          "match": "org.jetbrains:markdown-jvm:0.7.0",
+          "legal_outputs": ["jetbrains-markdown-LICENSE"]
+        },
+        {
+          "match": "org.slf4j:slf4j-api:2.0.7",
+          "legal_outputs": ["slf4j-LICENSE.txt"]
+        },
+        {
+          "match": "project:ktlint:1.3.0",
+          "legal_outputs": ["ktlint-LICENSE"]
+        }
+      ]
+    },
+    "swift": {
+      "kind": "swift_package_resolved",
+      "source_path": "images/swift/Package.resolved",
+      "source_sha256": "599a6beab32b6e9164edaf89903fd30d5c4b9dcc46083b15ef7c4f886b386636",
+      "mappings": [
+        {
+          "match": "swift-argument-parser@1.8.2#6a52f3251125d74daf04fcbd5e6f08a75d074382",
+          "legal_outputs": [
+            "swift-argument-parser-LICENSE.txt"
+          ]
+        },
+        {
+          "match": "swift-cmark@0.8.0#924936d0427cb25a61169739a7660230bffa6ea6",
+          "legal_outputs": ["swift-cmark-COPYING"]
+        },
+        {
+          "match": "swift-markdown@0.8.0#3c6f9523da3a1ec2fd829673e472d95b8097a3b8",
+          "legal_outputs": [
+            "swift-markdown-LICENSE.txt",
+            "swift-markdown-NOTICE.txt"
+          ]
+        },
+        {
+          "match": "swift-syntax@603.0.2#79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+          "legal_outputs": ["swift-syntax-LICENSE.txt"]
+        }
+      ]
+    }
+  }
+}

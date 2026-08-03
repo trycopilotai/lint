@@ -1,0 +1,111 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/taplo",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/taplo/cargo-lock-legal-payload.txt",
+      "role": "license",
+      "sha256": "f91afbffc7816fa12bde527576fd4d4060e7b400f06ee8e3907d74bd454663ef",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/taplo/manifest.json",
+      "role": "license",
+      "sha256": "6f420251152ff38c5783766bdd80577b0631b9c222b65e9f7259ec10d52ad1bb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/taplo/musl-COPYRIGHT",
+      "role": "license",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/taplo/rust-1.87-LICENSE-APACHE",
+      "role": "license",
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/taplo/rust-1.87-LICENSE-MIT",
+      "role": "license",
+      "sha256": "b71bd43a069ca0641a9ecfe585ca7b3c53b5cc1608f8b68321168698e28b5ea1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/taplo/taplo-LICENSE",
+      "role": "license",
+      "sha256": "b23690ab205e06bf09725ef88e0b321175cbc2dd4d9f8ec7f7cd0577302c244d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "d598ef8ddba8750aa7b0ad33dcd0ec197cd903a690bcfa3220b91692302a9327",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0555",
+      "path": "taplo",
+      "role": "entrypoint",
+      "sha256": "dad2faf6377d2daa4f4fabf459fe7ccfb98a5448f0d4bca8270ca9acb0409bfe",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "taplo"
+}

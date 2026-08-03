@@ -1,0 +1,69 @@
+{
+  "entries": [
+    {
+      "component": "CommonMark.jl",
+      "license": "MIT",
+      "path": "commonmark-LICENSE",
+      "payload_sha256": "1840fe1b989208725f1c45bfffb8ba8714389bea3311491bfd00d1d3fd3c6dc4",
+      "source_sha256": "1840fe1b989208725f1c45bfffb8ba8714389bea3311491bfd00d1d3fd3c6dc4",
+      "source_url": "https://raw.githubusercontent.com/MichaelHatherly/CommonMark.jl/v1.0.3/LICENSE",
+      "version": "1.0.3"
+    },
+    {
+      "component": "Glob.jl",
+      "license": "MIT",
+      "path": "glob-LICENSE.md",
+      "payload_sha256": "7bd205a2f6e3d02eb3f68ed38712e621b849e67228b131f1a6a55eb058bb34fb",
+      "source_sha256": "7bd205a2f6e3d02eb3f68ed38712e621b849e67228b131f1a6a55eb058bb34fb",
+      "source_url": "https://raw.githubusercontent.com/vtjnash/Glob.jl/v1.5.0/LICENSE.md",
+      "version": "1.5.0"
+    },
+    {
+      "component": "Julia and bundled components",
+      "license": "MIT and other terms in the payload",
+      "path": "julia-LICENSE.md",
+      "payload_sha256": "c349becf11ee093ce16f0c0526c0a26c970444171ce9a2a281f230dc07dbfb66",
+      "source_sha256": "c349becf11ee093ce16f0c0526c0a26c970444171ce9a2a281f230dc07dbfb66",
+      "source_url": "https://raw.githubusercontent.com/JuliaLang/julia/v1.12.6/LICENSE.md",
+      "version": "1.12.6"
+    },
+    {
+      "component": "JuliaFormatter",
+      "license": "MIT",
+      "path": "juliaformatter-LICENSE",
+      "payload_sha256": "8ac3e9b27630654348e4c4eccab4aa00d397afd117343596d4d4b441f82dd855",
+      "source_sha256": "8ac3e9b27630654348e4c4eccab4aa00d397afd117343596d4d4b441f82dd855",
+      "source_url": "https://raw.githubusercontent.com/JuliaEditorSupport/JuliaFormatter.jl/v2.12.3/LICENSE",
+      "version": "2.12.3"
+    },
+    {
+      "component": "JuliaSyntax.jl",
+      "license": "MIT",
+      "path": "juliasyntax-LICENSE.md",
+      "payload_sha256": "b38844ba3d737e9550f6fb161718f7d254dd8adb5d984418340fbeb04ffd1e14",
+      "source_sha256": "b38844ba3d737e9550f6fb161718f7d254dd8adb5d984418340fbeb04ffd1e14",
+      "source_url": "https://raw.githubusercontent.com/JuliaLang/JuliaSyntax.jl/v1.0.2/LICENSE.md",
+      "version": "1.0.2"
+    },
+    {
+      "component": "PrecompileTools.jl",
+      "license": "MIT",
+      "path": "precompiletools-LICENSE",
+      "payload_sha256": "4102721694be71a80322c1fd3f3e33b9a017faaf0a0eb785ebd0c9558ddeffeb",
+      "source_sha256": "4102721694be71a80322c1fd3f3e33b9a017faaf0a0eb785ebd0c9558ddeffeb",
+      "source_url": "https://raw.githubusercontent.com/JuliaLang/PrecompileTools.jl/v1.3.4/LICENSE",
+      "version": "1.3.4"
+    },
+    {
+      "component": "Preferences.jl",
+      "license": "MIT",
+      "path": "preferences-LICENSE.md",
+      "payload_sha256": "7d20d9825893f292496271edd11fda1e39dacacf64d6c0fb8c8b10bdf66cf0fb",
+      "source_sha256": "7d20d9825893f292496271edd11fda1e39dacacf64d6c0fb8c8b10bdf66cf0fb",
+      "source_url": "https://raw.githubusercontent.com/JuliaPackaging/Preferences.jl/v1.5.2/LICENSE.md",
+      "version": "1.5.2"
+    }
+  ],
+  "schema_version": 4,
+  "target": "julia"
+}

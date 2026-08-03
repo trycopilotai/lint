@@ -1,0 +1,711 @@
+{
+  "architecture": "amd64",
+  "entries": [
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/db",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/installed",
+      "role": "runtime",
+      "sha256": "713b2843cdad6b4f5229dd4ee46f1ffafadda0dea754b3bbf8384906412f7f91",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0600",
+      "path": "lib/apk/db/lock",
+      "role": "runtime",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/scripts.tar.gz",
+      "role": "runtime",
+      "sha256": "5c01f2e9bbb9bf45531b564699af3476a7e56ad373b07c5192b07de159d94a4d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lib/apk/db/triggers",
+      "role": "runtime",
+      "sha256": "9619fc74d859f3040758001f54518496ac2854e1f798ec8254dedba702b583d8",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/apk/exec",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/firmware",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/ld-musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "type": "regular"
+    },
+    {
+      "link_target": "ld-musl-x86_64.so.1",
+      "mode": "0777",
+      "path": "lib/libc.musl-x86_64.so.1",
+      "role": "runtime",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/modules-load.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "lib/sysctl.d",
+      "role": "runtime",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/lint",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/LICENSE",
+      "role": "license",
+      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+      "role": "license",
+      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "licenses/xml",
+      "role": "license",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/xml/libxml2-Copyright",
+      "role": "license",
+      "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/xml/manifest.json",
+      "role": "license",
+      "sha256": "eb98ee7e046225ee89190bb9c3a3ef45b313e10e37f86a8a143f3f27aee8ce7c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0664",
+      "path": "licenses/xml/musl-COPYRIGHT",
+      "role": "license",
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "lint-tool-version",
+      "role": "formatter",
+      "sha256": "f6602b797b09854749fbabaf761092f0bd53b614dab6ed0e4b5a052bc04add2a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/bin",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/bin/xml2-config",
+      "role": "formatter",
+      "sha256": "a192f4fe1dc0e7787245a6a00884cf2cc73718ab1bf99ed42aa8697cf26cc609",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/bin/xmlcatalog",
+      "role": "formatter",
+      "sha256": "4b378875ca4eaf8ea49d66b5acc25aa2e6b8c2d67f8b977b1f5610e52ead464f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/bin/xmllint",
+      "role": "formatter",
+      "sha256": "a6ab60ed2d4e0243d2cb80dfef481ee64ddb5c845b533498343df71dfee8ecd1",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/include",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/include/libxml2",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/include/libxml2/libxml",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/HTMLparser.h",
+      "role": "formatter",
+      "sha256": "c4f81e8cbd194fbd4c121db47ff0eadf4b3efa9d0c780300787fb0e08372ffa4",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/HTMLtree.h",
+      "role": "formatter",
+      "sha256": "d2280b971a031a5ed2f7f8ecff4906a9df6c3f35cb40c588eb05d60e24d8fdcb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/SAX.h",
+      "role": "formatter",
+      "sha256": "777fc2057fd2a39a6ca7648ee5f148014a65643e750cc5a2fe2e2fc3b4a0ff79",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/SAX2.h",
+      "role": "formatter",
+      "sha256": "d3228dc9e18dec65660f7ff43eb5af2cb7a9e6dad00369f76f058300c0cb1b37",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/c14n.h",
+      "role": "formatter",
+      "sha256": "c9adaf74b4d5c0f5e23e06deb9194e7d595142914a8c36f5e725010a37e6a7c6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/catalog.h",
+      "role": "formatter",
+      "sha256": "8418816149bed7463eb13fd6d260354a91f1819d2180685dc8d285181932b9c5",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/chvalid.h",
+      "role": "formatter",
+      "sha256": "00acfc327dc00dfb2dd640ab4e1156effd8f5fb8311f0c20d2707440456dc7ce",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/debugXML.h",
+      "role": "formatter",
+      "sha256": "1380bb85a7dccdbfebb1cc9ba9921873e6be11cbd4b0813824754feaa5aa5820",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/dict.h",
+      "role": "formatter",
+      "sha256": "12302fd488f2b735c791f2b1d9fa5b2008dd5e40f94da12e56da0aebea6e1321",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/encoding.h",
+      "role": "formatter",
+      "sha256": "0eabe928a57824d52b95daba1ee3e663f004d8622800f8c1f40177ea15a8a74c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/entities.h",
+      "role": "formatter",
+      "sha256": "ff61a6eedb81b52ad7e6bd5c005a705c871587c68314d94f7a3511f4afff8739",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/globals.h",
+      "role": "formatter",
+      "sha256": "4e4a9866916b928b201d0ff4a544d90098c6b639da50ca25cc9c7ce395c26349",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/hash.h",
+      "role": "formatter",
+      "sha256": "ee8ba2adce87d740581d6763e783828b622ea8da93a5e9ac4ff36436f607bc75",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/list.h",
+      "role": "formatter",
+      "sha256": "ba1174b44be729cde0eb443180968def8a2879db54199af670e965d331648912",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/nanoftp.h",
+      "role": "formatter",
+      "sha256": "b902e60279e35a4818cf1834a04e654a9cf51b5136f785e89179047304cc52ef",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/nanohttp.h",
+      "role": "formatter",
+      "sha256": "8000d0196f6e6defd5e2468118cf3b534b15da7818b7db18167259ed857d4b7e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/parser.h",
+      "role": "formatter",
+      "sha256": "3062aaa97d435de0afc34630162c0b3c8a994e76854a92a0e3a217b6297545e2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/parserInternals.h",
+      "role": "formatter",
+      "sha256": "543da365c6c72699926ff11c0f4afa6c1990f028d7b8fcaaa30de2f284ae0718",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/pattern.h",
+      "role": "formatter",
+      "sha256": "169dca568e076cba001c9a445b22fb73ffa64c9699fd785abcfaf31a8e22337a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/relaxng.h",
+      "role": "formatter",
+      "sha256": "7d46056b24c572f8a656637cb287fe462e880c7a1fbcd32d5ca7e618f838564c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/schemasInternals.h",
+      "role": "formatter",
+      "sha256": "e05a6496f4ca8e5017a94812b25bba7856110d7d85d91590ed50780ea6d98cdf",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/schematron.h",
+      "role": "formatter",
+      "sha256": "a3d96d68d801f984b0eaab68d2b193b571ec3b27ba50bbc1c66d3f4dca187f0e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/threads.h",
+      "role": "formatter",
+      "sha256": "8cee9610d9e3ec2146af6a074a2c6161bd87629e55ab231e61c0fbd8686142d2",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/tree.h",
+      "role": "formatter",
+      "sha256": "29bb46867633b5da9ac289f72f8667863a14b7105843f8fa2b16df21b26d0496",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/uri.h",
+      "role": "formatter",
+      "sha256": "f761d9ac289b051ec7bbc73ae723468fa80f96461dc664fe5781bc009a92ac90",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/valid.h",
+      "role": "formatter",
+      "sha256": "e51b4ca60f3f7921b3be0e78fe750f202b9d0a47fafc0750a806d665239f1fb9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xinclude.h",
+      "role": "formatter",
+      "sha256": "54df174ccb9f272aa5483b9c18c83153ca6bbea93e706453240ad09381fad037",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xlink.h",
+      "role": "formatter",
+      "sha256": "6b0495de5f706d571995cde9e41ae6673d906a53899f7cae2061108ddad00d39",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlIO.h",
+      "role": "formatter",
+      "sha256": "e623b00dcabbf5c559567fcea561cc97f03b9fb3c8642d9edcaf70ade988385d",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlautomata.h",
+      "role": "formatter",
+      "sha256": "41eeba10a1dc5f727694618a5513ffef4b1dcb0c27169d91b264e54eedad7d08",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlerror.h",
+      "role": "formatter",
+      "sha256": "ff6fb62996e5478f08ef99258c4f49b1a0830f93565ff3a92f47a316f792202f",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlexports.h",
+      "role": "formatter",
+      "sha256": "36f6cc28976fed8b6c8587fd521f14ee1f4b96615f10e9b7c35c76ef2876e525",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlmemory.h",
+      "role": "formatter",
+      "sha256": "b8a8addf9376aa9bee7d3f5b6f8b58d2af4c2c284921bd418da5b27b70fe1085",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlmodule.h",
+      "role": "formatter",
+      "sha256": "ed0d48e89b3f1aac1618d4f74e87ee64bde0a8b4c7057fa56a03b56703af67cb",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlreader.h",
+      "role": "formatter",
+      "sha256": "11fd34156675d65c73bfa83c69c8dda3d87a56553df92a5ab713bd95ab525c16",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlregexp.h",
+      "role": "formatter",
+      "sha256": "7df116616ee4319f0654ce00b467bc165dbaf38ed318b1193d4a474a73ee1298",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlsave.h",
+      "role": "formatter",
+      "sha256": "fb99635f075e4d1c2fe858b16ef0d8853839c5df971f5dec54dcb29b872ccbbe",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlschemas.h",
+      "role": "formatter",
+      "sha256": "0e4eeabaa87ede8e7deb65e25078bfd0caa1ddfe5c7c9a98a043f2b870fa10fd",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlschemastypes.h",
+      "role": "formatter",
+      "sha256": "9c9b26c8badbcbf12e580ad301bc261051a4b861a9cf5801b79585b218886622",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlstring.h",
+      "role": "formatter",
+      "sha256": "479db08576ff1a61dee723ca0285893e19d806a23c1c287f75be5242f22e8aaa",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlunicode.h",
+      "role": "formatter",
+      "sha256": "8a5b06d87968144cdb77908a4d6c3f8b04012a26f0cf64b186869d240a696f7e",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlversion.h",
+      "role": "formatter",
+      "sha256": "26723b88fd054d366ada76faf5ba8f2b991f3482403072e5f58f10517b28a8cc",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xmlwriter.h",
+      "role": "formatter",
+      "sha256": "9cf89ac9e8485869db835ed25643fe58a0dbb7ee30f9191d6c400ffd7c1405d9",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xpath.h",
+      "role": "formatter",
+      "sha256": "5f6392d4a0fa7fe97407738baf692a99be31218cb786cc2225d28ea66c413f9c",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xpathInternals.h",
+      "role": "formatter",
+      "sha256": "4daa466e29c75e91e70556911278542c65ac3168c7ce0287ccb566bf0ce58807",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/include/libxml2/libxml/xpointer.h",
+      "role": "formatter",
+      "sha256": "f39e26a9380e0035c3f1c26f0a5ae2bc84ec7d1f2a172af809541c74eb1697b6",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/lib",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/lib/cmake",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/lib/cmake/libxml2",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/lib/cmake/libxml2/libxml2-config.cmake",
+      "role": "formatter",
+      "sha256": "c613b651dd730bdf366f6cbbdba52b0022c2566550c381cab1b966a999e087c7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/lib/libxml2.la",
+      "role": "formatter",
+      "sha256": "b18fe2fececde186bd2bb26ceb4fd308381454d46b6b63758f32dd12c0e782eb",
+      "type": "regular"
+    },
+    {
+      "link_target": "libxml2.so.16.1.3",
+      "mode": "0777",
+      "path": "opt/libxml2/lib/libxml2.so",
+      "role": "formatter",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": "libxml2.so.16.1.3",
+      "mode": "0777",
+      "path": "opt/libxml2/lib/libxml2.so.16",
+      "role": "formatter",
+      "sha256": null,
+      "type": "symlink"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/lib/libxml2.so.16.1.3",
+      "role": "formatter",
+      "sha256": "623a97c3e608d5fb5fe18b3f765781ef2a762ed405087beb8764d10dfe83aa71",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "opt/libxml2/lib/pkgconfig",
+      "role": "formatter",
+      "sha256": null,
+      "type": "directory"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "opt/libxml2/lib/pkgconfig/libxml-2.0.pc",
+      "role": "formatter",
+      "sha256": "82a53ba869a5e0c446953a4459c46b24c3fabc49b240362911a06d48e64bcd33",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0755",
+      "path": "xml-format",
+      "role": "entrypoint",
+      "sha256": "9cf8477af7fca0f4a30064c57a2c8f9c20285db26dbe7befd56f9866c461d0e1",
+      "type": "regular"
+    }
+  ],
+  "schema_version": 1,
+  "target": "xml"
+}

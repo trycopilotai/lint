@@ -3,8 +3,13 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
+
+
+REQUIREMENT_NAME_PATTERN = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?")
+REQUIREMENT_SEPARATOR_PATTERN = re.compile(r"[-_.]+")
 
 
 def requirement_records(section: list[str]) -> list[str]:
@@ -19,6 +24,16 @@ def requirement_records(section: list[str]) -> list[str]:
     if current:
         records.append("\n".join(current))
     return records
+
+
+def canonical_requirement_name(record: str) -> str:
+    """Return the normalized distribution name used for sorting."""
+
+    first_line = record.splitlines()[0].strip()
+    match = REQUIREMENT_NAME_PATTERN.match(first_line)
+    if match is None:
+        return first_line.casefold()
+    return REQUIREMENT_SEPARATOR_PATTERN.sub("-", match.group(0)).casefold()
 
 
 def formatted(text: str) -> str:
@@ -41,7 +56,7 @@ def formatted(text: str) -> str:
                 comments.append(record)
             else:
                 requirements.append(record)
-        requirements.sort(key=str.casefold)
+        requirements.sort(key=canonical_requirement_name)
         output.append("\n".join(comments + requirements))
     if not output:
         return ""

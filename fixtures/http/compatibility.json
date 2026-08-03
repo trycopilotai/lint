@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "limits": {
+    "max_files": 64,
+    "max_file_bytes": 2097152,
+    "max_request_bytes": 16777216,
+    "timeout_seconds_per_file": 30
+  },
+  "cases": [
+    {
+      "name": "clean check",
+      "request": {
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "input_bytes_base64": "YWxwaGE9PTEKemV0YT09MQo="
+          }
+        ]
+      },
+      "status_code": 200,
+      "response": {
+        "status": "pass",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "status": "pass",
+            "language": "requirements",
+            "changed": false,
+            "diagnostics": []
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "name": "changed check",
+      "request": {
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "input_bytes_base64": "emV0YT09MQphbHBoYT09MQo="
+          }
+        ]
+      },
+      "status_code": 200,
+      "response": {
+        "status": "fail",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "status": "changed",
+            "language": "requirements",
+            "changed": true,
+            "diagnostics": [],
+            "output_bytes_base64": "YWxwaGE9PTEKemV0YT09MQo="
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "name": "changed fix",
+      "request": {
+        "mode": "fix",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "input_bytes_base64": "emV0YT09MQphbHBoYT09MQo="
+          }
+        ]
+      },
+      "status_code": 200,
+      "response": {
+        "status": "pass",
+        "mode": "fix",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "status": "changed",
+            "language": "requirements",
+            "changed": true,
+            "diagnostics": [],
+            "output_bytes_base64": "YWxwaGE9PTEKemV0YT09MQo="
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "name": "malformed json",
+      "request": {
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "data.json",
+            "input_bytes_base64": "eyJhIjo="
+          }
+        ]
+      },
+      "status_code": 200,
+      "response": {
+        "status": "fail",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "data.json",
+            "status": "fail",
+            "language": "json",
+            "changed": false,
+            "diagnostics": [
+              {
+                "severity": "error",
+                "message": "Expecting value",
+                "code": "json_parse_error",
+                "line": 1,
+                "column": 6
+              }
+            ]
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "name": "clean and malformed are partial",
+      "request": {
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "input_bytes_base64": "YWxwaGE9PTEKemV0YT09MQo="
+          },
+          {
+            "path": "data.json",
+            "input_bytes_base64": "eyJhIjo="
+          }
+        ]
+      },
+      "status_code": 200,
+      "response": {
+        "status": "partial",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "data.json",
+            "status": "fail",
+            "language": "json",
+            "changed": false,
+            "diagnostics": [
+              {
+                "severity": "error",
+                "message": "Expecting value",
+                "code": "json_parse_error",
+                "line": 1,
+                "column": 6
+              }
+            ]
+          },
+          {
+            "path": "requirements.txt",
+            "status": "pass",
+            "language": "requirements",
+            "changed": false,
+            "diagnostics": []
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "name": "unsupported language",
+      "request": {
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "sample.unknown",
+            "input_bytes_base64": "c2FtcGxlCg=="
+          }
+        ]
+      },
+      "status_code": 200,
+      "response": {
+        "status": "fail",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "sample.unknown",
+            "status": "unsupported",
+            "language": null,
+            "changed": false,
+            "diagnostics": [
+              {
+                "severity": "error",
+                "message": "file language is unsupported",
+                "code": "unsupported_language"
+              }
+            ]
+          }
+        ],
+        "diagnostics": []
+      }
+    },
+    {
+      "name": "invalid mode",
+      "request": {
+        "mode": "invalid",
+        "policy_id": "default",
+        "files": []
+      },
+      "status_code": 400,
+      "response": {
+        "status": "error",
+        "mode": "unknown",
+        "policy_id": "default",
+        "files": [],
+        "diagnostics": [
+          {
+            "severity": "error",
+            "message": "mode must be \"check\" or \"fix\"",
+            "code": "invalid_mode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing mode",
+      "request": {
+        "policy_id": "default",
+        "files": []
+      },
+      "status_code": 400,
+      "response": {
+        "status": "error",
+        "mode": "unknown",
+        "policy_id": "default",
+        "files": [],
+        "diagnostics": [
+          {
+            "severity": "error",
+            "message": "mode must be \"check\" or \"fix\"",
+            "code": "invalid_mode"
+          }
+        ]
+      }
+    },
+    {
+      "name": "unsupported policy",
+      "request": {
+        "mode": "check",
+        "policy_id": "other",
+        "files": []
+      },
+      "status_code": 400,
+      "response": {
+        "status": "error",
+        "mode": "check",
+        "policy_id": "other",
+        "files": [],
+        "diagnostics": [
+          {
+            "severity": "error",
+            "message": "unsupported policy_id: other",
+            "code": "unsupported_policy"
+          }
+        ]
+      }
+    },
+    {
+      "name": "missing policy",
+      "request": {
+        "mode": "check",
+        "files": []
+      },
+      "status_code": 400,
+      "response": {
+        "status": "error",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [],
+        "diagnostics": [
+          {
+            "severity": "error",
+            "message": "policy_id is not supported",
+            "code": "unsupported_policy"
+          }
+        ]
+      }
+    },
+    {
+      "name": "runner error",
+      "fault": "engine",
+      "request": {
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "input_bytes_base64": "YWxwaGE9PTEKemV0YT09MQo="
+          }
+        ]
+      },
+      "status_code": 400,
+      "response": {
+        "status": "error",
+        "mode": "check",
+        "policy_id": "default",
+        "files": [
+          {
+            "path": "requirements.txt",
+            "status": "error",
+            "language": "requirements",
+            "changed": false,
+            "diagnostics": [
+              {
+                "severity": "error",
+                "message": "formatter engine unavailable",
+                "code": "runner_error"
+              }
+            ]
+          }
+        ],
+        "diagnostics": []
+      }
+    }
+  ]
+}

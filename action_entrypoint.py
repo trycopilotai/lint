@@ -43,6 +43,15 @@ def command() -> list[str]:
     paths = os.environ.get("LINT_INPUT_PATHS", "")
     files_from0 = os.environ.get("LINT_INPUT_FILES_FROM0", "")
     modified = boolean_input("LINT_INPUT_MODIFIED")
+    selection_count = 0
+    if paths != "":
+        selection_count += 1
+    if files_from0 != "":
+        selection_count += 1
+    if modified:
+        selection_count += 1
+    if selection_count > 1:
+        raise ValueError("only one selection input may be set")
     if paths != "":
         arguments.extend(shlex.split(paths))
     elif files_from0 != "":
