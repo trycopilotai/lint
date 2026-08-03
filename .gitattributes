@@ -1,1 +1,17 @@
 images/licenses/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+
+# evidence/demo-manifest.json records a SHA-256 for each path
+# below, and scripts/demo.sh is read by a POSIX shell. A
+# checkout that translated their line endings would hand the
+# verifier different bytes than the ones it hashed, and would
+# hand the shell a script full of carriage returns. Git for
+# Windows defaults to core.autocrlf=true, which is what
+# GitHub's Windows runner checks out with, so the canonical
+# bytes have to be stated here rather than assumed.
+assets/demo.svg -text
+evidence/demo-transcript.txt -text
+languages.json -text
+lint.py -text
+scripts/demo.sh -text
+scripts/generate_demo.py -text
+skills/lint/SKILL.md -text

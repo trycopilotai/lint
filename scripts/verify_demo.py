@@ -8,6 +8,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -43,6 +44,10 @@ ALLOWED_EVIDENCE_DELTA = frozenset(
         OUTPUT_PATH,
     }
 )
+# Either shell runs the script; Git for Windows installs both
+# and GitHub's Windows runner puts them on PATH.
+POSIX_SHELLS = ("bash", "sh")
+WINDOWS = os.name == "nt"
 
 
 def sha256(payload: bytes) -> str:
@@ -139,6 +144,28 @@ def copy_current_source(destination: Path) -> None:
     )
 
 
+def demo_command(workspace: str) -> list[str]:
+    """Return the argument vector that runs the demo here.
+
+    `scripts/demo.sh` is a POSIX shell program with no Windows
+    executable form, so handing its path to CreateProcess fails
+    with WinError 193 before the demo runs at all. Naming the
+    shell explicitly runs the same script with the same
+    arguments, and leaves its return code and stderr to be
+    checked exactly as before.
+    """
+
+    invocation = ["./scripts/demo.sh", workspace]
+    if not WINDOWS:
+        return invocation
+    for name in POSIX_SHELLS:
+        shell = shutil.which(name)
+        if shell is None:
+            continue
+        return [shell, *invocation]
+    raise ValueError("demo replay requires bash or sh on PATH")
+
+
 def run_demo(input_commit: str | None, use_git: bool) -> bytes:
     with tempfile.TemporaryDirectory(prefix="lint-demo-verify-") as directory:
         checkout = Path(directory) / "lint"
@@ -151,7 +178,7 @@ def run_demo(input_commit: str | None, use_git: bool) -> bytes:
         else:
             copy_current_source(checkout)
         completed = subprocess.run(
-            ["./scripts/demo.sh", "demo-work"],
+            demo_command("demo-work"),
             cwd=checkout,
             check=False,
             stdout=subprocess.PIPE,
