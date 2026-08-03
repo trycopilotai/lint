@@ -331,6 +331,10 @@ USER 65532:65532
 ENTRYPOINT ["/bin/rustfmt"]
 
 FROM ${JAVA_JDK_IMAGE} AS kotlin-build
+RUN apk add --no-cache \
+      libexpat=2.8.2-r0 \
+      p11-kit=0.26.2-r0 \
+      p11-kit-trust=0.26.2-r0
 ADD --checksum=sha256:01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985 \
     https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint \
     /ktlint
