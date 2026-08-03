@@ -861,19 +861,37 @@ class FormattingTest(unittest.TestCase):
     def test_windows_npx_handles_a_command_metacharacter_in_a_filename(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            path = root / "a&ver&.js"
+            project = root / "project"
+            project.mkdir()
+            launcher = root / "node-install"
+            entrypoint = launcher / "node_modules" / "npm" / "bin" / "npx-cli.js"
+            entrypoint.parent.mkdir(parents=True)
+            entrypoint.write_text(
+                "const fs = require('fs');\n"
+                "const file = process.argv[process.argv.length - 1];\n"
+                "fs.writeFileSync(file, 'const value = { answer: 42 };\\n');\n",
+                encoding="utf-8",
+            )
+            (launcher / "npx.cmd").write_text(
+                "@echo off\r\nexit /b 97\r\n",
+                encoding="utf-8",
+            )
+            path = project / "a&ver&.js"
             path.write_text("const value={answer:42};\n", encoding="utf-8")
+            env = os.environ.copy()
+            env["PATH"] = f"{launcher}{os.pathsep}{env['PATH']}"
             completed = subprocess.run(
                 [
                     sys.executable,
                     str(ROOT / "lint.py"),
                     "--cwd",
-                    str(root),
+                    str(project),
                     "--write",
                     "--json",
                     path.name,
                 ],
                 check=False,
+                env=env,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
