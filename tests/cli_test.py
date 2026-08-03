@@ -470,8 +470,19 @@ class FormattingTest(unittest.TestCase):
         self.assertNotEqual(root, formatter_cwd)
         self.assertNotIn(root, formatter_cwd.parents)
         self.assertFalse(formatter_cwd.exists())
-        self.assertEqual(0o700, observed["root_mode"])
-        self.assertEqual(0o600, observed["file_mode"])
+        # Windows has no POSIX permission bits. CPython synthesizes
+        # st_mode there from the read-only attribute alone, so every
+        # directory reports 0o777 and every writable file reports
+        # 0o666 no matter what mkdtemp and chmod requested. Assert the
+        # modes the running platform can actually report; every other
+        # assertion in this test is platform independent.
+        expected_root_mode = 0o700
+        expected_file_mode = 0o600
+        if os.name == "nt":
+            expected_root_mode = 0o777
+            expected_file_mode = 0o666
+        self.assertEqual(expected_root_mode, observed["root_mode"])
+        self.assertEqual(expected_file_mode, observed["file_mode"])
 
     def test_julia_path_is_passed_as_an_argument(self) -> None:
         language = LINT.Language(
