@@ -565,8 +565,6 @@ class ReleaseWorkflowTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             repository = Path(directory) / "release"
             repository.mkdir()
-            script_path = Path(directory) / "controller.sh"
-            script_path.write_text(script, encoding="utf-8")
             subprocess.run(
                 ["git", "init", "-q", "-b", "main", str(repository)], check=True
             )
@@ -638,7 +636,8 @@ class ReleaseWorkflowTest(unittest.TestCase):
                         "--norc",
                         "-eo",
                         "pipefail",
-                        str(script_path),
+                        "-c",
+                        script,
                     ],
                     cwd=repository,
                     env=environment,
