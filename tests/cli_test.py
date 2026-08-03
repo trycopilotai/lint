@@ -786,6 +786,40 @@ class FormattingTest(unittest.TestCase):
                     )
                 self.assertIn(install_command, str(caught.exception))
 
+    def test_npx_formatter_failure_is_not_a_dependency_failure(self) -> None:
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=1,
+            stdout=b"",
+            stderr=(
+                b"npm error command failed\n"
+                b"npm error SyntaxError: JSON Error in fixture.json\n"
+            ),
+        )
+        language = LINT.Language(
+            id="json",
+            family="prettier",
+            extensions=(".json",),
+            filenames=(),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "fixture.json"
+            path.write_text('{"value":', encoding="utf-8")
+            with mock.patch.object(
+                LINT.subprocess,
+                "run",
+                return_value=completed,
+            ), self.assertRaises(LINT.FormatterError) as caught:
+                LINT.run_formatter(
+                    language=language,
+                    path=path,
+                    cwd=root,
+                    timeout_seconds=30,
+                )
+
+        self.assertNotIsInstance(caught.exception, LINT.EngineError)
+
     def test_version_mismatch_names_an_exact_install_command(self) -> None:
         language = LINT.Language(
             id="python",
