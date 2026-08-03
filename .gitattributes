@@ -11,6 +11,13 @@ images/julia/Manifest.toml -text
 images/julia/Project.toml -text
 images/swift/Package.resolved -text
 
+# Golden fixtures, canonical OCI inventories, and comparison
+# captures are compared as exact bytes rather than host-native
+# text files.
+fixtures/** -text
+images/inventories/** -text
+evidence/comparison-source-excerpts/** -text
+
 # evidence/demo-manifest.json records a SHA-256 for each path
 # below, and scripts/demo.sh is read by a POSIX shell. A
 # checkout that translated their line endings would hand the
