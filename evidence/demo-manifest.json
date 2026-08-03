@@ -5,8 +5,8 @@
     "assets/demo.svg": "38074406b19fc7c14da374e72834d9903346473485cd7ade50940e910b5a58c0",
     "evidence/demo-transcript.txt": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065"
   },
-  "input_commit": "b6dc40e418db7b6f60d4609d3247b359ddc8ae4a",
-  "input_tree": "bc009eaa23f092efe5b29cda45b5f2776fb3ff36",
+  "input_commit": "1444d30d15910cd1c8f35245aac4c07f45a4499c",
+  "input_tree": "3dfa0e0daae9b488a5cb71c40e07e411b49b34f4",
   "invocation": "./scripts/demo.sh demo-work",
   "invocation_date": "2026-08-03",
   "output_path": "evidence/demo-transcript.txt",
@@ -21,7 +21,7 @@
   "schema_version": 2,
   "source_sha256": {
     "languages.json": "b3fc78139712be1af133489766fb308bb02fc35f80e7bbb66899674316fc0602",
-    "lint.py": "fd4be7ff5aa116d66c87270c2debf8384d02faf628fc7e99fe3829f459a993ff",
+    "lint.py": "83eba746ad5de6607a7242ead4d8bdc311c4ce9635fa58827385d4beaeda28c3",
     "scripts/demo.sh": "a1085f8d35a42407eec2230068d77f7423fd28a40556ead6a7861caa0d088f3c",
     "scripts/generate_demo.py": "ab75ee01a79c02c54259fc9c2f65a0114e47a3be7ee60fb44e25392f439f6524",
     "skills/lint/SKILL.md": "7f55e67977b54af2da441c8ca0bcf98c0451eee2da96e7bdb3f6bba629d50493"
