@@ -28,6 +28,7 @@ evidence/comparison-source-excerpts/** -text
 # bytes have to be stated here rather than assumed.
 assets/demo.svg -text
 evidence/demo-transcript.txt -text
+images/matrix.json -text
 languages.json -text
 lint.py -text
 scripts/demo.sh -text
