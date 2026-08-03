@@ -581,6 +581,16 @@ def select_paths(
     return git_paths(cwd, modified=modified)
 
 
+def npx_executable() -> str:
+    if os.name == "nt":
+        return "npx.cmd"
+    return "npx"
+
+
+def is_npx_executable(executable: str) -> bool:
+    return Path(executable).name.lower() in {"npx", "npx.cmd"}
+
+
 def command_for(language: Language, path: Path) -> list[str]:
     versions = tool_versions()
     family = language.family
@@ -593,7 +603,7 @@ def command_for(language: Language, path: Path) -> list[str]:
         ]
     if family == "prettier":
         executable = [
-            "npx",
+            npx_executable(),
             "-y",
             f"prettier@{versions['prettier']}",
         ]
@@ -616,7 +626,7 @@ def command_for(language: Language, path: Path) -> list[str]:
         return executable
     if family == "buildifier":
         executable = [
-            "npx",
+            npx_executable(),
             "-y",
             f"@bazel/buildifier@{versions['buildifier']}",
         ]
@@ -1200,7 +1210,7 @@ def run_formatter(
                 detail = standard_output
             if detail == "":
                 detail = f"formatter exited {completed.returncode}"
-            if command[0] == "npx":
+            if is_npx_executable(command[0]):
                 if npx_engine_failure(completed.returncode, detail):
                     raise EngineError(f"{detail}; {formatter_install_hint(language)}")
             raise FormatterError(detail)
