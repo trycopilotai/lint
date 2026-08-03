@@ -53,7 +53,13 @@ class DemoEvidenceTest(unittest.TestCase):
         transcript = self.transcript()
         transcript_path = root / "evidence" / "demo-transcript.txt"
         transcript_path.parent.mkdir(parents=True, exist_ok=True)
-        transcript_path.write_text(transcript, encoding="utf-8")
+        # A transcript is captured command output, so its bytes
+        # are the evidence. Writing it as text lets a platform
+        # that translates newlines replace every canonical LF
+        # marker with CRLF, which hides the raw results the
+        # manifest hashes behind a transcript nothing can find
+        # them in.
+        transcript_path.write_bytes(transcript.encode("utf-8"))
         demo_path = root / "assets" / "demo.svg"
         demo_path.parent.mkdir(parents=True, exist_ok=True)
         demo_path.write_bytes(b"<svg/>\n")
@@ -173,6 +179,29 @@ class DemoEvidenceTest(unittest.TestCase):
 
             self.verify_fixture(root, sources, transcript_path, reloaded)
 
+    def test_transcript_fixture_keeps_canonical_marker_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, transcript_path, _ = self.fixture(root)
+
+            payload = transcript_path.read_bytes()
+
+            self.assertEqual(self.transcript().encode("utf-8"), payload)
+            self.assertNotIn(b"\r", payload)
+            for name in VERIFIER.RAW_RESULTS:
+                marker = f"$ cat demo-work/{name}.json\n".encode("utf-8")
+                self.assertIn(marker, payload)
+
+    def test_published_demo_paths_keep_canonical_newlines(self) -> None:
+        # Every path below is hashed by the demo manifest, so a
+        # working tree that translated its newlines could never
+        # satisfy the recorded digest. `.gitattributes` keeps
+        # each one out of end-of-line conversion.
+        for path in VERIFIER.SOURCE_PATHS + VERIFIER.ARTIFACT_PATHS:
+            payload = (ROOT / path).read_bytes()
+
+            self.assertNotIn(b"\r", payload, path)
+
     def test_source_drift_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -205,10 +234,46 @@ class DemoEvidenceTest(unittest.TestCase):
                     replayed=b"different output\n",
                 )
 
+    def test_demo_command_runs_the_script_directly_on_posix(self) -> None:
+        with mock.patch.object(VERIFIER, "WINDOWS", False):
+            command = VERIFIER.demo_command("demo-work")
+
+        self.assertEqual(["./scripts/demo.sh", "demo-work"], command)
+
+    def test_windows_demo_command_names_an_explicit_shell(self) -> None:
+        shell = "C:\\Program Files\\Git\\bin\\bash.exe"
+        replacement = mock.Mock()
+        replacement.which.return_value = shell
+
+        with mock.patch.object(VERIFIER, "WINDOWS", True), mock.patch.object(
+            VERIFIER,
+            "shutil",
+            replacement,
+        ):
+            command = VERIFIER.demo_command("demo-work")
+
+        self.assertEqual([shell, "./scripts/demo.sh", "demo-work"], command)
+        replacement.which.assert_called_once_with("bash")
+
+    def test_windows_demo_command_fails_without_a_shell(self) -> None:
+        replacement = mock.Mock()
+        replacement.which.return_value = None
+
+        with mock.patch.object(VERIFIER, "WINDOWS", True), mock.patch.object(
+            VERIFIER,
+            "shutil",
+            replacement,
+        ):
+            with self.assertRaisesRegex(ValueError, "bash or sh"):
+                VERIFIER.demo_command("demo-work")
+
     def test_demo_script_requires_a_fresh_workspace(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             workspace = Path(directory) / "demo"
-            command = ["./scripts/demo.sh", str(workspace)]
+            # A POSIX path keeps the workspace argument readable
+            # to the shell that runs the script on every
+            # platform.
+            command = VERIFIER.demo_command(workspace.as_posix())
 
             first = subprocess.run(
                 command,
