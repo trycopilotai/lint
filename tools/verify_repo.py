@@ -454,7 +454,7 @@ def verify_architecture_coverage(workflows: dict[str, str]) -> None:
             ),
         ),
         "release.yml Verify ARM64 image": (
-            command_text(release[1].split("- name: Attest image", 1)[0]),
+            command_text(release[1].split("\n  promote:", 1)[0]),
             (
                 "docker pull --platform linux/arm64",
                 "python3 images/verify_tool_version.py",
@@ -556,24 +556,37 @@ def verify_release_surfaces() -> None:
         raise ValueError("release must scan both image platforms")
     if "platforms=linux/amd64" not in release:
         raise ValueError("private release platform is not AMD64-only")
-    if 'if test "$visibility" = "public"; then' not in release:
+    if 'if test "$REPOSITORY_VISIBILITY" = "public"; then' not in release:
         raise ValueError("public release platform expansion is missing")
     if "platforms=linux/amd64,linux/arm64" not in release:
         raise ValueError("public release platform set is incomplete")
     normalized_release = " ".join(release.split())
-    platform_input = 'platforms: "${{ steps.visibility.outputs.platforms }}"'
+    platform_input = 'platforms: "${{ steps.platforms.outputs.value }}"'
     if platform_input not in normalized_release:
         raise ValueError("release build does not use the visibility-bound platforms")
-    for step_name in ("Set up QEMU", "Verify ARM64 image", "Scan ARM64 image"):
+    visibility_gate = "if: needs.matrix.outputs.repository_visibility == 'public'"
+    for step_name in (
+        "Set up QEMU",
+        "Attest image",
+        "Scan ARM64 image",
+        "Attest source archive",
+    ):
         step_parts = release.split(f"- name: {step_name}", 1)
         if len(step_parts) != 2:
             raise ValueError(f"release step is missing: {step_name}")
         step = step_parts[1].split("- name:", 1)[0]
-        visibility_gate = "if: steps.visibility.outputs.value == 'public'"
-        if visibility_gate not in step:
+        if visibility_gate not in " ".join(step.split()):
             raise ValueError(
                 f"release step must wait for public visibility: {step_name}"
             )
+    arm64_job = release.split("\n  verify-arm64:\n", 1)
+    if len(arm64_job) != 2:
+        raise ValueError("native ARM64 release verification is missing")
+    arm64_header = arm64_job[1].split("    steps:", 1)[0]
+    if "needs.matrix.outputs.repository_visibility == 'public'" not in " ".join(
+        arm64_header.split()
+    ):
+        raise ValueError("native ARM64 verification must use the shared visibility")
     for platform in ("linux/amd64", "linux/arm64"):
         marker = f"TRIVY_PLATFORM: {platform}"
         if release.count(marker) != 1:

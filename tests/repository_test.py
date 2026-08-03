@@ -429,7 +429,10 @@ class ContinuousIntegrationWorkflowTest(unittest.TestCase):
         self.assertNotIn('tags: ["v*"]', workflow)
         self.assertIn("schedule:", workflow)
         self.assertIn("workflow_dispatch:", workflow)
-        self.assertIn("github.event_name != 'pull_request'", workflow)
+        arm64 = workflow.split("  build-arm64:", 1)[1]
+        arm64_header = arm64.split("    steps:", 1)[0]
+        self.assertNotIn("github.event_name != 'pull_request'", arm64_header)
+        self.assertIn("runs-on: ubuntu-24.04-arm", arm64_header)
         self.assertEqual(28, len(matrix))
         self.assertEqual(28, len({row["language"] for row in matrix}))
 
@@ -491,6 +494,8 @@ class ContinuousIntegrationWorkflowTest(unittest.TestCase):
             "github.event.repository.visibility == 'public'",
             arm64.split("    needs:", 1)[0],
         )
+        self.assertIn("runs-on: ubuntu-24.04-arm", arm64)
+        self.assertNotIn("docker/setup-qemu-action@", arm64)
 
 
 class ReleaseWorkflowTest(unittest.TestCase):
@@ -810,12 +815,13 @@ class ReleaseWorkflowTest(unittest.TestCase):
                     1,
                 )[0]
                 self.assertIn(
-                    "if: steps.visibility.outputs.value == 'public'",
-                    step,
+                    "if: needs.matrix.outputs.repository_visibility == 'public'",
+                    " ".join(step.split()),
                 )
-        self.assertGreaterEqual(
-            release.count('gh api "repos/$GITHUB_REPOSITORY"'),
-            2,
+        self.assertEqual(1, release.count('gh api "repos/$GITHUB_REPOSITORY"'))
+        self.assertIn(
+            'repository_visibility: "${{ steps.visibility.outputs.value }}"',
+            " ".join(release.split()),
         )
 
     def test_private_release_builds_only_amd64(self) -> None:
@@ -825,15 +831,14 @@ class ReleaseWorkflowTest(unittest.TestCase):
         normalized = " ".join(release.split())
 
         self.assertIn("platforms=linux/amd64", release)
-        self.assertIn('if test "$visibility" = "public"; then', release)
+        self.assertIn('if test "$REPOSITORY_VISIBILITY" = "public"; then', release)
         self.assertIn("platforms=linux/amd64,linux/arm64", release)
         self.assertIn(
-            'platforms: "${{ steps.visibility.outputs.platforms }}"',
+            'platforms: "${{ steps.platforms.outputs.value }}"',
             normalized,
         )
         for step_name in (
             "Set up QEMU",
-            "Verify ARM64 image",
             "Scan ARM64 image",
         ):
             with self.subTest(step=step_name):
@@ -842,9 +847,16 @@ class ReleaseWorkflowTest(unittest.TestCase):
                     1,
                 )[0]
                 self.assertIn(
-                    "if: steps.visibility.outputs.value == 'public'",
-                    step,
+                    "if: needs.matrix.outputs.repository_visibility == 'public'",
+                    " ".join(step.split()),
                 )
+        arm64 = release.split("\n  verify-arm64:\n", 1)[1].split("\n  promote:", 1)[0]
+        self.assertIn(
+            "needs.matrix.outputs.repository_visibility == 'public'",
+            arm64,
+        )
+        self.assertIn("runs-on: ubuntu-24.04-arm", arm64)
+        self.assertIn("needs: [images, matrix]", arm64)
 
     def test_vulnerability_scan_covers_both_platforms(self) -> None:
         release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
@@ -894,13 +906,25 @@ class ReleaseWorkflowTest(unittest.TestCase):
                 cleanup.append(stripped)
 
         self.assertEqual(
-            ["docker image rm lint-release-test:amd64"],
+            [
+                "docker image rm lint-release-test:amd64",
+                "docker image rm lint-release-test:arm64",
+            ],
             cleanup,
         )
         self.assertNotIn(
             'docker image rm lint-release-test:amd64 "$IMAGE@$DIGEST"',
             release,
         )
+
+    def test_promotion_waits_for_native_arm64_verification(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        promotion = release.split("\n  promote:\n", 1)[1].split("\n  draft:\n", 1)[0]
+
+        self.assertIn("needs: [images, matrix, verify-arm64]", promotion)
+        self.assertIn("needs.verify-arm64.result == 'success'", promotion)
 
 
 class WorkflowTriggerTest(unittest.TestCase):
@@ -1028,8 +1052,8 @@ class InventoryArchitectureGateTest(unittest.TestCase):
             ),
             "release.yml": (
                 "          python3 images/verify_registry_size.py \\\n"
-                '            --image "$IMAGE" \\\n'
-                '            --digest "$DIGEST" \\\n'
+                '            --image "$image" \\\n'
+                '            --digest "$digest" \\\n'
                 '            --platform "linux/arm64" \\',
                 "          python3 images/verify_images.py \\\n"
                 "            --image lint-release-test:arm64 \\\n"
@@ -1037,8 +1061,8 @@ class InventoryArchitectureGateTest(unittest.TestCase):
                 '            --target "$TARGET" \\\n'
                 '            --architecture "arm64"\n'
                 "          python3 images/verify_registry_size.py \\\n"
-                '            --image "$IMAGE" \\\n'
-                '            --digest "$DIGEST" \\\n'
+                '            --image "$image" \\\n'
+                '            --digest "$digest" \\\n'
                 '            --platform "linux/arm64" \\',
             ),
         }
@@ -1111,7 +1135,7 @@ class ArchitectureCoverageTest(unittest.TestCase):
                 "- name: Verify ARM64 image",
                 1,
             )[1]
-            .split("- name: Attest image", 1)[0]
+            .split("\n  promote:", 1)[0]
         )
         for surface in (images, release):
             # Each job explains the absent call in a comment, so
