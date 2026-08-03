@@ -453,9 +453,16 @@ jobs:
   repository:
     runs-on: ubuntu-latest
     steps:
+      # `make verify` replays the demo evidence manifest, which
+      # proves its recorded input commit is an ancestor of HEAD.
+      # A shallow checkout of the synthetic pull-request merge
+      # commit does not contain that commit, so the reachability
+      # proof cannot run. Fetch the full history instead of
+      # loosening the proof.
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
