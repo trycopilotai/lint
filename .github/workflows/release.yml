@@ -9,7 +9,7 @@ on:
         description: "Existing signed release tag"
         required: true
         type: string
-        default: v0.1.5
+        default: v0.1.6
 
 permissions:
   contents: read
@@ -57,6 +57,25 @@ jobs:
             -c gpg.format=ssh \
             -c "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/.github/release-allowed-signers" \
             verify-tag "$RELEASE_REF"
+      - name: Verify release controller commit
+        shell: bash
+        env:
+          WORKFLOW_SHA: "${{ github.workflow_sha }}"
+        run: |
+          # github.workflow_sha is the commit this workflow
+          # file was read from. A tag push reads the controller
+          # from the pushed tag, so the two agree. A dispatch
+          # reads it from whatever ref was selected, which need
+          # not be the signed release target checked out above,
+          # and every later job would then run steps the tag
+          # never carried. Bind them here, in the job the image
+          # build waits on, so a mismatch stops before anything
+          # is built or published.
+          release_sha="$(git rev-list -n 1 "$RELEASE_REF")"
+          head_sha="$(git rev-parse HEAD)"
+          test -n "$WORKFLOW_SHA"
+          test "$WORKFLOW_SHA" = "$release_sha"
+          test "$WORKFLOW_SHA" = "$head_sha"
       - name: Set up Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
@@ -74,6 +93,8 @@ jobs:
       images: "${{ steps.images.outputs.matrix }}"
       publish_images:
         "${{ steps.release-mode.outputs.publish_images }}"
+      repository_visibility:
+        "${{ steps.visibility.outputs.value }}"
     steps:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -86,6 +107,16 @@ jobs:
         run: |
           matrix="$(python3 tools/release_matrix.py)"
           printf 'matrix=%s\n' "$matrix" >>"$GITHUB_OUTPUT"
+      - name: Read repository visibility
+        id: visibility
+        shell: bash
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          visibility="$(
+            gh api "repos/$GITHUB_REPOSITORY" --jq .visibility
+          )"
+          printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
       - name: Select release mode
         id: release-mode
         shell: bash
@@ -117,22 +148,19 @@ jobs:
         with:
           ref: "${{ env.RELEASE_REF }}"
           persist-credentials: false
-      - name: Read repository visibility
-        id: visibility
+      - name: Select image platforms
+        id: platforms
         shell: bash
         env:
-          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          REPOSITORY_VISIBILITY:
+            "${{ needs.matrix.outputs.repository_visibility
+            }}"
         run: |
-          visibility="$(
-            gh api "repos/$GITHUB_REPOSITORY" --jq .visibility
-          )"
           platforms=linux/amd64
-          if test "$visibility" = "public"; then
+          if test "$REPOSITORY_VISIBILITY" = "public"; then
             platforms=linux/amd64,linux/arm64
           fi
-          printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
-          printf 'platforms=%s\n' "$platforms" \
-            >>"$GITHUB_OUTPUT"
+          printf 'value=%s\n' "$platforms" >>"$GITHUB_OUTPUT"
       - name: Set version
         id: version
         shell: bash
@@ -142,7 +170,9 @@ jobs:
           printf 'sha=%s\n' "$(git rev-parse HEAD)" \
             >>"$GITHUB_OUTPUT"
       - name: Set up QEMU
-        if: steps.visibility.outputs.value == 'public'
+        if:
+          needs.matrix.outputs.repository_visibility ==
+          'public'
         uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130
       - name: Set up Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
@@ -159,8 +189,7 @@ jobs:
           context: .
           file: images/Dockerfile
           target: "${{ matrix.target }}"
-          platforms:
-            "${{ steps.visibility.outputs.platforms }}"
+          platforms: "${{ steps.platforms.outputs.value }}"
           push: true
           tags:
             "ghcr.io/trycopilotai/lint-${{ matrix.language
@@ -207,46 +236,10 @@ jobs:
             --platform "linux/amd64" \
             --budget-mib "$BUDGET_MIB"
           docker image rm lint-release-test:amd64
-      - name: Verify ARM64 image
-        if: steps.visibility.outputs.value == 'public'
-        shell: bash
-        env:
-          BUDGET_MIB: "${{ matrix.budget_mib }}"
-          DIGEST: "${{ steps.build.outputs.digest }}"
-          IMAGE:
-            "ghcr.io/trycopilotai/lint-${{ matrix.language
-            }}"
-          LANGUAGE: "${{ matrix.language }}"
-          TARGET: "${{ matrix.target }}"
-        run: |
-          docker pull --platform linux/arm64 "$IMAGE@$DIGEST"
-          docker image tag "$IMAGE@$DIGEST" lint-release-test:arm64
-          python3 images/verify_tool_version.py \
-            --target "$TARGET" \
-            --image lint-release-test:arm64
-          python3 images/smoke.py \
-            --target "$TARGET" \
-            --image lint-release-test:arm64
-          python3 images/verify_cli.py \
-            --target "$TARGET" \
-            --language "$LANGUAGE" \
-            --backend docker \
-            --image lint-release-test:arm64 \
-            --architecture "arm64"
-          # No ARM64 canonical inventory is checked in, so
-          # `images/verify_images.py --architecture arm64`
-          # would look one up and fail here, after the images
-          # have already been pushed. The registry-size check
-          # below measures the published ARM64 manifest, so the
-          # size gate holds without claiming a content
-          # inventory this repository does not have.
-          python3 images/verify_registry_size.py \
-            --image "$IMAGE" \
-            --digest "$DIGEST" \
-            --platform "linux/arm64" \
-            --budget-mib "$BUDGET_MIB"
       - name: Attest image
-        if: steps.visibility.outputs.value == 'public'
+        if:
+          needs.matrix.outputs.repository_visibility ==
+          'public'
         uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-name:
@@ -268,7 +261,9 @@ jobs:
           severity: HIGH,CRITICAL
           trivyignores: .trivyignore.yaml
       - name: Scan ARM64 image
-        if: steps.visibility.outputs.value == 'public'
+        if:
+          needs.matrix.outputs.repository_visibility ==
+          'public'
         env:
           TRIVY_PLATFORM: linux/arm64
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
@@ -300,9 +295,95 @@ jobs:
           path: "digest/${{ matrix.language }}.json"
           if-no-files-found: error
 
-  promote:
-    if: needs.matrix.outputs.publish_images == 'true'
+  verify-arm64:
+    if: >-
+      needs.matrix.outputs.publish_images == 'true' &&
+      needs.matrix.outputs.repository_visibility == 'public'
     needs: [images, matrix]
+    permissions:
+      contents: read
+      packages: read
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+      matrix: "${{ fromJSON(needs.matrix.outputs.images) }}"
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: "${{ env.RELEASE_REF }}"
+          persist-credentials: false
+      - name: Download image digest
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: "digest-${{ matrix.language }}"
+          path: digests
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - name: Log in to the image registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: "${{ github.actor }}"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Verify ARM64 image
+        shell: bash
+        env:
+          BUDGET_MIB: "${{ matrix.budget_mib }}"
+          LANGUAGE: "${{ matrix.language }}"
+          TARGET: "${{ matrix.target }}"
+        run: |
+          record="digests/$LANGUAGE.json"
+          version="${RELEASE_REF#v}"
+          revision="$(git rev-parse HEAD)"
+          expected_image="ghcr.io/trycopilotai/lint-$LANGUAGE"
+          expected_staging_tag="$version-$revision"
+          jq -e \
+            --arg image "$expected_image" \
+            --arg staging_tag "$expected_staging_tag" \
+            '.image == $image and
+             .staging_tag == $staging_tag and
+             (.digest | test("^sha256:[0-9a-f]{64}$"))' \
+            "$record" >/dev/null
+          image="$(jq -r .image "$record")"
+          digest="$(jq -r .digest "$record")"
+          docker pull --platform linux/arm64 "$image@$digest"
+          docker image tag "$image@$digest" lint-release-test:arm64
+          python3 images/verify_tool_version.py \
+            --target "$TARGET" \
+            --image lint-release-test:arm64
+          python3 images/smoke.py \
+            --target "$TARGET" \
+            --image lint-release-test:arm64
+          python3 images/verify_cli.py \
+            --target "$TARGET" \
+            --language "$LANGUAGE" \
+            --backend docker \
+            --image lint-release-test:arm64 \
+            --architecture "arm64"
+          # No ARM64 canonical inventory is checked in, so
+          # `images/verify_images.py --architecture arm64`
+          # would look one up and fail here. The registry-size
+          # check below measures the exact staged ARM64
+          # manifest, so the size gate holds without claiming a
+          # content inventory this repository does not have.
+          python3 images/verify_registry_size.py \
+            --image "$image" \
+            --digest "$digest" \
+            --platform "linux/arm64" \
+            --budget-mib "$BUDGET_MIB"
+          docker image rm lint-release-test:arm64
+
+  promote:
+    if: >-
+      always() && needs.matrix.result == 'success' &&
+      needs.images.result == 'success' &&
+      needs.matrix.outputs.publish_images == 'true' &&
+      ((needs.matrix.outputs.repository_visibility ==
+      'public' && needs.verify-arm64.result == 'success') ||
+      (needs.matrix.outputs.repository_visibility !=
+      'public' && needs.verify-arm64.result == 'skipped'))
+    needs: [images, matrix, verify-arm64]
     permissions:
       contents: read
       packages: write
@@ -374,16 +455,6 @@ jobs:
           ref: "${{ env.RELEASE_REF }}"
           fetch-depth: 0
           persist-credentials: false
-      - name: Read repository visibility
-        id: visibility
-        shell: bash
-        env:
-          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: |
-          visibility="$(
-            gh api "repos/$GITHUB_REPOSITORY" --jq .visibility
-          )"
-          printf 'value=%s\n' "$visibility" >>"$GITHUB_OUTPUT"
       - name: Download image digests
         if: needs.matrix.outputs.publish_images == 'true'
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
@@ -445,7 +516,9 @@ jobs:
             sha256sum ./* >SHA256SUMS
           )
       - name: Attest source archive
-        if: steps.visibility.outputs.value == 'public'
+        if:
+          needs.matrix.outputs.repository_visibility ==
+          'public'
         uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
         with:
           subject-path: "dist/lint-*.tar.gz"

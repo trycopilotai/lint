@@ -80,3 +80,17 @@ formatter processes. Pinned Prettier and Buildifier runs use
 package cache. Docker mode runs with networking off.
 Read-only mode protects source files, not the local package
 cache.
+
+## Reference
+
+This skill can be installed on its own, so every link below
+is absolute rather than relative to a checkout.
+
+- Canonical repository:
+  <https://github.com/trycopilotai/lint>
+- Command documentation:
+  <https://github.com/trycopilotai/lint/blob/main/README.md#quick-start>
+- Report a formatter result or request language coverage:
+  <https://github.com/trycopilotai/lint/issues>
+- Security policy and vulnerability reporting:
+  <https://github.com/trycopilotai/lint/blob/main/SECURITY.md>

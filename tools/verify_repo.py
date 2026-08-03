@@ -284,7 +284,7 @@ def verify_manifests() -> None:
         ROOT / ".codex-plugin" / "plugin.json",
     ):
         data = json.loads(manifest.read_text(encoding="utf-8"))
-        if data["version"] != "0.1.5":
+        if data["version"] != "0.1.6":
             raise ValueError(f"wrong plugin version: {manifest}")
 
 
@@ -454,7 +454,7 @@ def verify_architecture_coverage(workflows: dict[str, str]) -> None:
             ),
         ),
         "release.yml Verify ARM64 image": (
-            command_text(release[1].split("- name: Attest image", 1)[0]),
+            command_text(release[1].split("\n  promote:", 1)[0]),
             (
                 "docker pull --platform linux/arm64",
                 "python3 images/verify_tool_version.py",
@@ -487,14 +487,25 @@ def verify_public_wording(documents: dict[str, str], version: str) -> None:
             if phrase in lowered:
                 raise ValueError(f"retired visibility wording in {name}: {phrase}")
     readme = " ".join(documents["README.md"].split())
+    # This release is published, so nothing about it may be
+    # deferred to a publication that already happened. The
+    # marketplace distribution in `trycopilotai/skills` is a
+    # different repository's release, but it is pinned too and
+    # must not retain a future-publication qualification.
+    deferred = (
+        "tag is published",
+        "only once the matching image package is published",
+        f"Once the matching `v{version}` release is published",
+        "marketplace release is published",
+    )
+    for phrase in deferred:
+        if phrase in readme:
+            raise ValueError(f"README defers the published release: {phrase}")
     conditions = (
-        (f"Once the matching `v{version}` tag is published", 1),
-        (f"Once the matching `v{version}` release is published", 2),
-        (
-            f"`ghcr.io/trycopilotai/lint-<language>:{version}`, which resolves "
-            "only once the matching image package is published",
-            1,
-        ),
+        (f"uses: trycopilotai/lint@v{version}", 1),
+        (f"release=v{version}", 2),
+        (f"--image-manifest release-manifest-{version}.json", 2),
+        (f"`ghcr.io/trycopilotai/lint-<language>:{version}`", 1),
     )
     for phrase, count in conditions:
         if readme.count(phrase) != count:
@@ -513,9 +524,13 @@ def verify_inventory_documentation(
     normalized = " ".join(readme.split())
     for architecture in sorted(canonical):
         label = ARCHITECTURE_LABELS[architecture]
+        # One inventory exists per formatter build target, not
+        # per language image. Calling the set a count of images
+        # read as a claim that 13 of the 28 published images
+        # have no checked-in inventory behind them.
         claim = (
             "The checked-in canonical inventory set covers the "
-            f"{inventory_count} {label} images."
+            f"{inventory_count} {label} formatter build targets"
         )
         if claim not in normalized:
             raise ValueError(f"README does not state the {architecture} inventory set")
@@ -541,24 +556,37 @@ def verify_release_surfaces() -> None:
         raise ValueError("release must scan both image platforms")
     if "platforms=linux/amd64" not in release:
         raise ValueError("private release platform is not AMD64-only")
-    if 'if test "$visibility" = "public"; then' not in release:
+    if 'if test "$REPOSITORY_VISIBILITY" = "public"; then' not in release:
         raise ValueError("public release platform expansion is missing")
     if "platforms=linux/amd64,linux/arm64" not in release:
         raise ValueError("public release platform set is incomplete")
     normalized_release = " ".join(release.split())
-    platform_input = 'platforms: "${{ steps.visibility.outputs.platforms }}"'
+    platform_input = 'platforms: "${{ steps.platforms.outputs.value }}"'
     if platform_input not in normalized_release:
         raise ValueError("release build does not use the visibility-bound platforms")
-    for step_name in ("Set up QEMU", "Verify ARM64 image", "Scan ARM64 image"):
+    visibility_gate = "if: needs.matrix.outputs.repository_visibility == 'public'"
+    for step_name in (
+        "Set up QEMU",
+        "Attest image",
+        "Scan ARM64 image",
+        "Attest source archive",
+    ):
         step_parts = release.split(f"- name: {step_name}", 1)
         if len(step_parts) != 2:
             raise ValueError(f"release step is missing: {step_name}")
         step = step_parts[1].split("- name:", 1)[0]
-        visibility_gate = "if: steps.visibility.outputs.value == 'public'"
-        if visibility_gate not in step:
+        if visibility_gate not in " ".join(step.split()):
             raise ValueError(
                 f"release step must wait for public visibility: {step_name}"
             )
+    arm64_job = release.split("\n  verify-arm64:\n", 1)
+    if len(arm64_job) != 2:
+        raise ValueError("native ARM64 release verification is missing")
+    arm64_header = arm64_job[1].split("    steps:", 1)[0]
+    if "needs.matrix.outputs.repository_visibility == 'public'" not in " ".join(
+        arm64_header.split()
+    ):
+        raise ValueError("native ARM64 verification must use the shared visibility")
     for platform in ("linux/amd64", "linux/arm64"):
         marker = f"TRIVY_PLATFORM: {platform}"
         if release.count(marker) != 1:
@@ -611,7 +639,7 @@ def verify_release_surfaces() -> None:
     release_base = "https://github.com/trycopilotai/lint/releases/download/$release"
     if readme.count(release_base) != 2:
         raise ValueError("public skill installs must use the release archive")
-    if readme.count("release=v0.1.5") != 2:
+    if readme.count("release=v0.1.6") != 2:
         raise ValueError("public skill installs must pin the release tag")
     if readme.count('version="${release#v}"') != 2:
         raise ValueError("public skill installs must derive the archive version")
