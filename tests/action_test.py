@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import os
 import shutil
 import subprocess
@@ -126,7 +127,43 @@ class ActionTest(unittest.TestCase):
                 ACTION.command()
 
     def test_plugin_skill_runner_finds_engine(self) -> None:
-        self.assertEqual(ROOT / "lint.py", RUNNER.engine_path())
+        self.assertEqual(
+            ROOT / "skills" / "lint" / "lint.py",
+            RUNNER.engine_path(),
+        )
+
+    def test_plugin_skill_package_runs_without_repository_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "lint"
+            shutil.copytree(ROOT / "skills" / "lint", target)
+
+            completed = subprocess.run(
+                [sys.executable, str(target / "run.py"), "--list-languages"],
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        manifest = json.loads(completed.stdout)
+        self.assertEqual(28, len(manifest["languages"]))
+
+    def test_plugin_skill_runtime_matches_repository_runtime(self) -> None:
+        pairs = (
+            (ROOT / "lint.py", ROOT / "skills" / "lint" / "lint.py"),
+            (
+                ROOT / "languages.json",
+                ROOT / "skills" / "lint" / "languages.json",
+            ),
+            (
+                ROOT / "images" / "matrix.json",
+                ROOT / "skills" / "lint" / "images" / "matrix.json",
+            ),
+        )
+        for source, packaged in pairs:
+            with self.subTest(packaged=packaged):
+                self.assertEqual(source.read_bytes(), packaged.read_bytes())
 
     def test_standalone_skill_layout_launches_engine(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
