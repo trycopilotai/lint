@@ -32,4 +32,4 @@ languages.json -text
 lint.py -text
 scripts/demo.sh -text
 scripts/generate_demo.py -text
-skills/lint/SKILL.md -text
+skills/lint/** -text

@@ -43,6 +43,12 @@ def exact_byte_paths() -> set[str]:
     for source in comparisons["sources"]:
         paths.add(source["capture"]["context_path"])
 
+    for path in sorted((ROOT / "skills" / "lint").rglob("*")):
+        if "__pycache__" in path.parts:
+            continue
+        if path.is_file():
+            paths.add(path.relative_to(ROOT).as_posix())
+
     for path in sorted((ROOT / "fixtures").rglob("*")):
         if path.is_file():
             paths.add(path.relative_to(ROOT).as_posix())
