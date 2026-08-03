@@ -588,7 +588,7 @@ def npx_executable() -> str:
 
 
 def is_npx_executable(executable: str) -> bool:
-    return Path(executable).name.lower() in {"npx", "npx.cmd"}
+    return os.path.basename(executable).lower() in {"npx", "npx.cmd"}
 
 
 def command_for(language: Language, path: Path) -> list[str]:
