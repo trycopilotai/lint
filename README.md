@@ -101,6 +101,16 @@ LINT_INSTALL=always python3 lint.py ensure --language python
 make ensure ARGS='--language python'
 ```
 
+Stream progress events as NDJSON on stderr (for consumers
+like `my` that draw a TTY progress line):
+
+```sh
+python3 lint.py --progress=always --json path.md 2>events.ndjson
+```
+
+`auto` (default) emits when stderr is a TTY and CI is unset;
+`never` disables events.
+
 Normal `lint.py` / `make lint` runs the same host ensure
 preflight before formatting when not using `--docker`.
 
