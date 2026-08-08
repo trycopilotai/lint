@@ -85,16 +85,16 @@ python3 lint.py doctor
 make doctor
 ```
 
-Install missing **allowlisted** host tools (Black, Prettier via
-npx, Buildifier via npx, clang-format via pipx) according to
-`LINT_INSTALL`:
+Install missing **allowlisted** host tools (Black, Prettier
+via npx, Buildifier via npx, clang-format via pipx)
+according to `LINT_INSTALL`:
 
-| `LINT_INSTALL` | Behavior |
-| :--- | :--- |
-| unset + TTY | `prompt` (ask before install) |
-| unset + CI / non-TTY | `never` |
-| `always` | install without prompting |
-| `never` | report only; `ensure` exits with an error |
+| `LINT_INSTALL`       | Behavior                                  |
+| :------------------- | :---------------------------------------- |
+| unset + TTY          | `prompt` (ask before install)             |
+| unset + CI / non-TTY | `never`                                   |
+| `always`             | install without prompting                 |
+| `never`              | report only; `ensure` exits with an error |
 
 ```sh
 LINT_INSTALL=always python3 lint.py ensure --language python
