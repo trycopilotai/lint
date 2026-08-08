@@ -1,14 +1,14 @@
 {
-  "agent": "Codex",
-  "agent_version": "GPT-5.6",
+  "agent": "Grok",
+  "agent_version": "Grok 4.5",
   "artifact_sha256": {
     "assets/demo.svg": "38074406b19fc7c14da374e72834d9903346473485cd7ade50940e910b5a58c0",
     "evidence/demo-transcript.txt": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065"
   },
-  "input_commit": "e60effce322a17e35b6eb44e30a6d98bcdc7d65d",
-  "input_tree": "62fc23adc55d14b034e784c5ad146d50c01f360c",
+  "input_commit": "f3c66b0f0a2e148f4ea63b9bd642d9650359b169",
+  "input_tree": "84ced07ec7aa8dd7d722cb9b8079c9651babeafb",
   "invocation": "./scripts/demo.sh demo-work",
-  "invocation_date": "2026-08-03",
+  "invocation_date": "2026-08-08",
   "output_path": "evidence/demo-transcript.txt",
   "output_sha256": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065",
   "protocol_path": "skills/lint/SKILL.md",
@@ -21,7 +21,7 @@
   "schema_version": 2,
   "source_sha256": {
     "languages.json": "b3fc78139712be1af133489766fb308bb02fc35f80e7bbb66899674316fc0602",
-    "lint.py": "2d178ed8798e945a7a69b9aff9adfe359b91ace751e7e2fb508c4ddca8c00da4",
+    "lint.py": "584fa1465964da67a843ac59c029a8a5a36af1481406b6e1cde3543c44a871e9",
     "scripts/demo.sh": "a1085f8d35a42407eec2230068d77f7423fd28a40556ead6a7861caa0d088f3c",
     "scripts/generate_demo.py": "ab75ee01a79c02c54259fc9c2f65a0114e47a3be7ee60fb44e25392f439f6524",
     "skills/lint/SKILL.md": "ba6c80a7323567cf505dedb6ad3c60eeab421f3bc2384a35c56ca6c7059a3607"
