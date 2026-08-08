@@ -1795,16 +1795,6 @@ def prepare_results(
 
     cwd = resolved_cwd
 
-    if not use_docker and selected:
-        unique_languages: list[Language] = []
-        seen_families: set[str] = set()
-        for _path, language in selected:
-            if language.family in seen_families:
-                continue
-            seen_families.add(language.family)
-            unique_languages.append(language)
-        ensure_host_formatters(unique_languages)
-
     request_limits = limits()
     maximum_bytes = request_limits["max_file_bytes"]
     timeout_seconds = request_limits["timeout_seconds_per_file"]
@@ -1853,7 +1843,11 @@ def prepare_results(
                     )
             else:
                 if language.family not in verified_families:
-                    verify_formatter_version(language)
+                    # Config validation above runs first so invalid
+                    # project options still surface as FormatterError
+                    # even when the host tool is missing. ensure then
+                    # probes/installs under LINT_INSTALL.
+                    ensure_host_formatters([language])
                     verified_families.add(language.family)
                 run_formatter(
                     language,
