@@ -37,6 +37,8 @@ EXIT_CLEAN = 0
 EXIT_FORMATTING = 1
 EXIT_SELECTION = 2
 EXIT_INTERNAL = 3
+PROGRESS_MODES = frozenset({"auto", "always", "never"})
+_PROGRESS_ENABLED = False
 FORMATTER_CONFIGURATION_NAMES = {
     "prettier": (
         ".editorconfig",
@@ -1722,6 +1724,54 @@ def run_docker_formatter(
         raise FormatterError(f"{image}: {detail}")
 
 
+def resolve_progress_mode(
+    mode: str,
+    *,
+    env: dict[str, str] | None = None,
+    stderr_isatty: bool | None = None,
+) -> bool:
+    """Return whether NDJSON progress events should be emitted."""
+    if mode not in PROGRESS_MODES:
+        raise SelectionError(f"--progress must be auto, always, or never; got {mode!r}")
+    if mode == "always":
+        return True
+    if mode == "never":
+        return False
+    if env is None:
+        env = dict(os.environ)
+    raw = env.get("LINT_PROGRESS")
+    if raw is not None:
+        value = raw.strip().lower()
+        if value not in PROGRESS_MODES:
+            raise SelectionError(
+                "LINT_PROGRESS must be auto, always, or never; " f"got {raw!r}"
+            )
+        if value == "always":
+            return True
+        if value == "never":
+            return False
+    ci = env.get("CI", "").strip().lower()
+    actions = env.get("GITHUB_ACTIONS", "").strip().lower()
+    if ci in {"1", "true", "yes"} or actions in {"1", "true", "yes"}:
+        return False
+    if stderr_isatty is None:
+        stderr_isatty = sys.stderr.isatty()
+    return bool(stderr_isatty)
+
+
+def set_progress_enabled(enabled: bool) -> None:
+    """Enable or disable progress event emission for this process."""
+    global _PROGRESS_ENABLED
+    _PROGRESS_ENABLED = enabled
+
+
+def emit_progress(event: dict[str, Any]) -> None:
+    """Write one NDJSON progress event to stderr when enabled."""
+    if not _PROGRESS_ENABLED:
+        return
+    print(json.dumps(event, sort_keys=True), file=sys.stderr, flush=True)
+
+
 def prepare_results(
     cwd: Path,
     paths: Sequence[Path],
@@ -1782,9 +1832,23 @@ def prepare_results(
     workspace = tempfile.mkdtemp(prefix="lint-work-")
     mirror_root = Path(workspace)
     (mirror_root / ".lint-empty-ignore").write_bytes(b"")
+    run_started = time.monotonic()
+    emit_progress({"event": "start", "total": len(selected)})
+    job_id = 0
     try:
         for path, language in selected:
             relative = path.relative_to(cwd)
+            relative_text = relative.as_posix()
+            job_id += 1
+            emit_progress(
+                {
+                    "event": "begin",
+                    "family": language.family,
+                    "id": job_id,
+                    "path": relative_text,
+                }
+            )
+            file_started = time.monotonic()
             payload = path.read_bytes()
             if len(payload) > maximum_bytes:
                 raise FormatterError(f"{relative}: exceeds {maximum_bytes} bytes")
@@ -1834,18 +1898,44 @@ def prepare_results(
                     mirror_root,
                     timeout_seconds,
                 )
-            results.append(
-                FormatResult(
-                    path=path,
-                    relative_path=relative.as_posix(),
-                    language=language,
-                    original=payload,
-                    formatted=mirror_path.read_bytes(),
-                    mode=source_mode,
-                )
+            result = FormatResult(
+                path=path,
+                relative_path=relative_text,
+                language=language,
+                original=payload,
+                formatted=mirror_path.read_bytes(),
+                mode=source_mode,
+            )
+            results.append(result)
+            status = "clean"
+            if result.changed:
+                status = "changed"
+            elapsed_ms = int((time.monotonic() - file_started) * 1000)
+            emit_progress(
+                {
+                    "event": "end",
+                    "family": language.family,
+                    "id": job_id,
+                    "ms": elapsed_ms,
+                    "path": relative_text,
+                    "status": status,
+                }
             )
     finally:
         shutil.rmtree(mirror_root)
+    changed = 0
+    for result in results:
+        if result.changed:
+            changed += 1
+    emit_progress(
+        {
+            "changed": changed,
+            "event": "done",
+            "failed": 0,
+            "ms": int((time.monotonic() - run_started) * 1000),
+            "selected": len(results),
+        }
+    )
     return results, findings
 
 
@@ -2037,6 +2127,15 @@ def parser() -> argparse.ArgumentParser:
         action="store_true",
         help="print stable machine-readable JSON",
     )
+    argument_parser.add_argument(
+        "--progress",
+        choices=sorted(PROGRESS_MODES),
+        default="auto",
+        help=(
+            "emit NDJSON progress events on stderr: auto, always, or never "
+            "(default: auto)"
+        ),
+    )
     argument_parser.add_argument("paths", nargs="*")
     return argument_parser
 
@@ -2147,6 +2246,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     arguments = parse_arguments(raw_arguments)
     try:
         validate_selection_arguments(arguments)
+        set_progress_enabled(resolve_progress_mode(arguments.progress))
         if arguments.list_languages:
             print(json.dumps(load_manifest(), sort_keys=True, indent=2))
             return EXIT_CLEAN
@@ -2163,6 +2263,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             raise SelectionError(f"--cwd is not a directory: {cwd}")
         requested = frozenset(arguments.language)
         if command == "doctor":
+            set_progress_enabled(False)
             languages = languages_for_doctor(requested)
             response = doctor_host_formatters(languages)
             print_response(response, arguments.json)
@@ -2170,6 +2271,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 return EXIT_INTERNAL
             return EXIT_CLEAN
         if command == "ensure":
+            set_progress_enabled(False)
             policy = resolve_install_policy()
             if policy == "never":
                 raise SelectionError(
