@@ -1039,8 +1039,7 @@ def resolve_install_policy(
         if value in {"never", "prompt", "always"}:
             return value
         raise SelectionError(
-            "LINT_INSTALL must be never, prompt, or always; "
-            f"got {raw!r}"
+            "LINT_INSTALL must be never, prompt, or always; " f"got {raw!r}"
         )
     ci = env.get("CI", "").strip().lower()
     actions = env.get("GITHUB_ACTIONS", "").strip().lower()
@@ -1218,13 +1217,10 @@ def run_allowlisted_install(
             timeout=timeout_seconds,
         )
     except FileNotFoundError as error:
-        raise EngineError(
-            f"install launcher is not installed: {argv[0]}"
-        ) from error
+        raise EngineError(f"install launcher is not installed: {argv[0]}") from error
     except subprocess.TimeoutExpired as error:
         raise EngineError(
-            f"install timed out after {timeout_seconds}s: "
-            f"{' '.join(argv)}"
+            f"install timed out after {timeout_seconds}s: " f"{' '.join(argv)}"
         ) from error
     if completed.returncode != 0:
         detail = (completed.stderr or "").strip()
@@ -1232,9 +1228,7 @@ def run_allowlisted_install(
             detail = (completed.stdout or "").strip()
         if detail == "":
             detail = f"exit {completed.returncode}"
-        raise EngineError(
-            f"install failed ({' '.join(argv)}): {detail}"
-        )
+        raise EngineError(f"install failed ({' '.join(argv)}): {detail}")
 
 
 def apply_host_install_policy(
@@ -1290,17 +1284,11 @@ def ensure_host_formatters(
         input_func=input_func,
         runner=runner,
     )
-    families_to_recheck = {
-        tool.family for tool in missing if tool.allowlisted
-    }
+    families_to_recheck = {tool.family for tool in missing if tool.allowlisted}
     recheck_languages = [
-        language
-        for language in languages
-        if language.family in families_to_recheck
+        language for language in languages if language.family in families_to_recheck
     ]
-    non_allowlisted = [
-        tool for tool in missing if not tool.allowlisted
-    ]
+    non_allowlisted = [tool for tool in missing if not tool.allowlisted]
     still_after: list[MissingTool] = []
     if recheck_languages:
         still_after = probe_missing_tools(recheck_languages)
@@ -1331,9 +1319,7 @@ def doctor_host_formatters(
         status = "missing"
     message = "all probed host formatters are available"
     if missing:
-        message = (
-            f"{len(missing)} host formatter families need attention"
-        )
+        message = f"{len(missing)} host formatter families need attention"
     return {
         "schema_version": 2,
         "status": status,
@@ -1353,17 +1339,11 @@ def languages_for_doctor(
     """Select languages to probe for doctor/ensure."""
     known = load_languages()
     if requested_languages:
-        unknown = requested_languages - frozenset(
-            language.id for language in known
-        )
+        unknown = requested_languages - frozenset(language.id for language in known)
         if unknown:
             values = ", ".join(sorted(unknown))
             raise SelectionError(f"unknown language: {values}")
-        return [
-            language
-            for language in known
-            if language.id in requested_languages
-        ]
+        return [language for language in known if language.id in requested_languages]
     # One representative per family so doctor stays small.
     seen_families: set[str] = set()
     selected: list[Language] = []
@@ -1375,7 +1355,6 @@ def languages_for_doctor(
         seen_families.add(language.family)
         selected.append(language)
     return selected
-
 
 
 def requirement_records(section: list[str]) -> list[str]:

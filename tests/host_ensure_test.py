@@ -263,9 +263,7 @@ class HostEnsureTest(unittest.TestCase):
             clear=False,
         ):
             with mock.patch.object(LINT, "print_response"):
-                code = LINT.main(
-                    ["ensure", "--json", "--language", "python"]
-                )
+                code = LINT.main(["ensure", "--json", "--language", "python"])
         self.assertEqual(code, LINT.EXIT_SELECTION)
 
 
