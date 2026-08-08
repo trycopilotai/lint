@@ -991,6 +991,372 @@ def verify_formatter_version(language: Language) -> None:
         )
 
 
+HOST_INSTALL_ALLOWLIST = frozenset(
+    {
+        "prettier",
+        "buildifier",
+        "black",
+        "clang",
+    }
+)
+INSTALL_TIMEOUT_SECONDS = 600
+
+
+@dataclasses.dataclass(frozen=True)
+class MissingTool:
+    """A host formatter family that failed availability checks."""
+
+    family: str
+    language_ids: tuple[str, ...]
+    install_argv: tuple[str, ...]
+    allowlisted: bool
+    message: str
+
+
+class HostToolError(EngineError):
+    """Host tools are missing after install policy was applied."""
+
+    def __init__(
+        self,
+        message: str,
+        recovery: dict[str, Any],
+    ) -> None:
+        super().__init__(message)
+        self.recovery = recovery
+
+
+def resolve_install_policy(
+    env: dict[str, str] | None = None,
+    *,
+    stdin_isatty: bool | None = None,
+) -> str:
+    """Return never, prompt, or always for host tool installation."""
+    if env is None:
+        env = dict(os.environ)
+    raw = env.get("LINT_INSTALL")
+    if raw is not None:
+        value = raw.strip().lower()
+        if value in {"never", "prompt", "always"}:
+            return value
+        raise SelectionError(
+            "LINT_INSTALL must be never, prompt, or always; " f"got {raw!r}"
+        )
+    ci = env.get("CI", "").strip().lower()
+    actions = env.get("GITHUB_ACTIONS", "").strip().lower()
+    if ci in {"1", "true", "yes"} or actions in {"1", "true", "yes"}:
+        return "never"
+    if stdin_isatty is None:
+        stdin_isatty = sys.stdin.isatty()
+    if stdin_isatty:
+        return "prompt"
+    return "never"
+
+
+def formatter_install_argv(language: Language) -> list[str]:
+    """Return argv for installing one language's host formatter."""
+    versions = tool_versions()
+    family = language.family
+    if family == "prettier":
+        return [
+            *npx_command(),
+            "-y",
+            f"prettier@{versions['prettier']}",
+            "--version",
+        ]
+    if family == "buildifier":
+        return [
+            *npx_command(),
+            "-y",
+            f"@bazel/buildifier@{versions['buildifier']}",
+            "--version",
+        ]
+    if family == "black":
+        return [
+            "pipx",
+            "install",
+            "--force",
+            f"black=={versions['black']}",
+        ]
+    if family == "clang":
+        return [
+            "pipx",
+            "install",
+            "--force",
+            "clang-format==18.1.8",
+        ]
+    if family == "shfmt":
+        return [
+            "go",
+            "install",
+            f"mvdan.cc/sh/v3/cmd/shfmt@v{versions['shfmt']}",
+        ]
+    if family == "java":
+        return ["docker", "pull", docker_image(language)]
+    if family == "go":
+        return ["docker", "pull", docker_image(language)]
+    if family == "rust":
+        return [
+            "rustup",
+            "toolchain",
+            "install",
+            versions["rust"],
+            "--component",
+            "rustfmt",
+        ]
+    if family == "kotlin":
+        return ["docker", "pull", docker_image(language)]
+    if family == "toml":
+        return [
+            "cargo",
+            "install",
+            "taplo-cli",
+            "--version",
+            versions["taplo"],
+            "--locked",
+        ]
+    if family == "xml":
+        return ["docker", "pull", docker_image(language)]
+    if family == "swift":
+        return ["docker", "pull", docker_image(language)]
+    if family == "csharp":
+        return [
+            "dotnet",
+            "tool",
+            "install",
+            "--global",
+            "csharpier",
+            "--version",
+            versions["csharpier"],
+        ]
+    if family == "julia":
+        return ["docker", "pull", docker_image(language)]
+    if family == "requirements":
+        return []
+    raise FormatterError(f"unsupported formatter family: {family}")
+
+
+def host_install_allowlisted(
+    family: str,
+    install_argv: Sequence[str],
+) -> bool:
+    """Return whether auto-install is permitted for this family."""
+    if family not in HOST_INSTALL_ALLOWLIST:
+        return False
+    if not install_argv:
+        return False
+    if install_argv[0] == "docker":
+        return False
+    return True
+
+
+def recovery_payload(
+    missing: Sequence[MissingTool],
+    policy: str,
+) -> dict[str, Any]:
+    """Build structured recovery metadata for JSON errors."""
+    entries: list[dict[str, Any]] = []
+    for tool in missing:
+        entries.append(
+            {
+                "family": tool.family,
+                "language_ids": list(tool.language_ids),
+                "install_argv": list(tool.install_argv),
+                "allowlisted": tool.allowlisted,
+            }
+        )
+    return {
+        "install_policy": policy,
+        "missing": entries,
+    }
+
+
+def probe_missing_tools(
+    languages: Sequence[Language],
+) -> list[MissingTool]:
+    """Return host tools that fail version/availability probes."""
+    by_family: dict[str, list[Language]] = {}
+    for language in languages:
+        by_family.setdefault(language.family, []).append(language)
+    missing: list[MissingTool] = []
+    for family in sorted(by_family):
+        group = by_family[family]
+        language = group[0]
+        try:
+            verify_formatter_version(language)
+        except EngineError as error:
+            argv = formatter_install_argv(language)
+            allowlisted = host_install_allowlisted(family, argv)
+            missing.append(
+                MissingTool(
+                    family=family,
+                    language_ids=tuple(item.id for item in group),
+                    install_argv=tuple(argv),
+                    allowlisted=allowlisted,
+                    message=str(error),
+                )
+            )
+    return missing
+
+
+def run_allowlisted_install(
+    argv: Sequence[str],
+    *,
+    timeout_seconds: int = INSTALL_TIMEOUT_SECONDS,
+    runner: Any = None,
+) -> None:
+    """Run one pinned install argv for an allowlisted family."""
+    if runner is None:
+        runner = subprocess.run
+    try:
+        completed = runner(
+            list(argv),
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout_seconds,
+        )
+    except FileNotFoundError as error:
+        raise EngineError(f"install launcher is not installed: {argv[0]}") from error
+    except subprocess.TimeoutExpired as error:
+        raise EngineError(
+            f"install timed out after {timeout_seconds}s: " f"{' '.join(argv)}"
+        ) from error
+    if completed.returncode != 0:
+        detail = (completed.stderr or "").strip()
+        if detail == "":
+            detail = (completed.stdout or "").strip()
+        if detail == "":
+            detail = f"exit {completed.returncode}"
+        raise EngineError(f"install failed ({' '.join(argv)}): {detail}")
+
+
+def apply_host_install_policy(
+    missing: Sequence[MissingTool],
+    policy: str,
+    *,
+    input_func: Any = None,
+    runner: Any = None,
+) -> list[MissingTool]:
+    """Install allowlisted missing tools per policy; return unresolved."""
+    if input_func is None:
+        input_func = input
+    unresolved: list[MissingTool] = []
+    for tool in missing:
+        if not tool.allowlisted:
+            unresolved.append(tool)
+            continue
+        if policy == "never":
+            unresolved.append(tool)
+            continue
+        if policy == "prompt":
+            prompt = (
+                f"{tool.family} is not ready on this host.\n"
+                f"Install with: {' '.join(tool.install_argv)}\n"
+                "Proceed? [y/N] "
+            )
+            answer = str(input_func(prompt)).strip().lower()
+            if answer not in {"y", "yes"}:
+                unresolved.append(tool)
+                continue
+        run_allowlisted_install(tool.install_argv, runner=runner)
+    return unresolved
+
+
+def ensure_host_formatters(
+    languages: Sequence[Language],
+    *,
+    policy: str | None = None,
+    input_func: Any = None,
+    runner: Any = None,
+) -> list[MissingTool]:
+    """Probe and optionally install host tools; raise if still missing."""
+    if not languages:
+        return []
+    if policy is None:
+        policy = resolve_install_policy()
+    missing = probe_missing_tools(languages)
+    if not missing:
+        return []
+    apply_host_install_policy(
+        missing,
+        policy,
+        input_func=input_func,
+        runner=runner,
+    )
+    families_to_recheck = {tool.family for tool in missing if tool.allowlisted}
+    recheck_languages = [
+        language for language in languages if language.family in families_to_recheck
+    ]
+    non_allowlisted = [tool for tool in missing if not tool.allowlisted]
+    still_after: list[MissingTool] = []
+    if recheck_languages:
+        still_after = probe_missing_tools(recheck_languages)
+    still = non_allowlisted + still_after
+    seen: set[str] = set()
+    deduped: list[MissingTool] = []
+    for tool in still:
+        if tool.family in seen:
+            continue
+        seen.add(tool.family)
+        deduped.append(tool)
+    if deduped:
+        lines = [tool.message for tool in deduped]
+        raise HostToolError(
+            "; ".join(lines),
+            recovery_payload(deduped, policy),
+        )
+    return []
+
+
+def doctor_host_formatters(
+    languages: Sequence[Language],
+) -> dict[str, Any]:
+    """Return a doctor report without installing anything."""
+    missing = probe_missing_tools(languages)
+    status = "ok"
+    if missing:
+        status = "missing"
+    message = "all probed host formatters are available"
+    if missing:
+        message = f"{len(missing)} host formatter families need attention"
+    return {
+        "schema_version": 2,
+        "status": status,
+        "mode": "doctor",
+        "backend": "local",
+        "recovery": recovery_payload(
+            missing,
+            resolve_install_policy(),
+        ),
+        "message": message,
+    }
+
+
+def languages_for_doctor(
+    requested_languages: frozenset[str],
+) -> list[Language]:
+    """Select languages to probe for doctor/ensure."""
+    known = load_languages()
+    if requested_languages:
+        unknown = requested_languages - frozenset(language.id for language in known)
+        if unknown:
+            values = ", ".join(sorted(unknown))
+            raise SelectionError(f"unknown language: {values}")
+        return [language for language in known if language.id in requested_languages]
+    # One representative per family so doctor stays small.
+    seen_families: set[str] = set()
+    selected: list[Language] = []
+    for language in known:
+        if language.family in seen_families:
+            continue
+        if language.family == "requirements":
+            continue
+        seen_families.add(language.family)
+        selected.append(language)
+    return selected
+
+
 def requirement_records(section: list[str]) -> list[str]:
     records: list[str] = []
     current: list[str] = []
@@ -1456,7 +1822,11 @@ def prepare_results(
                     )
             else:
                 if language.family not in verified_families:
-                    verify_formatter_version(language)
+                    # Config validation above runs first so invalid
+                    # project options still surface as FormatterError
+                    # even when the host tool is missing. ensure then
+                    # probes/installs under LINT_INSTALL.
+                    ensure_host_formatters([language])
                     verified_families.add(language.family)
                 run_formatter(
                     language,
@@ -1770,6 +2140,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         except (FormatterError, OSError) as error:
             print(str(error), file=sys.stderr)
             return EXIT_FORMATTING
+    command = "lint"
+    if raw_arguments and raw_arguments[0] in {"doctor", "ensure"}:
+        command = raw_arguments[0]
+        raw_arguments = raw_arguments[1:]
     arguments = parse_arguments(raw_arguments)
     try:
         validate_selection_arguments(arguments)
@@ -1787,6 +2161,29 @@ def main(argv: Sequence[str] | None = None) -> int:
             ) from error
         if not cwd.is_dir():
             raise SelectionError(f"--cwd is not a directory: {cwd}")
+        requested = frozenset(arguments.language)
+        if command == "doctor":
+            languages = languages_for_doctor(requested)
+            response = doctor_host_formatters(languages)
+            print_response(response, arguments.json)
+            if response["status"] != "ok":
+                return EXIT_INTERNAL
+            return EXIT_CLEAN
+        if command == "ensure":
+            policy = resolve_install_policy()
+            if policy == "never":
+                raise SelectionError(
+                    "ensure is blocked while LINT_INSTALL=never; "
+                    "set LINT_INSTALL=prompt or LINT_INSTALL=always"
+                )
+            languages = languages_for_doctor(requested)
+            ensure_host_formatters(languages, policy=policy)
+            response = doctor_host_formatters(languages)
+            response["mode"] = "ensure"
+            print_response(response, arguments.json)
+            if response["status"] != "ok":
+                return EXIT_INTERNAL
+            return EXIT_CLEAN
         paths = select_paths(
             cwd=cwd,
             explicit_paths=arguments.paths,
@@ -1796,7 +2193,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         response = lint_files(
             cwd=cwd,
             paths=paths,
-            requested_languages=frozenset(arguments.language),
+            requested_languages=requested,
             write=arguments.write,
             use_docker=arguments.docker,
             image_references=image_references,
@@ -1813,6 +2210,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         }
         print_response(response, arguments.json, error=True)
         return EXIT_SELECTION
+    except HostToolError as error:
+        response = {
+            "schema_version": 2,
+            "status": "engine_error",
+            "message": str(error),
+            "recovery": error.recovery,
+        }
+        print_response(response, arguments.json, error=True)
+        return EXIT_INTERNAL
     except EngineError as error:
         response = {
             "schema_version": 2,

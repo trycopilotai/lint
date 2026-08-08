@@ -4,6 +4,8 @@ ARGS ?=
 .PHONY: \
   all \
   lint \
+  doctor \
+  ensure \
   dlint \
   lint_markdown \
   lint_html \
@@ -128,6 +130,12 @@ pyformat:
 
 lint:
 	$(PYTHON) lint.py $(ARGS)
+
+doctor:
+	$(PYTHON) lint.py doctor $(ARGS)
+
+ensure:
+	$(PYTHON) lint.py ensure $(ARGS)
 
 dlint:
 	$(PYTHON) dlint.py $(ARGS)
