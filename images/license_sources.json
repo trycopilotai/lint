@@ -681,8 +681,8 @@
       "output": "go-LICENSE",
       "sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
       "targets": ["buildifier", "go", "shfmt"],
-      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE",
-      "version": "1.26.5"
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.6/LICENSE",
+      "version": "1.26.6"
     },
     {
       "component": "Go patents grant",
@@ -690,8 +690,8 @@
       "output": "go-PATENTS",
       "sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
       "targets": ["buildifier", "go", "shfmt"],
-      "url": "https://raw.githubusercontent.com/golang/go/go1.26.5/PATENTS",
-      "version": "1.26.5"
+      "url": "https://raw.githubusercontent.com/golang/go/go1.26.6/PATENTS",
+      "version": "1.26.6"
     },
     {
       "component": "Rust",
@@ -931,8 +931,8 @@
       "output": "dotnet-THIRD-PARTY-NOTICES.TXT",
       "sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
       "targets": ["csharp"],
-      "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/THIRD-PARTY-NOTICES.TXT",
-      "version": "10.0.10"
+      "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.11/THIRD-PARTY-NOTICES.TXT",
+      "version": "10.0.11"
     },
     {
       "component": ".NET runtime and Microsoft.Extensions",
@@ -940,8 +940,8 @@
       "output": "dotnet-LICENSE.TXT",
       "sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
       "targets": ["csharp"],
-      "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/LICENSE.TXT",
-      "version": "10.0.10"
+      "url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.11/LICENSE.TXT",
+      "version": "10.0.11"
     },
     {
       "component": "Roslyn",

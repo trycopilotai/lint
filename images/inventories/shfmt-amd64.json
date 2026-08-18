@@ -30,7 +30,7 @@
       "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
-      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "sha256": "18361c6b8821a762a005d897aefb603a77a75f3de05ffca601cf70b318a68bd4",
       "type": "regular"
     },
     {
@@ -78,7 +78,7 @@
       "mode": "0644",
       "path": "licenses/shfmt/manifest.json",
       "role": "license",
-      "sha256": "f2c4f4a71dc2d465ff349f382187fd358f6e7e85e8142ffaadf4d2632b4426af",
+      "sha256": "0f93e22a432f2f962047bbad6698b0c57af19d5a62fd174acb51b6ce4371e291",
       "type": "regular"
     },
     {
@@ -126,7 +126,7 @@
       "mode": "0755",
       "path": "shfmt",
       "role": "entrypoint",
-      "sha256": "a6bb5bc3b90af2eda4a34512a54b5123c6dad3e305c2970498d7ead278fcd850",
+      "sha256": "b75b7874d0690075cceb7ace559c4f23c35a705876f35c9e010203347a827dc1",
       "type": "regular"
     }
   ],

@@ -6,7 +6,7 @@
       "mode": "0755",
       "path": "gofmt",
       "role": "entrypoint",
-      "sha256": "198a3d0a83314900388906b849ef9f6238cc8112fc8230fd4be466d90cc4e0e5",
+      "sha256": "0ef6fe2d15c972d15b8ecb75dcb9c861e042ac94a0e48baf0202a840648b0fdc",
       "type": "regular"
     },
     {
@@ -46,7 +46,7 @@
       "mode": "0644",
       "path": "licenses/go/manifest.json",
       "role": "license",
-      "sha256": "3f4a618cbcc02f1b9e1b30b582bb856b79e36495eecbcbd1d3d1213be90fb056",
+      "sha256": "1f87edd8a8f8f7ce770bcb39abf45f185be2189aadd6861e1583865e843b1af7",
       "type": "regular"
     },
     {
@@ -70,7 +70,7 @@
       "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
-      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "sha256": "18361c6b8821a762a005d897aefb603a77a75f3de05ffca601cf70b318a68bd4",
       "type": "regular"
     },
     {
@@ -78,7 +78,7 @@
       "mode": "0644",
       "path": "lint-tool-version",
       "role": "formatter",
-      "sha256": "1510d78991be5f2ae342d9ee21a049393b0e8af7e11ac1d0b35bd2cad28ab932",
+      "sha256": "964185fd571c1c31cb5a3d4da12fb0e72b3829d2bff14004c454549315c10dad",
       "type": "regular"
     }
   ],

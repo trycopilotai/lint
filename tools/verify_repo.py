@@ -257,7 +257,7 @@ def verify_manifests() -> None:
         "buildifier": "8.2.1",
         "ktlint": "1.3.0",
         "shfmt": "3.13.1",
-        "go": "1.26.5",
+        "go": "1.26.6",
         "rust": "1.97.1",
         "rustfmt": "1.9.0",
         "taplo": "0.10.0",

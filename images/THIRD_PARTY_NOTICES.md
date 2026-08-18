@@ -86,7 +86,7 @@ third-party license file.
 
 ### go
 
-The payload covers Go and gofmt 1.26.5, including the Go
+The payload covers Go and gofmt 1.26.6, including the Go
 patent grant.
 
 ### rust
@@ -139,7 +139,7 @@ target manifest include the exact resolved Git revisions.
 
 The payload covers CSharpier 1.3.0, the exact package
 inventory extracted from the pinned net10.0 application
-archive, the .NET 10.0.10 license and third-party notices,
+archive, the .NET 10.0.11 license and third-party notices,
 and legal texts for each distinct upstream dependency family
 in that inventory. It also covers the copied Alpine runtime
 families.

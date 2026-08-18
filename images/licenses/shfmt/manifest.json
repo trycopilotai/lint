@@ -6,8 +6,8 @@
       "path": "go-LICENSE",
       "payload_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
       "source_sha256": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad",
-      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.5/LICENSE",
-      "version": "1.26.5"
+      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.6/LICENSE",
+      "version": "1.26.6"
     },
     {
       "component": "Go patents grant",
@@ -15,8 +15,8 @@
       "path": "go-PATENTS",
       "payload_sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
       "source_sha256": "96f408bfae65bf137fc2525d3ecb030271c50c1e90799f87abf8846d8dd505cc",
-      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.5/PATENTS",
-      "version": "1.26.5"
+      "source_url": "https://raw.githubusercontent.com/golang/go/go1.26.6/PATENTS",
+      "version": "1.26.6"
     },
     {
       "component": "github.com/google/renameio/v2",

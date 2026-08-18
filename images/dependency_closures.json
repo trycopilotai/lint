@@ -88,10 +88,10 @@
     "go_buildifier": {
       "kind": "go_build_info",
       "source_path": "images/closures/buildifier-go-build-info.txt",
-      "source_sha256": "1e0beb84ae3322ef5ecc94807b04de96b36c17731b37c0a0592a937659eb0fe7",
+      "source_sha256": "10b7eb28ecd07a712771764feb42b12c100475dbb7e6a9ab62a45f394bbac6ad",
       "source_download": "buildifier_source",
       "receipt": {
-        "go_version": "go1.26.5",
+        "go_version": "go1.26.6",
         "main": {
           "path": "github.com/bazelbuild/buildtools",
           "version": "(devel)"
@@ -131,10 +131,10 @@
     "go_shfmt": {
       "kind": "go_build_info",
       "source_path": "images/closures/shfmt-go-build-info.txt",
-      "source_sha256": "392b0632345c166f49d45a08c09c46faeb0cf40636e6209326fa6460a92788f3",
+      "source_sha256": "08080c2c59663f0e63018154ec8a3c306dce99ab09002469ab1fa1886f758cb3",
       "source_module": "shfmt",
       "receipt": {
-        "go_version": "go1.26.5",
+        "go_version": "go1.26.6",
         "main": {
           "path": "mvdan.cc/sh/v3",
           "sum": "h1:DP3TfgZhDkT7lerUdnp6PTGKyxxzz6T+cOlY/xEvfWk=",

@@ -631,7 +631,7 @@ class FormattingTest(unittest.TestCase):
             "shfmt": "v3.13.1",
             "clang": "Homebrew clang-format version 18.1.8",
             "java": "google-java-format: Version 1.35.0",
-            "go": "/tools/gofmt: go1.26.5",
+            "go": "/tools/gofmt: go1.26.6",
             "rust": "rustfmt 1.9.0-stable (0123456789 2026-07-30)",
             "kotlin": "ktlint version 1.3.0",
             "toml": "taplo 0.10.0",

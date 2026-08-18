@@ -2,8 +2,8 @@ Go build information receipt
 Tool: shfmt 3.13.1
 Source: https://proxy.golang.org/mvdan.cc/sh/v3/@v/v3.13.1.zip
 Source module sum: h1:DP3TfgZhDkT7lerUdnp6PTGKyxxzz6T+cOlY/xEvfWk=
-Derivation: GOTOOLCHAIN=local go1.26.5 install mvdan.cc/sh/v3/cmd/shfmt@v3.13.1, then go version -m
-go go1.26.5
+Derivation: GOTOOLCHAIN=local go1.26.6 install mvdan.cc/sh/v3/cmd/shfmt@v3.13.1, then go version -m
+go go1.26.6
 main mvdan.cc/sh/v3 v3.13.1 h1:DP3TfgZhDkT7lerUdnp6PTGKyxxzz6T+cOlY/xEvfWk=
 dep github.com/google/renameio/v2 v2.0.2 h1:qKZs+tfn+arruZZhQ7TKC/ergJunuJicWS6gLDt/dGw=
 dep github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=
