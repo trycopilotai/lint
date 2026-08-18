@@ -1103,15 +1103,15 @@ class FormattingTest(unittest.TestCase):
             "black": "pipx install --force black==24.10.0",
             "shfmt": "go install mvdan.cc/sh/v3/cmd/shfmt@v3.13.1",
             "clang": "pipx install --force clang-format==18.1.8",
-            "java": "docker pull ghcr.io/trycopilotai/lint-java:0.1.6",
-            "go": "docker pull ghcr.io/trycopilotai/lint-go:0.1.6",
+            "java": "docker pull ghcr.io/trycopilotai/lint-java:0.1.7",
+            "go": "docker pull ghcr.io/trycopilotai/lint-go:0.1.7",
             "rust": "rustup toolchain install 1.97.1 --component rustfmt",
-            "kotlin": "docker pull ghcr.io/trycopilotai/lint-kotlin:0.1.6",
+            "kotlin": "docker pull ghcr.io/trycopilotai/lint-kotlin:0.1.7",
             "toml": "cargo install taplo-cli --version 0.10.0 --locked",
-            "xml": "docker pull ghcr.io/trycopilotai/lint-xml:0.1.6",
-            "swift": "docker pull ghcr.io/trycopilotai/lint-swift:0.1.6",
+            "xml": "docker pull ghcr.io/trycopilotai/lint-xml:0.1.7",
+            "swift": "docker pull ghcr.io/trycopilotai/lint-swift:0.1.7",
             "csharp": "dotnet tool install --global csharpier --version 1.3.0",
-            "julia": "docker pull ghcr.io/trycopilotai/lint-julia:0.1.6",
+            "julia": "docker pull ghcr.io/trycopilotai/lint-julia:0.1.7",
         }
         languages_by_family = {}
         for language in LINT.load_languages():

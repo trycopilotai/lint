@@ -1,6 +1,6 @@
 {
   "name": "lint",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Check or apply canonical formatting across mixed-language repositories with a read-only default.",
   "author": {
     "name": "trycopilot.ai"

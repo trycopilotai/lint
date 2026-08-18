@@ -9,7 +9,7 @@ on:
         description: "Existing signed release tag"
         required: true
         type: string
-        default: v0.1.6
+        default: v0.1.7
 
 permissions:
   contents: read

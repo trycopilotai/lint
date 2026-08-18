@@ -38,11 +38,11 @@ def sha256(payload: bytes) -> str:
 class ReleaseProvenanceTest(unittest.TestCase):
     def write_inputs(self, directory: Path) -> tuple[Path, Path, Path]:
         revision = "a" * 40
-        archive = directory / "lint-0.1.6.tar.gz"
+        archive = directory / "lint-0.1.7.tar.gz"
         archive.write_bytes(b"deterministic archive\n")
         workflow = directory / "release.yml"
         workflow.write_bytes(b"name: Release\n")
-        manifest = directory / "release-manifest-0.1.6.json"
+        manifest = directory / "release-manifest-0.1.7.json"
         manifest.write_text(
             json.dumps(
                 {
@@ -50,7 +50,7 @@ class ReleaseProvenanceTest(unittest.TestCase):
                         "ghcr.io/trycopilotai/lint-python": "sha256:" + "1" * 64,
                         "ghcr.io/trycopilotai/lint-rust": "sha256:" + "2" * 64,
                     },
-                    "release": "0.1.6",
+                    "release": "0.1.7",
                     "schema_version": 1,
                     "source": {
                         "archive": archive.name,
@@ -72,7 +72,7 @@ class ReleaseProvenanceTest(unittest.TestCase):
             directory = Path(temporary)
             archive, manifest, workflow = self.write_inputs(directory)
             statement = PROVENANCE.build_statement(
-                version="0.1.6",
+                version="0.1.7",
                 revision="a" * 40,
                 archive=archive,
                 manifest=manifest,
@@ -88,11 +88,11 @@ class ReleaseProvenanceTest(unittest.TestCase):
         subjects = {row["name"]: row["digest"] for row in statement["subject"]}
         self.assertEqual(
             sha256(b"deterministic archive\n"),
-            subjects["lint-0.1.6.tar.gz"]["sha256"],
+            subjects["lint-0.1.7.tar.gz"]["sha256"],
         )
         self.assertEqual(
             manifest_digest,
-            subjects["release-manifest-0.1.6.json"]["sha256"],
+            subjects["release-manifest-0.1.7.json"]["sha256"],
         )
         self.assertEqual(
             "1" * 64,
@@ -114,7 +114,7 @@ class ReleaseProvenanceTest(unittest.TestCase):
 
             for output in (first, second):
                 PROVENANCE.write_statement(
-                    version="0.1.6",
+                    version="0.1.7",
                     revision="a" * 40,
                     archive=archive,
                     manifest=manifest,
@@ -135,7 +135,7 @@ class ReleaseProvenanceTest(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "archive digest"):
                 PROVENANCE.build_statement(
-                    version="0.1.6",
+                    version="0.1.7",
                     revision="a" * 40,
                     archive=archive,
                     manifest=manifest,

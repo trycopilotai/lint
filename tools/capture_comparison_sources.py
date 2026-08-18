@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "evidence"
 EXCERPTS = EVIDENCE / "comparison-source-excerpts"
 OUTPUT = EVIDENCE / "comparison-sources.json"
-USER_AGENT = "trycopilotai-lint-comparison-evidence/0.1.6"
+USER_AGENT = "trycopilotai-lint-comparison-evidence/0.1.7"
 # Every comparison cell that describes another project needs
 # its own first-party excerpt. Sourcing only the breadth
 # column left the role and delivery columns as unsourced
