@@ -785,7 +785,7 @@ class ReleaseWorkflowTest(unittest.TestCase):
         security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
         normalized = " ".join(security.split())
 
-        self.assertIn("verify-tag v0.1.6", security)
+        self.assertIn("verify-tag v0.1.7", security)
         self.assertIn(".github/release-allowed-signers", security)
         self.assertIn(RELEASE_TRUST_ROOT, security)
         self.assertIn(
@@ -1532,7 +1532,7 @@ class LaunchSurfaceTest(unittest.TestCase):
         release_base = "https://github.com/trycopilotai/lint/releases/download/$release"
 
         self.assertEqual(2, readme.count(release_base))
-        self.assertEqual(2, readme.count("release=v0.1.6"))
+        self.assertEqual(2, readme.count("release=v0.1.7"))
         self.assertEqual(2, readme.count('version="${release#v}"'))
         # The auto-generated tag tarball is the one artifact
         # no checksum is published for, so both installs take
@@ -1784,7 +1784,7 @@ class LaunchSurfaceTest(unittest.TestCase):
         # together. If they drift, the README promises an image
         # build that the tag skips, and --docker pulls a tag that
         # was never published.
-        self.assertEqual("0.1.6", version)
+        self.assertEqual("0.1.7", version)
         self.assertIn(
             'return f"{IMAGE_PREFIX}{language.id}:{image_version()}"',
             lint_source,

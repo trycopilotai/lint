@@ -257,7 +257,7 @@ def verify_manifests() -> None:
         "buildifier": "8.2.1",
         "ktlint": "1.3.0",
         "shfmt": "3.13.1",
-        "go": "1.26.5",
+        "go": "1.26.6",
         "rust": "1.97.1",
         "rustfmt": "1.9.0",
         "taplo": "0.10.0",
@@ -284,7 +284,7 @@ def verify_manifests() -> None:
         ROOT / ".codex-plugin" / "plugin.json",
     ):
         data = json.loads(manifest.read_text(encoding="utf-8"))
-        if data["version"] != "0.1.6":
+        if data["version"] != "0.1.7":
             raise ValueError(f"wrong plugin version: {manifest}")
 
 
@@ -639,7 +639,7 @@ def verify_release_surfaces() -> None:
     release_base = "https://github.com/trycopilotai/lint/releases/download/$release"
     if readme.count(release_base) != 2:
         raise ValueError("public skill installs must use the release archive")
-    if readme.count("release=v0.1.6") != 2:
+    if readme.count("release=v0.1.7") != 2:
         raise ValueError("public skill installs must pin the release tag")
     if readme.count('version="${release#v}"') != 2:
         raise ValueError("public skill installs must derive the archive version")

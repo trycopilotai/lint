@@ -57,11 +57,11 @@ class ServiceTest(unittest.TestCase):
         self.assertEqual("changed", response["files"][0]["status"])
         self.assertEqual("requirements", response["files"][0]["runner_id"])
         self.assertEqual(
-            "ghcr.io/trycopilotai/lint-requirements:0.1.6",
+            "ghcr.io/trycopilotai/lint-requirements:0.1.7",
             response["files"][0]["image"],
         )
         self.assertEqual(
-            {"requirements-sort": "0.1.6"},
+            {"requirements-sort": "0.1.7"},
             response["files"][0]["tool_versions"],
         )
         self.assertTrue(response["files"][0]["changed"])
@@ -320,11 +320,11 @@ class ServiceTest(unittest.TestCase):
             language["id"]: language for language in response["languages"]
         }
         self.assertEqual(
-            "ghcr.io/trycopilotai/lint-scss:0.1.6",
+            "ghcr.io/trycopilotai/lint-scss:0.1.7",
             languages_by_id["scss"]["image"],
         )
         self.assertEqual(
-            "ghcr.io/trycopilotai/lint-less:0.1.6",
+            "ghcr.io/trycopilotai/lint-less:0.1.7",
             languages_by_id["less"]["image"],
         )
 

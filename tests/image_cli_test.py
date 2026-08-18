@@ -107,7 +107,7 @@ class WorkflowCoverageTest(unittest.TestCase):
             "shfmt": "shfmt@v3.13.1",
             "clang": "clang-format==18.1.8",
             "java": "/v1.35.0/google-java-format_linux-x86-64",
-            "go": 'go-version: "1.26.5"',
+            "go": 'go-version: "1.26.6"',
             "rust": "rustup toolchain install 1.97.1",
             "kotlin": "/1.3.0/ktlint",
             "taplo": "/0.10.0/taplo-linux-x86_64.gz",

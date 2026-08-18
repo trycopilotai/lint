@@ -2,8 +2,8 @@
 
 ARG ALPINE_3_23="alpine:3.23@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40"
 ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:d97bc0a941b8d4be647dc0ee75b264ddbb772f1ac5ba690a4309c00723b23775"
-ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.10-alpine3.23@sha256:9297ae3050f7e80428142f784a6d016f80bc8b5cd54e7fc1b596935911b1e58e"
-ARG GO_IMAGE="golang:1.26.5-alpine3.23@sha256:622e56dbc11a8cfe87cafa2331e9a201877271cbff918af53d3be315f3da88cc"
+ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.11-alpine3.23@sha256:6aa91d49edbbbd0a680ad22192b49373427397e48935074d441a1138c42f41b1"
+ARG GO_IMAGE="golang:1.26.6-alpine3.23@sha256:e57c41c1d5864341031181b0db34b9a537bb5773eb6428e4e5bdaea0f9135406"
 ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
 ARG JAVA_JDK_IMAGE="eclipse-temurin:21-jdk-alpine-3.23@sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76"
 ARG JULIA_IMAGE="julia:1.12.6-bookworm@sha256:4979dc5c6fbcd7f5f0dc2ba2b336d136bda63a40c25e52a848222aa24326dfe1"
@@ -294,8 +294,8 @@ ENTRYPOINT ["google-java-format", "--replace"]
 
 FROM ${GO_IMAGE} AS go-source
 RUN cp /usr/local/go/bin/gofmt /gofmt \
-    && test "$(go version /gofmt)" = "/gofmt: go1.26.5" \
-    && printf 'go=1.26.5\n' >/lint-tool-version
+    && test "$(go version /gofmt)" = "/gofmt: go1.26.6" \
+    && printf 'go=1.26.6\n' >/lint-tool-version
 
 FROM scratch AS go
 LABEL org.opencontainers.image.source="https://github.com/trycopilotai/lint"

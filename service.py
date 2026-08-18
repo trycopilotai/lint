@@ -478,7 +478,7 @@ def tools_for_language(language: lint.Language) -> dict[str, str]:
     for tool in FAMILY_TOOLS[language.family]:
         selected[tool] = versions[tool]
     if language.family == "requirements":
-        selected["requirements-sort"] = "0.1.6"
+        selected["requirements-sort"] = "0.1.7"
     return selected
 
 
@@ -563,7 +563,7 @@ def max_request_body_bytes() -> int:
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "lint/0.1.6"
+    server_version = "lint/0.1.7"
     use_docker = False
 
     def do_GET(self) -> None:

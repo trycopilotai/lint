@@ -145,12 +145,12 @@ make dlint_markdown
 make dlint_less
 ```
 
-Use the composite GitHub Action, pinned to `v0.1.6`:
+Use the composite GitHub Action, pinned to `v0.1.7`:
 
 ```yaml
 steps:
   - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
-  - uses: trycopilotai/lint@v0.1.6
+  - uses: trycopilotai/lint@v0.1.7
     with:
       mode: read-only
       cwd: .
@@ -172,8 +172,8 @@ verified release manifest:
 
 ```sh
 python3 lint.py --docker \
-  --image-manifest release-manifest-0.1.6.json
-make lint ARGS="--docker --image-manifest release-manifest-0.1.6.json"
+  --image-manifest release-manifest-0.1.7.json
+make lint ARGS="--docker --image-manifest release-manifest-0.1.7.json"
 ```
 
 The manifest must exactly match this release's source
@@ -226,13 +226,13 @@ The default policy covers:
 Pinned versions are recorded in `languages.json`. Local runs
 report an install hint when a required executable is absent.
 Docker runs pull
-`ghcr.io/trycopilotai/lint-<language>:0.1.6`. The release
+`ghcr.io/trycopilotai/lint-<language>:0.1.7`. The release
 workflow checks each built image against its compressed-size
 budget. For Linux AMD64 it also compares every final
 filesystem path, type, mode, link target, regular-file
 SHA-256, and reviewed role against the checked-in canonical
 inventory for that target. An extra, missing, or changed
-entry fails verification. A matching v0.1.6 tag builds and
+entry fails verification. A matching v0.1.7 tag builds and
 publishes the image set for Linux AMD64 and Linux ARM64. The
 release manifest records each promoted image digest
 alongside the source archive and its checksums.
@@ -345,7 +345,7 @@ Install the pinned standalone skill without authentication:
 archive="$(mktemp -d)"
 target="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/skills/lint"
 install -d "$target"
-release=v0.1.6
+release=v0.1.7
 version="${release#v}"
 base="https://github.com/trycopilotai/lint/releases/download/$release"
 curl --fail --location "$base/lint-$version.tar.gz" \
@@ -383,7 +383,7 @@ without authentication:
 archive="$(mktemp -d)"
 target="${CODEX_HOME:-$HOME/.codex}/skills/lint"
 install -d "$target"
-release=v0.1.6
+release=v0.1.7
 version="${release#v}"
 base="https://github.com/trycopilotai/lint/releases/download/$release"
 curl --fail --location "$base/lint-$version.tar.gz" \

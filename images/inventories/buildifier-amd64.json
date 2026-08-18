@@ -6,7 +6,7 @@
       "mode": "0755",
       "path": "buildifier",
       "role": "entrypoint",
-      "sha256": "9ecd526fce53e9fcc4804898efd412ba0294b879722cd921ed67c884c595b513",
+      "sha256": "39220d44920b0d35badb8a47ee0db09b4aaf9985c10033a1b9c88be74d6dde22",
       "type": "regular"
     },
     {
@@ -62,7 +62,7 @@
       "mode": "0644",
       "path": "licenses/buildifier/manifest.json",
       "role": "license",
-      "sha256": "80ff1538fbae31cdacf352f147aebb980ced2a53e77e0845b1d228b5fbefc054",
+      "sha256": "6208ffa028495664296e9a422c4c4b751180d427983753a07ed95ac04a313ad9",
       "type": "regular"
     },
     {
@@ -94,7 +94,7 @@
       "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
-      "sha256": "a3a45e269859df16b75856935649295307bd4eeb60f28ba9115f25747307aee6",
+      "sha256": "18361c6b8821a762a005d897aefb603a77a75f3de05ffca601cf70b318a68bd4",
       "type": "regular"
     },
     {

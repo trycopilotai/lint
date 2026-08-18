@@ -6,8 +6,8 @@
       "path": "dotnet-LICENSE.TXT",
       "payload_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
       "source_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310",
-      "source_url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/LICENSE.TXT",
-      "version": "10.0.10"
+      "source_url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.11/LICENSE.TXT",
+      "version": "10.0.11"
     },
     {
       "component": ".NET runtime and Microsoft.Extensions",
@@ -15,8 +15,8 @@
       "path": "dotnet-THIRD-PARTY-NOTICES.TXT",
       "payload_sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
       "source_sha256": "66f1d4e44973185519bb4aa8a9718eb22fc7af2cc532e3ae9cfc4c127ee7fc54",
-      "source_url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.10/THIRD-PARTY-NOTICES.TXT",
-      "version": "10.0.10"
+      "source_url": "https://raw.githubusercontent.com/dotnet/runtime/v10.0.11/THIRD-PARTY-NOTICES.TXT",
+      "version": "10.0.11"
     },
     {
       "component": "Alpine apk-tools runtime",
