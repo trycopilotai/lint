@@ -8,6 +8,8 @@ name: Regenerate inventories
 
 on:
   workflow_dispatch:
+  push:
+    branches: [fix/images-cve]
 
 permissions:
   contents: read
