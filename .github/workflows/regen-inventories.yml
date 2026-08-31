@@ -33,6 +33,8 @@ jobs:
           record = json.load(open("images/matrix.json"))
           include = []
           for entry in record["images"]:
+              if entry["target"] != "kotlin":
+                  continue
               include.append(
                   {
                       "language": entry["languages"][0],
