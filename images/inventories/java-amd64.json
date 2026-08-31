@@ -558,7 +558,7 @@
       "mode": "0644",
       "path": "usr/lib/x86_64-linux-gnu/engines-3/afalg.so",
       "role": "runtime",
-      "sha256": "d18a929c4b113361abce1f16a3051f6149590cfd6d2b5466158173d89366c06f",
+      "sha256": "1dc13554c487969b5fa9fbd997d0e6f0292b3afd519c662522e0ff7358f601f0",
       "type": "regular"
     },
     {
@@ -566,7 +566,7 @@
       "mode": "0644",
       "path": "usr/lib/x86_64-linux-gnu/engines-3/loader_attic.so",
       "role": "runtime",
-      "sha256": "dbafd417e4a47124975246c5a0ebd3ceab00f9836e17f306f745d5ad07cd46d0",
+      "sha256": "e7279c2799db0fa179c93fafef0723c7ba53b2f90a439dd74f7d6cc4c7e4f225",
       "type": "regular"
     },
     {
@@ -574,7 +574,7 @@
       "mode": "0644",
       "path": "usr/lib/x86_64-linux-gnu/engines-3/padlock.so",
       "role": "runtime",
-      "sha256": "0c8f38ba5ade030c15f38b1f38ce87afc978f19ca0f8f7f1482ae3c906e673cd",
+      "sha256": "71cceabf628d52ab392b1e688c8531be43267fd28dd483a7ff0e96a31af7ba14",
       "type": "regular"
     },
     {
@@ -2686,7 +2686,7 @@
       "mode": "0644",
       "path": "usr/lib/x86_64-linux-gnu/libcrypto.so.3",
       "role": "runtime",
-      "sha256": "cb0b7ad91caee5f3b1448198b1a60b4d202baf916e779e9dbab7f232155991eb",
+      "sha256": "8bb5f3fdffe280d4453eb79a4663c2c47af70b7c247fe2e94e2da703cee1fd3d",
       "type": "regular"
     },
     {
@@ -2822,7 +2822,7 @@
       "mode": "0644",
       "path": "usr/lib/x86_64-linux-gnu/libssl.so.3",
       "role": "runtime",
-      "sha256": "caac96cbdee92283c7ab4a25611503cb63f161dcc7e6569be76158b63830e398",
+      "sha256": "4b34859318555bf96d518131bed5fc4d5e35fefa4e1729f49eaa26bd05263850",
       "type": "regular"
     },
     {
@@ -3414,7 +3414,7 @@
       "mode": "0644",
       "path": "usr/share/doc/libssl3t64/changelog.Debian.gz",
       "role": "runtime",
-      "sha256": "e893d9316e840f1b9bdd50243511dea2cd0f5a83440b5e60872ce18270389904",
+      "sha256": "aa4ec4a36b9788e916677f49c3773e013a4a6a53fe6df56abffbbed98eb35bc8",
       "type": "regular"
     },
     {
@@ -3422,7 +3422,7 @@
       "mode": "0644",
       "path": "usr/share/doc/libssl3t64/changelog.gz",
       "role": "runtime",
-      "sha256": "abb4d750dc6bf839a5006866d4c84f513277f94f6eaf97c5c44964944744d3db",
+      "sha256": "de7e88f075451ad8ebc3784a263a873c1079a940a56bb6d6f77155027f406b89",
       "type": "regular"
     },
     {
@@ -13892,6 +13892,22 @@
     {
       "link_target": null,
       "mode": "0644",
+      "path": "var/lib/dpkg/status.d/ca-certificates",
+      "role": "runtime",
+      "sha256": "3f458b5dba442fcd79618e5f3f9c5dd24d0efca831ada4a28eeb746c4b6b6c6a",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
+      "path": "var/lib/dpkg/status.d/ca-certificates.md5sums",
+      "role": "runtime",
+      "sha256": "e9234ae8ea2b4ac3f1e089c878345093f5356ab9ae28ba92d584b20f11765fd7",
+      "type": "regular"
+    },
+    {
+      "link_target": null,
+      "mode": "0644",
       "path": "var/lib/dpkg/status.d/gcc-14-base",
       "role": "runtime",
       "sha256": "3ab3a11930c188172cc07ca122c7646b8d2c832e1403e37f993c53ceb838df28",
@@ -13958,7 +13974,7 @@
       "mode": "0644",
       "path": "var/lib/dpkg/status.d/libssl3t64",
       "role": "runtime",
-      "sha256": "20f468852fbb87029ba3e2b241601626c6689408f2b15a0da774cf89b8b45a00",
+      "sha256": "860a1d3aeb0591ebdbd30949272ddf26a403ff0bc4bb39aacfbfc4d253c9c514",
       "type": "regular"
     },
     {
@@ -13966,7 +13982,7 @@
       "mode": "0644",
       "path": "var/lib/dpkg/status.d/libssl3t64.md5sums",
       "role": "runtime",
-      "sha256": "62c8d30ce9ffc408195c789223ffc991a99c88877f061a962c4b741a6376a4cf",
+      "sha256": "4e96958350517c3492e01c110e5e89cad16431b2dfe772043f7ff4979d6913c3",
       "type": "regular"
     },
     {

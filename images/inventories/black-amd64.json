@@ -30,7 +30,7 @@
       "mode": "0644",
       "path": "lib/apk/db/installed",
       "role": "runtime",
-      "sha256": "c65aa0d5b064b13a25237ab63c31c80ab94db84f4d1aee3919a248058b252616",
+      "sha256": "a59b064dfd9fa0ab81862b3b02e03c6f653f1130201db85c1d24cc3686fbdf44",
       "type": "regular"
     },
     {
@@ -374,7 +374,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/afalg.so",
       "role": "runtime",
-      "sha256": "c095af87bcd32431c0898d7d6d3585d6eac5046f9ff30662fe0f449f26b0d5b9",
+      "sha256": "37b2e379caafde2ab58bdf8950975530f72e8ef1c41af4f12bea160b37c2bece",
       "type": "regular"
     },
     {
@@ -382,7 +382,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/capi.so",
       "role": "runtime",
-      "sha256": "1897fafd326cf649e083f6ceb1074110b8bcce646163b5c3de5c5bbc50901ba2",
+      "sha256": "b8514972e1ba12ee21d499c15ff87caded0772c4c527a102ae5a735eb622203b",
       "type": "regular"
     },
     {
@@ -390,7 +390,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/loader_attic.so",
       "role": "runtime",
-      "sha256": "8c3a24e4c1c8364c092c9ce4c5edb58ba664dc641dca4f3b8225ab0395b9f078",
+      "sha256": "fd572438567621228bf2cd0a7886f9eef3b6c5589192c084af2b865b21364537",
       "type": "regular"
     },
     {
@@ -398,7 +398,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/padlock.so",
       "role": "runtime",
-      "sha256": "ed94e152a9f195676bc856ff2847d882a68577ef4e2857e2fd44a5187bcdfc8d",
+      "sha256": "1543b356b9254f711ea39bc2ba5a1683580b53bb22a9c3e0bdd33b93ce506939",
       "type": "regular"
     },
     {
@@ -430,7 +430,7 @@
       "mode": "0755",
       "path": "usr/lib/libcrypto.so.3",
       "role": "runtime",
-      "sha256": "5e860b4eb92cd6671dfe557ecffd506778f6549030b0e6142e94cb8e340c871d",
+      "sha256": "1ac79b0200d7021813703ff3bf84f9904eb3e246637a80068574b688137a6cb9",
       "type": "regular"
     },
     {
@@ -546,7 +546,7 @@
       "type": "regular"
     },
     {
-      "link_target": "libsqlite3.so.3.51.2",
+      "link_target": "libsqlite3.so.3.53.4",
       "mode": "0777",
       "path": "usr/lib/libsqlite3.so.0",
       "role": "runtime",
@@ -556,9 +556,9 @@
     {
       "link_target": null,
       "mode": "0755",
-      "path": "usr/lib/libsqlite3.so.3.51.2",
+      "path": "usr/lib/libsqlite3.so.3.53.4",
       "role": "runtime",
-      "sha256": "91c1425e737ab17234d55b6471bef80cfd3da87bb8e23ce5093265e654344d69",
+      "sha256": "31cb64c44f413276f9df944b02ba8cc94f68c2c38531e76e61728c06876f5301",
       "type": "regular"
     },
     {
@@ -566,7 +566,7 @@
       "mode": "0755",
       "path": "usr/lib/libssl.so.3",
       "role": "runtime",
-      "sha256": "e5511fdc20200c254a01ff8c801828139cfc36be4fca2d52b3fdac54f041f978",
+      "sha256": "887c7ece9256a1e04c451e9b1193824fcd302814f43098c055590719ad70a49e",
       "type": "regular"
     },
     {
@@ -630,7 +630,7 @@
       "mode": "0755",
       "path": "usr/lib/ossl-modules/legacy.so",
       "role": "runtime",
-      "sha256": "02b03d1347c880f8d5076931a4454b876b8e9601536f48a94bf6f64e338f7387",
+      "sha256": "313c70195b37cf885dd9e09a9f6898add64261a6da811ae36503e9efec988274",
       "type": "regular"
     },
     {

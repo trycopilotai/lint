@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.18
 
 ARG ALPINE_3_23="alpine:3.23@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40"
-ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:d97bc0a941b8d4be647dc0ee75b264ddbb772f1ac5ba690a4309c00723b23775"
+ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:c31ff9abcb1910f3ab25c7957bdaf0bfe12a01eb546e8df2282f1c8f682b606c"
 ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.11-alpine3.23@sha256:6aa91d49edbbbd0a680ad22192b49373427397e48935074d441a1138c42f41b1"
 ARG GO_IMAGE="golang:1.26.6-alpine3.23@sha256:e57c41c1d5864341031181b0db34b9a537bb5773eb6428e4e5bdaea0f9135406"
 ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
@@ -85,6 +85,9 @@ COPY LICENSE /licenses/lint/LICENSE
 COPY images/THIRD_PARTY_NOTICES.md /licenses/lint/THIRD_PARTY_NOTICES.md
 
 FROM ${NODE_IMAGE} AS prettier-build
+RUN apk add --no-cache \
+      libcrypto3=3.5.8-r0 \
+      libssl3=3.5.8-r0
 COPY --from=prettier-download \
     /downloads/prettier-3.7.4.tgz \
     /downloads/prettier-3.7.4.tgz
@@ -165,6 +168,10 @@ USER 65532:65532
 ENTRYPOINT ["/buildifier", "-mode=fix"]
 
 FROM ${PYTHON_IMAGE} AS black-build
+RUN apk add --no-cache \
+      libcrypto3=3.5.8-r0 \
+      libssl3=3.5.8-r0 \
+      sqlite-libs=3.53.4-r0
 COPY --from=black-download /black-wheels /black-wheels
 RUN pip install \
       --no-cache-dir \
@@ -192,6 +199,10 @@ USER 65532:65532
 ENTRYPOINT ["/usr/local/bin/python3", "-m", "black", "--quiet", "--line-length", "88"]
 
 FROM ${PYTHON_IMAGE} AS requirements-build
+RUN apk add --no-cache \
+      libcrypto3=3.5.8-r0 \
+      libssl3=3.5.8-r0 \
+      sqlite-libs=3.53.4-r0
 COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
 RUN echo "723bfe9070dd70e804fff734a7156b963e694446e161739d03394ca30d9f29b5  /requirements-format" \
       | sha256sum -c \
@@ -332,9 +343,12 @@ ENTRYPOINT ["/bin/rustfmt"]
 
 FROM ${JAVA_JDK_IMAGE} AS kotlin-build
 RUN apk add --no-cache \
-      libexpat=2.8.2-r0 \
+      libcrypto3=3.5.8-r0 \
+      libexpat=2.8.3-r0 \
+      libssl3=3.5.8-r0 \
       p11-kit=0.26.2-r0 \
-      p11-kit-trust=0.26.2-r0
+      p11-kit-trust=0.26.2-r0 \
+      sqlite-libs=3.53.4-r0
 ADD --checksum=sha256:01b2e0ef893383a50dbeb13970fe7fa3be36ca3e83259e01649945b09d736985 \
     https://github.com/ktlint/ktlint/releases/download/1.3.0/ktlint \
     /ktlint
@@ -494,6 +508,9 @@ RUN curl --fail --location \
     && find /tools -name '*.pdb' -delete
 
 FROM ${DOTNET_RUNTIME} AS csharp-runtime
+RUN apk add --no-cache \
+      libcrypto3=3.5.8-r0 \
+      libssl3=3.5.8-r0
 
 FROM csharp-runtime AS csharp-build
 COPY --from=csharp-download /tools /tools
