@@ -46,7 +46,7 @@
       "mode": "0644",
       "path": "lib/apk/db/installed",
       "role": "runtime",
-      "sha256": "fa04367ed8586e3a7782882229c3432d77febc0448fa9698d96223cdf4cd3718",
+      "sha256": "05de98b7bcf7c3dda8d24fc74b8709286212e8724889ac50a6aa89d04139f9b8",
       "type": "regular"
     },
     {
@@ -2602,7 +2602,7 @@
       "type": "regular"
     },
     {
-      "link_target": "libsqlite3.so.3.51.2",
+      "link_target": "libsqlite3.so.3.53.4",
       "mode": "0777",
       "path": "usr/lib/libsqlite3.so.0",
       "role": "runtime",
@@ -2612,9 +2612,9 @@
     {
       "link_target": null,
       "mode": "0755",
-      "path": "usr/lib/libsqlite3.so.3.51.2",
+      "path": "usr/lib/libsqlite3.so.3.53.4",
       "role": "runtime",
-      "sha256": "91c1425e737ab17234d55b6471bef80cfd3da87bb8e23ce5093265e654344d69",
+      "sha256": "31cb64c44f413276f9df944b02ba8cc94f68c2c38531e76e61728c06876f5301",
       "type": "regular"
     },
     {
