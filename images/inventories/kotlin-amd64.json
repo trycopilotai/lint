@@ -46,7 +46,7 @@
       "mode": "0644",
       "path": "lib/apk/db/installed",
       "role": "runtime",
-      "sha256": "34395d279af6bccddc2ed8e90ca7a332827548a28c7c57025a88329c5a7c1cd9",
+      "sha256": "fa04367ed8586e3a7782882229c3432d77febc0448fa9698d96223cdf4cd3718",
       "type": "regular"
     },
     {
@@ -1974,7 +1974,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/afalg.so",
       "role": "runtime",
-      "sha256": "c095af87bcd32431c0898d7d6d3585d6eac5046f9ff30662fe0f449f26b0d5b9",
+      "sha256": "37b2e379caafde2ab58bdf8950975530f72e8ef1c41af4f12bea160b37c2bece",
       "type": "regular"
     },
     {
@@ -1982,7 +1982,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/capi.so",
       "role": "runtime",
-      "sha256": "1897fafd326cf649e083f6ceb1074110b8bcce646163b5c3de5c5bbc50901ba2",
+      "sha256": "b8514972e1ba12ee21d499c15ff87caded0772c4c527a102ae5a735eb622203b",
       "type": "regular"
     },
     {
@@ -1990,7 +1990,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/loader_attic.so",
       "role": "runtime",
-      "sha256": "8c3a24e4c1c8364c092c9ce4c5edb58ba664dc641dca4f3b8225ab0395b9f078",
+      "sha256": "fd572438567621228bf2cd0a7886f9eef3b6c5589192c084af2b865b21364537",
       "type": "regular"
     },
     {
@@ -1998,7 +1998,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/padlock.so",
       "role": "runtime",
-      "sha256": "ed94e152a9f195676bc856ff2847d882a68577ef4e2857e2fd44a5187bcdfc8d",
+      "sha256": "1543b356b9254f711ea39bc2ba5a1683580b53bb22a9c3e0bdd33b93ce506939",
       "type": "regular"
     },
     {
@@ -2134,7 +2134,7 @@
       "mode": "0755",
       "path": "usr/lib/libcrypto.so.3",
       "role": "runtime",
-      "sha256": "5e860b4eb92cd6671dfe557ecffd506778f6549030b0e6142e94cb8e340c871d",
+      "sha256": "1ac79b0200d7021813703ff3bf84f9904eb3e246637a80068574b688137a6cb9",
       "type": "regular"
     },
     {
@@ -2170,7 +2170,7 @@
       "type": "regular"
     },
     {
-      "link_target": "libexpat.so.1.12.2",
+      "link_target": "libexpat.so.1.12.3",
       "mode": "0777",
       "path": "usr/lib/libexpat.so.1",
       "role": "runtime",
@@ -2180,9 +2180,9 @@
     {
       "link_target": null,
       "mode": "0755",
-      "path": "usr/lib/libexpat.so.1.12.2",
+      "path": "usr/lib/libexpat.so.1.12.3",
       "role": "runtime",
-      "sha256": "d446e66c67bdd3d59b8435320d1c563ae6a2095f021c032f0884bf0ab8113701",
+      "sha256": "6adc0b9523ba1ae4fb318f0c644c0e0911a593642d38f625de95ab4cb0d26a35",
       "type": "regular"
     },
     {
@@ -2622,7 +2622,7 @@
       "mode": "0755",
       "path": "usr/lib/libssl.so.3",
       "role": "runtime",
-      "sha256": "e5511fdc20200c254a01ff8c801828139cfc36be4fca2d52b3fdac54f041f978",
+      "sha256": "887c7ece9256a1e04c451e9b1193824fcd302814f43098c055590719ad70a49e",
       "type": "regular"
     },
     {
@@ -2750,7 +2750,7 @@
       "mode": "0755",
       "path": "usr/lib/ossl-modules/legacy.so",
       "role": "runtime",
-      "sha256": "02b03d1347c880f8d5076931a4454b876b8e9601536f48a94bf6f64e338f7387",
+      "sha256": "313c70195b37cf885dd9e09a9f6898add64261a6da811ae36503e9efec988274",
       "type": "regular"
     },
     {
