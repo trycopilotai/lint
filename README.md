@@ -237,19 +237,21 @@ publishes the image set for Linux AMD64 and Linux ARM64. The
 release manifest records each promoted image digest
 alongside the source archive and its checksums.
 
-Prettier always uses `printWidth: 60`, `proseWrap: always`,
-and `trailingComma: none`; Black always uses line length 88.
-Native data configuration below `--cwd` is copied into the
-same isolated mirror as the selected file, so nonlocked
-options apply identically to local and Docker runs. This
-includes Prettier, EditorConfig, Black, shfmt, clang-format,
-rustfmt, ktlint, Taplo, swift-format, CSharpier, and
-JuliaFormatter configuration. Formatter ignore files are not
-copied and cannot suppress an engine-selected file.
-Executable Prettier configuration and project Prettier
-plugins are outside this release and fail explicitly. Black
-selection options that could exclude a selected path also
-fail explicitly.
+Prettier uses `printWidth: 60` by default; `--print-width`
+(or the action's `print-width` input) overrides the width
+for prettier-family languages only. `proseWrap: always` and
+`trailingComma: none` stay fixed; Black always uses line
+length 88. Native data configuration below `--cwd` is copied
+into the same isolated mirror as the selected file, so
+nonlocked options apply identically to local and Docker
+runs. This includes Prettier, EditorConfig, Black, shfmt,
+clang-format, rustfmt, ktlint, Taplo, swift-format,
+CSharpier, and JuliaFormatter configuration. Formatter
+ignore files are not copied and cannot suppress an
+engine-selected file. Executable Prettier configuration and
+project Prettier plugins are outside this release and fail
+explicitly. Black selection options that could exclude a
+selected path also fail explicitly.
 
 ## HTTP API
 

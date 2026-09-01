@@ -25,6 +25,10 @@ without broadening the requested scope.
 - Use `--modified` only when the user requests changed
   files. The default is all supported files below the
   working directory.
+- Use `--print-width <columns>` only when the user asks for
+  a different wrap width. It overrides the default Prettier
+  print width of 60 for prettier-family languages only;
+  other formatter families are unchanged.
 
 ## Run
 
