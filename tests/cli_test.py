@@ -118,6 +118,54 @@ class ParserTest(unittest.TestCase):
             response = json.loads(error.getvalue())
             self.assertEqual("selection_error", response["status"])
 
+    def test_print_width_rejects_a_nonpositive_width(self) -> None:
+        for width in ("0", "-4"):
+            error = io.StringIO()
+            with self.subTest(width=width), contextlib.redirect_stderr(error):
+                exit_code = LINT.main(["--json", "--print-width", width])
+            self.assertEqual(LINT.EXIT_SELECTION, exit_code)
+            response = json.loads(error.getvalue())
+            self.assertEqual("selection_error", response["status"])
+            self.assertIn(
+                "--print-width must be a positive column count",
+                response["message"],
+            )
+
+    def test_print_width_rejects_a_non_prettier_language_selection(self) -> None:
+        error = io.StringIO()
+        with contextlib.redirect_stderr(error):
+            exit_code = LINT.main(
+                ["--json", "--print-width", "100", "--language", "python"]
+            )
+
+        self.assertEqual(LINT.EXIT_SELECTION, exit_code)
+        response = json.loads(error.getvalue())
+        self.assertEqual("selection_error", response["status"])
+        self.assertIn(
+            "--print-width requires at least one prettier-family language",
+            response["message"],
+        )
+
+    def test_print_width_accepts_prettier_and_mixed_language_selections(
+        self,
+    ) -> None:
+        combinations = (
+            ("--print-width", "100"),
+            ("--print-width", "100", "--language", "markdown"),
+            (
+                "--print-width",
+                "100",
+                "--language",
+                "python",
+                "--language",
+                "markdown",
+            ),
+        )
+        for arguments in combinations:
+            with self.subTest(arguments=arguments):
+                parsed = LINT.parser().parse_args(list(arguments))
+                LINT.validate_selection_arguments(parsed)
+
     def test_default_is_read_only_all_current_directory(self) -> None:
         arguments = LINT.parser().parse_args([])
         self.assertFalse(arguments.write)
@@ -423,6 +471,40 @@ class FormattingTest(unittest.TestCase):
         self.assertNotIn("--config", command)
         self.assertNotIn(os.devnull, command)
         self.assertIn("--line-length", command)
+        self.assertIn("88", command)
+
+    def test_prettier_command_emits_the_requested_print_width(self) -> None:
+        language = LINT.Language(
+            id="markdown",
+            family="prettier",
+            extensions=(".md",),
+            filenames=(),
+        )
+        command = LINT.command_for(
+            language,
+            Path("/work/example.md"),
+            print_width=120,
+        )
+
+        self.assertIn("--print-width", command)
+        self.assertIn("120", command)
+        self.assertNotIn("60", command)
+
+    def test_black_command_ignores_the_print_width_override(self) -> None:
+        language = LINT.Language(
+            id="python",
+            family="black",
+            extensions=(".py",),
+            filenames=(),
+        )
+        command = LINT.command_for(
+            language,
+            Path("/work/example.py"),
+            print_width=120,
+        )
+
+        self.assertNotIn("--print-width", command)
+        self.assertNotIn("120", command)
         self.assertIn("88", command)
 
     def test_local_formatter_runs_in_external_mirror(self) -> None:
@@ -1161,6 +1243,32 @@ class FormattingTest(unittest.TestCase):
         self.assertEqual(expected, local)
         self.assertEqual(expected, image)
 
+    def test_print_width_golden_matches_prettier_at_width_120(self) -> None:
+        fixture = ROOT / "fixtures" / "prettier-width"
+        expected = (fixture / "expected.md").read_bytes()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            path = root / "needs.md"
+            path.write_bytes((fixture / "needs.md").read_bytes())
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                exit_code = LINT.main(
+                    [
+                        "--json",
+                        "--cwd",
+                        str(root),
+                        "--write",
+                        "--print-width",
+                        "120",
+                        "needs.md",
+                    ]
+                )
+
+            self.assertEqual(LINT.EXIT_CLEAN, exit_code)
+            response = json.loads(output.getvalue())
+            self.assertEqual(1, response["summary"]["changed"])
+            self.assertEqual(expected, path.read_bytes())
+
     def test_requirements_sort_by_canonical_distribution_name(self) -> None:
         source = (
             "pyasn1-modules==0.4.2\n"
@@ -1695,6 +1803,69 @@ class FormattingTest(unittest.TestCase):
         self.assertIn("ALL", command)
         self.assertIn("no-new-privileges", command)
         self.assertIn(LINT.docker_user(), command)
+
+    def test_docker_runner_appends_print_width_after_the_path(self) -> None:
+        language = LINT.Language(
+            id="markdown",
+            family="prettier",
+            extensions=(".md",),
+            filenames=(),
+        )
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout=b"",
+            stderr=b"",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            with mock.patch.object(
+                LINT.subprocess,
+                "run",
+                return_value=completed,
+            ) as run:
+                LINT.run_docker_formatter(
+                    language,
+                    root,
+                    Path("needs.md"),
+                    30,
+                    print_width=120,
+                )
+
+        command = run.call_args.args[0]
+        path_index = command.index("/work/needs.md")
+        self.assertEqual(["--print-width", "120"], command[path_index + 1 :])
+
+    def test_docker_runner_argv_is_unchanged_without_print_width(self) -> None:
+        language = LINT.Language(
+            id="markdown",
+            family="prettier",
+            extensions=(".md",),
+            filenames=(),
+        )
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout=b"",
+            stderr=b"",
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            with mock.patch.object(
+                LINT.subprocess,
+                "run",
+                return_value=completed,
+            ) as run:
+                LINT.run_docker_formatter(
+                    language,
+                    root,
+                    Path("needs.md"),
+                    30,
+                )
+
+        command = run.call_args.args[0]
+        self.assertEqual("/work/needs.md", command[-1])
+        self.assertNotIn("--print-width", command)
 
     def test_docker_runner_has_a_windows_user_fallback(self) -> None:
         language = LINT.Language(

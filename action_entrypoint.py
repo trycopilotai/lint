@@ -64,6 +64,10 @@ def command() -> list[str]:
     if boolean_input("LINT_INPUT_DOCKER", default="true"):
         arguments.append("--docker")
 
+    print_width = os.environ.get("LINT_INPUT_PRINT_WIDTH", "").strip()
+    if print_width != "":
+        arguments.extend(["--print-width", print_width])
+
     languages = os.environ.get("LINT_INPUT_LANGUAGES", "")
     for language in languages.split(","):
         language = language.strip()

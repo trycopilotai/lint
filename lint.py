@@ -615,7 +615,12 @@ def npx_command() -> list[str]:
     return [node, entrypoint]
 
 
-def command_for(language: Language, path: Path) -> list[str]:
+def command_for(
+    language: Language,
+    path: Path,
+    *,
+    print_width: int | None = None,
+) -> list[str]:
     versions = tool_versions()
     family = language.family
     if family == "requirements":
@@ -636,13 +641,16 @@ def command_for(language: Language, path: Path) -> list[str]:
                     f"prettier@{versions['prettier']}",
                 ]
             )
+        width_text = "60"
+        if print_width is not None:
+            width_text = str(print_width)
         executable.extend(
             [
                 "--write",
                 "--ignore-path",
                 str(path.parent / ".lint-empty-ignore"),
                 "--print-width",
-                "60",
+                width_text,
                 "--prose-wrap",
                 "always",
                 "--trailing-comma",
@@ -1588,10 +1596,15 @@ def run_formatter(
     path: Path,
     cwd: Path,
     timeout_seconds: int,
+    *,
+    print_width: int | None = None,
 ) -> None:
     if language.family == "prettier":
         (path.parent / ".lint-empty-ignore").touch()
-    command = command_for(language, path)
+    if print_width is None:
+        command = command_for(language, path)
+    else:
+        command = command_for(language, path, print_width=print_width)
     uses_npx = language.family in {"prettier", "buildifier"}
     if CONTAINER_MARKER.is_file():
         uses_npx = False
@@ -1665,6 +1678,8 @@ def run_docker_formatter(
     relative_path: Path,
     timeout_seconds: int,
     image_reference: str | None = None,
+    *,
+    print_width: int | None = None,
 ) -> None:
     image = docker_image(language)
     if image_reference is not None:
@@ -1697,6 +1712,11 @@ def run_docker_formatter(
         image,
         f"/work/{relative_path.as_posix()}",
     ]
+    if print_width is not None:
+        # Prettier honors the last repeated option, so this
+        # overrides the width baked into the image entrypoint
+        # without an image change.
+        command.extend(["--print-width", str(print_width)])
     try:
         completed = subprocess.run(
             command,
@@ -1779,6 +1799,8 @@ def prepare_results(
     use_docker: bool,
     language_overrides: dict[Path, str] | None = None,
     image_references: dict[str, str] | None = None,
+    *,
+    print_width: int | None = None,
 ) -> tuple[list[FormatResult], list[Finding]]:
     resolved_cwd = cwd.resolve()
     known_languages = load_languages()
@@ -1869,21 +1891,43 @@ def prepare_results(
                 image_reference = None
                 if image_references is not None:
                     image_reference = image_references[language.id]
+                docker_width = None
+                if print_width is not None and language.family == "prettier":
+                    docker_width = print_width
                 if image_reference is None:
-                    run_docker_formatter(
-                        language,
-                        mirror_root,
-                        relative,
-                        timeout_seconds,
-                    )
+                    if docker_width is None:
+                        run_docker_formatter(
+                            language,
+                            mirror_root,
+                            relative,
+                            timeout_seconds,
+                        )
+                    else:
+                        run_docker_formatter(
+                            language,
+                            mirror_root,
+                            relative,
+                            timeout_seconds,
+                            print_width=docker_width,
+                        )
                 else:
-                    run_docker_formatter(
-                        language,
-                        mirror_root,
-                        relative,
-                        timeout_seconds,
-                        image_reference,
-                    )
+                    if docker_width is None:
+                        run_docker_formatter(
+                            language,
+                            mirror_root,
+                            relative,
+                            timeout_seconds,
+                            image_reference,
+                        )
+                    else:
+                        run_docker_formatter(
+                            language,
+                            mirror_root,
+                            relative,
+                            timeout_seconds,
+                            image_reference,
+                            print_width=docker_width,
+                        )
             else:
                 if language.family not in verified_families:
                     # Config validation above runs first so invalid
@@ -1892,12 +1936,21 @@ def prepare_results(
                     # probes/installs under LINT_INSTALL.
                     ensure_host_formatters([language])
                     verified_families.add(language.family)
-                run_formatter(
-                    language,
-                    mirror_path,
-                    mirror_root,
-                    timeout_seconds,
-                )
+                if print_width is None:
+                    run_formatter(
+                        language,
+                        mirror_path,
+                        mirror_root,
+                        timeout_seconds,
+                    )
+                else:
+                    run_formatter(
+                        language,
+                        mirror_path,
+                        mirror_root,
+                        timeout_seconds,
+                        print_width=print_width,
+                    )
             result = FormatResult(
                 path=path,
                 relative_path=relative_text,
@@ -2039,14 +2092,26 @@ def lint_files(
     write: bool,
     use_docker: bool,
     image_references: dict[str, str] | None = None,
+    *,
+    print_width: int | None = None,
 ) -> dict[str, Any]:
-    results, skipped = prepare_results(
-        cwd=cwd,
-        paths=paths,
-        requested_languages=requested_languages,
-        use_docker=use_docker,
-        image_references=image_references,
-    )
+    if print_width is None:
+        results, skipped = prepare_results(
+            cwd=cwd,
+            paths=paths,
+            requested_languages=requested_languages,
+            use_docker=use_docker,
+            image_references=image_references,
+        )
+    else:
+        results, skipped = prepare_results(
+            cwd=cwd,
+            paths=paths,
+            requested_languages=requested_languages,
+            use_docker=use_docker,
+            image_references=image_references,
+            print_width=print_width,
+        )
     if write:
         apply_results(results)
     backend = "local"
@@ -2136,6 +2201,17 @@ def parser() -> argparse.ArgumentParser:
             "(default: auto)"
         ),
     )
+    argument_parser.add_argument(
+        "--print-width",
+        type=int,
+        default=None,
+        metavar="COLUMNS",
+        help=(
+            "override the prettier-family print width "
+            "(default: 60; other formatter families are "
+            "unchanged)"
+        ),
+    )
     argument_parser.add_argument("paths", nargs="*")
     return argument_parser
 
@@ -2162,6 +2238,20 @@ def validate_selection_arguments(parsed: argparse.Namespace) -> None:
         raise SelectionError(
             "--image-manifest cannot be combined with --list-languages"
         )
+    if parsed.print_width is not None:
+        if parsed.print_width < 1:
+            raise SelectionError("--print-width must be a positive column count")
+        requested = frozenset(parsed.language)
+        if requested:
+            prettier_ids = frozenset(
+                language.id
+                for language in load_languages()
+                if language.family == "prettier"
+            )
+            if not requested & prettier_ids:
+                raise SelectionError(
+                    "--print-width requires at least one prettier-family language"
+                )
 
 
 def human_response(response: dict[str, Any]) -> str:
@@ -2292,14 +2382,25 @@ def main(argv: Sequence[str] | None = None) -> int:
             files_from0=arguments.files_from0,
             modified=arguments.modified,
         )
-        response = lint_files(
-            cwd=cwd,
-            paths=paths,
-            requested_languages=requested,
-            write=arguments.write,
-            use_docker=arguments.docker,
-            image_references=image_references,
-        )
+        if arguments.print_width is None:
+            response = lint_files(
+                cwd=cwd,
+                paths=paths,
+                requested_languages=requested,
+                write=arguments.write,
+                use_docker=arguments.docker,
+                image_references=image_references,
+            )
+        else:
+            response = lint_files(
+                cwd=cwd,
+                paths=paths,
+                requested_languages=requested,
+                write=arguments.write,
+                use_docker=arguments.docker,
+                image_references=image_references,
+                print_width=arguments.print_width,
+            )
         print_response(response, arguments.json)
         if response["status"] == "needs_formatting":
             return EXIT_FORMATTING

@@ -117,6 +117,34 @@ class ActionTest(unittest.TestCase):
         self.assertIn("--docker", command)
         self.assertEqual(2, command.count("--language"))
 
+    def test_print_width_input_is_forwarded(self) -> None:
+        environment = {
+            "GITHUB_ACTION_PATH": str(ROOT),
+            "LINT_INPUT_PRINT_WIDTH": "120",
+        }
+        with mock.patch.dict(os.environ, environment, clear=True):
+            command = ACTION.command()
+
+        index = command.index("--print-width")
+        self.assertEqual("120", command[index + 1])
+
+        action = (ROOT / "action.yml").read_text(encoding="utf-8")
+        self.assertIn("  print-width:", action)
+        self.assertIn(
+            'LINT_INPUT_PRINT_WIDTH: "${{ inputs.print-width }}"',
+            action,
+        )
+
+    def test_empty_print_width_input_adds_nothing(self) -> None:
+        environment = {
+            "GITHUB_ACTION_PATH": str(ROOT),
+            "LINT_INPUT_PRINT_WIDTH": "",
+        }
+        with mock.patch.dict(os.environ, environment, clear=True):
+            command = ACTION.command()
+
+        self.assertNotIn("--print-width", command)
+
     def test_invalid_boolean_is_rejected(self) -> None:
         environment = {
             "GITHUB_ACTION_PATH": str(ROOT),

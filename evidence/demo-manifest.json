@@ -5,14 +5,14 @@
     "assets/demo.svg": "38074406b19fc7c14da374e72834d9903346473485cd7ade50940e910b5a58c0",
     "evidence/demo-transcript.txt": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065"
   },
-  "input_commit": "00cda91af134f53bd10fa52eb83b049491c4cc57",
-  "input_tree": "8d3f165353e0096aa9bba66eaaf1104149760e9c",
+  "input_commit": "d8a01488a9a46e28b4937242c5b7c099919c1fe8",
+  "input_tree": "30f310707aca107c22bbcfffe557c45837d0ca90",
   "invocation": "./scripts/demo.sh demo-work",
   "invocation_date": "2026-08-08",
   "output_path": "evidence/demo-transcript.txt",
   "output_sha256": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065",
   "protocol_path": "skills/lint/SKILL.md",
-  "protocol_sha256": "ba6c80a7323567cf505dedb6ad3c60eeab421f3bc2384a35c56ca6c7059a3607",
+  "protocol_sha256": "22f55b02afcc3a1203844c85fce9b6e69a3438bf072a12c8580bebf6b216d9cf",
   "raw_result_sha256": {
     "final": "76afa93e11fed17c03881be9c2d7d5e3d39eb79420a5b35a39f818159ee2cd6a",
     "read-only": "9e74a21dde4f277cc985c8dfa2577f7dcc1a652349b5ff8fbec0e81eef54e69d",
@@ -21,10 +21,10 @@
   "schema_version": 2,
   "source_sha256": {
     "languages.json": "ecd0e79c29f85a9e1dcbba6077fffc3e7ebd8176fc31f9288ef69c2310e6a1a9",
-    "lint.py": "5aaee4605733a6fc386221776da7f6781dca0af974527cdc8be426917e847bb5",
+    "lint.py": "0e718f5f8f930c82aa772cdd25fdfaf7afd2a8b4350a4949c27e371e2e0f38ca",
     "scripts/demo.sh": "a1085f8d35a42407eec2230068d77f7423fd28a40556ead6a7861caa0d088f3c",
     "scripts/generate_demo.py": "ab75ee01a79c02c54259fc9c2f65a0114e47a3be7ee60fb44e25392f439f6524",
-    "skills/lint/SKILL.md": "ba6c80a7323567cf505dedb6ad3c60eeab421f3bc2384a35c56ca6c7059a3607"
+    "skills/lint/SKILL.md": "22f55b02afcc3a1203844c85fce9b6e69a3438bf072a12c8580bebf6b216d9cf"
   },
   "transcript_edited": false
 }

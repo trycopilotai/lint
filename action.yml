@@ -31,6 +31,10 @@ inputs:
     description: "NUL-delimited path file"
     required: false
     default: ""
+  print-width:
+    description: "Prettier-family print width override"
+    required: false
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -44,5 +48,6 @@ runs:
         LINT_INPUT_LANGUAGES: "${{ inputs.languages }}"
         LINT_INPUT_PATHS: "${{ inputs.paths }}"
         LINT_INPUT_FILES_FROM0: "${{ inputs.files-from0 }}"
+        LINT_INPUT_PRINT_WIDTH: "${{ inputs.print-width }}"
       run: >-
         python3 "$GITHUB_ACTION_PATH/action_entrypoint.py"
