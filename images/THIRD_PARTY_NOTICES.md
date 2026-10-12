@@ -1,7 +1,7 @@
 # Third-party notices
 
-Every formatter image carries the repository's MIT terms at
-`/licenses/lint/LICENSE`, this notice at
+Every formatter image carries the repository's MIT license
+terms at `/licenses/lint/LICENSE`, this notice at
 `/licenses/lint/THIRD_PARTY_NOTICES.md`, and a target-local
 legal payload at `/licenses/<target>/`.
 
