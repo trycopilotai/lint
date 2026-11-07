@@ -17,10 +17,13 @@ Ordering matters and is not mechanical:
     1. `bump` and any other source change, committed together.
     2. `refresh-evidence`, committed on its own.
 
-`scripts/verify_demo.py` requires the demo evidence commit to be
-the repository tip and to touch evidence paths only. Refreshing
-evidence while source edits are still uncommitted fails with
-"demo evidence commit contains unrelated paths".
+`scripts/verify_demo.py` binds a committed manifest to the tree
+of the evidence commit's first parent, then permits only evidence
+paths to differ from that tree. The input commit remains audit
+metadata, so verification survives commit rewriting when the
+recorded tree is unchanged. Refresh evidence after source changes
+are committed; otherwise verification fails with "demo evidence
+commit contains unrelated paths".
 """
 
 from __future__ import annotations
@@ -353,11 +356,12 @@ def pending_paths(root: Path) -> set[str]:
 def require_committed_source(root: Path, allowed: Iterable[str]) -> None:
     """Refuse to refresh evidence over pending source edits.
 
-    `scripts/verify_demo.py` requires the evidence commit to be
-    the repository tip and to touch evidence paths only. Writing
-    the manifest first and discovering that afterwards leaves a
-    half-refreshed file behind, so the ordering is checked
-    before anything is written.
+    `scripts/verify_demo.py` binds a committed manifest to the
+    evidence commit's first-parent tree and requires only evidence
+    paths to differ from it. Writing the manifest first and
+    discovering unrelated source changes afterwards leaves a
+    half-refreshed file behind, so the ordering is checked before
+    anything is written.
     """
 
     unrelated = sorted(pending_paths(root) - set(allowed))
@@ -374,9 +378,10 @@ def refresh_evidence(root: Path, verify: bool) -> dict[str, Any]:
     """Repoint the demo evidence manifest at HEAD.
 
     Run this only once every source change is committed. The
-    manifest records the commit the demo was captured from, and
-    `scripts/verify_demo.py` rejects an evidence commit that
-    carries anything but evidence paths.
+    manifest records the input commit and tree captured by the
+    demo. `scripts/verify_demo.py` requires the evidence commit's
+    first-parent tree to match that recorded tree and rejects any
+    intervening changes outside the evidence paths.
     """
 
     verifier = load_demo_verifier(root)

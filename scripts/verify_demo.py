@@ -166,14 +166,14 @@ def demo_command(workspace: str) -> list[str]:
     raise ValueError("demo replay requires bash or sh on PATH")
 
 
-def run_demo(input_commit: str | None, use_git: bool) -> bytes:
+def run_demo(input_tree: str | None, use_git: bool) -> bytes:
     with tempfile.TemporaryDirectory(prefix="lint-demo-verify-") as directory:
         checkout = Path(directory) / "lint"
         checkout.mkdir()
         if use_git:
-            if input_commit is None:
-                raise ValueError("Git demo verification requires an input commit")
-            archive = git("archive", "--format=tar", input_commit).stdout
+            if input_tree is None:
+                raise ValueError("Git demo verification requires an input tree")
+            archive = git("archive", "--format=tar", input_tree).stdout
             safe_extract(archive, checkout)
         else:
             copy_current_source(checkout)
@@ -199,7 +199,7 @@ def build_manifest(
     input_tree = git_text("rev-parse", f"{input_commit}^{{tree}}")
     source_hashes: dict[str, str] = {}
     for path in SOURCE_PATHS:
-        source_hashes[path] = sha256(commit_bytes(input_commit, path))
+        source_hashes[path] = sha256(commit_bytes(input_tree, path))
     transcript = TRANSCRIPT_PATH.read_text(encoding="utf-8")
     raw_hashes: dict[str, str] = {}
     for name in RAW_RESULTS:
@@ -297,27 +297,91 @@ def verify_static_fields(manifest: dict[str, Any]) -> str:
     return input_commit
 
 
+def manifest_is_committed() -> bool:
+    """Report whether the current manifest matches its HEAD version."""
+
+    path = MANIFEST_PATH.relative_to(ROOT).as_posix()
+    result = git("diff", "--quiet", "HEAD", "--", path, check=False)
+    if result.returncode not in (0, 1):
+        raise ValueError("could not inspect the demo manifest commit state")
+    if result.returncode == 0:
+        return True
+    return False
+
+
+def source_tree_and_delta_base(
+    input_commit: str,
+    input_tree: str,
+) -> tuple[str, str]:
+    """Resolve the captured tree and evidence-only diff boundary.
+
+    A committed manifest is bound to the first-parent tree of the
+    commit that records it. The input commit remains audit metadata;
+    its object may no longer be reachable after a rebase. Before the
+    evidence commit is made, the refresh command still validates the
+    supplied source commit and its tree.
+    """
+
+    if manifest_is_committed():
+        manifest_path = MANIFEST_PATH.relative_to(ROOT).as_posix()
+        evidence_commit = git_text(
+            "log",
+            "-1",
+            "--format=%H",
+            "--",
+            manifest_path,
+        )
+        if re.fullmatch(r"[0-9a-f]{40}", evidence_commit) is None:
+            raise ValueError("demo evidence commit could not be resolved")
+        evidence_parent = git_text("rev-parse", f"{evidence_commit}^1")
+        if re.fullmatch(r"[0-9a-f]{40}", evidence_parent) is None:
+            raise ValueError("demo evidence parent could not be resolved")
+        expected_tree = git_text(
+            "rev-parse",
+            f"{evidence_parent}^{{tree}}",
+        )
+        if re.fullmatch(r"[0-9a-f]{40}", expected_tree) is None:
+            raise ValueError("demo evidence parent tree could not be resolved")
+        if input_tree != expected_tree:
+            raise ValueError("demo input tree differs from the evidence parent")
+        return input_tree, evidence_parent
+
+    ancestry = git(
+        "merge-base",
+        "--is-ancestor",
+        input_commit,
+        "HEAD",
+        check=False,
+    )
+    if ancestry.returncode != 0:
+        raise ValueError("demo input commit is not reachable from HEAD")
+    expected_tree = git_text("rev-parse", f"{input_commit}^{{tree}}")
+    if input_tree != expected_tree:
+        raise ValueError("demo input tree does not match the input commit")
+    return input_tree, input_commit
+
+
 def verify_manifest(manifest: dict[str, Any]) -> None:
     input_commit = verify_static_fields(manifest)
+    input_tree = manifest["input_tree"]
     source_hashes = require_hash_map(manifest, "source_sha256", SOURCE_PATHS)
     artifact_hashes = require_hash_map(manifest, "artifact_sha256", ARTIFACT_PATHS)
     raw_hashes = require_hash_map(manifest, "raw_result_sha256", RAW_RESULTS)
     use_git = is_git_root()
+    source_ref = input_tree
 
     if use_git:
-        ancestry = git("merge-base", "--is-ancestor", input_commit, "HEAD", check=False)
-        if ancestry.returncode != 0:
-            raise ValueError("demo input commit is not reachable from HEAD")
-        expected_tree = git_text("rev-parse", f"{input_commit}^{{tree}}")
-        if manifest.get("input_tree") != expected_tree:
-            raise ValueError("demo input tree does not match the input commit")
+        source_ref, delta_base = source_tree_and_delta_base(
+            input_commit,
+            input_tree,
+        )
         for path, expected in source_hashes.items():
-            committed = commit_bytes(input_commit, path)
+            committed = commit_bytes(source_ref, path)
             if sha256(committed) != expected:
-                raise ValueError(f"demo source hash differs at input commit: {path}")
+                raise ValueError(f"demo source hash differs at input tree: {path}")
             if (ROOT / path).read_bytes() != committed:
                 raise ValueError(f"demo source changed after capture: {path}")
-        unexpected = changed_paths(input_commit) - ALLOWED_EVIDENCE_DELTA
+        unexpected = changed_paths(delta_base) - ALLOWED_EVIDENCE_DELTA
         if unexpected:
             joined = ", ".join(sorted(unexpected))
             raise ValueError(f"demo evidence commit contains unrelated paths: {joined}")
@@ -347,7 +411,7 @@ def verify_manifest(manifest: dict[str, Any]) -> None:
         if sha256(raw_result_bytes(transcript, name)) != expected:
             raise ValueError(f"demo raw result hash differs: {name}")
 
-    replayed = run_demo(input_commit, use_git)
+    replayed = run_demo(input_tree, use_git)
     if replayed != transcript_bytes:
         raise ValueError("demo transcript differs from a clean replay")
     generator = load_demo_generator()
