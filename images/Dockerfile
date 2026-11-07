@@ -85,9 +85,9 @@ COPY LICENSE /licenses/lint/LICENSE
 COPY images/THIRD_PARTY_NOTICES.md /licenses/lint/THIRD_PARTY_NOTICES.md
 
 FROM ${NODE_IMAGE} AS prettier-build
-RUN apk add --no-cache \
-      libcrypto3=3.5.8-r0 \
-      libssl3=3.5.8-r0
+RUN apk --force-refresh add --no-cache \
+      libcrypto3=3.5.9-r0 \
+      libssl3=3.5.9-r0
 COPY --from=prettier-download \
     /downloads/prettier-3.7.4.tgz \
     /downloads/prettier-3.7.4.tgz
@@ -168,9 +168,9 @@ USER 65532:65532
 ENTRYPOINT ["/buildifier", "-mode=fix"]
 
 FROM ${PYTHON_IMAGE} AS black-build
-RUN apk add --no-cache \
-      libcrypto3=3.5.8-r0 \
-      libssl3=3.5.8-r0 \
+RUN apk --force-refresh add --no-cache \
+      libcrypto3=3.5.9-r0 \
+      libssl3=3.5.9-r0 \
       sqlite-libs=3.53.4-r0
 COPY --from=black-download /black-wheels /black-wheels
 RUN pip install \
@@ -199,9 +199,9 @@ USER 65532:65532
 ENTRYPOINT ["/usr/local/bin/python3", "-m", "black", "--quiet", "--line-length", "88"]
 
 FROM ${PYTHON_IMAGE} AS requirements-build
-RUN apk add --no-cache \
-      libcrypto3=3.5.8-r0 \
-      libssl3=3.5.8-r0 \
+RUN apk --force-refresh add --no-cache \
+      libcrypto3=3.5.9-r0 \
+      libssl3=3.5.9-r0 \
       sqlite-libs=3.53.4-r0
 COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
 RUN echo "723bfe9070dd70e804fff734a7156b963e694446e161739d03394ca30d9f29b5  /requirements-format" \
@@ -342,10 +342,10 @@ USER 65532:65532
 ENTRYPOINT ["/bin/rustfmt"]
 
 FROM ${JAVA_JDK_IMAGE} AS kotlin-build
-RUN apk add --no-cache \
-      libcrypto3=3.5.8-r0 \
+RUN apk --force-refresh add --no-cache \
+      libcrypto3=3.5.9-r0 \
       libexpat=2.8.3-r0 \
-      libssl3=3.5.8-r0 \
+      libssl3=3.5.9-r0 \
       p11-kit=0.26.2-r0 \
       p11-kit-trust=0.26.2-r0 \
       sqlite-libs=3.53.4-r0
@@ -508,9 +508,9 @@ RUN curl --fail --location \
     && find /tools -name '*.pdb' -delete
 
 FROM ${DOTNET_RUNTIME} AS csharp-runtime
-RUN apk add --no-cache \
-      libcrypto3=3.5.8-r0 \
-      libssl3=3.5.8-r0
+RUN apk --force-refresh add --no-cache \
+      libcrypto3=3.5.9-r0 \
+      libssl3=3.5.9-r0
 
 FROM csharp-runtime AS csharp-build
 COPY --from=csharp-download /tools /tools
