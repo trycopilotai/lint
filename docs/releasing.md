@@ -12,10 +12,13 @@ image, or a browser.
 4. `python3 tools/release.py refresh-evidence`
 5. Commit the evidence change by itself.
 
-Step 4 must follow step 3. `scripts/verify_demo.py` requires
-the demo evidence commit to be the repository tip and to
-contain evidence paths only, so refreshing evidence while
-source edits are still uncommitted fails with
+Step 4 must follow step 3. The manifest records both the
+input commit for audit and its source tree. Verification
+binds the committed manifest to the first-parent tree of the
+commit that records it, so commit rewriting is safe when
+that tree is unchanged. Changes from that tree through
+`HEAD` must contain evidence paths only. Refreshing evidence
+while source edits are still uncommitted fails with
 `demo evidence commit contains unrelated paths`.
 
 ## What `bump` does

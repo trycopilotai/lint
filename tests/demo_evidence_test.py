@@ -105,10 +105,12 @@ class DemoEvidenceTest(unittest.TestCase):
         manifest,
         changed: str = "",
         replayed: bytes | None = None,
+        committed_manifest: bool = False,
+        evidence_commit: str = "c" * 40,
+        evidence_parent: str = "d" * 40,
+        evidence_tree: str = "b" * 40,
     ) -> None:
-        use_git = False
-        if changed != "":
-            use_git = True
+        use_git = committed_manifest or changed != ""
         if replayed is None:
             replayed = transcript_path.read_bytes()
         completed = subprocess.CompletedProcess(
@@ -119,11 +121,44 @@ class DemoEvidenceTest(unittest.TestCase):
         )
 
         def git_text(*arguments: str) -> str:
+            if arguments[0] == "log":
+                return evidence_commit
             if arguments[0] == "rev-parse":
-                return "b" * 40
+                revision = arguments[1]
+                if revision == f"{evidence_commit}^1":
+                    return evidence_parent
+                if revision == f"{evidence_parent}^{{tree}}":
+                    return evidence_tree
+                if not committed_manifest and revision == f"{'a' * 40}^{{tree}}":
+                    return evidence_tree
+                raise AssertionError(f"unexpected revision: {revision}")
             if arguments[0] == "diff":
                 return changed
             raise AssertionError(f"unexpected git text arguments: {arguments}")
+
+        def git_result(*arguments: str, check: bool = True):
+            if arguments[:2] == ("diff", "--quiet"):
+                returncode = 0
+                if not committed_manifest:
+                    returncode = 1
+                return subprocess.CompletedProcess(
+                    args=[],
+                    returncode=returncode,
+                    stdout=b"",
+                    stderr=b"",
+                )
+            if arguments[:2] == ("merge-base", "--is-ancestor"):
+                if committed_manifest:
+                    raise AssertionError(
+                        "committed verification must not resolve input_commit"
+                    )
+            return completed
+
+        def commit_bytes(ref: str, path: str) -> bytes:
+            expected_ref = manifest["input_tree"]
+            if ref != expected_ref:
+                raise AssertionError(f"unexpected source ref: {ref}")
+            return sources[path]
 
         generator = mock.Mock()
         generator.render_svg.return_value = "<svg/>\n"
@@ -138,20 +173,24 @@ class DemoEvidenceTest(unittest.TestCase):
             transcript_path,
         ), mock.patch.object(
             VERIFIER,
+            "MANIFEST_PATH",
+            root / "evidence" / "demo-manifest.json",
+        ), mock.patch.object(
+            VERIFIER,
             "is_git_root",
             return_value=use_git,
         ), mock.patch.object(
             VERIFIER,
             "run_demo",
             return_value=replayed,
-        ), mock.patch.object(
+        ) as run_demo_mock, mock.patch.object(
             VERIFIER,
             "load_demo_generator",
             return_value=generator,
         ), mock.patch.object(
             VERIFIER,
             "git",
-            return_value=completed,
+            side_effect=git_result,
         ), mock.patch.object(
             VERIFIER,
             "git_text",
@@ -159,9 +198,128 @@ class DemoEvidenceTest(unittest.TestCase):
         ), mock.patch.object(
             VERIFIER,
             "commit_bytes",
-            side_effect=lambda _commit, path: sources[path],
-        ):
+            side_effect=commit_bytes,
+        ) as commit_bytes_mock:
             VERIFIER.verify_manifest(manifest)
+            run_demo_mock.assert_called_once_with(manifest["input_tree"], use_git)
+            if committed_manifest:
+                self.assertEqual(
+                    [mock.call(manifest["input_tree"], path) for path in sources],
+                    commit_bytes_mock.call_args_list,
+                )
+
+    def test_rewritten_input_commit_with_same_tree_verifies(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources, transcript_path, manifest = self.fixture(root)
+
+            self.verify_fixture(
+                root,
+                sources,
+                transcript_path,
+                manifest,
+                committed_manifest=True,
+            )
+
+    def test_manifest_builder_hashes_sources_from_input_tree(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources, transcript_path, _ = self.fixture(root)
+            expected_tree = "b" * 40
+
+            def commit_bytes(ref: str, path: str) -> bytes:
+                self.assertEqual(expected_tree, ref)
+                return sources[path]
+
+            with mock.patch.object(VERIFIER, "ROOT", root), mock.patch.object(
+                VERIFIER,
+                "TRANSCRIPT_PATH",
+                transcript_path,
+            ), mock.patch.object(
+                VERIFIER,
+                "git_text",
+                return_value=expected_tree,
+            ), mock.patch.object(
+                VERIFIER,
+                "commit_bytes",
+                side_effect=commit_bytes,
+            ) as commit_bytes_mock:
+                manifest = VERIFIER.build_manifest(
+                    input_commit="a" * 40,
+                    agent="Codex",
+                    agent_version="codex-cli fixture",
+                    invocation_date="2026-08-02",
+                )
+
+            self.assertEqual(expected_tree, manifest["input_tree"])
+            self.assertEqual(
+                [mock.call(expected_tree, path) for path in VERIFIER.SOURCE_PATHS],
+                commit_bytes_mock.call_args_list,
+            )
+
+    def test_rewritten_input_commit_with_mismatched_tree_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources, transcript_path, manifest = self.fixture(root)
+            manifest["input_tree"] = "e" * 40
+
+            with self.assertRaisesRegex(ValueError, "input tree"):
+                self.verify_fixture(
+                    root,
+                    sources,
+                    transcript_path,
+                    manifest,
+                    committed_manifest=True,
+                )
+
+    def test_allowed_evidence_only_changes_after_source_are_accepted(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources, transcript_path, manifest = self.fixture(root)
+
+            self.verify_fixture(
+                root,
+                sources,
+                transcript_path,
+                manifest,
+                changed="assets/demo.svg",
+                committed_manifest=True,
+            )
+
+    def test_missing_or_malformed_input_tree_is_rejected(self) -> None:
+        invalid_trees = (None, "not-a-tree", "b" * 39, "B" * 40)
+        for invalid_tree in invalid_trees:
+            with self.subTest(invalid_tree=invalid_tree):
+                with tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    sources, transcript_path, manifest = self.fixture(root)
+                    if invalid_tree is None:
+                        manifest.pop("input_tree")
+                    else:
+                        manifest["input_tree"] = invalid_tree
+
+                    with self.assertRaisesRegex(ValueError, "input_tree"):
+                        self.verify_fixture(
+                            root,
+                            sources,
+                            transcript_path,
+                            manifest,
+                        )
+
+    def test_unrelated_commit_after_evidence_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources, transcript_path, manifest = self.fixture(root)
+
+            with self.assertRaisesRegex(ValueError, "unrelated paths"):
+                self.verify_fixture(
+                    root,
+                    sources,
+                    transcript_path,
+                    manifest,
+                    changed="scripts/demo.sh",
+                    committed_manifest=True,
+                )
 
     def test_complete_manifest_verifies(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
