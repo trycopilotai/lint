@@ -221,6 +221,105 @@ class DemoEvidenceTest(unittest.TestCase):
                 committed_manifest=True,
             )
 
+    def test_rewritten_input_commit_can_be_missing_from_repository(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            sources, transcript_path, manifest = self.fixture(root)
+
+            subprocess.run(
+                ["git", "-C", str(root), "init", "--quiet"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "config", "user.name", "Demo Test"],
+                check=True,
+            )
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(root),
+                    "config",
+                    "user.email",
+                    "demo-test@example.invalid",
+                ],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "add", *VERIFIER.SOURCE_PATHS],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "commit", "--quiet", "-m", "Input"],
+                check=True,
+            )
+            input_tree = subprocess.run(
+                ["git", "-C", str(root), "rev-parse", "HEAD^{tree}"],
+                check=True,
+                stdout=subprocess.PIPE,
+                text=True,
+            ).stdout.strip()
+            manifest["input_commit"] = "a" * 40
+            manifest["input_tree"] = input_tree
+            (root / "evidence" / "demo-manifest.json").write_text(
+                json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(root),
+                    "add",
+                    "assets/demo.svg",
+                    "evidence/demo-manifest.json",
+                    "evidence/demo-transcript.txt",
+                ],
+                check=True,
+            )
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(root),
+                    "commit",
+                    "--quiet",
+                    "-m",
+                    "Evidence",
+                ],
+                check=True,
+            )
+            missing_commit = subprocess.run(
+                ["git", "-C", str(root), "cat-file", "-e", "a" * 40],
+                check=False,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            self.assertNotEqual(0, missing_commit.returncode)
+
+            generator = mock.Mock()
+            generator.render_svg.return_value = "<svg/>\n"
+            with mock.patch.object(VERIFIER, "ROOT", root), mock.patch.object(
+                VERIFIER,
+                "MANIFEST_PATH",
+                root / "evidence" / "demo-manifest.json",
+            ), mock.patch.object(
+                VERIFIER,
+                "TRANSCRIPT_PATH",
+                transcript_path,
+            ), mock.patch.object(
+                VERIFIER,
+                "run_demo",
+                return_value=transcript_path.read_bytes(),
+            ) as run_demo_mock, mock.patch.object(
+                VERIFIER,
+                "load_demo_generator",
+                return_value=generator,
+            ):
+                VERIFIER.verify_manifest(manifest)
+
+            run_demo_mock.assert_called_once_with(input_tree, True)
+
     def test_manifest_builder_hashes_sources_from_input_tree(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
