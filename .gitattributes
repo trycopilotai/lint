@@ -11,6 +11,10 @@ images/julia/Manifest.toml -text
 images/julia/Project.toml -text
 images/swift/Package.resolved -text
 
+# The requirements tool version and Docker build checksum bind
+# this entrypoint's exact bytes.
+images/requirements_entrypoint.py -text
+
 # Golden fixtures, canonical OCI inventories, and comparison
 # captures are compared as exact bytes rather than host-native
 # text files.
