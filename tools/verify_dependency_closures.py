@@ -10,7 +10,6 @@ import tomllib
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CLOSURE_PATH = ROOT / "images" / "dependency_closures.json"
 SOURCES_PATH = ROOT / "images" / "sources.json"

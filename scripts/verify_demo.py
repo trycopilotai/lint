@@ -19,7 +19,6 @@ from pathlib import Path
 from pathlib import PurePosixPath
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_PATH = ROOT / "evidence" / "demo-manifest.json"
 TRANSCRIPT_PATH = ROOT / "evidence" / "demo-transcript.txt"

@@ -18,7 +18,6 @@ if SCRIPT_DIRECTORY not in sys.path:
     sys.path.insert(0, SCRIPT_DIRECTORY)
 import lint
 
-
 POLICY_ID = "default"
 READ_MODES = frozenset({"check", "read-only", "readonly"})
 WRITE_MODES = frozenset({"fix", "write", "apply"})

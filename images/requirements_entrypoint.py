@@ -7,7 +7,6 @@ import re
 import sys
 from pathlib import Path
 
-
 REQUIREMENT_NAME_PATTERN = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?")
 REQUIREMENT_SEPARATOR_PATTERN = re.compile(r"[-_.]+")
 

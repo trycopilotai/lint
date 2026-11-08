@@ -11,7 +11,6 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 IMAGE_PREFIX = "ghcr.io/trycopilotai/lint-"
 DIGEST_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")

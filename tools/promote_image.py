@@ -8,7 +8,6 @@ import json
 import re
 import subprocess
 
-
 DIGEST_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")
 
 

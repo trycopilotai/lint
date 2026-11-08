@@ -21,7 +21,6 @@ import tomllib
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
-
 ROOT = Path(__file__).resolve().parent
 MANIFEST_PATH = ROOT / "languages.json"
 IMAGE_MATRIX_PATH = ROOT / "images" / "matrix.json"

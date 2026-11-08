@@ -9,7 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 READ_MODES = frozenset({"read-only", "readonly", "check"})
 WRITE_MODES = frozenset({"write", "apply", "fix"})
 

@@ -21,7 +21,6 @@ from pathlib import PurePosixPath
 from typing import Any
 from typing import Callable
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PATH = ROOT / "images" / "license_sources.json"
 OUTPUT_ROOT = ROOT / "images" / "licenses"

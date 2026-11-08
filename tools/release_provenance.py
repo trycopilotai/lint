@@ -10,7 +10,6 @@ import re
 from pathlib import Path
 from typing import Any
 
-
 REPOSITORY = "https://github.com/trycopilotai/lint"
 DIGEST_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")
 REVISION_PATTERN = re.compile(r"[0-9a-f]{40}")

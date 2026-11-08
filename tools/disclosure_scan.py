@@ -11,7 +11,6 @@ import subprocess
 from pathlib import Path
 from typing import Iterable, Sequence
 
-
 PRUNED_DIRECTORIES = frozenset({".git", ".venv", "__pycache__", "node_modules"})
 RESERVED_INFIX = "." + "g" + "p" + "t"
 

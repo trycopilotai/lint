@@ -18,7 +18,6 @@ from pathlib import Path
 from pathlib import PurePosixPath
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX_PATH = ROOT / "images" / "matrix.json"
 SOURCES_PATH = ROOT / "images" / "sources.json"
