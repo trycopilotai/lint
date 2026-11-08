@@ -13,7 +13,6 @@ import unittest
 from pathlib import Path
 from pathlib import PurePosixPath
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 

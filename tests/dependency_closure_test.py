@@ -7,7 +7,6 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_PATH = ROOT / "tools" / "verify_dependency_closures.py"
 SPEC = importlib.util.spec_from_file_location(

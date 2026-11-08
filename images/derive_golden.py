@@ -13,7 +13,6 @@ from pathlib import Path
 
 import verify_cli
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 

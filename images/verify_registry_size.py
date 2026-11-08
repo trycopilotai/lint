@@ -12,7 +12,6 @@ import tarfile
 from pathlib import Path
 from typing import Any
 
-
 DIGEST_PATTERN = re.compile(r"sha256:[0-9a-f]{64}")
 PLATFORMS = ("linux/amd64", "linux/arm64")
 ATTESTATION_REFERENCE_TYPE = "attestation-manifest"

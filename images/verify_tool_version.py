@@ -12,7 +12,6 @@ import tarfile
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 LANGUAGES_PATH = ROOT / "languages.json"
 IDENTITY_PATH = "/lint-tool-version"
