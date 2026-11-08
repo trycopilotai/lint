@@ -199,6 +199,16 @@ RUN mkdir /out \
     && test "$(/shfmt --version)" = "v3.13.1" \
     && printf 'shfmt=3.13.1\n' >/shfmt-tool-version
 
+RUN mkdir /go-build-info \
+    && go version -m /buildifier >/go-build-info/buildifier-go-build-info.txt \
+    && go version -m /shfmt >/go-build-info/shfmt-go-build-info.txt \
+    && sha256sum /buildifier /shfmt >/go-build-info/binaries.sha256
+
+FROM scratch AS go-build-info-export
+COPY --from=go-tools-build /go-build-info/buildifier-go-build-info.txt /
+COPY --from=go-tools-build /go-build-info/shfmt-go-build-info.txt /
+COPY --from=go-tools-build /go-build-info/binaries.sha256 /
+
 FROM scratch AS buildifier
 LABEL org.opencontainers.image.source="https://github.com/trycopilotai/lint"
 COPY --from=license-notices /licenses /licenses
