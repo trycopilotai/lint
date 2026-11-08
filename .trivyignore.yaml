@@ -1,15 +1,1 @@
-vulnerabilities:
-  - id: CVE-2026-32274
-    purls:
-      - "pkg:pypi/black@24.10.0"
-    expired_at: 2026-10-31
-    statement: >-
-      Black is intentionally pinned for output
-      compatibility. The engine rejects the vulnerable
-      python-cell-magics option from project configuration,
-      formats isolated temporary mirrors, and exposes no
-      formatter-argument passthrough. The container also
-      runs unprivileged with a read-only root filesystem.
-      Direct Black use and direct image entrypoint
-      invocation remain affected outside this disposition.
-      Reassess the pin before this exception expires.
+vulnerabilities: []
