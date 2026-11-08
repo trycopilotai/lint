@@ -39,7 +39,7 @@ class ImageDigestSetTest(unittest.TestCase):
             record = {
                 "digest": "sha256:" + f"{index:064x}",
                 "image": f"ghcr.io/trycopilotai/lint-{language}",
-                "staging_tag": "0.1.8-deadbeef",
+                "staging_tag": "0.1.9-deadbeef",
             }
             (directory / f"{language}.json").write_text(
                 json.dumps(record),
@@ -56,7 +56,7 @@ class ImageDigestSetTest(unittest.TestCase):
 
             digests = RELEASE_MANIFEST.image_digests(
                 directory,
-                version="0.1.8",
+                version="0.1.9",
                 revision="deadbeef",
             )
 
@@ -70,7 +70,7 @@ class ImageDigestSetTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "coverage differs"):
                 RELEASE_MANIFEST.image_digests(
                     directory,
-                    version="0.1.8",
+                    version="0.1.9",
                     revision="deadbeef",
                 )
 
@@ -85,7 +85,7 @@ class ImageDigestSetTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "duplicate image"):
                 RELEASE_MANIFEST.image_digests(
                     directory,
-                    version="0.1.8",
+                    version="0.1.9",
                     revision="deadbeef",
                 )
 

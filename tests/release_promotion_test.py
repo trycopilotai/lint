@@ -30,8 +30,8 @@ PROMOTION = load_module(
 
 
 IMAGE = "ghcr.io/trycopilotai/lint-python"
-VERSION = "0.1.8"
-STAGING_TAG = "0.1.8-deadbeef"
+VERSION = "0.1.9"
+STAGING_TAG = "0.1.9-deadbeef"
 DIGEST = "sha256:" + "1" * 64
 OTHER_DIGEST = "sha256:" + "2" * 64
 ALIAS = f"{IMAGE}:{VERSION}"
