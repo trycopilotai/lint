@@ -69,6 +69,38 @@ jobs:
           cache-from:
             "type=gha,scope=${{ matrix.target }}-amd64"
           cache-to: "type=gha,mode=max"
+      - name: Export AMD64 Go build information
+        id: go-build-info
+        if: >-
+          matrix.target == 'buildifier' || matrix.target ==
+          'shfmt'
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          file: images/Dockerfile
+          target: go-build-info-export
+          platforms: linux/amd64
+          push: false
+          outputs: >-
+            type=local,dest=${{ runner.temp
+            }}/go-build-info-candidates/${{ matrix.target
+            }}-amd64
+          cache-from:
+            "type=gha,scope=${{ matrix.target }}-amd64"
+      - name: Upload AMD64 Go build information
+        if: >-
+          always() && steps.go-build-info.outcome ==
+          'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name:
+            "go-build-info-candidate-${{ matrix.target
+            }}-amd64"
+          path: |
+            ${{ runner.temp }}/go-build-info-candidates/${{ matrix.target }}-amd64/buildifier-go-build-info.txt
+            ${{ runner.temp }}/go-build-info-candidates/${{ matrix.target }}-amd64/shfmt-go-build-info.txt
+            ${{ runner.temp }}/go-build-info-candidates/${{ matrix.target }}-amd64/binaries.sha256
+          if-no-files-found: error
       - name: Inspect image
         shell: bash
         env:
@@ -208,6 +240,38 @@ jobs:
           cache-from:
             "type=gha,scope=${{ matrix.target }}-arm64"
           cache-to: "type=gha,mode=max"
+      - name: Export ARM64 Go build information
+        id: go-build-info
+        if: >-
+          matrix.target == 'buildifier' || matrix.target ==
+          'shfmt'
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          file: images/Dockerfile
+          target: go-build-info-export
+          platforms: linux/arm64
+          push: false
+          outputs: >-
+            type=local,dest=${{ runner.temp
+            }}/go-build-info-candidates/${{ matrix.target
+            }}-arm64
+          cache-from:
+            "type=gha,scope=${{ matrix.target }}-arm64"
+      - name: Upload ARM64 Go build information
+        if: >-
+          always() && steps.go-build-info.outcome ==
+          'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name:
+            "go-build-info-candidate-${{ matrix.target
+            }}-arm64"
+          path: |
+            ${{ runner.temp }}/go-build-info-candidates/${{ matrix.target }}-arm64/buildifier-go-build-info.txt
+            ${{ runner.temp }}/go-build-info-candidates/${{ matrix.target }}-arm64/shfmt-go-build-info.txt
+            ${{ runner.temp }}/go-build-info-candidates/${{ matrix.target }}-arm64/binaries.sha256
+          if-no-files-found: error
       - name: Inspect image
         shell: bash
         env:

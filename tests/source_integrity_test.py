@@ -339,6 +339,85 @@ class SourceIntegrityTest(unittest.TestCase):
             self.assertIn(pin, body)
         self.assertNotIn("musl=1.2.5", body)
 
+    def test_go_build_information_is_read_from_the_final_built_binaries(self) -> None:
+        build = stage(self.dockerfile, "go-tools-build")
+        exported = stage(self.dockerfile, "go-build-info-export")
+        for tool in ("buildifier", "shfmt"):
+            self.assertIn(
+                f"go version -m /{tool} >/go-build-info/{tool}-go-build-info.txt",
+                build,
+            )
+            self.assertIn(
+                f"COPY --from=go-tools-build /go-build-info/{tool}-go-build-info.txt /",
+                exported,
+            )
+            self.assertIn(
+                f"COPY --from=go-tools-build /{tool} /{tool}", self.dockerfile
+            )
+        self.assertIn(
+            "sha256sum /buildifier /shfmt >/go-build-info/binaries.sha256", build
+        )
+        self.assertIn(
+            "COPY --from=go-tools-build /go-build-info/binaries.sha256 /", exported
+        )
+        self.assertEqual(3, exported.count("COPY "))
+        self.assertNotIn("RUN ", exported)
+        self.assertNotIn("ENTRYPOINT", exported)
+
+    def test_native_go_artifact_exports_precede_other_image_gates(self) -> None:
+        workflow = (ROOT / ".github/workflows/images.yml").read_text(encoding="utf-8")
+        jobs = {
+            "amd64": workflow.split("  build:\n", 1)[1].split("  build-arm64:\n", 1)[0],
+            "arm64": workflow.split("  build-arm64:\n", 1)[1],
+        }
+        for architecture, job in jobs.items():
+            with self.subTest(architecture=architecture):
+                heading = architecture.upper()
+                export_name = f"- name: Export {heading} Go build information"
+                upload_name = f"- name: Upload {heading} Go build information"
+                export = job.split(export_name, 1)[1].split(upload_name, 1)[0]
+                upload = job.split(upload_name, 1)[1].split("- name: Inspect image", 1)[
+                    0
+                ]
+                normalized_export = " ".join(export.split())
+                normalized_upload = " ".join(upload.split())
+                self.assertIn(
+                    "matrix.target == 'buildifier' || matrix.target == 'shfmt'",
+                    normalized_export,
+                )
+                self.assertIn(
+                    "docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8",
+                    export,
+                )
+                self.assertIn(f"platforms: linux/{architecture}", export)
+                self.assertIn("target: go-build-info-export", export)
+                self.assertIn("push: false", export)
+                self.assertIn("type=local,dest=", export)
+                for rejected in ("tags:", "load:", "cache-to:"):
+                    self.assertNotIn(rejected, export)
+                self.assertIn(
+                    "always() && steps.go-build-info.outcome == 'success'",
+                    normalized_upload,
+                )
+                self.assertIn("if-no-files-found: error", upload)
+                self.assertIn(
+                    f"go-build-info-candidate-${{{{ matrix.target }}}}-{architecture}",
+                    normalized_upload,
+                )
+                for name in (
+                    "buildifier-go-build-info.txt",
+                    "shfmt-go-build-info.txt",
+                    "binaries.sha256",
+                ):
+                    self.assertIn(f"-{architecture}/{name}", upload)
+                self.assertLess(
+                    job.index(f"- name: Build {heading} image"), job.index(export_name)
+                )
+                self.assertLess(job.index(export_name), job.index(upload_name))
+                self.assertLess(
+                    job.index(upload_name), job.index("- name: Inspect image")
+                )
+
     def test_lockfiles_are_bound_to_the_build(self) -> None:
         for name, record in self.sources["lockfiles"].items():
             path = ROOT / record["path"]
