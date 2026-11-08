@@ -47,7 +47,7 @@ module.
 
 ### black
 
-The payload covers Black 24.10.0, its six pinned runtime
+The payload covers Black 26.10.1, its seven pinned runtime
 wheels, CPython 3.13.14, and the copied Alpine runtime
 families. Component copyright text is retained where an
 upstream package supplies it.
@@ -56,8 +56,9 @@ upstream package supplies it.
 - mypy-extensions 1.0.0: [MIT][mypy-extensions-license]
 - packaging 24.1: [Apache-2.0 OR
   BSD-2-Clause][packaging-license]
-- pathspec 0.12.1: [MPL-2.0][pathspec-license]
+- pathspec 1.1.1: [MPL-2.0][pathspec-license]
 - platformdirs 4.3.6: [MIT][platformdirs-license]
+- pytokens 0.4.0: [MIT][pytokens-license]
 
 ### requirements
 
@@ -84,9 +85,14 @@ runtime closure, annotation artifacts, GraalVM Community
 Edition 25.0.2, OpenJDK 25.0.2, and GraalVM's complete
 third-party license file.
 
+The Java and Swift images also carry the complete pinned
+Debian zlib package and its original control metadata in the
+distroless `status.d` layout. Package file checksums are
+verified before adding the layer.
+
 ### go
 
-The payload covers Go and gofmt 1.26.6, including the Go
+The payload covers Go and gofmt 1.26.10, including the Go
 patent grant.
 
 ### rust
@@ -139,7 +145,7 @@ target manifest include the exact resolved Git revisions.
 
 The payload covers CSharpier 1.3.0, the exact package
 inventory extracted from the pinned net10.0 application
-archive, the .NET 10.0.11 license and third-party notices,
+archive, the .NET 10.0.14 license and third-party notices,
 and legal texts for each distinct upstream dependency family
 in that inventory. It also covers the copied Alpine runtime
 families.
@@ -170,7 +176,7 @@ JuliaSyntax, PrecompileTools, and Preferences.
 [packaging-license]:
   https://github.com/pypa/packaging/blob/24.1/LICENSE
 [pathspec-license]:
-  https://github.com/cpburnz/python-pathspec/blob/v0.12.1/LICENSE
+  https://github.com/cpburnz/python-pathspec/blob/v1.1.1/LICENSE
 [platformdirs-license]:
   https://github.com/tox-dev/platformdirs/blob/4.3.6/LICENSE
 [precompiletools-license]:
@@ -179,3 +185,5 @@ JuliaSyntax, PrecompileTools, and Preferences.
   https://github.com/JuliaPackaging/Preferences.jl/blob/v1.5.2/LICENSE.md
 [rustfmt-license]:
   https://github.com/rust-lang/rust/blob/1.97.1/src/tools/rustfmt/LICENSE-APACHE
+[pytokens-license]:
+  https://github.com/tusharsadhwani/pytokens/blob/0.4.0/LICENSE

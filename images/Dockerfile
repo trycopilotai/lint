@@ -1,9 +1,9 @@
 # syntax=docker/dockerfile:1.18
 
 ARG ALPINE_3_23="alpine:3.23@sha256:fd791d74b68913cbb027c6546007b3f0d3bc45125f797758156952bc2d6daf40"
-ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:c31ff9abcb1910f3ab25c7957bdaf0bfe12a01eb546e8df2282f1c8f682b606c"
-ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.11-alpine3.23@sha256:6aa91d49edbbbd0a680ad22192b49373427397e48935074d441a1138c42f41b1"
-ARG GO_IMAGE="golang:1.26.6-alpine3.23@sha256:e57c41c1d5864341031181b0db34b9a537bb5773eb6428e4e5bdaea0f9135406"
+ARG DISTROLESS_CC="gcr.io/distroless/cc-debian13:nonroot@sha256:08476c244888bfb425bae1ae4dd7c17f093e972aab8426883d97f3c6f280f7c1"
+ARG DOTNET_RUNTIME="mcr.microsoft.com/dotnet/runtime:10.0.14-alpine3.24@sha256:8ef0660a5ae5877915bc868a27aabf334c8b14c60aadbdd0fa058d81b87c52b6"
+ARG GO_IMAGE="golang:1.26.10-alpine3.23@sha256:78e7f1e419545bc4b8b5ee8a40a99ddb5df1216d38681dbab2eeb1fdb2427f43"
 ARG JAVA_IMAGE="eclipse-temurin:21-jre-alpine-3.23@sha256:3f08b13888f595cc49edabea7250ba69499ba25602b267da591720769400e08c"
 ARG JAVA_JDK_IMAGE="eclipse-temurin:21-jdk-alpine-3.23@sha256:1ff763083f2993d57d0bf374ab10bb3e2cb873af6c13a04458ebbd3e0337dc76"
 ARG JULIA_IMAGE="julia:1.12.6-bookworm@sha256:4979dc5c6fbcd7f5f0dc2ba2b336d136bda63a40c25e52a848222aa24326dfe1"
@@ -14,6 +14,39 @@ ARG SWIFT_IMAGE="swift:6.3-noble@sha256:66520bcba471018a34fd54ba09be97ba4abebd95
 
 FROM ${ALPINE_3_23} AS downloader
 RUN apk add --no-cache ca-certificates curl
+
+# Keep Debian package files and the real control metadata together. The
+# status.d layout follows distroless/PACKAGE_METADATA.md.
+FROM downloader AS distroless-zlib
+ARG TARGETARCH
+RUN apk add --no-cache dpkg busybox-static=1.37.0-r30
+RUN set -eu; \
+    case "${TARGETARCH}" in \
+      amd64) checksum="8c27c342230503b73dfde629642c3b352e87b554e06d60cf58772f236a305ceb" ;; \
+      arm64) checksum="0e41b3d7ad8ad7fcd36dd4d61ca91a70018478fc4af652e044f4be770784ddff" ;; \
+      *) exit 2 ;; \
+    esac; \
+    curl --fail --location --output /zlib.deb \
+      "https://security.debian.org/debian-security/pool/updates/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+deb13u1_${TARGETARCH}.deb"; \
+    echo "${checksum}  /zlib.deb" | sha256sum -c; \
+    test "$(dpkg-deb --field /zlib.deb Package)" = "zlib1g"; \
+    test "$(dpkg-deb --field /zlib.deb Version)" = \
+      "1:1.3.dfsg+really1.3.1-1+deb13u1"; \
+    test "$(dpkg-deb --field /zlib.deb Architecture)" = "${TARGETARCH}"; \
+    dpkg-deb --extract /zlib.deb /runtime; \
+    mkdir -p /runtime/var/lib/dpkg/status.d /zlib-control; \
+    dpkg-deb --field /zlib.deb >/runtime/var/lib/dpkg/status.d/zlib1g; \
+    dpkg-deb --control /zlib.deb /zlib-control; \
+    cp /zlib-control/md5sums /runtime/var/lib/dpkg/status.d/zlib1g.md5sums; \
+    cd /runtime; \
+    md5sum -c var/lib/dpkg/status.d/zlib1g.md5sums
+
+FROM ${DISTROLESS_CC} AS distroless-runtime
+USER 0:0
+RUN --mount=from=distroless-zlib,source=/bin/busybox.static,target=/busybox \
+    ["/busybox", "rm", "-f", "/usr/share/doc/zlib1g/changelog.Debian.amd64.gz", "/usr/share/doc/zlib1g/changelog.Debian.arm64.gz"]
+COPY --from=distroless-zlib /runtime/ /
+USER 65532:65532
 
 FROM downloader AS prettier-download
 RUN mkdir /downloads \
@@ -26,9 +59,9 @@ RUN mkdir /downloads \
 FROM downloader AS black-download
 RUN mkdir /black-wheels \
     && curl --fail --location \
-      --output /black-wheels/black-24.10.0-py3-none-any.whl \
-      https://files.pythonhosted.org/packages/8d/a7/4b27c50537ebca8bec139b872861f9d2bf501c5ec51fcf897cb924d9e264/black-24.10.0-py3-none-any.whl \
-    && echo "3bb2b7a1f7b685f85b11fed1ef10f8a9148bceb49853e47a294a3dd963c1dd7d  /black-wheels/black-24.10.0-py3-none-any.whl" \
+      --output /black-wheels/black-26.10.1-py3-none-any.whl \
+      https://files.pythonhosted.org/packages/b1/28/9dd29175c1db777e6189e2a0bb5f37101adf19c3e509b236c8920f778d0b/black-26.10.1-py3-none-any.whl \
+    && echo "28842f9a8207cc1df6eb983a35a14c5a0dfcd603d214fe82d84bef552afd2e3a  /black-wheels/black-26.10.1-py3-none-any.whl" \
       | sha256sum -c \
     && curl --fail --location \
       --output /black-wheels/click-8.1.7-py3-none-any.whl \
@@ -46,14 +79,19 @@ RUN mkdir /black-wheels \
     && echo "5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124  /black-wheels/packaging-24.1-py3-none-any.whl" \
       | sha256sum -c \
     && curl --fail --location \
-      --output /black-wheels/pathspec-0.12.1-py3-none-any.whl \
-      https://files.pythonhosted.org/packages/cc/20/ff623b09d963f88bfde16306a54e12ee5ea43e9b597108672ff3a408aad6/pathspec-0.12.1-py3-none-any.whl \
-    && echo "a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08  /black-wheels/pathspec-0.12.1-py3-none-any.whl" \
+      --output /black-wheels/pathspec-1.1.1-py3-none-any.whl \
+      https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl \
+    && echo "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189  /black-wheels/pathspec-1.1.1-py3-none-any.whl" \
       | sha256sum -c \
     && curl --fail --location \
       --output /black-wheels/platformdirs-4.3.6-py3-none-any.whl \
       https://files.pythonhosted.org/packages/3c/a6/bc1012356d8ece4d66dd75c4b9fc6c1f6650ddd5991e421177d9f8f671be/platformdirs-4.3.6-py3-none-any.whl \
     && echo "73e575e1408ab8103900836b97580d5307456908a03e92031bab39e4554cc3fb  /black-wheels/platformdirs-4.3.6-py3-none-any.whl" \
+      | sha256sum -c \
+    && curl --fail --location \
+      --output /black-wheels/pytokens-0.4.0-py3-none-any.whl \
+      https://files.pythonhosted.org/packages/7c/3c/6941a82f4f130af6e1c68c076b6789069ef10c04559bd4733650f902fd3b/pytokens-0.4.0-py3-none-any.whl \
+    && echo "0508d11b4de157ee12063901603be87fb0253e8f4cb9305eb168b1202ab92068  /black-wheels/pytokens-0.4.0-py3-none-any.whl" \
       | sha256sum -c
 
 FROM downloader AS julia-formatter-download
@@ -176,6 +214,7 @@ RUN apk --force-refresh add --no-cache \
       libssl3=3.5.9-r0 \
       musl=1.2.5-r24 \
       musl-utils=1.2.5-r24 \
+      libuuid=2.41.6-r1 \
       zlib=1.4-r0 \
       sqlite-libs=3.53.4-r0
 COPY --from=black-download /black-wheels /black-wheels
@@ -190,8 +229,8 @@ RUN pip install \
       /usr/local/lib/python3.13/ensurepip \
       /usr/local/lib/python3.13/site-packages/pip* \
     && test "$(PYTHONDONTWRITEBYTECODE=1 python3 -c \
-      'import black; print(black.__version__)')" = "24.10.0" \
-    && printf 'black=24.10.0\n' >/lint-tool-version
+      'import black; print(black.__version__)')" = "26.10.1" \
+    && printf 'black=26.10.1\n' >/lint-tool-version
 
 FROM scratch AS black
 LABEL org.opencontainers.image.source="https://github.com/trycopilotai/lint"
@@ -210,6 +249,7 @@ RUN apk --force-refresh add --no-cache \
       libssl3=3.5.9-r0 \
       musl=1.2.5-r24 \
       musl-utils=1.2.5-r24 \
+      libuuid=2.41.6-r1 \
       zlib=1.4-r0 \
       sqlite-libs=3.53.4-r0
 COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
@@ -303,7 +343,7 @@ RUN test "$(/google-java-format --version 2>&1)" = \
       "google-java-format: Version 1.35.0" \
     && printf 'google-java-format=1.35.0\n' >/lint-tool-version
 
-FROM ${DISTROLESS_CC} AS java
+FROM distroless-runtime AS java
 LABEL org.opencontainers.image.source="https://github.com/trycopilotai/lint"
 COPY --from=license-notices /licenses /licenses
 COPY images/licenses/java /licenses/java
@@ -314,8 +354,8 @@ ENTRYPOINT ["google-java-format", "--replace"]
 
 FROM ${GO_IMAGE} AS go-source
 RUN cp /usr/local/go/bin/gofmt /gofmt \
-    && test "$(go version /gofmt)" = "/gofmt: go1.26.6" \
-    && printf 'go=1.26.6\n' >/lint-tool-version
+    && test "$(go version /gofmt)" = "/gofmt: go1.26.10" \
+    && printf 'go=1.26.10\n' >/lint-tool-version
 
 FROM scratch AS go
 LABEL org.opencontainers.image.source="https://github.com/trycopilotai/lint"
@@ -357,6 +397,7 @@ RUN apk --force-refresh add --no-cache \
       libssl3=3.5.9-r0 \
       musl=1.2.5-r24 \
       musl-utils=1.2.5-r24 \
+      brotli-libs=1.2.1-r0 \
       zlib=1.4-r0 \
       p11-kit=0.26.2-r0 \
       p11-kit-trust=0.26.2-r0 \
@@ -498,7 +539,7 @@ RUN echo "599a6beab32b6e9164edaf89903fd30d5c4b9dcc46083b15ef7c4f886b386636  /swi
     && test "$(/swift-format --version)" = "603.0.0" \
     && printf 'swift-format=603.0.0\n' >/lint-tool-version
 
-FROM ${DISTROLESS_CC} AS swift
+FROM distroless-runtime AS swift
 LABEL org.opencontainers.image.source="https://github.com/trycopilotai/lint"
 COPY --from=license-notices /licenses /licenses
 COPY images/licenses/swift /licenses/swift
@@ -523,8 +564,8 @@ FROM ${DOTNET_RUNTIME} AS csharp-runtime
 RUN apk --force-refresh add --no-cache \
       libcrypto3=3.5.9-r0 \
       libssl3=3.5.9-r0 \
-      musl=1.2.5-r24 \
-      musl-utils=1.2.5-r24 \
+      musl=1.2.6-r3 \
+      musl-utils=1.2.6-r3 \
       zlib=1.4-r0
 
 FROM csharp-runtime AS csharp-build

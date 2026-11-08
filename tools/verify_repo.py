@@ -13,7 +13,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 # The allowed-signers file the release job trusts is read from
@@ -251,13 +250,13 @@ def verify_manifests() -> None:
     ]
     expected = {
         "prettier": "3.7.4",
-        "black": "24.10.0",
+        "black": "26.10.1",
         "clang-format": "18.1.8",
         "google-java-format": "1.35.0",
         "buildifier": "8.2.1",
         "ktlint": "1.3.0",
         "shfmt": "3.13.1",
-        "go": "1.26.6",
+        "go": "1.26.10",
         "rust": "1.97.1",
         "rustfmt": "1.9.0",
         "taplo": "0.10.0",

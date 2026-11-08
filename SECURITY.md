@@ -46,19 +46,9 @@ the same repository, this is not independent identity proof.
 
 ## Scanner exceptions
 
-The release scan carries one time-bounded exception for
-Black 24.10.0 under `CVE-2026-32274`. The release requires
-that version for output compatibility. The engine rejects
-the vulnerable `python-cell-magics` option from project
-configuration before copying it into an isolated temporary
-mirror and exposes no formatter-argument passthrough. The
-container also runs as an unprivileged user with a read-only
-root filesystem. Direct Black use or direct image entrypoint
-invocation is outside this disposition.
-
-The exception is scoped to the Black 24.10.0 package URL and
-expires on 2026-10-31. A release after that date must update
-the pin or record a newly reviewed disposition.
+The release scan has no vulnerability exceptions. Black
+26.10.1 replaces the expired Black 24.10.0 exception; the
+existing formatter isolation checks remain in place.
 
 Public follow-up work about formatter isolation uses the
 `formatter` label. Public follow-up work about images,

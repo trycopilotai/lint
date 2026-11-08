@@ -125,7 +125,7 @@ codec:
 		$(CODEC_PATHS)
 
 pyformat:
-	pipx run --spec black==24.10.0 black --check --diff \
+	pipx run --spec black==26.10.1 black --check --diff \
 		$(BLACK_PATHS)
 
 lint:
