@@ -597,10 +597,39 @@ def verify_release_surfaces() -> None:
     )
     if not allowed_signers.startswith("trycopilotai-release ssh-ed25519 "):
         raise ValueError("release signer trust root is missing")
+    if 'if test "$RELEASE_REF" = "v0.1.9"; then' not in release:
+        raise ValueError("the v0.1.9 unsigned-tag exception is missing")
+    if 'test "$(git cat-file -t "$RELEASE_REF")" = "tag"' not in release:
+        raise ValueError("release tags must be annotated")
+    if "gpg.format=ssh" not in release:
+        raise ValueError("other release tags must retain SSH signature verification")
+    signer_configuration = (
+        "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/"
+        ".github/release-allowed-signers"
+    )
+    if signer_configuration not in release:
+        raise ValueError("other release tags must use the pinned signer trust root")
+    candidate_configuration = (
+        "gpg.ssh.allowedSignersFile=.github/release-allowed-signers"
+    )
+    if candidate_configuration in release:
+        raise ValueError("release tag verification trusts the candidate signer file")
+    if 'verify-tag "$RELEASE_REF"' not in release:
+        raise ValueError("other release tags must verify their SSH signature")
+    target_check = 'git rev-list -n 1 "$RELEASE_REF"'
+    exception_start = release.index('if test "$RELEASE_REF" = "v0.1.9"; then')
+    if target_check not in release or release.index(target_check) > exception_start:
+        raise ValueError("all release tags must bind to the checked-out commit")
+    exception_branch = release.split('if test "$RELEASE_REF" = "v0.1.9"; then', 1)[1]
+    exception_branch = exception_branch.split("else", 1)[0]
+    if "verify-tag" in exception_branch or "allowedSignersFile" in exception_branch:
+        raise ValueError("the v0.1.9 exception must not require a signer")
+    if "single unsigned release exception" not in exception_branch:
+        raise ValueError("the v0.1.9 release status must be explicit")
     trust_checkout = release.split("- name: Check out release trust root", 1)
     if len(trust_checkout) != 2:
         raise ValueError("release trust root checkout is missing")
-    trust_checkout = trust_checkout[1].split("- name: Verify signed release tag", 1)
+    trust_checkout = trust_checkout[1].split("- name: Verify release tag", 1)
     if len(trust_checkout) != 2:
         raise ValueError("release trust root checkout is not isolated")
     trust_checkout_text = trust_checkout[0]
@@ -612,21 +641,6 @@ def verify_release_surfaces() -> None:
         raise ValueError("release trust root checkout is not signer-only")
     if "persist-credentials: false" not in trust_checkout_text:
         raise ValueError("release trust root checkout retains credentials")
-    if "gpg.format=ssh" not in release:
-        raise ValueError("release tag verification does not require SSH signatures")
-    signer_configuration = (
-        "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/"
-        ".github/release-allowed-signers"
-    )
-    if signer_configuration not in release:
-        raise ValueError("release tag verification is missing its pinned trust root")
-    candidate_configuration = (
-        "gpg.ssh.allowedSignersFile=.github/release-allowed-signers"
-    )
-    if candidate_configuration in release:
-        raise ValueError("release tag verification trusts the candidate signer file")
-    if 'verify-tag "$RELEASE_REF"' not in release:
-        raise ValueError("release tag signature is not verified")
     digest_verification = "python3 tools/release_manifest.py"
     digest_promotion = "for record in digests/*.json"
     if "--verify-only" not in release:
@@ -668,6 +682,8 @@ def verify_release_surfaces() -> None:
     security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
     if release_trust_root not in security:
         raise ValueError("SECURITY.md documents a different release trust root")
+    if "v0.1.9" not in security or "single unsigned exception" not in security.lower():
+        raise ValueError("SECURITY.md must document the v0.1.9 exception")
 
 
 def recipient_documents() -> dict[str, str]:

@@ -17,14 +17,8 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 
 # The published `main` commit whose allowed-signers file the
-# release job trusts. It is written out here rather than read
-# from the workflow, so a workflow that repins itself has to
-# disagree with this file to pass.
+# release job trusts for tags other than the v0.1.9 exception.
 RELEASE_TRUST_ROOT = "3d5d4ee7b83b2c6442039b8a72a571c729ffcead"
-
-# The trust root the release workflow used before this one. It
-# was never pushed, so `actions/checkout` cannot fetch it and
-# the release fails before it verifies a signature.
 UNPUBLISHED_TRUST_ROOT = "5ec8a57d4cdddb23e446cf2bc69596d748a4d285"
 
 
@@ -521,7 +515,7 @@ class ReleaseWorkflowTest(unittest.TestCase):
             1,
         )[
             1
-        ].split("- name: Verify signed release tag", 1)[0]
+        ].split("- name: Verify release tag", 1)[0]
         self.assertIn(f"ref: {RELEASE_TRUST_ROOT}", trust_checkout)
         self.assertIn("path: release-trust", trust_checkout)
         self.assertNotIn("${{ env.RELEASE_REF }}", trust_checkout)
@@ -536,6 +530,15 @@ class ReleaseWorkflowTest(unittest.TestCase):
             release,
         )
         self.assertIn('verify-tag "$RELEASE_REF"', release)
+        exception_branch = release.split('if test "$RELEASE_REF" = "v0.1.9"; then', 1)[
+            1
+        ].split("else", 1)[0]
+        target_check = 'git rev-list -n 1 "$RELEASE_REF"'
+        exception_start = release.index('if test "$RELEASE_REF" = "v0.1.9"; then')
+        self.assertLess(release.index(target_check), exception_start)
+        self.assertNotIn("verify-tag", exception_branch)
+        self.assertIn("single unsigned release exception", exception_branch)
+        self.assertIn("verify-tag", release.split("else", 1)[1])
 
     @unittest.skipIf(os.name == "nt", "release guard runs on ubuntu-latest")
     def test_release_controller_is_bound_to_the_checked_out_target(self) -> None:
@@ -545,7 +548,7 @@ class ReleaseWorkflowTest(unittest.TestCase):
         workflow file itself comes from `github.workflow_sha`.
         A tag push reads both from the same commit. A dispatch
         reads the controller from the ref it was started on, so
-        an unsigned branch could drive the signed tag's release
+        a different branch could drive the release
         with steps the tag never carried.
         """
 
@@ -649,8 +652,7 @@ class ReleaseWorkflowTest(unittest.TestCase):
                     text=True,
                 )
 
-            # A signed tag push: the controller, the peeled tag,
-            # and the checkout are one commit.
+            # An unsigned annotated tag: controller and peeled tag agree.
             tag_push = run_guard(tagged_sha)
             # A dispatch of the tag from another branch.
             other_controller = run_guard(other_sha)
@@ -777,17 +779,133 @@ class ReleaseWorkflowTest(unittest.TestCase):
         self.assertEqual(0, candidate_result.returncode, candidate_result.stderr)
         self.assertNotEqual(0, pinned_result.returncode, pinned_result.stdout)
 
-    def test_release_signature_verification_is_documented(self) -> None:
+    @unittest.skipIf(os.name == "nt", "release guard runs on ubuntu-latest")
+    def test_only_v019_accepts_an_unsigned_annotated_tag(self) -> None:
+        release = (ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        script = workflow_step_script(release, "Verify release tag")
+        script = script.replace(
+            'git -C "$GITHUB_WORKSPACE/release-trust" rev-parse HEAD',
+            f'printf "%s\\n" "{RELEASE_TRUST_ROOT}"',
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory) / "release"
+            workspace = Path(directory) / "workspace"
+            trust_root = workspace / "release-trust" / ".github"
+            trust_root.mkdir(parents=True)
+            (trust_root / "release-allowed-signers").write_text(
+                "trycopilotai-release ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIinvalid\n",
+                encoding="utf-8",
+            )
+            repository.mkdir()
+            subprocess.run(
+                ["git", "init", "-q", "-b", "main", str(repository)], check=True
+            )
+            for name, value in (
+                ("user.name", "Release Test"),
+                ("user.email", "release-test@example.invalid"),
+            ):
+                subprocess.run(
+                    ["git", "-C", str(repository), "config", name, value],
+                    check=True,
+                )
+            (repository / "payload.txt").write_text("release\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repository), "add", "."], check=True)
+            subprocess.run(
+                ["git", "-C", str(repository), "commit", "-qm", "release"],
+                check=True,
+            )
+            tagged_commit = subprocess.run(
+                ["git", "-C", str(repository), "rev-parse", "HEAD"],
+                check=True,
+                stdout=subprocess.PIPE,
+                text=True,
+            ).stdout.strip()
+            subprocess.run(
+                ["git", "-C", str(repository), "tag", "-am", "release", "v0.1.9"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(repository), "tag", "-am", "release", "v0.1.10"],
+                check=True,
+            )
+
+            def run_guard(release_ref: str) -> subprocess.CompletedProcess[str]:
+                return subprocess.run(
+                    ["bash", "--noprofile", "--norc", "-eo", "pipefail", "-c", script],
+                    cwd=repository,
+                    env={
+                        **os.environ,
+                        "GITHUB_WORKSPACE": str(workspace),
+                        "RELEASE_REF": release_ref,
+                    },
+                    check=False,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                )
+
+            allowed_unsigned_tag = run_guard("v0.1.9")
+            rejected_unsigned_tag = run_guard("v0.1.10")
+            subprocess.run(
+                ["git", "-C", str(repository), "tag", "-d", "v0.1.9"],
+                check=True,
+                stdout=subprocess.PIPE,
+            )
+            subprocess.run(
+                ["git", "-C", str(repository), "tag", "v0.1.9", tagged_commit],
+                check=True,
+            )
+            rejected_lightweight_tag = run_guard("v0.1.9")
+            subprocess.run(
+                ["git", "-C", str(repository), "tag", "-d", "v0.1.9"],
+                check=True,
+                stdout=subprocess.PIPE,
+            )
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(repository),
+                    "tag",
+                    "-am",
+                    "release",
+                    "v0.1.9",
+                    tagged_commit,
+                ],
+                check=True,
+            )
+            (repository / "payload.txt").write_text("later\n", encoding="utf-8")
+            subprocess.run(["git", "-C", str(repository), "add", "."], check=True)
+            subprocess.run(
+                ["git", "-C", str(repository), "commit", "-qm", "later"],
+                check=True,
+            )
+            rejected_wrong_target = run_guard("v0.1.9")
+
+        self.assertEqual(
+            0, allowed_unsigned_tag.returncode, allowed_unsigned_tag.stderr
+        )
+        for case, result in (
+            ("other version", rejected_unsigned_tag),
+            ("lightweight v0.1.9 tag", rejected_lightweight_tag),
+            ("tag target differs from checkout", rejected_wrong_target),
+        ):
+            with self.subTest(case=case):
+                self.assertNotEqual(0, result.returncode)
+
+    def test_release_signature_documentation_limits_unsigned_exception(self) -> None:
         security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
         normalized = " ".join(security.split())
 
-        self.assertIn("verify-tag v0.1.9", security)
+        self.assertIn(
+            "The `v0.1.9` release is the single unsigned exception.", normalized
+        )
+        self.assertIn("All other release tags remain SSH-signed", normalized)
+        self.assertIn("verify-tag v0.1.8", security)
         self.assertIn(".github/release-allowed-signers", security)
         self.assertIn(RELEASE_TRUST_ROOT, security)
-        self.assertIn(
-            "SHA256:DfKMRhe4zXosajTxEcDqVDi7dnQ/pwtvj/lLBDn7a9k",
-            security,
-        )
         self.assertIn("not independent identity proof", normalized)
 
     def test_promotion_requires_the_complete_digest_set(self) -> None:

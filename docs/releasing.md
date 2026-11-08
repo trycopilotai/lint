@@ -107,12 +107,18 @@ inside the pinned `golang` image, then update
 `source_sha256` and `receipt.go_version` for those entries
 in `images/dependency_closures.json`.
 
-## Signed tag
+## Release tag policy
 
-The release tag is annotated and SSH-signed so it verifies
-against `.github/release-allowed-signers`. The tagger
-identity is
-`Pramod Kotipalli <trycopilotai@users.noreply.github.com>`.
+The specifically authorized release is the single unsigned
+exception. Its tag must still be annotated and point to the
+exact checked-out source commit; the workflow commit must
+match that same commit. The tagger identity is
+`Pramod Kotipalli <trycopilotai@users.noreply.github.com>`,
+but tagger metadata is not independent identity proof. All
+other release tags remain SSH-signed against the pinned
+`.github/release-allowed-signers` trust root. The release
+workflow keeps the same repository, image, scan, digest, and
+provenance checks for every version.
 
 ## GHCR package visibility is a manual step
 

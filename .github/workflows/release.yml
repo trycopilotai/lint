@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       release-ref:
-        description: "Existing signed release tag"
+        description: "Existing release tag"
         required: true
         type: string
         default: v0.1.9
@@ -43,7 +43,7 @@ jobs:
           sparse-checkout: .github/release-allowed-signers
           sparse-checkout-cone-mode: false
           persist-credentials: false
-      - name: Verify signed release tag
+      - name: Verify release tag
         shell: bash
         run: |
           test "$(
@@ -53,10 +53,14 @@ jobs:
           test "$(git cat-file -t "$RELEASE_REF")" = "tag"
           test "$(git rev-list -n 1 "$RELEASE_REF")" = \
             "$(git rev-parse HEAD)"
-          git \
-            -c gpg.format=ssh \
-            -c "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/.github/release-allowed-signers" \
-            verify-tag "$RELEASE_REF"
+          if test "$RELEASE_REF" = "v0.1.9"; then
+            echo "v0.1.9 is the single unsigned release exception."
+          else
+            git \
+              -c gpg.format=ssh \
+              -c "gpg.ssh.allowedSignersFile=$GITHUB_WORKSPACE/release-trust/.github/release-allowed-signers" \
+              verify-tag "$RELEASE_REF"
+          fi
       - name: Verify release controller commit
         shell: bash
         env:
@@ -66,7 +70,7 @@ jobs:
           # file was read from. A tag push reads the controller
           # from the pushed tag, so the two agree. A dispatch
           # reads it from whatever ref was selected, which need
-          # not be the signed release target checked out above,
+          # not be the release target checked out above,
           # and every later job would then run steps the tag
           # never carried. Bind them here, in the job the image
           # build waits on, so a mismatch stops before anything
@@ -476,7 +480,7 @@ jobs:
           # artifact. Different compressors and levels each
           # produce a different digest from the same tar, and a
           # recipient cannot guess which one ran. Pin exactly
-          # one here so the chain from the signed tag to the
+          # one here so the chain from the annotated tag to the
           # published digest is reproducible.
           git archive \
             --format=tar \
