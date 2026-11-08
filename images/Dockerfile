@@ -263,9 +263,9 @@ RUN apk --force-refresh add --no-cache \
       zlib=1.4-r0 \
       sqlite-libs=3.53.4-r0
 COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
-RUN echo "723bfe9070dd70e804fff734a7156b963e694446e161739d03394ca30d9f29b5  /requirements-format" \
+RUN echo "fb4382e7d2cc31be6369687ed951c3535e05e0b9e39124f7366e2bf0befbea37  /requirements-format" \
       | sha256sum -c \
-    && printf 'requirements=sha256:723bfe9070dd70e804fff734a7156b963e694446e161739d03394ca30d9f29b5\n' \
+    && printf 'requirements=sha256:fb4382e7d2cc31be6369687ed951c3535e05e0b9e39124f7366e2bf0befbea37\n' \
       >/lint-tool-version \
     && rm -rf \
       /usr/local/bin/pip* \
