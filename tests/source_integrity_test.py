@@ -286,6 +286,18 @@ class SourceIntegrityTest(unittest.TestCase):
                 self.assertIn(url, self.dockerfile)
                 self.assertIn(sha256, self.dockerfile)
 
+    def test_requirements_formatter_identity_matches_its_actual_source(self) -> None:
+        digest = hashlib.sha256(
+            (ROOT / "images/requirements_entrypoint.py").read_bytes()
+        ).hexdigest()
+        body = stage(self.dockerfile, "requirements-build")
+        self.assertIn(f"{digest}  /requirements-format", body)
+        self.assertIn(f"requirements=sha256:{digest}\\n", body)
+        for relative in ("languages.json", "skills/lint/languages.json"):
+            with self.subTest(manifest=relative):
+                tools = json.loads((ROOT / relative).read_text())["tools"]
+                self.assertEqual(f"sha256:{digest}", tools["requirements"])
+
     def test_distroless_zlib_package_layer_keeps_authentic_metadata(self) -> None:
         body = stage(self.dockerfile, "distroless-zlib")
         for architecture, checksum in (
