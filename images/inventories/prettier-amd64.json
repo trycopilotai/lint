@@ -30,7 +30,7 @@
       "mode": "0644",
       "path": "lib/apk/db/installed",
       "role": "runtime",
-      "sha256": "3160763099d9f711eb99cc160f0c0a8e30a1132e380ecef89700055d598c9310",
+      "sha256": "49febad181a03f5f239a18bd83da2cf261077ffddb66ebb4a84386d0fbd5324c",
       "type": "regular"
     },
     {
@@ -78,7 +78,7 @@
       "mode": "0755",
       "path": "lib/ld-musl-x86_64.so.1",
       "role": "runtime",
-      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "sha256": "01e3b793ecda1146c4853dfa350e0515f2137f380fb9fa2370428f7bf9481148",
       "type": "regular"
     },
     {
@@ -126,7 +126,7 @@
       "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
-      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "sha256": "d7c9ff7b497130f6fc2307ab9b5e05e096fd394b55ee35a35ac4321b170fcc82",
       "type": "regular"
     },
     {
@@ -134,7 +134,7 @@
       "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
-      "sha256": "18361c6b8821a762a005d897aefb603a77a75f3de05ffca601cf70b318a68bd4",
+      "sha256": "5686da670fb647818c74edd302fb4d6ee065a3ad399b94877eefe997901a5a3d",
       "type": "regular"
     },
     {
@@ -174,7 +174,7 @@
       "mode": "0644",
       "path": "licenses/prettier/manifest.json",
       "role": "license",
-      "sha256": "cdcdd6b791d19193e37ef354b1b2a2d65cf66644080daba6cc4715a79f0a3f16",
+      "sha256": "7117c3145a52c267299f47a1b5f9ab1d288d04f26916f77bc37b1e8e1e536e99",
       "type": "regular"
     },
     {
@@ -254,7 +254,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/afalg.so",
       "role": "runtime",
-      "sha256": "37b2e379caafde2ab58bdf8950975530f72e8ef1c41af4f12bea160b37c2bece",
+      "sha256": "2408114f75ab3ec9d51e9805f33e06810983387fa905a4073dd01f35657e8921",
       "type": "regular"
     },
     {
@@ -262,7 +262,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/capi.so",
       "role": "runtime",
-      "sha256": "b8514972e1ba12ee21d499c15ff87caded0772c4c527a102ae5a735eb622203b",
+      "sha256": "973e3319939d79e452618c93a51799e0e920909c8576ce61b4179fd9f8872e10",
       "type": "regular"
     },
     {
@@ -270,7 +270,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/loader_attic.so",
       "role": "runtime",
-      "sha256": "fd572438567621228bf2cd0a7886f9eef3b6c5589192c084af2b865b21364537",
+      "sha256": "f737d4948fc1ef95b32775c94fbc892bd84d5f080e18cd6efb6e3b4c8056c839",
       "type": "regular"
     },
     {
@@ -278,7 +278,7 @@
       "mode": "0755",
       "path": "usr/lib/engines-3/padlock.so",
       "role": "runtime",
-      "sha256": "1543b356b9254f711ea39bc2ba5a1683580b53bb22a9c3e0bdd33b93ce506939",
+      "sha256": "e05be4b6d9d82f0c4d308498b895d3a904686b79af3ce516a324a87a3d8f6516",
       "type": "regular"
     },
     {
@@ -294,7 +294,7 @@
       "mode": "0755",
       "path": "usr/lib/libcrypto.so.3",
       "role": "runtime",
-      "sha256": "1ac79b0200d7021813703ff3bf84f9904eb3e246637a80068574b688137a6cb9",
+      "sha256": "e1bc9392eb00116f8bc5ea5c1b9931d58e9013a987214a98b1e5695c7ada193d",
       "type": "regular"
     },
     {
@@ -310,7 +310,7 @@
       "mode": "0755",
       "path": "usr/lib/libssl.so.3",
       "role": "runtime",
-      "sha256": "887c7ece9256a1e04c451e9b1193824fcd302814f43098c055590719ad70a49e",
+      "sha256": "119ccfd8f10282b7c5d4b2c08c76a76ff8cf5afc853f7ffd7b220591857bb9f6",
       "type": "regular"
     },
     {
@@ -330,7 +330,7 @@
       "type": "regular"
     },
     {
-      "link_target": "libz.so.1.3.2",
+      "link_target": "libz.so.1.4",
       "mode": "0777",
       "path": "usr/lib/libz.so.1",
       "role": "runtime",
@@ -340,9 +340,9 @@
     {
       "link_target": null,
       "mode": "0755",
-      "path": "usr/lib/libz.so.1.3.2",
+      "path": "usr/lib/libz.so.1.4",
       "role": "runtime",
-      "sha256": "60997f0db81cadd7cd12e787f3cc7de3c1e0946bc9bf28160c10199cceb59fef",
+      "sha256": "abab3792b17d2bed4502f1e3383e8e41bfde68077d0b555097256968b15cd0c2",
       "type": "regular"
     },
     {
@@ -374,7 +374,7 @@
       "mode": "0755",
       "path": "usr/lib/ossl-modules/legacy.so",
       "role": "runtime",
-      "sha256": "313c70195b37cf885dd9e09a9f6898add64261a6da811ae36503e9efec988274",
+      "sha256": "9d0c6842cd414d116357113e89d287f6bdc9cb4dfc17decb96a088b06a327e39",
       "type": "regular"
     },
     {
