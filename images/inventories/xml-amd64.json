@@ -30,7 +30,7 @@
       "mode": "0644",
       "path": "lib/apk/db/installed",
       "role": "runtime",
-      "sha256": "713b2843cdad6b4f5229dd4ee46f1ffafadda0dea754b3bbf8384906412f7f91",
+      "sha256": "e826fff0da98935109e1fddb0b83248a779403e3817a4fa8424cf582fe05e631",
       "type": "regular"
     },
     {
@@ -46,7 +46,7 @@
       "mode": "0644",
       "path": "lib/apk/db/scripts.tar.gz",
       "role": "runtime",
-      "sha256": "5c01f2e9bbb9bf45531b564699af3476a7e56ad373b07c5192b07de159d94a4d",
+      "sha256": "5cd18d806ef718f6b5998d938bd1074b7b0611da5a9854c74d8e6f0858935217",
       "type": "regular"
     },
     {
@@ -54,7 +54,7 @@
       "mode": "0644",
       "path": "lib/apk/db/triggers",
       "role": "runtime",
-      "sha256": "9619fc74d859f3040758001f54518496ac2854e1f798ec8254dedba702b583d8",
+      "sha256": "0c2ede95d52144d8e72e0141f7ec375a69201a403483e8ec71f08204bad06d85",
       "type": "regular"
     },
     {
@@ -78,7 +78,7 @@
       "mode": "0755",
       "path": "lib/ld-musl-x86_64.so.1",
       "role": "runtime",
-      "sha256": "99eab0629ed5e6bc258bea735a128d1de30c5a8b52f39eed4919452d03c6c4ee",
+      "sha256": "01e3b793ecda1146c4853dfa350e0515f2137f380fb9fa2370428f7bf9481148",
       "type": "regular"
     },
     {
@@ -126,7 +126,7 @@
       "mode": "0644",
       "path": "licenses/lint/LICENSE",
       "role": "license",
-      "sha256": "b5ca60b57e4ce23a876583bc025a6ba71ebf66ea8aa1e59ce40509aecbdd6b63",
+      "sha256": "d7c9ff7b497130f6fc2307ab9b5e05e096fd394b55ee35a35ac4321b170fcc82",
       "type": "regular"
     },
     {
@@ -134,7 +134,7 @@
       "mode": "0644",
       "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
       "role": "license",
-      "sha256": "18361c6b8821a762a005d897aefb603a77a75f3de05ffca601cf70b318a68bd4",
+      "sha256": "5686da670fb647818c74edd302fb4d6ee065a3ad399b94877eefe997901a5a3d",
       "type": "regular"
     },
     {
