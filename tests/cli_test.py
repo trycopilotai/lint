@@ -12,7 +12,6 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -709,11 +708,11 @@ class FormattingTest(unittest.TestCase):
 
     def test_path_version_grammars_require_exact_pins(self) -> None:
         valid_outputs = {
-            "black": ("black, 24.10.0 (compiled: yes)\n" "Python (CPython) 3.13.14"),
+            "black": ("black, 26.10.1 (compiled: yes)\n" "Python (CPython) 3.13.14"),
             "shfmt": "v3.13.1",
             "clang": "Homebrew clang-format version 18.1.8",
             "java": "google-java-format: Version 1.35.0",
-            "go": "/tools/gofmt: go1.26.6",
+            "go": "/tools/gofmt: go1.26.10",
             "rust": "rustfmt 1.9.0-stable (0123456789 2026-07-30)",
             "kotlin": "ktlint version 1.3.0",
             "toml": "taplo 0.10.0",
@@ -1174,7 +1173,7 @@ class FormattingTest(unittest.TestCase):
             LINT.verify_formatter_version(language)
 
         self.assertIn(
-            "pipx install --force black==24.10.0",
+            "pipx install --force black==26.10.1",
             str(caught.exception),
         )
 
@@ -1182,7 +1181,7 @@ class FormattingTest(unittest.TestCase):
         expected = {
             "prettier": "npx -y prettier@3.7.4 --version",
             "buildifier": "npx -y @bazel/buildifier@8.2.1 --version",
-            "black": "pipx install --force black==24.10.0",
+            "black": "pipx install --force black==26.10.1",
             "shfmt": "go install mvdan.cc/sh/v3/cmd/shfmt@v3.13.1",
             "clang": "pipx install --force clang-format==18.1.8",
             "java": "docker pull ghcr.io/trycopilotai/lint-java:0.1.8",
