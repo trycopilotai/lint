@@ -364,7 +364,12 @@ def detect_language(path: Path, languages: Sequence[Language]) -> Language | Non
     return None
 
 
-def run_git(cwd: Path, arguments: Sequence[str]) -> bytes:
+def run_git(
+    cwd: Path,
+    arguments: Sequence[str],
+    *,
+    input_data: bytes | None = None,
+) -> bytes:
     command = ["git", "-C", str(cwd)]
     command.extend(arguments)
     completed = subprocess.run(
@@ -372,11 +377,42 @@ def run_git(cwd: Path, arguments: Sequence[str]) -> bytes:
         check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        input=input_data,
     )
     if completed.returncode != 0:
         detail = completed.stderr.decode("utf-8", errors="replace").strip()
         raise SelectionError(detail)
     return completed.stdout
+
+
+def lfs_managed_paths(repository: Path, paths: Sequence[Path]) -> set[Path]:
+    """Return selected paths whose effective Git filter is LFS."""
+
+    if not paths:
+        return set()
+    relative_paths = [path.relative_to(repository).as_posix() for path in paths]
+    if any("\0" in path for path in relative_paths):
+        raise SelectionError("path contains a NUL byte")
+    input_data = b"".join(os.fsencode(path) + b"\0" for path in relative_paths)
+    output = run_git(
+        repository,
+        ["check-attr", "-z", "--stdin", "filter"],
+        input_data=input_data,
+    )
+    fields = output.split(b"\0")
+    if fields[-1:] == [b""]:
+        fields.pop()
+    if len(fields) != len(relative_paths) * 3:
+        raise SelectionError("Git returned malformed filter attributes")
+    managed: set[Path] = set()
+    for index, path in enumerate(paths):
+        offset = index * 3
+        expected_path = os.fsencode(relative_paths[index])
+        if fields[offset] != expected_path or fields[offset + 1] != b"filter":
+            raise SelectionError("Git returned mismatched filter attributes")
+        if fields[offset + 2] == b"lfs":
+            managed.add(path)
+    return managed
 
 
 def git_root(cwd: Path) -> Path | None:
@@ -1842,6 +1878,27 @@ def prepare_results(
         if not path.is_file():
             raise SelectionError(f"not a regular file: {relative_path}")
         selected.append((path, language))
+
+    repository = git_root(resolved_cwd)
+    if repository is not None and selected:
+        managed = lfs_managed_paths(
+            repository,
+            [path for path, _language in selected],
+        )
+        retained: list[tuple[Path, Language]] = []
+        for path, language in selected:
+            if path in managed:
+                findings.append(
+                    Finding(
+                        path=path.relative_to(resolved_cwd).as_posix(),
+                        language=language.id,
+                        status="skipped",
+                        message="Git LFS-managed file",
+                    )
+                )
+                continue
+            retained.append((path, language))
+        selected = retained
 
     cwd = resolved_cwd
 
