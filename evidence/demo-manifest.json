@@ -5,8 +5,8 @@
     "assets/demo.svg": "38074406b19fc7c14da374e72834d9903346473485cd7ade50940e910b5a58c0",
     "evidence/demo-transcript.txt": "137ac4a9ecb1ee31a17ce5b0151f6bee035bb02c9dd5aeadf3e2e9574eadb065"
   },
-  "input_commit": "41acac2f2c3c1c827c41288d9f9b365aef845038",
-  "input_tree": "68f97f9d62a76c763b50e947cb4ff8e03533e619",
+  "input_commit": "84690c1cf2c79ac9f5e37ea00e7f875a4e5abc63",
+  "input_tree": "c88d46efc9fc06eac387cede292061a452b54f27",
   "invocation": "./scripts/demo.sh demo-work",
   "invocation_date": "2026-11-08",
   "output_path": "evidence/demo-transcript.txt",
@@ -20,7 +20,7 @@
   },
   "schema_version": 2,
   "source_sha256": {
-    "languages.json": "1645aa2aea4647a472af2afdfc829d94c25afe53c62302254f9492d3df0ce60a",
+    "languages.json": "b84223b8bc1e36f899f4c84edd25cf5ee29639ebaf2c03645c494b7840ee6e80",
     "lint.py": "399480867c383d5cff36732e8594c06766734457704636374809f64b5558b13f",
     "scripts/demo.sh": "a1085f8d35a42407eec2230068d77f7423fd28a40556ead6a7861caa0d088f3c",
     "scripts/generate_demo.py": "98908809333fe4312ecca34d3eb8ff540dacae9dcbfa8bfe5929998ae52547c0",
