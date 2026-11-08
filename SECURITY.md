@@ -20,29 +20,32 @@ read-only root filesystem, and run as a non-root user.
 
 Security fixes are supported for the latest tagged release.
 
-## Release signatures
+## Release tag policy
 
-Release tags are SSH-signed. Release automation verifies a
-candidate against the allowed-signers file from the
-published, immutable `main` commit
-`3d5d4ee7b83b2c6442039b8a72a571c729ffcead`, not against the
-copy in the candidate. A candidate therefore cannot
-authorize an additional release key by changing its own
-allowed-signers file. The trusted ED25519 fingerprint is
+The `v0.1.9` release is the single unsigned exception. The
+release workflow still requires its tag to be annotated and
+to point to the exact checked-out commit; it also binds the
+workflow controller to that same commit. All other release
+tags remain SSH-signed and are verified against the
+allowed-signers file from the published, immutable `main`
+commit `3d5d4ee7b83b2c6442039b8a72a571c729ffcead`. The
+v0.1.9 tagger identity is self-asserted metadata, not
+independent identity proof. The trusted ED25519 fingerprint
+for those signed tags is
 `SHA256:DfKMRhe4zXosajTxEcDqVDi7dnQ/pwtvj/lLBDn7a9k`.
+
+To verify a signed tag from another release:
 
 ```sh
 git -c gpg.format=ssh \
   -c gpg.ssh.allowedSignersFile=.github/release-allowed-signers \
-  verify-tag v0.1.9
+  verify-tag v0.1.8
 ```
 
-This local command proves that the tag matches the key in
-the checked-out allowed-signers file. Release automation
-instead fetches the published commit above into an isolated
-checkout and passes that file's absolute path to Git.
-Because the key, commit identifier, and instructions ship in
-the same repository, this is not independent identity proof.
+The v0.1.9 exception does not change image build, scan,
+checksum, SBOM, or provenance verification. The pinned
+signer root remains the trust policy for every other release
+tag.
 
 ## Scanner exceptions
 
