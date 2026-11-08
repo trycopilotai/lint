@@ -7,7 +7,6 @@ import tempfile
 import unittest
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SCANNER_PATH = ROOT / "tools" / "disclosure_scan.py"
 
@@ -135,7 +134,7 @@ class DisclosureScannerTest(unittest.TestCase):
             self.assertIn(f"language: {language}", local)
         self.assertIn("actions/setup-node@", local)
         self.assertIn('node-version: "24.18.0"', local)
-        self.assertIn("black==24.10.0", local)
+        self.assertIn("black==26.10.1", local)
         self.assertIn("--language", local)
         self.assertIn("matrix.language", local)
         self.assertIn("requirements-a.txt", local)

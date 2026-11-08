@@ -6,7 +6,6 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -94,7 +93,7 @@ class HostEnsureTest(unittest.TestCase):
             del language_arg
             raise LINT.EngineError(
                 "black is not installed; "
-                "use --docker or run `pipx install --force black==24.10.0`"
+                "use --docker or run `pipx install --force black==26.10.1`"
             )
 
         with mock.patch.object(

@@ -10,7 +10,6 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 import lint
@@ -102,12 +101,12 @@ class WorkflowCoverageTest(unittest.TestCase):
         markers = {
             "prettier": 'node-version: "24.18.0"',
             "buildifier": "'buildifier'",
-            "black": "black==24.10.0",
+            "black": "black==26.10.1",
             "requirements": "--backend local",
             "shfmt": "shfmt@v3.13.1",
             "clang": "clang-format==18.1.8",
             "java": "/v1.35.0/google-java-format_linux-x86-64",
-            "go": 'go-version: "1.26.6"',
+            "go": 'go-version: "1.26.10"',
             "rust": "rustup toolchain install 1.97.1",
             "kotlin": "/1.3.0/ktlint",
             "taplo": "/0.10.0/taplo-linux-x86_64.gz",
@@ -195,7 +194,7 @@ class CliTransitionTest(unittest.TestCase):
             (
                 "black",
                 10,
-                b"black, 24.10.0 (compiled: yes)\nPython (CPython) 3.13.14",
+                b"black, 26.10.1 (compiled: yes)\nPython (CPython) 3.13.14",
             ),
         )
         for family, expected_timeout, output in cases:

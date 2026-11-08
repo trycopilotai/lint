@@ -14,7 +14,6 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from unittest import mock
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 # The published `main` commit whose allowed-signers file the
@@ -392,16 +391,13 @@ class ImageContentsTest(unittest.TestCase):
         self.assertIn("/opt/julia-depot/packages", dockerfile)
         self.assertIn(r"-type d \( -name docs -o -name test \)", dockerfile)
 
-    def test_black_scanner_exception_is_scoped_and_expires(self) -> None:
+    def test_fixed_black_does_not_keep_the_expired_scanner_exception(self) -> None:
         ignore = (ROOT / ".trivyignore.yaml").read_text(encoding="utf-8")
         security = (ROOT / "SECURITY.md").read_text(encoding="utf-8")
 
-        self.assertIn("CVE-2026-32274", ignore)
-        self.assertIn("pkg:pypi/black@24.10.0", ignore)
-        self.assertIn("expired_at: 2026-10-31", ignore)
-        for surface in (ignore, security):
-            self.assertIn("python-cell-magics", surface)
-            self.assertNotIn("--config /dev/null", surface)
+        self.assertEqual("vulnerabilities: []\n", ignore)
+        self.assertIn("no vulnerability exceptions", security)
+        self.assertIn("26.10.1", security)
 
 
 class ContinuousIntegrationWorkflowTest(unittest.TestCase):

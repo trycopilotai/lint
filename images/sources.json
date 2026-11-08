@@ -6,15 +6,15 @@
     },
     "distroless_cc": {
       "image": "gcr.io/distroless/cc-debian13:nonroot",
-      "digest": "sha256:c31ff9abcb1910f3ab25c7957bdaf0bfe12a01eb546e8df2282f1c8f682b606c"
+      "digest": "sha256:08476c244888bfb425bae1ae4dd7c17f093e972aab8426883d97f3c6f280f7c1"
     },
     "dotnet_runtime": {
-      "image": "mcr.microsoft.com/dotnet/runtime:10.0.11-alpine3.23",
-      "digest": "sha256:6aa91d49edbbbd0a680ad22192b49373427397e48935074d441a1138c42f41b1"
+      "image": "mcr.microsoft.com/dotnet/runtime:10.0.14-alpine3.24",
+      "digest": "sha256:8ef0660a5ae5877915bc868a27aabf334c8b14c60aadbdd0fa058d81b87c52b6"
     },
     "go": {
-      "image": "golang:1.26.6-alpine3.23",
-      "digest": "sha256:e57c41c1d5864341031181b0db34b9a537bb5773eb6428e4e5bdaea0f9135406"
+      "image": "golang:1.26.10-alpine3.23",
+      "digest": "sha256:78e7f1e419545bc4b8b5ee8a40a99ddb5df1216d38681dbab2eeb1fdb2427f43"
     },
     "java": {
       "image": "eclipse-temurin:21-jre-alpine-3.23",
@@ -47,8 +47,8 @@
   },
   "downloads": {
     "black": {
-      "url": "https://files.pythonhosted.org/packages/8d/a7/4b27c50537ebca8bec139b872861f9d2bf501c5ec51fcf897cb924d9e264/black-24.10.0-py3-none-any.whl",
-      "sha256": "3bb2b7a1f7b685f85b11fed1ef10f8a9148bceb49853e47a294a3dd963c1dd7d"
+      "url": "https://files.pythonhosted.org/packages/b1/28/9dd29175c1db777e6189e2a0bb5f37101adf19c3e509b236c8920f778d0b/black-26.10.1-py3-none-any.whl",
+      "sha256": "28842f9a8207cc1df6eb983a35a14c5a0dfcd603d214fe82d84bef552afd2e3a"
     },
     "black_click": {
       "url": "https://files.pythonhosted.org/packages/00/2e/d53fa4befbf2cfa713304affc7ca780ce4fc1fd8710527771b58311a3229/click-8.1.7-py3-none-any.whl",
@@ -63,12 +63,16 @@
       "sha256": "5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124"
     },
     "black_pathspec": {
-      "url": "https://files.pythonhosted.org/packages/cc/20/ff623b09d963f88bfde16306a54e12ee5ea43e9b597108672ff3a408aad6/pathspec-0.12.1-py3-none-any.whl",
-      "sha256": "a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08"
+      "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+      "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189"
     },
     "black_platformdirs": {
       "url": "https://files.pythonhosted.org/packages/3c/a6/bc1012356d8ece4d66dd75c4b9fc6c1f6650ddd5991e421177d9f8f671be/platformdirs-4.3.6-py3-none-any.whl",
       "sha256": "73e575e1408ab8103900836b97580d5307456908a03e92031bab39e4554cc3fb"
+    },
+    "black_pytokens": {
+      "url": "https://files.pythonhosted.org/packages/7c/3c/6941a82f4f130af6e1c68c076b6789069ef10c04559bd4733650f902fd3b/pytokens-0.4.0-py3-none-any.whl",
+      "sha256": "0508d11b4de157ee12063901603be87fb0253e8f4cb9305eb168b1202ab92068"
     },
     "clang_format_linux_amd64": {
       "url": "https://files.pythonhosted.org/packages/c8/b1/7bdec805dfa84eb4d2f3cbe65a419eaeb4cb0d67634c68d0915f54a32b88/clang_format-18.1.8-py2.py3-none-musllinux_1_2_x86_64.whl",
@@ -85,6 +89,14 @@
     "buildifier_source": {
       "url": "https://github.com/bazelbuild/buildtools/archive/refs/tags/v8.2.1.tar.gz",
       "sha256": "53119397bbce1cd7e4c590e117dcda343c2086199de62932106c80733526c261"
+    },
+    "distroless_zlib_linux_amd64": {
+      "url": "https://security.debian.org/debian-security/pool/updates/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+deb13u1_amd64.deb",
+      "sha256": "8c27c342230503b73dfde629642c3b352e87b554e06d60cf58772f236a305ceb"
+    },
+    "distroless_zlib_linux_arm64": {
+      "url": "https://security.debian.org/debian-security/pool/updates/main/z/zlib/zlib1g_1.3.dfsg+really1.3.1-1+deb13u1_arm64.deb",
+      "sha256": "0e41b3d7ad8ad7fcd36dd4d61ca91a70018478fc4af652e044f4be770784ddff"
     },
     "google_java_format_linux_amd64": {
       "url": "https://github.com/google/google-java-format/releases/download/v1.35.0/google-java-format_linux-x86-64",
