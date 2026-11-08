@@ -441,6 +441,83 @@ class SelectionTest(unittest.TestCase):
             )
 
 
+class LfsAttributeTest(unittest.TestCase):
+    def test_prepare_skips_smudged_and_pointer_lfs_files(self) -> None:
+        for payload in (
+            b"version https://git-lfs.github.com/spec/v1\n"
+            b"oid sha256:" + b"a" * 64 + b"\nsize 1\n",
+            b"smudged binary payload\n",
+        ):
+            with self.subTest(payload=payload[:8]):
+                with tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory).resolve() / "project"
+                    root.mkdir()
+                    initialize_repository(root)
+                    (root / ".gitattributes").write_text(
+                        "managed.py filter=lfs\n",
+                        encoding="utf-8",
+                        newline="\n",
+                    )
+                    managed = root / "managed.py"
+                    managed.write_bytes(payload)
+                    ordinary = root / "ordinary.py"
+                    ordinary.write_text("value = 1\n", encoding="utf-8")
+                    subprocess.run(
+                        ["git", "-C", str(root), "add", "-A"],
+                        check=True,
+                    )
+                    subprocess.run(
+                        ["git", "-C", str(root), "commit", "-qm", "fixture"],
+                        check=True,
+                    )
+
+                    with mock.patch.object(LINT, "ensure_host_formatters"):
+                        with mock.patch.object(LINT, "run_formatter"):
+                            results, findings = LINT.prepare_results(
+                                cwd=root,
+                                paths=[managed, ordinary],
+                                requested_languages=frozenset(),
+                                use_docker=False,
+                            )
+
+                    self.assertEqual([ordinary], [result.path for result in results])
+                    self.assertEqual(payload, managed.read_bytes())
+                    self.assertEqual(
+                        [("managed.py", "python", "skipped", "Git LFS-managed file")],
+                        [
+                            (item.path, item.language, item.status, item.message)
+                            for item in findings
+                        ],
+                    )
+
+    def test_filter_attribute_protocol_errors_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            initialize_repository(root)
+            path = root / "sample.py"
+            path.write_text("value = 1\n", encoding="utf-8")
+
+            with mock.patch.object(
+                LINT,
+                "run_git",
+                return_value=b"sample.py\0filter\0",
+            ):
+                with self.assertRaisesRegex(
+                    LINT.SelectionError,
+                    "malformed filter attributes",
+                ):
+                    LINT.lfs_managed_paths(root, [path])
+
+    def test_filter_attribute_git_errors_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            path = root / "sample.py"
+            path.write_text("value = 1\n", encoding="utf-8")
+
+            with self.assertRaises(LINT.SelectionError):
+                LINT.lfs_managed_paths(root, [path])
+
+
 class FormattingTest(unittest.TestCase):
     def test_prettier_command_allows_data_configuration(self) -> None:
         language = LINT.Language(
