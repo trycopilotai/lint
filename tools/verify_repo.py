@@ -267,7 +267,7 @@ def verify_manifests() -> None:
         "juliaformatter": "2.12.3",
         "node": "24.18.0",
         "python": "3.13.14",
-        "requirements": "sha256:723bfe9070dd70e804fff734a7156b963e694446e161739d03394ca30d9f29b5",
+        "requirements": "sha256:fb4382e7d2cc31be6369687ed951c3535e05e0b9e39124f7366e2bf0befbea37",
     }
     if versions != expected:
         raise ValueError("tool version manifest differs from the release set")
