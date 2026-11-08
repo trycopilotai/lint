@@ -120,6 +120,28 @@ jobs:
           matrix.language }}-amd64.oci.tar" --platform
           linux/amd64 --budget-mib "${{ matrix.budget_mib
           }}"
+      - name: Capture AMD64 candidate image inventory
+        id: candidate-inventory
+        run: >-
+          python3 images/generate_image_inventory.py --image
+          "lint-${{ matrix.language }}:ci" --target "${{
+          matrix.target }}" --architecture amd64
+          --output-root
+          "${RUNNER_TEMP}/image-inventory-candidates"
+      - name: Upload AMD64 candidate image inventory
+        if: >-
+          always() && steps.candidate-inventory.outcome ==
+          'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name:
+            "image-inventory-candidate-${{ matrix.target
+            }}-amd64"
+          path: >-
+            ${{ runner.temp
+            }}/image-inventory-candidates/${{ matrix.target
+            }}-amd64.json
+          if-no-files-found: error
       - name: Enforce compressed size budget
         run: >-
           python3 images/verify_images.py --image "lint-${{

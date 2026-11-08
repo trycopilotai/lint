@@ -87,7 +87,10 @@ COPY images/THIRD_PARTY_NOTICES.md /licenses/lint/THIRD_PARTY_NOTICES.md
 FROM ${NODE_IMAGE} AS prettier-build
 RUN apk --force-refresh add --no-cache \
       libcrypto3=3.5.9-r0 \
-      libssl3=3.5.9-r0
+      libssl3=3.5.9-r0 \
+      musl=1.2.5-r24 \
+      musl-utils=1.2.5-r24 \
+      zlib=1.4-r0
 COPY --from=prettier-download \
     /downloads/prettier-3.7.4.tgz \
     /downloads/prettier-3.7.4.tgz
@@ -171,6 +174,9 @@ FROM ${PYTHON_IMAGE} AS black-build
 RUN apk --force-refresh add --no-cache \
       libcrypto3=3.5.9-r0 \
       libssl3=3.5.9-r0 \
+      musl=1.2.5-r24 \
+      musl-utils=1.2.5-r24 \
+      zlib=1.4-r0 \
       sqlite-libs=3.53.4-r0
 COPY --from=black-download /black-wheels /black-wheels
 RUN pip install \
@@ -202,6 +208,9 @@ FROM ${PYTHON_IMAGE} AS requirements-build
 RUN apk --force-refresh add --no-cache \
       libcrypto3=3.5.9-r0 \
       libssl3=3.5.9-r0 \
+      musl=1.2.5-r24 \
+      musl-utils=1.2.5-r24 \
+      zlib=1.4-r0 \
       sqlite-libs=3.53.4-r0
 COPY --chmod=0555 images/requirements_entrypoint.py /requirements-format
 RUN echo "723bfe9070dd70e804fff734a7156b963e694446e161739d03394ca30d9f29b5  /requirements-format" \
@@ -344,8 +353,11 @@ ENTRYPOINT ["/bin/rustfmt"]
 FROM ${JAVA_JDK_IMAGE} AS kotlin-build
 RUN apk --force-refresh add --no-cache \
       libcrypto3=3.5.9-r0 \
-      libexpat=2.8.3-r0 \
+      libexpat=2.10.0-r0 \
       libssl3=3.5.9-r0 \
+      musl=1.2.5-r24 \
+      musl-utils=1.2.5-r24 \
+      zlib=1.4-r0 \
       p11-kit=0.26.2-r0 \
       p11-kit-trust=0.26.2-r0 \
       sqlite-libs=3.53.4-r0
@@ -510,7 +522,10 @@ RUN curl --fail --location \
 FROM ${DOTNET_RUNTIME} AS csharp-runtime
 RUN apk --force-refresh add --no-cache \
       libcrypto3=3.5.9-r0 \
-      libssl3=3.5.9-r0
+      libssl3=3.5.9-r0 \
+      musl=1.2.5-r24 \
+      musl-utils=1.2.5-r24 \
+      zlib=1.4-r0
 
 FROM csharp-runtime AS csharp-build
 COPY --from=csharp-download /tools /tools

@@ -154,6 +154,23 @@ def write_saved_image(path: Path, layers: list[bytes]) -> None:
         add_tar_entry(handle, "manifest.json", payload=manifest)
 
 
+def write_notice_image(path: Path) -> None:
+    layer = layer_payload(
+        [
+            {"path": "licenses", "entry_type": tarfile.DIRTYPE},
+            {"path": "licenses/lint", "entry_type": tarfile.DIRTYPE},
+            {"path": "licenses/julia", "entry_type": tarfile.DIRTYPE},
+            {"path": "licenses/lint/LICENSE", "payload": b"license\n"},
+            {
+                "path": "licenses/lint/THIRD_PARTY_NOTICES.md",
+                "payload": b"notices\n",
+            },
+            {"path": "licenses/julia/manifest.json", "payload": b"{}\n"},
+        ]
+    )
+    write_saved_image(path, [layer])
+
+
 class LicenseNoticeTest(unittest.TestCase):
     def test_every_final_stage_copies_the_license_notices(self) -> None:
         matrix = json.loads(
@@ -522,6 +539,130 @@ class InventoryGenerationTest(unittest.TestCase):
             self.assertEqual(payload, path.read_bytes())
             self.assertEqual(payload, VERIFIER.render_inventory(json.loads(payload)))
 
+    def test_generator_cli_writes_only_under_candidate_root(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            temporary_root = Path(directory)
+            saved_image = temporary_root / "image.tar"
+            output_root = temporary_root / "candidate-inventories"
+            write_notice_image(saved_image)
+            canonical_root = VERIFIER.INVENTORY_ROOT
+            canonical_before = {
+                path.relative_to(canonical_root): path.read_bytes()
+                for path in canonical_root.glob("*.json")
+            }
+            commands: list[list[str]] = []
+
+            def run(command: list[str], **kwargs):
+                commands.append(command)
+                if command[:3] == ["docker", "image", "inspect"]:
+                    return subprocess.CompletedProcess(
+                        args=command,
+                        returncode=0,
+                        stdout="amd64\n",
+                        stderr="",
+                    )
+                if command[:3] == ["docker", "image", "save"]:
+                    shutil.copyfile(saved_image, command[4])
+                    return subprocess.CompletedProcess(
+                        args=command,
+                        returncode=0,
+                        stdout="",
+                        stderr="",
+                    )
+                raise AssertionError(f"unexpected Docker command: {command}")
+
+            arguments = [
+                "generate_image_inventory.py",
+                "--image",
+                "fixture:1",
+                "--target",
+                "julia",
+                "--architecture",
+                "amd64",
+                "--output-root",
+                str(output_root),
+            ]
+            with (
+                mock.patch.object(VERIFIER.subprocess, "run", side_effect=run),
+                mock.patch.object(sys, "argv", arguments),
+                mock.patch("builtins.print") as print_output,
+            ):
+                self.assertEqual(0, GENERATOR.main())
+
+            candidate_path = output_root / "julia-amd64.json"
+            self.assertTrue(candidate_path.is_file())
+            self.assertEqual(
+                canonical_before,
+                {
+                    path.relative_to(canonical_root): path.read_bytes()
+                    for path in canonical_root.glob("*.json")
+                },
+            )
+            result = json.loads(print_output.call_args.args[0])
+            payload = candidate_path.read_bytes()
+            self.assertEqual("julia-amd64.json", result["path"])
+            self.assertEqual("written", result["status"])
+            self.assertEqual(
+                hashlib.sha256(payload).hexdigest(),
+                result["sha256"],
+            )
+            self.assertEqual(2, len(commands))
+            self.assertEqual("inspect", commands[0][2])
+            self.assertEqual("save", commands[1][2])
+
+    def test_generator_cli_preserves_default_repo_relative_path(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            temporary_root = Path(directory)
+            inventory_root = temporary_root / "images" / "inventories"
+            saved_image = temporary_root / "image.tar"
+            write_notice_image(saved_image)
+
+            def run(command: list[str], **kwargs):
+                if command[:3] == ["docker", "image", "inspect"]:
+                    return subprocess.CompletedProcess(
+                        args=command,
+                        returncode=0,
+                        stdout="amd64\n",
+                        stderr="",
+                    )
+                if command[:3] == ["docker", "image", "save"]:
+                    shutil.copyfile(saved_image, command[4])
+                    return subprocess.CompletedProcess(
+                        args=command,
+                        returncode=0,
+                        stdout="",
+                        stderr="",
+                    )
+                raise AssertionError(f"unexpected Docker command: {command}")
+
+            arguments = [
+                "generate_image_inventory.py",
+                "--image",
+                "fixture:1",
+                "--target",
+                "julia",
+                "--architecture",
+                "amd64",
+            ]
+            with (
+                mock.patch.object(VERIFIER.subprocess, "run", side_effect=run),
+                mock.patch.object(GENERATOR.verify_images, "ROOT", temporary_root),
+                mock.patch.object(
+                    GENERATOR.verify_images, "INVENTORY_ROOT", inventory_root
+                ),
+                mock.patch.object(sys, "argv", arguments),
+                mock.patch("builtins.print") as print_output,
+            ):
+                self.assertEqual(0, GENERATOR.main())
+
+            default_path = inventory_root / "julia-amd64.json"
+            self.assertTrue(default_path.is_file())
+            result = json.loads(print_output.call_args.args[0])
+            self.assertEqual(
+                "images/inventories/julia-amd64.json",
+                result["path"],
+            )
+
 
 class WorkflowInventoryTest(unittest.TestCase):
     # One content check per canonical architecture, in the order
@@ -542,6 +683,29 @@ class WorkflowInventoryTest(unittest.TestCase):
                 invocation = "\n".join(block.splitlines()[:4])
                 self.assertIn('matrix.target\n          }}"', invocation)
                 self.assertIn(f'--architecture "{architecture}"', invocation)
+
+    def test_amd64_candidate_capture_brackets_strict_inventory_gate(self) -> None:
+        workflow = (ROOT / ".github" / "workflows" / "images.yml").read_text(
+            encoding="utf-8"
+        )
+        amd64 = workflow.split("  build:", 1)[1].split("  build-arm64:", 1)[0]
+        arm64 = workflow.split("  build-arm64:", 1)[1]
+        layer_budget = amd64.index("- name: Verify AMD64 compressed layer budget")
+        capture = amd64.index("- name: Capture AMD64 candidate image inventory")
+        upload = amd64.index("- name: Upload AMD64 candidate image inventory")
+        strict_gate = amd64.index("- name: Enforce compressed size budget")
+
+        self.assertLess(layer_budget, capture)
+        self.assertLess(capture, upload)
+        self.assertLess(upload, strict_gate)
+        self.assertIn("images/generate_image_inventory.py", amd64[capture:upload])
+        self.assertIn("--output-root", amd64[capture:upload])
+        self.assertIn('"${RUNNER_TEMP}/image-inventory-candidates"', amd64)
+        self.assertIn("if: >-\n          always()", amd64[upload:strict_gate])
+        self.assertIn("uses: actions/upload-artifact@", amd64[upload:strict_gate])
+        self.assertIn("if-no-files-found: error", amd64[upload:strict_gate])
+        self.assertIn("python3 images/verify_images.py", amd64[strict_gate:])
+        self.assertNotIn("candidate image inventory", arm64)
 
     def test_release_jobs_bind_the_exact_target_and_architecture(self) -> None:
         workflow = (ROOT / ".github" / "workflows" / "release.yml").read_text(

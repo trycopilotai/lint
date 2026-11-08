@@ -40,6 +40,12 @@ def parser() -> argparse.ArgumentParser:
         choices=sorted(verify_images.ARCHITECTURES),
         required=True,
     )
+    argument_parser.add_argument(
+        "--output-root",
+        type=Path,
+        default=None,
+        help="write the inventory under this directory instead of the repo",
+    )
     return argument_parser
 
 
@@ -49,13 +55,18 @@ def main() -> int:
         arguments.image,
         arguments.target,
         arguments.architecture,
+        root=arguments.output_root,
     )
+    if arguments.output_root is None:
+        reported_path = path.relative_to(verify_images.ROOT).as_posix()
+    else:
+        reported_path = path.relative_to(arguments.output_root).as_posix()
     print(
         json.dumps(
             {
                 "architecture": arguments.architecture,
                 "entries": len(json.loads(payload)["entries"]),
-                "path": path.relative_to(verify_images.ROOT).as_posix(),
+                "path": reported_path,
                 "sha256": hashlib.sha256(payload).hexdigest(),
                 "status": "written",
                 "target": arguments.target,
