@@ -2,8 +2,14 @@ Go build information receipt
 Tool: shfmt 3.13.1
 Source: https://proxy.golang.org/mvdan.cc/sh/v3/@v/v3.13.1.zip
 Source module sum: h1:DP3TfgZhDkT7lerUdnp6PTGKyxxzz6T+cOlY/xEvfWk=
-Derivation: GOTOOLCHAIN=local go1.26.6 install mvdan.cc/sh/v3/cmd/shfmt@v3.13.1, then go version -m
-go go1.26.6
+Derivation: actual native go version -m from images/Dockerfile go-tools-build
+Source commit: f8b1c63516423dc92969a1370685451ae06658b8
+CI run: https://github.com/trycopilotai/lint/actions/runs/42471880609
+Native amd64 artifact: 13613986496
+Native amd64 raw SHA-256: 7103c96d2584f6962ce2b31e542e3f711c4e526f3f5b59157d9e247a7c696cac
+Native arm64 artifact: 13614015503
+Native arm64 raw SHA-256: 8bbf8b46fbb4dbc9b8885b2a642400f114d45f53534c3087e6d6e4d9a0e23bae
+go go1.26.10
 main mvdan.cc/sh/v3 v3.13.1 h1:DP3TfgZhDkT7lerUdnp6PTGKyxxzz6T+cOlY/xEvfWk=
 dep github.com/google/renameio/v2 v2.0.2 h1:qKZs+tfn+arruZZhQ7TKC/ergJunuJicWS6gLDt/dGw=
 dep github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=
