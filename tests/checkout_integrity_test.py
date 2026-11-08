@@ -43,6 +43,7 @@ def exact_byte_paths() -> set[str]:
         paths.add(source["capture"]["context_path"])
 
     paths.add("images/matrix.json")
+    paths.add("images/requirements_entrypoint.py")
 
     for path in sorted((ROOT / "skills" / "lint").rglob("*")):
         if "__pycache__" in path.parts:
